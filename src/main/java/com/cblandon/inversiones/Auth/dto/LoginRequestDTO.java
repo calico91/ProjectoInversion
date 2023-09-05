@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Auth.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequestDTO {
     String username;
-    String password; 
+    String password;
 }

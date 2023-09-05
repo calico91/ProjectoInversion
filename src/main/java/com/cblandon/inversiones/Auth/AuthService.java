@@ -3,6 +3,7 @@ package com.cblandon.inversiones.Auth;
 import com.cblandon.inversiones.Auth.dto.AuthResponseDTO;
 import com.cblandon.inversiones.Auth.dto.LoginRequestDTO;
 import com.cblandon.inversiones.Auth.dto.RegisterRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,37 +21,43 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    JwtService jwtService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-    public AuthResponseDTO login(LoginRequestDTO request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user=userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token=jwtService.getToken(user);
+    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginRequestDTO.getUsername(),
+                loginRequestDTO.getPassword()));
+        UserDetails user = userRepository.findByUsername(loginRequestDTO.getUsername()).orElseThrow();
+        String token = jwtService.getToken(user);
         return AuthResponseDTO.builder()
-            .token(token)
-            .build();
+                .token(token)
+                .build();
 
     }
 
-    public AuthResponseDTO register(RegisterRequestDTO request)  throws Exception{
+    public AuthResponseDTO register(RegisterRequestDTO request) throws Exception {
         User user = User.builder()
-            .username(request.getUsername())
-            .password(passwordEncoder.encode( request.getPassword()))
-            .firstname(request.getFirstname())
-            .lastname(request.getLastname())
-            .country(request.getCountry())
-            .role(Role.USER)
-            .build();
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .country(request.getCountry())
+                .role(Role.USER)
+                .build();
 
         userRepository.save(user);
 
         return AuthResponseDTO.builder()
-            .token(jwtService.getToken(user))
-            .build();
-        
+                .token(jwtService.getToken(user))
+                .build();
+
     }
 
 }

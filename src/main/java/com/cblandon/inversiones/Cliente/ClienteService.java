@@ -1,10 +1,13 @@
 package com.cblandon.inversiones.Cliente;
 
+import com.cblandon.inversiones.Cliente.dto.ClienteMapper;
+import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,22 +17,19 @@ public class ClienteService {
 
     public void createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
-        Cliente cliente = Cliente.builder()
-                .nombres(registrarClienteDTO.getNombres())
-                .apellidos(registrarClienteDTO.getApellidos())
-                .celular(registrarClienteDTO.getCelular())
-                .email(registrarClienteDTO.getEmail())
-                .pais(registrarClienteDTO.getPais())
-                .build();
+        Cliente clientemaper = ClienteMapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
-        clienteRepository.save(cliente);
+        clienteRepository.save(clientemaper);
     }
 
-    public List<Cliente> allClientes() {
+    public List<ClienteResponseDTO> allClientes() {
 
-        System.out.println(clienteRepository.findAll());
-        return clienteRepository.findAll();
+        List<Cliente> clientes = clienteRepository.findAll();
 
+        List<ClienteResponseDTO> clienteResponseDTOS = clientes.stream().map(
+                cliente -> ClienteMapper.mapper.clienteToClienteResponseDto(cliente)).collect(Collectors.toList());
+
+        return clienteResponseDTOS;
     }
 
     public void deleteCliente(Integer id) {

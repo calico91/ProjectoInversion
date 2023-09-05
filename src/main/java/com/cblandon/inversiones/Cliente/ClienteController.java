@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Cliente;
 
+import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ClienteController {
     }
 
     @GetMapping("/consultarClientes")
-    public List<Cliente> consultarClientes() {
+    public List<ClienteResponseDTO> consultarClientes() {
         return clienteService.allClientes();
     }
 }
