@@ -17,5 +17,6 @@ public class ClienteResponseDTO {
     private String email;
     private String celular;
     private String pais;
+    private String cedula;
 
 }

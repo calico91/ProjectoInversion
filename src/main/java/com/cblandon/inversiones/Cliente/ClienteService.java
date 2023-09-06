@@ -2,6 +2,7 @@ package com.cblandon.inversiones.Cliente;
 
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Jwt.JwtService;
 import com.cblandon.inversiones.Mapper.Mapper;
@@ -24,9 +25,8 @@ public class ClienteService {
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
         try {
-            Optional consultarCliente = clienteRepository.findByCedula(registrarClienteDTO.getCedula());
 
-            if (!consultarCliente.isEmpty()) {
+            if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()) == null) {
                 throw new RequestException(
                         "el cliente con cedula " + registrarClienteDTO.getCedula() + " ya se encuentra registrado", "1");
             }
@@ -46,12 +46,27 @@ public class ClienteService {
 
     public List<ClienteResponseDTO> allClientes() {
         try {
+
             List<Cliente> clientes = clienteRepository.findAll();
 
             List<ClienteResponseDTO> clienteResponseDTOS = clientes.stream().map(
                     cliente -> Mapper.mapper.clienteToClienteResponseDto(cliente)).collect(Collectors.toList());
 
             return clienteResponseDTOS;
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
+
+    public ClienteResponseDTO consultarCliente(String cedula) {
+        try {
+            if (clienteRepository.findByCedula(cedula) == null) {
+                throw new NoDataException("no se encontraron resultados", "3");
+            }
+
+            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.findByCedula(cedula));
+
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
