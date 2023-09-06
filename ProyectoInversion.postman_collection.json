@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "29d644b5-0602-4255-be69-b05aa5160a74",
+		"name": "ProyectoInversion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24336740",
+		"_collection_link": "https://cloudy-eclipse-812867.postman.co/workspace/Listo~ee891a82-cc11-4c28-8514-0d7781fce60d/collection/24336740-29d644b5-0602-4255-be69-b05aa5160a74?action=share&source=collection_link&creator=24336740"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "registrarUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"yo\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"maelo\",\r\n    \"lastname\": \"blandon\",\r\n    \"country\": \"compartir\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "registrarCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYWVsaXRvIiwiaWF0IjoxNjkzOTQyODg3LCJleHAiOjE2OTM5NDQzMjd9.IckNskQDTeYvFu8f6z1n6NDV6RD7AiZtVKmzFX44Evo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"maelo\",\r\n    \"apellidos\": \"blandon\",\r\n    \"email\": \"maelo\",\r\n    \"celular\": \"3104567100\",\r\n    \"pais\": \"chichombia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultarClientes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYWVsaXRvIiwiaWF0IjoxNjkzOTQ0ODQzLCJleHAiOjE2OTM5NDYyODN9.ugeMmA9I5hJHcFc34tJNYBTFOdpxwD_jnLGJgQJImjE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nombres\":\"Ismael\",\r\n\"apellidos\":\"Blandon Rendon\",\r\n\"email\":\"maelito@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente/consultarClientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente",
+								"consultarClientes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8091/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

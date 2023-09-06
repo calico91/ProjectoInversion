@@ -4,6 +4,7 @@ import com.cblandon.inversiones.Auth.dto.AuthResponseDTO;
 import com.cblandon.inversiones.Auth.dto.LoginRequestDTO;
 import com.cblandon.inversiones.Auth.dto.RegisterRequestDTO;
 import com.cblandon.inversiones.Excepciones.RequestException;
+import com.cblandon.inversiones.Mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,15 +56,16 @@ public class AuthService {
 
     }
 
-    public AuthResponseDTO register(RegisterRequestDTO request) throws Exception {
-        User user = User.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .country(request.getCountry())
-                .role(Role.USER)
-                .build();
+    public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) throws Exception {
+        Optional<User> consultarUser = userRepository.findByUsername(registerRequestDTO.getUsername());
+        if (!consultarUser.isEmpty()) {
+            //logger.error("error en el login: no existe el usuario " + username + " en el sistema!");
+            throw new RequestException("usuario " + registerRequestDTO.getUsername() + " ya se encuentra creado", "1");
+        }
+
+        User user = Mapper.mapper.registrarClienteDTOToUser(registerRequestDTO);
+        user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
+        user.setRole(Role.USER);
 
         userRepository.save(user);
 

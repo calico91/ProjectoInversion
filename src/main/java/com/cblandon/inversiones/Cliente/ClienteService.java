@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.Cliente;
 
-import com.cblandon.inversiones.Cliente.dto.ClienteMapper;
+import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class ClienteService {
 
     public void createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
-        Cliente clientemaper = ClienteMapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+        Cliente clientemaper = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
         clienteRepository.save(clientemaper);
     }
@@ -27,7 +27,7 @@ public class ClienteService {
         List<Cliente> clientes = clienteRepository.findAll();
 
         List<ClienteResponseDTO> clienteResponseDTOS = clientes.stream().map(
-                cliente -> ClienteMapper.mapper.clienteToClienteResponseDto(cliente)).collect(Collectors.toList());
+                cliente -> Mapper.mapper.clienteToClienteResponseDto(cliente)).collect(Collectors.toList());
 
         return clienteResponseDTOS;
     }
