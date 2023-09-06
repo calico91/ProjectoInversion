@@ -16,5 +16,5 @@ public interface Mapper {
     ClienteResponseDTO clienteToClienteResponseDto(Cliente cliente);
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO RegistrarClienteDTO);
-    User registrarClienteDTOToUser(RegisterRequestDTO registerRequestDTO);
+    User registerRequestDTOToUser(RegisterRequestDTO registerRequestDTO);
 }

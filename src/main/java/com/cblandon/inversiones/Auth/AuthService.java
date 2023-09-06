@@ -59,11 +59,10 @@ public class AuthService {
     public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) throws Exception {
         Optional<User> consultarUser = userRepository.findByUsername(registerRequestDTO.getUsername());
         if (!consultarUser.isEmpty()) {
-            //logger.error("error en el login: no existe el usuario " + username + " en el sistema!");
             throw new RequestException("usuario " + registerRequestDTO.getUsername() + " ya se encuentra creado", "1");
         }
 
-        User user = Mapper.mapper.registrarClienteDTOToUser(registerRequestDTO);
+        User user = Mapper.mapper.registerRequestDTOToUser(registerRequestDTO);
         user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
         user.setRole(Role.USER);
 

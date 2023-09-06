@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Cliente.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -22,5 +23,5 @@ public class RegistrarClienteDTO {
     private String email;
     private String celular;
     private String pais;
-
+    private String cedula;
 }
