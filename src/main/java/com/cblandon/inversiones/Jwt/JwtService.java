@@ -1,6 +1,8 @@
 package com.cblandon.inversiones.Jwt;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,12 +27,18 @@ public class JwtService {
     }
 
     private String getToken(Map<String,Object> extraClaims, UserDetails user) {
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
+
+        System.out.println("Issued at: {}"+issuedAt);
+        System.out.println("Expires at: {}"+ expiration);
+        System.out.println("--jwt--");
         return Jwts
             .builder()
             .setClaims(extraClaims)
             .setSubject(user.getUsername())
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+            .setIssuedAt(Date.from(issuedAt))
+            .setExpiration(Date.from(expiration))
             .signWith(getKey(), SignatureAlgorithm.HS256)
             .compact();
     }

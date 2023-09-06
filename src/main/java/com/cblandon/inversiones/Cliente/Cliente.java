@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Cliente {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Basic
     private String nombres;
@@ -23,6 +23,8 @@ public class Cliente {
     @Column(length = 10)
     private String celular;
     private String pais;
+    @Column(unique = true, nullable = false)
+    private String cedula;
 
 
 }
