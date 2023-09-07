@@ -6,12 +6,12 @@ import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Jwt.JwtService;
 import com.cblandon.inversiones.Mapper.Mapper;
+import com.cblandon.inversiones.Utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,12 +60,29 @@ public class ClienteService {
     }
 
     public ClienteResponseDTO consultarCliente(String cedula) {
-        try {
-            if (clienteRepository.findByCedula(cedula) == null) {
-                throw new NoDataException("no se encontraron resultados", "3");
-            }
 
+        if (clienteRepository.findByCedula(cedula) == null) {
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+        }
+
+        try {
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.findByCedula(cedula));
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
+
+    public ClienteResponseDTO actualizarCliente(String cedula, RegistrarClienteDTO registrarClienteDTO) {
+        if (clienteRepository.findByCedula(cedula) == null) {
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+        }
+
+        try {
+
+            Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+
+            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());

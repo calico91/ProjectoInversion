@@ -42,8 +42,7 @@ public class AuthService {
 
         if (user.isEmpty()) {
 
-            //logger.error("error en el login: no existe el usuario " + username + " en el sistema!");
-            throw new RequestException("Usuario o contraseña invalido", "1");
+            throw new RequestException("Usuario o contraseña invalido", "2");
         }
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequestDTO.getUsername(),
@@ -59,7 +58,7 @@ public class AuthService {
     public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) throws Exception {
         Optional<User> consultarUser = userRepository.findByUsername(registerRequestDTO.getUsername());
         if (!consultarUser.isEmpty()) {
-            throw new RequestException("usuario " + registerRequestDTO.getUsername() + " ya se encuentra creado", "1");
+            throw new RequestException("usuario " + registerRequestDTO.getUsername() + " ya se encuentra creado", "2");
         }
 
         User user = Mapper.mapper.registerRequestDTOToUser(registerRequestDTO);

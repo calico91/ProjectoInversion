@@ -18,14 +18,21 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> createCliente(@RequestBody RegistrarClienteDTO registrarClienteDTO) {
         return ResponseEntity.ok().body(clienteService.createCliente(registrarClienteDTO));
-
     }
 
     @GetMapping("/consultarClientes")
     public ResponseEntity<?> consultarClientes() {
         return ResponseEntity.ok().body(clienteService.allClientes());
-    }@GetMapping("/consultarCliente/{cedula}")
+    }
+
+    @GetMapping("/consultarCliente/{cedula}")
     public ResponseEntity<?> consultarCliente(@PathVariable String cedula) {
         return ResponseEntity.ok().body(clienteService.consultarCliente(cedula));
+
+    }
+
+    @PutMapping("/actualizarCliente/{cedula}")
+    public ResponseEntity<?> actualizarCliente(@PathVariable String cedula, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
+        return ResponseEntity.ok().body(clienteService.actualizarCliente(cedula, registrarClienteDTO));
     }
 }
