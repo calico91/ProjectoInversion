@@ -35,4 +35,9 @@ public class ClienteController {
     public ResponseEntity<?> actualizarCliente(@PathVariable String cedula, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
         return ResponseEntity.ok().body(clienteService.actualizarCliente(cedula, registrarClienteDTO));
     }
+
+    @DeleteMapping("/eliminarCliente/{cedula}")
+    public ResponseEntity<?> eliminarCliente(@PathVariable String cedula) {
+        return ResponseEntity.ok().body(clienteService.deleteCliente(cedula));
+    }
 }

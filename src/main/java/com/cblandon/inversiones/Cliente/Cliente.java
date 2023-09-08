@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @Builder
@@ -25,12 +28,33 @@ public class Cliente {
     @Column(nullable = false)
     @Email(message = "correo invalido")
     private String email;
+    @Column(nullable = false)
     @Size(min = 10, max = 10, message = "el numero celular debe tener 10 caracteres")
     private String celular;
+    @Column(nullable = false)
     private String pais;
     @Column(unique = true, nullable = false)
     private String cedula;
     private String usuariocreador;
+
+    private String usuariomodificador;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    private Date fechacreacion;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    private Date fechamodificacion;
+
+    @PrePersist
+    public void prePersit() {
+        this.fechacreacion = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.fechamodificacion = new Date();
+    }
 
 
 }
