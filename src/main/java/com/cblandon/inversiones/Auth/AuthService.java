@@ -50,6 +50,7 @@ public class AuthService {
 
             throw new RequestException("Usuario o contraseña invalido", "2");
         }
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequestDTO.getUsername(),
                 loginRequestDTO.getPassword()));
@@ -61,25 +62,39 @@ public class AuthService {
 
     }
 
-    public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) throws UsernameNotFoundException {
-        User consultarUser = userRepository.findByUsername(registerRequestDTO.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + registerRequestDTO.getUsername() + " no existe."));
+    public AuthResponseDTO register(RegisterRequestDTO registerRequestDTO) {
+        Optional<User> consultarUser = userRepository.findByUsername(registerRequestDTO.getUsername());
+        if (!consultarUser.isEmpty()) {
 
+            throw new RequestException("Usuario ya se encuentra registrado", "2");
+        }
 
-        User user = Mapper.mapper.registerRequestDTOToUser(registerRequestDTO);
-        user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
-        Set<Roles> authorities = registerRequestDTO.getRoles().stream()
-                .map(role -> Roles.builder()
-                        .name(Role.valueOf(role))
-                        .build())
-                .collect(Collectors.toSet());
-        user.setRoles(authorities);
+        try {
+            User user = User.builder()
+                    .username(registerRequestDTO.getUsername())
+                    .firstname(registerRequestDTO.getFirstname())
+                    .lastname(registerRequestDTO.getLastname())
+                    .country(registerRequestDTO.getCountry())
+                    .build();
 
-        userRepository.save(user);
+            user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
+            Set<Roles> authorities = registerRequestDTO.getRoles().stream()
+                    .map(role -> Roles.builder()
+                            .name(Role.valueOf(role))
+                            .build())
+                    .collect(Collectors.toSet());
 
-        return AuthResponseDTO.builder()
-                .token(jwtService.getToken(user))
-                .build();
+            user.setRoles(authorities);
+
+            userRepository.save(user);
+
+            return AuthResponseDTO.builder()
+                    .token(jwtService.getToken(user))
+                    .build();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
 
     }
 

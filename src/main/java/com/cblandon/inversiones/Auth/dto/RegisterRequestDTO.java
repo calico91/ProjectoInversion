@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Auth.dto;
 
+import com.cblandon.inversiones.Roles.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

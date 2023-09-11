@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.Mapper;
 
-import com.cblandon.inversiones.Auth.dto.AuthResponseDTO;
 import com.cblandon.inversiones.Auth.dto.RegisterRequestDTO;
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
@@ -17,5 +16,5 @@ public interface Mapper {
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO RegistrarClienteDTO);
 
-    User registerRequestDTOToUser(RegisterRequestDTO registerRequestDTO);
+    //User registerRequestDTOToUser(RegisterRequestDTO registerRequestDTO);
 }
