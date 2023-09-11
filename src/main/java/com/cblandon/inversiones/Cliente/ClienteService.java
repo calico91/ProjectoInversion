@@ -4,8 +4,8 @@ import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Jwt.JwtService;
 import com.cblandon.inversiones.Mapper.Mapper;
+import com.cblandon.inversiones.Security.jwt.JwtUtils;
 import com.cblandon.inversiones.Utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,7 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     @Autowired
-    JwtService jwtService;
+    JwtUtils jwtUtils;
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
