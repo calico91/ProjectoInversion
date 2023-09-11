@@ -5,6 +5,7 @@ import com.cblandon.inversiones.Security.filters.JwtAuthenticationFilter;
 import com.cblandon.inversiones.Security.filters.JwtAuthorizationFilter;
 import com.cblandon.inversiones.Security.jwt.JwtUtils;
 import com.cblandon.inversiones.User.UserDetailsServiceImpl;
+import com.cblandon.inversiones.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,9 @@ public class SecurityConfig {
 
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    UserRepository userRepository;
+
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -34,14 +38,14 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userRepository);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
         return httpSecurity
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/hello").permitAll();
+                    auth.requestMatchers("/user/register").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {

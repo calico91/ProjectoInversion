@@ -1,7 +1,9 @@
 package com.cblandon.inversiones.Security.filters;
 
+import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Security.jwt.JwtUtils;
 import com.cblandon.inversiones.User.UserEntity;
+import com.cblandon.inversiones.User.UserRepository;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,18 +17,23 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private JwtUtils jwtUtils;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils){
+    private UserRepository userRepository;
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserRepository userRepository) {
         this.jwtUtils = jwtUtils;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -36,16 +43,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserEntity userEntity = null;
         String username = "";
         String password = "";
-        try{
+        try {
             userEntity = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
             username = userEntity.getUsername();
             password = userEntity.getPassword();
+            Optional<UserEntity> user = userRepository.findByUsername(username);
+
+
+            if (user.isEmpty()) {
+
+                throw new RequestException("Usuario o contraseña invalido", "2");
+            }
         } catch (StreamReadException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } catch (DatabindException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
 
         UsernamePasswordAuthenticationToken authenticationToken =
