@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,27 +27,24 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtUtils {
-
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
     @Value("${jwt.secret.key}")
     private String secretKey;
-
-    @Value("${jwt.time.expiration}")
-    private String timeExpiration;
-
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     // Generar token de acceso
     public String generateAccesToken(String username) {
         UserDetails user = userDetailsService.loadUserByUsername(username);
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
         System.out.println(user.getAuthorities());
         return Jwts.builder()
                 .claim("Roles", roles)
                 .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
+                .setIssuedAt(Date.from(issuedAt))
+                .setExpiration(Date.from(expiration))
                 .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
