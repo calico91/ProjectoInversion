@@ -3,6 +3,8 @@ package com.cblandon.inversiones.Mapper;
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import org.mapstruct.factory.Mappers;
 
 @org.mapstruct.Mapper()
@@ -14,5 +16,5 @@ public interface Mapper {
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO RegistrarClienteDTO);
 
-    //UsuariosDTO userEntityToUsuariosDTO(UserEntity userEntity);
+    Credito registrarCreditoRequestDTOToCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO);
 }

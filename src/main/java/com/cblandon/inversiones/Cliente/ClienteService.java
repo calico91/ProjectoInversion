@@ -19,8 +19,6 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
-    @Autowired
-    JwtUtils jwtUtils;
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 

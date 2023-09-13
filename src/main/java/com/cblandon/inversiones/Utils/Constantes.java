@@ -7,4 +7,6 @@ public class Constantes {
     public static final String USUARIO_REGISTRADO = "Usuario ya se encuentra registrado";
     public static final String USUARIO_CREADO = "Usario creado correctamente";
     public static final String USUARIO_MODIFICADO = "Usuario modificado correctamente";
+
+    public static final String CLIENTE_NO_CREADO = "El cliente no se encuentra creado";
 }

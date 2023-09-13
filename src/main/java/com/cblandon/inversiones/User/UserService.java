@@ -1,9 +1,7 @@
 package com.cblandon.inversiones.User;
 
-import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Roles.Role;
 import com.cblandon.inversiones.Roles.Roles;
 import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
@@ -11,8 +9,7 @@ import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -100,31 +97,25 @@ public class UserService {
         if (usuarioBD.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        ClienteResponseDTO clienteResponseDTO = ClienteResponseDTO.builder().build();
-        try {
+        UserEntity usuarioModificado = UserEntity.builder()
+                .lastname(registrarClienteDTO.getLastname())
+                .firstname(registrarClienteDTO.getFirstname())
+                .username(registrarClienteDTO.getUsername())
+                .country(registrarClienteDTO.getCountry())
+                .email(registrarClienteDTO.getEmail())
+                .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
+                .roles(registrarClienteDTO.getRoles().stream()
+                        .map(role -> Roles.builder()
+                                .name(Role.valueOf(role))
+                                .build())
+                        .collect(Collectors.toSet()))
+                .build();
 
-            UserEntity usuarioModificado = UserEntity.builder()
-                    .lastname(registrarClienteDTO.getLastname())
-                    .firstname(registrarClienteDTO.getFirstname())
-                    .username(registrarClienteDTO.getUsername())
-                    .country(registrarClienteDTO.getCountry())
-                    .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
-                    .roles(registrarClienteDTO.getRoles().stream()
-                            .map(role -> Roles.builder()
-                                    .name(Role.valueOf(role))
-                                    .build())
-                            .collect(Collectors.toSet()))
-                    .build();
+        usuarioModificado.setId(usuarioBD.get().id);
+        userRepository.save(usuarioModificado);
+        return GenericMessageDTO.builder()
+                .message(Constantes.USUARIO_MODIFICADO)
+                .build();
 
-            usuarioModificado.setId(usuarioBD.get().id);
-            userRepository.save(usuarioModificado);
-            return GenericMessageDTO.builder()
-                    .message(Constantes.USUARIO_MODIFICADO)
-                    .build();
-
-
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
     }
 }

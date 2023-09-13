@@ -27,7 +27,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/actualizarUsuario/{username}")
-    public ResponseEntity<?> actualizarUsuario(@PathVariable String username, @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<?> actualizarUsuario(@PathVariable String username,
+                                               @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         return ResponseEntity.ok().body(userService.actualizarUsuario(username, registerUserRequestDTO));
     }
 }
