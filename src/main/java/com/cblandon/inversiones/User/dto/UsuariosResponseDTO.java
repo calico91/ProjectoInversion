@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuariosDTO {
+public class UsuariosResponseDTO {
 
     String username;
     String firstname;

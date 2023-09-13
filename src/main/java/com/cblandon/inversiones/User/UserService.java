@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.User;
 
-import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
@@ -8,10 +7,11 @@ import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Roles.Role;
 import com.cblandon.inversiones.Roles.Roles;
 import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
-import com.cblandon.inversiones.User.dto.UsuariosDTO;
+import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -66,26 +66,56 @@ public class UserService {
 
     }
 
-    public List<UsuariosDTO> consultarUsuarios() {
+    public List<UsuariosResponseDTO> consultarUsuarios() {
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
         if (usuariosConsulta.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
+        try {
+            List<UsuariosResponseDTO> usuariosResponseDto =
+                    usuariosConsulta.stream().map(usuario -> {
+                        UsuariosResponseDTO usuariosResponseDTO = UsuariosResponseDTO.builder().
+                                username(usuario.getUsername())
+                                .lastname(usuario.getLastname())
+                                .firstname(usuario.getFirstname())
+                                .country(usuario.getCountry())
+                                .roles(usuario.getRoles().stream().map(
+                                        roles -> roles.getName().toString()).collect(Collectors.toSet()))
+                                .build();
+                        return usuariosResponseDTO;
+                    }).collect(Collectors.toList());
 
-        List<UsuariosDTO> usuariosDto =
-                usuariosConsulta.stream().map(usuario -> {
-                    UsuariosDTO usuariosDTO = UsuariosDTO.builder().
-                            username(usuario.getUsername())
-                            .lastname(usuario.getLastname())
-                            .firstname(usuario.getFirstname())
-                            .country(usuario.getCountry())
-                            .roles(usuario.getRoles().stream().map(roles -> roles.getName().toString()).collect(Collectors.toSet()))
-                            .build();
-                    return usuariosDTO;
-                }).collect(Collectors.toList());
+            return usuariosResponseDto;
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
 
-        return usuariosDto;
+    }
+
+    public ClienteResponseDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
+
+        Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
+        if (usuarioBD.isEmpty()) {
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+        }
+
+        try {
+
+            UserEntity usuarioModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+
+            clienteModificado.setId(clienteBD.getId());
+            clienteModificado.setUsuariomodificador(SecurityContextHolder.getContext().getAuthentication().getName());
+            clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
+            clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
+            System.out.println(clienteModificado);
+
+
+            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
 
     }
 }

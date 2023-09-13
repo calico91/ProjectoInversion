@@ -76,7 +76,6 @@ public class ClienteService {
     public ClienteResponseDTO actualizarCliente(String cedula, RegistrarClienteDTO registrarClienteDTO) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        System.out.println(clienteBD);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
