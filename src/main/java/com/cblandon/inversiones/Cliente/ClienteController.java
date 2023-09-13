@@ -27,7 +27,7 @@ public class ClienteController {
         return ResponseEntity.ok().body(clienteService.allClientes());
     }
 
-    @GetMapping("/consultarCliente/{cedula}")
+    @GetMapping("/consultarClientePorCedula/{cedula}")
     public ResponseEntity<?> consultarCliente(@PathVariable String cedula) {
         return ResponseEntity.ok().body(clienteService.consultarCliente(cedula));
 

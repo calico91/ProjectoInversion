@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.cblandon.inversiones.Roles.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,6 +32,9 @@ public class UserEntity {
     String firstname;
     String country;
     String password;
+    @Column(nullable = false,unique = true)
+    @Email(message = "correo invalido")
+    private String email;
     @Enumerated(EnumType.STRING)
     @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinTable(name = "user_roles",

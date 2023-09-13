@@ -119,7 +119,7 @@ public class UserService {
             usuarioModificado.setId(usuarioBD.get().id);
             userRepository.save(usuarioModificado);
             return GenericMessageDTO.builder()
-                    .message("Usuario modificado correctamente")
+                    .message(Constantes.USUARIO_MODIFICADO)
                     .build();
 
 

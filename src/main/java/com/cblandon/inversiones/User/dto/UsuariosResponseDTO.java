@@ -17,6 +17,7 @@ public class UsuariosResponseDTO {
     String username;
     String firstname;
     String lastname;
+    String email;
     String country;
     Set<String> roles = new HashSet<>();
 }

@@ -18,5 +18,6 @@ public class RegisterUserRequestDTO {
     String firstname;
     String lastname;
     String country;
+    String email;
     Set<String> roles = new HashSet<>();
 }
