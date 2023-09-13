@@ -2,6 +2,7 @@ package com.cblandon.inversiones.User;
 
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
+import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Roles.Role;
@@ -65,49 +66,26 @@ public class UserService {
 
     }
 
-    public List<UserEntity> consultarUsuarios() {
-        try {
+    public List<UsuariosDTO> consultarUsuarios() {
 
-            List<UserEntity> usuarios = userRepository.findAll();
-            return usuarios;
-
-            List<UsuariosDTO> usuariosDto =
-                    usuarios.stream().map(usuario -> {
-                        UsuariosDTO usuariosDTO = UsuariosDTO.builder().
-                                username(usuario.getUsername())
-                                .lastname(usuario.getLastname())
-                                .firstname(usuario.getFirstname())
-                                .country(usuario.getCountry())
-                                .roles(usuario.getRoles())
-                                .
-                                .itemMovimientos(e.getItemMovimientos())
-                                .vendedor(UsuarioResponseDTO.builder().nombre(e.getVendedor().getNombre())
-                                        .documento(e.getVendedor().getDocumento())
-                                        .telefono(e.getVendedor().getTelefono())
-                                        .direccion(e.getVendedor().getDireccion())
-                                        .ciudad(e.getVendedor().getCiudad())
-                                        .estado(e.getVendedor().getEstado())
-                                        .build())
-                                .cliente(UsuarioResponseDTO.builder().nombre(e.getCliente().getNombre())
-                                        .documento(e.getCliente().getDocumento())
-                                        .telefono(e.getCliente().getTelefono())
-                                        .direccion(e.getCliente().getDireccion())
-                                        .ciudad(e.getCliente().getCiudad())
-                                        .estado(e.getCliente().getEstado())
-                                        .build())
-                                .idRemitente(e.getIdRemitente())
-                                .idDestino(e.getIdDestino())
-                                .descuentoAplicado(e.getDescuentoAplicado())
-                                .estado(e.getEstado())
-                                .pendiente(e.getPendiente())
-                                .cambio(e.getCambio())
-                                .build();
-                        return movimientoRespnseDTO;
-                    }).collect(Collectors.toList());
-
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
+        List<UserEntity> usuariosConsulta = userRepository.findAll();
+        if (usuariosConsulta.isEmpty()) {
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
+
+        List<UsuariosDTO> usuariosDto =
+                usuariosConsulta.stream().map(usuario -> {
+                    UsuariosDTO usuariosDTO = UsuariosDTO.builder().
+                            username(usuario.getUsername())
+                            .lastname(usuario.getLastname())
+                            .firstname(usuario.getFirstname())
+                            .country(usuario.getCountry())
+                            .roles(usuario.getRoles().stream().map(roles -> roles.getName().toString()).collect(Collectors.toSet()))
+                            .build();
+                    return usuariosDTO;
+                }).collect(Collectors.toList());
+
+        return usuariosDto;
 
     }
 }
