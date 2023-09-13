@@ -5,7 +5,7 @@ import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import org.mapstruct.factory.Mappers;
 
-@org.mapstruct.Mapper(uses = {RolesMapper.class})
+@org.mapstruct.Mapper()
 public interface Mapper {
 
     Mapper mapper = Mappers.getMapper(Mapper.class);

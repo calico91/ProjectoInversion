@@ -12,6 +12,7 @@ import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -93,29 +94,37 @@ public class UserService {
 
     }
 
-    public ClienteResponseDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
+    public GenericMessageDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
 
         Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
         if (usuarioBD.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-
+        ClienteResponseDTO clienteResponseDTO = ClienteResponseDTO.builder().build();
         try {
 
-            UserEntity usuarioModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+            UserEntity usuarioModificado = UserEntity.builder()
+                    .lastname(registrarClienteDTO.getLastname())
+                    .firstname(registrarClienteDTO.getFirstname())
+                    .username(registrarClienteDTO.getUsername())
+                    .country(registrarClienteDTO.getCountry())
+                    .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
+                    .roles(registrarClienteDTO.getRoles().stream()
+                            .map(role -> Roles.builder()
+                                    .name(Role.valueOf(role))
+                                    .build())
+                            .collect(Collectors.toSet()))
+                    .build();
 
-            clienteModificado.setId(clienteBD.getId());
-            clienteModificado.setUsuariomodificador(SecurityContextHolder.getContext().getAuthentication().getName());
-            clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
-            clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
-            System.out.println(clienteModificado);
+            usuarioModificado.setId(usuarioBD.get().id);
+            userRepository.save(usuarioModificado);
+            return GenericMessageDTO.builder()
+                    .message("Usuario modificado correctamente")
+                    .build();
 
-
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
-
     }
 }
