@@ -1,7 +1,10 @@
 package com.cblandon.inversiones.Credito;
 
+import java.time.LocalDate;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
@@ -37,8 +40,8 @@ public class Credito {
     @Column(nullable = false, name = "cuotacapital")
     private Double cuotaCapital;
 
-    @Column(nullable = false, name = "cedulatitularcredito")
-    private String cedulaTitularCredito;
+    @Column(nullable = false, name = "idtitularcredito")
+    private long idTitularCredito;
 
     @Column(nullable = false, name = "interescredito")
     private Double interesCredito;
@@ -48,9 +51,9 @@ public class Credito {
 
     @Column(nullable = false, name = "cuotascanceladas")
     private Integer cuotasCanceladas;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "diapago")
-    private Date diaPago;
+    private LocalDate diaPago;
 
 }

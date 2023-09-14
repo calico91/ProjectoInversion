@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -18,9 +19,7 @@ public class RegistrarCreditoResponseDTO {
 
     private Integer cantidadCuotas;
 
-    private String cedulaTitularCredito;
-
-    private Date diaPago;
+    private LocalDate diaPago;
 
     private Double valorCuota;
 

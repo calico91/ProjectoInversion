@@ -39,7 +39,6 @@ public class JwtUtils {
         Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-        System.out.println(user.getAuthorities());
         return Jwts.builder()
                 .claim("Roles", roles)
                 .setSubject(username)

@@ -31,7 +31,7 @@ public class ClienteService {
 
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
             cliente.setUsuariocreador(SecurityContextHolder.getContext().getAuthentication().getName());
-            System.out.println(cliente);
+
             /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
         } catch (RuntimeException ex) {
@@ -86,7 +86,6 @@ public class ClienteService {
             clienteModificado.setUsuariomodificador(SecurityContextHolder.getContext().getAuthentication().getName());
             clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
             clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
-            System.out.println(clienteModificado);
 
 
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));

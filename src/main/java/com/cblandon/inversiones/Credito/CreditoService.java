@@ -21,13 +21,14 @@ public class CreditoService {
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-
-        if (clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito()) == null) {
+        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
+        if (clienteBD == null) {
             throw new RequestException(
                     Constantes.CLIENTE_NO_CREADO, "1");
         }
-
         Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
+
+
         credito.setValorCuota(calcularValorCuota(
                 registrarCreditoRequestDTO.getCantidadPrestada(),
                 registrarCreditoRequestDTO.getCantidadCuotas(),
@@ -37,40 +38,27 @@ public class CreditoService {
         credito.setInteresCredito(calcularInteresCredito(registrarCreditoRequestDTO.getCantidadPrestada(),
                 registrarCreditoRequestDTO.getInteresPorcentaje()));
         credito.setSaldo(1.0);
-        credito.setCedulaTitularCredito(registrarCreditoRequestDTO.getCedulaTitularCredito());
+        credito.setIdTitularCredito(clienteBD.getId());
         credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
-        credito.setCuotasCanceladas(1);
-        credito.setDiaPago(registrarCreditoRequestDTO.getDiaPago());
+        credito.setCuotasCanceladas(0);
 
-        creditoRepository.save(credito);
-
-
-        ));
-
-
-        Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-        cliente.setUsuariocreador(SecurityContextHolder.getContext().getAuthentication().getName());
-        System.out.println(cliente);
-        cliente.
-        /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
-        return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
-
+        return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(creditoRepository.save(credito));
 
     }
 
     private Double calcularValorCuota(Double valorPrestado, Integer cantidadCuotas, Double interesPorcentaje) {
-        Double valorCuota = (valorPrestado / cantidadCuotas) + ((interesPorcentaje / 100) + valorPrestado);
-        return valorCuota;
+        Double valorCuota = (valorPrestado / cantidadCuotas) + ((interesPorcentaje / 100) * valorPrestado);
+        return Math.rint(valorCuota);
     }
 
     private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
         Double cuotaCapital = valorPrestado / cantidadCuotas;
-        return cuotaCapital;
+        return Math.rint(cuotaCapital);
     }
 
     private Double calcularInteresCredito(Double valorPrestado, Double interesPorcentaje) {
         Double interesCredito = valorPrestado * (interesPorcentaje / 100);
-        return interesCredito;
+        return Math.rint(interesCredito);
     }
 
 }
