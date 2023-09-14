@@ -3,6 +3,7 @@ package com.cblandon.inversiones.Credito;
 import java.time.LocalDate;
 import java.util.Date;
 
+import com.cblandon.inversiones.Cliente.Cliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 public class Credito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idcredito")
     private Integer id;
     @Column(nullable = false, name = "cantidadprestada")
     private Double cantidadPrestada;
@@ -55,5 +57,9 @@ public class Credito {
     @Temporal(TemporalType.DATE)
     @Column(name = "diapago")
     private LocalDate diaPago;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idcliente")
+    private Cliente cliente;
 
 }

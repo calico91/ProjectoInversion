@@ -1,6 +1,8 @@
 package com.cblandon.inversiones.Cliente;
 
 
+import com.cblandon.inversiones.Credito.Credito;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -20,6 +22,7 @@ import java.util.Date;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = ("idcliente"))
     private Integer id;
     @Column(nullable = false)
     private String nombres;
@@ -45,6 +48,10 @@ public class Cliente {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date fechamodificacion;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idcredito")
+    private Credito credito;
 
     @PrePersist
     public void prePersit() {
