@@ -8,7 +8,7 @@ import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
 import org.mapstruct.factory.Mappers;
 
-@org.mapstruct.Mapper()
+@org.mapstruct.Mapper(uses = CreditoMapper.class)
 public interface Mapper {
 
     Mapper mapper = Mappers.getMapper(Mapper.class);

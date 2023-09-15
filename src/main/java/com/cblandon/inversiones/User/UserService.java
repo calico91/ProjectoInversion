@@ -59,7 +59,7 @@ public class UserService {
                     .message(Constantes.USUARIO_CREADO)
                     .build();
         } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
+            throw new RuntimeException(ex);
         }
 
 

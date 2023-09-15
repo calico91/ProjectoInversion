@@ -77,6 +77,7 @@ public class ClienteService {
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
         List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
                 credito -> CreditoResponseDTO.builder()
+                        .idCredito(credito.getId())
                         .cantidadPrestada(credito.getCantidadPrestada())
                         .valorCuota(credito.getValorCuota())
                         .cantidadCuotas(credito.getCantidadCuotas())

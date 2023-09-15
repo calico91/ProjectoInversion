@@ -52,7 +52,7 @@ public class Cliente {
     private Date fechamodificacion;
 
     @OneToMany(targetEntity = Credito.class, fetch = FetchType.LAZY,mappedBy = "cliente")
-    private Set<Credito> listaCreditos;
+    private List<Credito> listaCreditos;
 
     @PrePersist
     public void prePersit() {

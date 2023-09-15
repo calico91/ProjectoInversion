@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CreditoResponseDTO {
 
+    private Integer idCredito;
     private Double cantidadPrestada;
     private Double valorCuota;
     private Integer cantidadCuotas;

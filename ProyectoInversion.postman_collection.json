@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"yo\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"maelo\",\r\n    \"lastname\": \"blandon\",\r\n    \"country\": \"compartir\"\r\n}",
+							"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Maelito\",\r\n    \"lastname\": \"Blandon\",\r\n    \"email\": \"maelito@gmail.com\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_ADMIN\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -25,15 +25,97 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/auth/register",
+							"raw": "http://localhost:8091/user/register",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8091",
 							"path": [
-								"auth",
+								"user",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizarUsuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Maelito\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Maelito\",\r\n    \"email\": \"Maelito@gmail.com\",\r\n    \"lastname\": \"Blandon\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_ADMIN\",\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/user/actualizarUsuario/maelito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"user",
+								"actualizarUsuario",
+								"maelito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultarUsuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Ismael\",\r\n    \"lastname\": \"Blandon\",\r\n    \"country\": \"compartir\",\r\n    \"roles\": [\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/user/consultarUsuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"user",
+								"consultarUsuarios"
 							]
 						}
 					},
@@ -52,7 +134,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYWVsaXRvIiwiaWF0IjoxNjkzOTQyODg3LCJleHAiOjE2OTM5NDQzMjd9.IckNskQDTeYvFu8f6z1n6NDV6RD7AiZtVKmzFX44Evo",
+									"value": "{{inversiones}}",
 									"type": "string"
 								}
 							]
@@ -61,7 +143,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\": \"maelo\",\r\n    \"apellidos\": \"blandon\",\r\n    \"email\": \"maelo\",\r\n    \"celular\": \"3104567100\",\r\n    \"pais\": \"chichombia\"\r\n}",
+							"raw": "{\r\n    \"nombres\": \"Katherine\",\r\n    \"apellidos\": \"Viafara\",\r\n    \"email\": \"nn@gmail.com\",\r\n    \"celular\": \"3117676893\",\r\n    \"pais\": \"colombia\",\r\n    \"cedula\":\"2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -93,7 +175,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYWVsaXRvIiwiaWF0IjoxNjkzOTQ0ODQzLCJleHAiOjE2OTM5NDYyODN9.ugeMmA9I5hJHcFc34tJNYBTFOdpxwD_jnLGJgQJImjE",
+									"value": "{{inversiones}}",
 									"type": "string"
 								}
 							]
@@ -123,6 +205,172 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "consultarClienteXcedula",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nombres\":\"Ismael\",\r\n\"apellidos\":\"Blandon Rendon\",\r\n\"email\":\"maelito@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente/consultarClientePorCedula/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente",
+								"consultarClientePorCedula",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizarCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"Maelito\",\r\n    \"apellidos\": \"Blandon Guzman\",\r\n    \"email\": \"maelo@gmail.com\",\r\n    \"celular\": \"3104657100\",\r\n    \"pais\": \"Chibchombia\",\r\n    \"cedula\":\"1144044869\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente/actualizarCliente/1144044869",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente",
+								"actualizarCliente",
+								"1144044869"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminarCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"Maelito\",\r\n    \"apellidos\": \"Blandon Guzman\",\r\n    \"email\": \"maelo@gmail.com\",\r\n    \"celular\": \"3104657100\",\r\n    \"pais\": \"Chibchombia\",\r\n    \"cedula\":\"1144044869\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente/eliminarCliente/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente",
+								"eliminarCliente",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Credito",
+			"item": [
+				{
+					"name": "registrarCredito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cantidadPrestada\": 800000,\r\n    \"interesPorcentaje\": 5,\r\n    \"cantidadCuotas\": 6,\r\n    \"cedulaTitularCredito\": \"2\",\r\n    \"dia_pago\": \"2023-10-02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/credito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"credito"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -133,7 +381,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"username\": \"Maelito\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -141,14 +389,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8091/auth/login",
+					"raw": "http://localhost:8091/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8091",
 					"path": [
-						"auth",
 						"login"
 					]
 				}
