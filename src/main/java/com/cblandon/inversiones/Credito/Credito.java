@@ -45,7 +45,7 @@ public class Credito {
     @Column(nullable = false, name = "interescredito")
     private Double interesCredito;
 
-    @Column(nullable = false, name = "usuariocreador")
+    @Column(nullable = false, name = "usuariocreadorCredito")
     private String usuarioCreador;
 
     @Column(nullable = false, name = "cuotascanceladas")
@@ -55,7 +55,8 @@ public class Credito {
     @Column(name = "diapago")
     private LocalDate diaPago;
 
-    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(targetEntity = Cliente.class)
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
 }

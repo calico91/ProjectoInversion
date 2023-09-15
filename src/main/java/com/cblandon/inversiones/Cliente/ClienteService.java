@@ -3,10 +3,10 @@ package com.cblandon.inversiones.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.Credito.CreditoRepository;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
 import com.cblandon.inversiones.Utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    CreditoRepository creditoRepository;
 
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
@@ -62,17 +65,14 @@ public class ClienteService {
     public ClienteResponseDTO consultarCliente(String cedula) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        System.out.println(clienteBD);
+        System.out.println("cliente----------" + clienteBD);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        Set<Credito> listaCreditos = clienteBD.getListaCreditos().stream().map(
-                credito -> Credito.builder()
-                        .cantidadPrestada(credito.getCantidadPrestada())
-                        .cantidadCuotas(credito.getCantidadCuotas())
-                        .build()).collect(Collectors.toSet());
+        /*Set<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
 
-        clienteBD.setListaCreditos(listaCreditos);
+
+        clienteBD.setListaCreditos(listaCreditos);*/
         return Mapper.mapper.clienteToClienteResponseDto(clienteBD);
 
     }

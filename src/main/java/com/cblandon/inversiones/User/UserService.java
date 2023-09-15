@@ -41,6 +41,7 @@ public class UserService {
                     .firstname(registerUserRequestDTO.getFirstname())
                     .lastname(registerUserRequestDTO.getLastname())
                     .country(registerUserRequestDTO.getCountry())
+                    .email(registerUserRequestDTO.getEmail())
                     .build();
 
             user.setPassword(passwordEncoder.encode(registerUserRequestDTO.getPassword()));
