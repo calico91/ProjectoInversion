@@ -75,16 +75,14 @@ public class ClienteService {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
-        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(credito -> {
-            CreditoResponseDTO crdto = CreditoResponseDTO.builder()
-                    .cantidadPrestada(credito.getCantidadPrestada())
-                    .valorCuota(credito.getValorCuota())
-                    .cantidadCuotas(credito.getCantidadCuotas())
-                    .build();
-            return crdto;
-        }).collect(Collectors.toList());
+        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
+                credito -> CreditoResponseDTO.builder()
+                        .cantidadPrestada(credito.getCantidadPrestada())
+                        .valorCuota(credito.getValorCuota())
+                        .cantidadCuotas(credito.getCantidadCuotas())
+                        .build()
+        ).collect(Collectors.toList());
 
-        //clienteBD.setListaCreditos(listaCreditosdto);
         ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
         clienteResponseDTO.setListaCreditos(listaCreditosdto);
         return clienteResponseDTO;

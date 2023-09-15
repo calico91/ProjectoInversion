@@ -74,18 +74,16 @@ public class UserService {
         }
         try {
             List<UsuariosResponseDTO> usuariosResponseDto =
-                    usuariosConsulta.stream().map(usuario -> {
-                        UsuariosResponseDTO usuariosResponseDTO = UsuariosResponseDTO.builder().
-                                username(usuario.getUsername())
-                                .lastname(usuario.getLastname())
-                                .firstname(usuario.getFirstname())
-                                .country(usuario.getCountry())
-                                .email(usuario.getEmail())
-                                .roles(usuario.getRoles().stream().map(
-                                        roles -> roles.getName().toString()).collect(Collectors.toSet()))
-                                .build();
-                        return usuariosResponseDTO;
-                    }).collect(Collectors.toList());
+                    usuariosConsulta.stream().map(usuario -> UsuariosResponseDTO.builder().
+                            username(usuario.getUsername())
+                            .lastname(usuario.getLastname())
+                            .firstname(usuario.getFirstname())
+                            .country(usuario.getCountry())
+                            .email(usuario.getEmail())
+                            .roles(usuario.getRoles().stream().map(
+                                    roles -> roles.getName().toString()).collect(Collectors.toSet()))
+                            .build()
+                    ).collect(Collectors.toList());
 
             return usuariosResponseDto;
         } catch (RuntimeException ex) {
