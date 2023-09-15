@@ -24,7 +24,6 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    @Basic
     @Column(nullable = false, unique = true)
     String username;
     @Column(nullable = false)

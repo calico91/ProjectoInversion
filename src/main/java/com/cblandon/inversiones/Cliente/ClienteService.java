@@ -2,6 +2,7 @@ package com.cblandon.inversiones.Cliente;
 
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,15 +61,19 @@ public class ClienteService {
 
     public ClienteResponseDTO consultarCliente(String cedula) {
 
-        if (clienteRepository.findByCedula(cedula) == null) {
+        Cliente clienteBD = clienteRepository.findByCedula(cedula);
+        System.out.println(clienteBD);
+        if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
+        Set<Credito> listaCreditos = clienteBD.getListaCreditos().stream().map(
+                credito -> Credito.builder()
+                        .cantidadPrestada(credito.getCantidadPrestada())
+                        .cantidadCuotas(credito.getCantidadCuotas())
+                        .build()).collect(Collectors.toSet());
 
-        try {
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.findByCedula(cedula));
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
+        clienteBD.setListaCreditos(listaCreditos);
+        return Mapper.mapper.clienteToClienteResponseDto(clienteBD);
 
     }
 

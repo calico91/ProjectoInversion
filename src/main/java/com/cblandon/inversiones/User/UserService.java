@@ -67,6 +67,7 @@ public class UserService {
     public List<UsuariosResponseDTO> consultarUsuarios() {
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
+        System.out.println(usuariosConsulta);
         if (usuariosConsulta.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
@@ -78,6 +79,7 @@ public class UserService {
                                 .lastname(usuario.getLastname())
                                 .firstname(usuario.getFirstname())
                                 .country(usuario.getCountry())
+                                .email(usuario.getEmail())
                                 .roles(usuario.getRoles().stream().map(
                                         roles -> roles.getName().toString()).collect(Collectors.toSet()))
                                 .build();

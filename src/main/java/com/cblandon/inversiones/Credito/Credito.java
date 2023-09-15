@@ -42,9 +42,6 @@ public class Credito {
     @Column(nullable = false, name = "cuotacapital")
     private Double cuotaCapital;
 
-    @Column(nullable = false, name = "idtitularcredito")
-    private long idTitularCredito;
-
     @Column(nullable = false, name = "interescredito")
     private Double interesCredito;
 
@@ -58,8 +55,7 @@ public class Credito {
     @Column(name = "diapago")
     private LocalDate diaPago;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idcliente")
+    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Cliente cliente;
 
 }

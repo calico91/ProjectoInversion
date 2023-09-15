@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -49,9 +51,8 @@ public class Cliente {
     @Temporal(TemporalType.DATE)
     private Date fechamodificacion;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idcredito")
-    private Credito credito;
+    @OneToMany(targetEntity = Credito.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL},mappedBy = "cliente")
+    private Set<Credito> listaCreditos;
 
     @PrePersist
     public void prePersit() {

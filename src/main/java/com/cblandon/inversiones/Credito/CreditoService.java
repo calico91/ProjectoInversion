@@ -38,10 +38,10 @@ public class CreditoService {
         credito.setInteresCredito(calcularInteresCredito(registrarCreditoRequestDTO.getCantidadPrestada(),
                 registrarCreditoRequestDTO.getInteresPorcentaje()));
         credito.setSaldo(1.0);
-        credito.setIdTitularCredito(clienteBD.getId());
         credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
         credito.setCuotasCanceladas(0);
-
+        credito.setCliente(clienteBD);
+        System.out.println(credito);
         return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(creditoRepository.save(credito));
 
     }
