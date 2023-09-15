@@ -4,14 +4,19 @@ import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Credito.CreditoRepository;
+import com.cblandon.inversiones.Credito.dto.CreditoResponseDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
+import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
+import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,18 +67,27 @@ public class ClienteService {
 
     }
 
+    @Transactional(readOnly = true)
     public ClienteResponseDTO consultarCliente(String cedula) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        System.out.println("cliente----------" + clienteBD);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        /*Set<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
+        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
+        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(credito -> {
+            CreditoResponseDTO crdto = CreditoResponseDTO.builder()
+                    .cantidadPrestada(credito.getCantidadPrestada())
+                    .valorCuota(credito.getValorCuota())
+                    .cantidadCuotas(credito.getCantidadCuotas())
+                    .build();
+            return crdto;
+        }).collect(Collectors.toList());
 
-
-        clienteBD.setListaCreditos(listaCreditos);*/
-        return Mapper.mapper.clienteToClienteResponseDto(clienteBD);
+        //clienteBD.setListaCreditos(listaCreditosdto);
+        ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
+        clienteResponseDTO.setListaCreditos(listaCreditosdto);
+        return clienteResponseDTO;
 
     }
 

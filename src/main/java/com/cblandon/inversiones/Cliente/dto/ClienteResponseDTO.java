@@ -1,11 +1,13 @@
 package com.cblandon.inversiones.Cliente.dto;
 
 import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.Credito.dto.CreditoResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -21,6 +23,6 @@ public class ClienteResponseDTO {
     private String celular;
     private String pais;
     private String cedula;
-    private Set<Credito> listaCreditos;
+    private List<CreditoResponseDTO> listaCreditos;
 
 }
