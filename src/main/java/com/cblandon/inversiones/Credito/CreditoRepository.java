@@ -18,5 +18,4 @@ public interface CreditoRepository extends JpaRepository<Credito, Long> {
             "        where cl.idcliente = :id", nativeQuery = true)
     List<Credito> listaCreditosCliente(@Param("id") Integer id);
 
-    List<Tuple> findByCliente(Cliente idCliente);
 }

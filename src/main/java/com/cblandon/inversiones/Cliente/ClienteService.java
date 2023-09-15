@@ -74,7 +74,8 @@ public class ClienteService {
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
+        /*
+        mapeo manual sin utilizar Mapper
         List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
                 credito -> CreditoResponseDTO.builder()
                         .idCredito(credito.getId())
@@ -82,10 +83,9 @@ public class ClienteService {
                         .valorCuota(credito.getValorCuota())
                         .cantidadCuotas(credito.getCantidadCuotas())
                         .build()
-        ).collect(Collectors.toList());
+        ).collect(Collectors.toList());*/
 
         ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
-        clienteResponseDTO.setListaCreditos(listaCreditosdto);
         return clienteResponseDTO;
 
     }
