@@ -68,7 +68,6 @@ public class UserService {
     public List<UsuariosResponseDTO> consultarUsuarios() {
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
-        System.out.println(usuariosConsulta);
         if (usuariosConsulta.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }

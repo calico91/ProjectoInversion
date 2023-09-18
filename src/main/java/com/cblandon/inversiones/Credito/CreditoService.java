@@ -26,23 +26,29 @@ public class CreditoService {
             throw new RequestException(
                     Constantes.CLIENTE_NO_CREADO, "1");
         }
-        Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
+        try {
+            Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
 
 
-        credito.setValorCuota(calcularValorCuota(
-                registrarCreditoRequestDTO.getCantidadPrestada(),
-                registrarCreditoRequestDTO.getCantidadCuotas(),
-                registrarCreditoRequestDTO.getInteresPorcentaje()));
-        credito.setCuotaCapital(calcularCuotaCapital(registrarCreditoRequestDTO.getCantidadPrestada(),
-                registrarCreditoRequestDTO.getCantidadCuotas()));
-        credito.setInteresCredito(calcularInteresCredito(registrarCreditoRequestDTO.getCantidadPrestada(),
-                registrarCreditoRequestDTO.getInteresPorcentaje()));
-        credito.setSaldo(1.0);
-        credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
-        credito.setCuotasCanceladas(0);
-        credito.setCliente(clienteBD);
-        System.out.println(credito);
-        return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(creditoRepository.save(credito));
+            credito.setValorCuota(calcularValorCuota(
+                    registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getCantidadCuotas(),
+                    registrarCreditoRequestDTO.getInteresPorcentaje()));
+            credito.setCuotaCapital(calcularCuotaCapital(registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getCantidadCuotas()));
+            credito.setInteresCredito(calcularInteresCredito(registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getInteresPorcentaje()));
+            credito.setSaldo(1.0);
+            credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
+            credito.setCuotasCanceladas(0);
+            credito.setCliente(clienteBD);
+            return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(creditoRepository.save(credito));
+        }catch (RuntimeException ex){
+            throw new RuntimeException(ex.getMessage());
+
+
+        }
+
 
     }
 

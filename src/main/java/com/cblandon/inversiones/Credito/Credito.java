@@ -47,15 +47,12 @@ public class Credito {
 
     @Column(nullable = false, name = "usuariocreadorCredito")
     private String usuarioCreador;
-
-    @Column(nullable = false, name = "cuotascanceladas")
-    private Integer cuotasCanceladas;
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    
     @Temporal(TemporalType.DATE)
-    @Column(name = "diapago")
+    @Column(name = "diapago",nullable = false)
     private LocalDate diaPago;
 
-    @ManyToOne(targetEntity = Cliente.class)
+    @ManyToOne(targetEntity = Cliente.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 

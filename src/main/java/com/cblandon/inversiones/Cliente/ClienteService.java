@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Cliente;
 
+import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.Credito;
@@ -52,13 +53,13 @@ public class ClienteService {
 
     }
 
-    public List<ClienteResponseDTO> allClientes() {
+    public List<ClienteAllResponseDTO> allClientes() {
         try {
 
             List<Cliente> clientes = clienteRepository.findAll();
 
-            List<ClienteResponseDTO> clienteResponseDTOS = clientes.stream().map(
-                    cliente -> Mapper.mapper.clienteToClienteResponseDto(cliente)).collect(Collectors.toList());
+            List<ClienteAllResponseDTO> clienteResponseDTOS = clientes.stream().map(
+                    cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
 
             return clienteResponseDTOS;
         } catch (RuntimeException ex) {
@@ -76,6 +77,8 @@ public class ClienteService {
         }
         /*
         mapeo manual sin utilizar Mapper
+        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
+
         List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
                 credito -> CreditoResponseDTO.builder()
                         .idCredito(credito.getId())

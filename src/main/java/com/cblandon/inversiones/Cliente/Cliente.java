@@ -51,7 +51,7 @@ public class Cliente {
     @Temporal(TemporalType.DATE)
     private Date fechamodificacion;
 
-    @OneToMany(targetEntity = Credito.class, fetch = FetchType.LAZY,mappedBy = "cliente")
+    @OneToMany(targetEntity = Credito.class, fetch = FetchType.LAZY, mappedBy = "cliente")
     private List<Credito> listaCreditos;
 
     @PrePersist

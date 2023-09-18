@@ -1,6 +1,8 @@
 package com.cblandon.inversiones.Mapper;
 
 import com.cblandon.inversiones.Cliente.Cliente;
+import com.cblandon.inversiones.Cliente.ClienteService;
+import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.Credito;
@@ -14,6 +16,7 @@ public interface Mapper {
     Mapper mapper = Mappers.getMapper(Mapper.class);
 
     ClienteResponseDTO clienteToClienteResponseDto(Cliente cliente);
+    ClienteAllResponseDTO clienteToClienteAllResponseDto(Cliente cliente);
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO RegistrarClienteDTO);
 
