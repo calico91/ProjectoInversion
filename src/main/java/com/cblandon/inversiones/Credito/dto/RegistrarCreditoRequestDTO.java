@@ -19,7 +19,8 @@ public class RegistrarCreditoRequestDTO {
     private Integer cantidadCuotas;
 
     private String cedulaTitularCredito;
-    @JsonProperty("dia_pago")
+
+    /*@JsonProperty("dia_pago")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate diaPago;
+    private LocalDate diaPago;*/
 }

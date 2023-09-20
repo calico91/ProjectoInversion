@@ -2,12 +2,11 @@ package com.cblandon.inversiones.Credito;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import com.cblandon.inversiones.Cliente.Cliente;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.cblandon.inversiones.CuotasCredito.CuotaCredito;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,13 +46,20 @@ public class Credito {
 
     @Column(nullable = false, name = "usuariocreadorCredito")
     private String usuarioCreador;
-    
-    @Temporal(TemporalType.DATE)
-    @Column(name = "diapago",nullable = false)
-    private LocalDate diaPago;
 
-    @ManyToOne(targetEntity = Cliente.class,fetch = FetchType.LAZY)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fechacredito", nullable = false)
+    private Date fechaCredito;
+
+    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
+    @OneToMany(targetEntity = CuotaCredito.class, fetch = FetchType.LAZY, mappedBy = "credito")
+    private List<CuotaCredito> listaCuotasCredito;
+
+    @PrePersist
+    public void prePersit() {
+        this.fechaCredito = new Date();
+    }
 }
