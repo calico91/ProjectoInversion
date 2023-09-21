@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
 
 @Service
 public class CreditoService {
@@ -31,6 +35,11 @@ public class CreditoService {
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, "1");
         }
         try {
+            System.out.println("interes primer cuota " + calcularInteresPrimeraCuota(
+                    registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getInteresPorcentaje(),
+                    registrarCreditoRequestDTO.getFechaCuota()));
+
             Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
             credito.setSaldo((calcularInteresCredito(
                     registrarCreditoRequestDTO.getCantidadPrestada(),
@@ -42,41 +51,37 @@ public class CreditoService {
             credito = creditoRepository.save(credito);
 
             if (credito.getId() != null) {
+
+                Double interesPrimerCuota = calcularInteresPrimeraCuota(
+                        registrarCreditoRequestDTO.getCantidadPrestada(),
+                        registrarCreditoRequestDTO.getInteresPorcentaje(),
+                        registrarCreditoRequestDTO.getFechaCuota());
+
                 CuotaCredito cuotaCredito = CuotaCredito.builder()
                         .fechaCuota(registrarCreditoRequestDTO.getFechaCuota())
                         .cuotaNumero(1)
                         .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
-                        .valorCuota(calcularValorCuota(
+                        .valorCuota(calcularValorPrimeraCuota(
                                 registrarCreditoRequestDTO.getCantidadPrestada(),
-                                registrarCreditoRequestDTO.getCantidadCuotas(),
-                                registrarCreditoRequestDTO.getInteresPorcentaje()))
+                                registrarCreditoRequestDTO.getCantidadCuotas()) + interesPrimerCuota)
                         .valorCapital(calcularCuotaCapital(
                                 registrarCreditoRequestDTO.getCantidadPrestada(),
                                 registrarCreditoRequestDTO.getCantidadCuotas()))
-                        .valorInteres(calcularInteresCredito(
-                                registrarCreditoRequestDTO.getCantidadPrestada(),
-                                registrarCreditoRequestDTO.getInteresPorcentaje()))
+                        .valorInteres(interesPrimerCuota)
                         .credito(credito)
                         .build();
 
                 cuotaCreditoRepository.save(cuotaCredito);
             }
 
-
             return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(credito);
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
 
-
         }
 
-
     }
 
-    private Double calcularValorCuota(Double valorPrestado, Integer cantidadCuotas, Double interesPorcentaje) {
-        Double valorCuota = (valorPrestado / cantidadCuotas) + ((interesPorcentaje / 100) * valorPrestado);
-        return Math.rint(valorCuota);
-    }
 
     private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
         Double cuotaCapital = valorPrestado / cantidadCuotas;
@@ -88,16 +93,17 @@ public class CreditoService {
         return Math.rint(interesCredito);
     }
 
-    /*private LocalDate calcularFechaCuota() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate ld = LocalDate.parse(new Date().toString(), dtf);
-        int monthDays = ld.lengthOfMonth();
-        int yearDays = ld.lengthOfYear();
-        int year = ld.getYear();
-        int month = ld.getMonthValue();
-        System.out.printf("Mes % 4d de %d tiene %d días%nAño %d tiene %d días",
-                month, year, monthDays,
-                year, yearDays);
-    }*/
+    private Double calcularInteresPrimeraCuota(Double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota) {
+        Long diasDiferencia = DAYS.between(LocalDate.now(), fechaCuota);
+        Double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
+
+        return Math.rint(interesCredito);
+    }
+
+    private Double calcularValorPrimeraCuota(Double valorPrestado, Integer cantidadCuotas) {
+        Double valorCuota = (valorPrestado / cantidadCuotas);
+        return Math.rint(valorCuota);
+    }
+
 
 }
