@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.Credito.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +21,8 @@ public class RegistrarCreditoRequestDTO {
 
     private String cedulaTitularCredito;
 
-    /*@JsonProperty("dia_pago")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate diaPago;*/
+    @JsonProperty("fecha_cuota")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fechaCuota;
 }

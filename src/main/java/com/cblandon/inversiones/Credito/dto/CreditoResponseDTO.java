@@ -13,7 +13,6 @@ public class CreditoResponseDTO {
 
     private Integer id;
     private Double cantidadPrestada;
-    private Double valorCuota;
     private Integer cantidadCuotas;
 
 }

@@ -24,7 +24,7 @@ import java.util.Set;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ("idcliente"))
+    @Column(name = ("id_cliente"))
     private Integer id;
     @Column(nullable = false)
     private String nombres;
@@ -40,13 +40,16 @@ public class Cliente {
     private String pais;
     @Column(unique = true, nullable = false)
     private String cedula;
+    @Column(name = "usuario_creador")
     private String usuariocreador;
-
+    @Column(name = "usuario_modificador")
     private String usuariomodificador;
+    @Column(name = "fecha_creacion")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
 
+    @Column(name = "fecha_modificacion")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date fechamodificacion;
