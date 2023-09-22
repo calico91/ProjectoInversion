@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Maelito\",\r\n    \"lastname\": \"Blandon\",\r\n    \"email\": \"maelito@gmail.com\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_ADMIN\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Cristian\",\r\n    \"lastname\": \"Blandon\",\r\n    \"email\": \"blandon@gmail.com\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_ADMIN\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,7 +143,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\": \"Katherine\",\r\n    \"apellidos\": \"Viafara\",\r\n    \"email\": \"nn@gmail.com\",\r\n    \"celular\": \"3117676893\",\r\n    \"pais\": \"colombia\",\r\n    \"cedula\":\"2\"\r\n}",
+							"raw": "{\r\n    \"nombres\": \"Katherine\",\r\n    \"apellidos\": \"Viafara\",\r\n    \"email\": \"nn@gmail.com\",\r\n    \"celular\": \"3117676893\",\r\n    \"pais\": \"colombia\",\r\n    \"cedula\":\"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -234,7 +234,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/cliente/consultarClientePorCedula/2",
+							"raw": "http://localhost:8091/cliente/consultarClientePorCedula/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -243,7 +243,7 @@
 							"path": [
 								"cliente",
 								"consultarClientePorCedula",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -351,7 +351,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cantidadPrestada\": 800000,\r\n    \"interesPorcentaje\": 5,\r\n    \"cantidadCuotas\": 6,\r\n    \"cedulaTitularCredito\": \"2\",\r\n    \"dia_pago\": \"2023-10-02\"\r\n}",
+							"raw": "{\r\n    \"cantidadPrestada\": 400000,\r\n    \"interesPorcentaje\": 5,\r\n    \"cantidadCuotas\": 5,\r\n    \"cedulaTitularCredito\": \"1\",\r\n    \"fecha_cuota\":\"01/10/2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -367,6 +367,48 @@
 							"port": "8091",
 							"path": [
 								"credito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultarCreditos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{inversiones}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nombres\":\"Ismael\",\r\n\"apellidos\":\"Blandon Rendon\",\r\n\"email\":\"maelito@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cliente/consultarClientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cliente",
+								"consultarClientes"
 							]
 						}
 					},
