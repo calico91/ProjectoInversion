@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -29,8 +30,8 @@ public class CuotaCredito {
     private Integer numeroCuotas;
     @Column(name = "couta_numero")
     private Integer cuotaNumero;
-    @Column(name = "cantidad_abonado")
-    private Double cantidadAbonado;
+    @Column(name = "valor_abonado")
+    private Double valorAbonado;
 
     @Column(name = "valor_capital", nullable = false)
     private Double valorCapital;
@@ -39,7 +40,7 @@ public class CuotaCredito {
     private Double valorInteres;
 
     @Column(name = "fecha_abono")
-    private Date fechaAbono;
+    private LocalDate fechaAbono;
 
     @ManyToOne(targetEntity = Credito.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_credito")

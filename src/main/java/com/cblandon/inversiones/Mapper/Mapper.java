@@ -9,6 +9,7 @@ import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Credito.dto.CreditoAllResponseDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
+import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import org.mapstruct.factory.Mappers;
 
 @org.mapstruct.Mapper(uses = CreditoMapper.class)
@@ -29,4 +30,5 @@ public interface Mapper {
     CreditoAllResponseDTO creditoToCreditoAllResponseDTO(Credito credito);
 
     Credito registrarCreditoResponseDTOToCredito(CreditoAllResponseDTO creditoAllResponseDTO);
+
 }

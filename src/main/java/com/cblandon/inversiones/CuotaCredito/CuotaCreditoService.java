@@ -7,34 +7,37 @@ import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CuotaCreditoService {
+    private final CuotaCreditoRepository cuotaCreditoRepository;
 
-    /*public ClienteResponseDTO pagarCuota(Integer codigoCredito, PagarCuotaRequestDTO registrarClienteDTO) {
+    public CuotaCreditoService(CuotaCreditoRepository cuotaCreditoRepository) {
+        this.cuotaCreditoRepository = cuotaCreditoRepository;
+    }
 
-        Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        if (clienteBD == null) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
-        }
+    public CuotaCredito pagarCuota(Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
+            throws NoDataException {
+
+        CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
+                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
+
 
         try {
+            cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
+            cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
+            cuotaCreditoRepository.save(cuotaCreditoDB);
 
-            Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-
-            clienteModificado.setId(clienteBD.getId());
-            clienteModificado.setUsuariomodificador(SecurityContextHolder.getContext().getAuthentication().getName());
-            clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
-            clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
-
-
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
+            return cuotaCreditoRepository.save(cuotaCreditoDB);
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
 
-    }*/
+    }
 }
