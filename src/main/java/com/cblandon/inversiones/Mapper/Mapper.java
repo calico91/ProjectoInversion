@@ -6,6 +6,7 @@ import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.Credito.dto.CreditoAllResponseDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
 import org.mapstruct.factory.Mappers;
@@ -16,6 +17,7 @@ public interface Mapper {
     Mapper mapper = Mappers.getMapper(Mapper.class);
 
     ClienteResponseDTO clienteToClienteResponseDto(Cliente cliente);
+
     ClienteAllResponseDTO clienteToClienteAllResponseDto(Cliente cliente);
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO RegistrarClienteDTO);
@@ -23,4 +25,8 @@ public interface Mapper {
     Credito registrarCreditoRequestDTOToCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO);
 
     RegistrarCreditoResponseDTO creditoToRegistrarCreditoResponseDTO(Credito credito);
+
+    CreditoAllResponseDTO creditoToCreditoAllResponseDTO(Credito credito);
+
+    Credito registrarCreditoResponseDTOToCredito(CreditoAllResponseDTO creditoAllResponseDTO);
 }

@@ -3,23 +3,17 @@ package com.cblandon.inversiones.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Credito.CreditoRepository;
-import com.cblandon.inversiones.Credito.dto.CreditoResponseDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
-import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
-import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

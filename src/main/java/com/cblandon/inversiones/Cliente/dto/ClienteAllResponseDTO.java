@@ -1,12 +1,10 @@
 package com.cblandon.inversiones.Cliente.dto;
 
-import com.cblandon.inversiones.Credito.dto.CreditoResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 
 @Data

@@ -2,6 +2,8 @@ package com.cblandon.inversiones.Credito;
 
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.ClienteRepository;
+import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
+import com.cblandon.inversiones.Credito.dto.CreditoAllResponseDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.CuotaCreditoRepository;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -81,6 +85,21 @@ public class CreditoService {
 
     }
 
+    public List<CreditoAllResponseDTO> allCreditos() {
+        
+        try {
+
+            List<Credito> creditos = creditoRepository.findAll();
+
+            List<CreditoAllResponseDTO> CreditoAllResponseDTO = creditos.stream().map(
+                    credito -> Mapper.mapper.creditoToCreditoAllResponseDTO(credito)).collect(Collectors.toList());
+
+            return CreditoAllResponseDTO;
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
 
     private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
         Double cuotaCapital = valorPrestado / cantidadCuotas;
