@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Builder
@@ -38,6 +36,12 @@ public class CuotaCredito {
 
     @Column(name = "valor_interes", nullable = false)
     private Double valorInteres;
+
+    @Column(name = "valor_credito", nullable = false)
+    private Double valorCredito;
+
+    @Column(nullable = false, name = "interes_porcentaje")
+    private Double interesPorcentaje;
 
     @Column(name = "fecha_abono")
     private LocalDate fechaAbono;

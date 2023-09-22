@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +28,7 @@ public class UserService {
 
     public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
+        Map<String, String> mensaje = new HashMap();
         if (!consultarUser.isEmpty()) {
 
             throw new RequestException(Constantes.USUARIO_REGISTRADO, "2");
@@ -54,9 +53,9 @@ public class UserService {
             user.setRoles(authorities);
 
             userRepository.save(user);
-
+            mensaje.put("message", Constantes.USUARIO_CREADO);
             return GenericMessageDTO.builder()
-                    .message(Constantes.USUARIO_CREADO)
+                    .message(mensaje)
                     .build();
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
@@ -94,6 +93,7 @@ public class UserService {
     public GenericMessageDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
 
         Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
+        Map<String, String> mensaje = new HashMap();
         if (usuarioBD.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
@@ -113,8 +113,9 @@ public class UserService {
 
         usuarioModificado.setId(usuarioBD.get().id);
         userRepository.save(usuarioModificado);
+        mensaje.put("message", Constantes.USUARIO_MODIFICADO);
         return GenericMessageDTO.builder()
-                .message(Constantes.USUARIO_MODIFICADO)
+                .message(mensaje)
                 .build();
 
     }

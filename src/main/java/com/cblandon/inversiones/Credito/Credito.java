@@ -19,16 +19,8 @@ public class Credito {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credito")
     private Integer id;
-    @Column(nullable = false, name = "cantidad_prestada")
-    private Double cantidadPrestada;
 
-    @Column(nullable = false, name = "interes_porcentaje")
-    private Double interesPorcentaje;
 
-    @Column(nullable = false, name = "cantidad_cuotas")
-    private Integer cantidadCuotas;
-
-    private Double saldo;
 
     @Column(nullable = false, name = "usuario_creador_credito")
     private String usuarioCreador;
