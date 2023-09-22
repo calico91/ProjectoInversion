@@ -86,11 +86,9 @@ public class CreditoService {
     }
 
     public List<CreditoAllResponseDTO> allCreditos() {
-        
+
         try {
-
             List<Credito> creditos = creditoRepository.findAll();
-
             List<CreditoAllResponseDTO> CreditoAllResponseDTO = creditos.stream().map(
                     credito -> Mapper.mapper.creditoToCreditoAllResponseDTO(credito)).collect(Collectors.toList());
 
