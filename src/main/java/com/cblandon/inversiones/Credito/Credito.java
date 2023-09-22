@@ -6,10 +6,7 @@ import java.util.List;
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -35,6 +32,9 @@ public class Credito {
 
     @Column(nullable = false, name = "usuario_creador_credito")
     private String usuarioCreador;
+
+    @Column(nullable = false)
+    private String estadoCredito;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_credito", nullable = false)

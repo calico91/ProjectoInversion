@@ -9,4 +9,5 @@ public class Constantes {
     public static final String USUARIO_MODIFICADO = "Usuario modificado correctamente";
 
     public static final String CLIENTE_NO_CREADO = "El cliente no se encuentra creado";
+    public static final String CREDITO_ACTIVO = "A";
 }

@@ -9,9 +9,11 @@ import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -19,6 +21,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 
 @Service
+@Slf4j
 public class CreditoService {
     @Autowired
     CreditoRepository creditoRepository;
@@ -35,10 +38,6 @@ public class CreditoService {
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, "1");
         }
         try {
-            System.out.println("interes primer cuota " + calcularInteresPrimeraCuota(
-                    registrarCreditoRequestDTO.getCantidadPrestada(),
-                    registrarCreditoRequestDTO.getInteresPorcentaje(),
-                    registrarCreditoRequestDTO.getFechaCuota()));
 
             Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
             credito.setSaldo((calcularInteresCredito(
@@ -46,10 +45,10 @@ public class CreditoService {
                     registrarCreditoRequestDTO.getInteresPorcentaje()))
                     + registrarCreditoRequestDTO.getCantidadPrestada());
             credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
+            credito.setEstadoCredito(Constantes.CREDITO_ACTIVO);
             credito.setCliente(clienteBD);
 
             credito = creditoRepository.save(credito);
-
             if (credito.getId() != null) {
 
                 Double interesPrimerCuota = calcularInteresPrimeraCuota(
@@ -85,11 +84,13 @@ public class CreditoService {
 
     private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
         Double cuotaCapital = valorPrestado / cantidadCuotas;
+
         return Math.rint(cuotaCapital);
     }
 
     private Double calcularInteresCredito(Double valorPrestado, Double interesPorcentaje) {
         Double interesCredito = valorPrestado * (interesPorcentaje / 100);
+
         return Math.rint(interesCredito);
     }
 
@@ -102,8 +103,8 @@ public class CreditoService {
 
     private Double calcularValorPrimeraCuota(Double valorPrestado, Integer cantidadCuotas) {
         Double valorCuota = (valorPrestado / cantidadCuotas);
+
         return Math.rint(valorCuota);
     }
-
 
 }
