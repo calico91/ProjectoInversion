@@ -3,14 +3,19 @@ package com.cblandon.inversiones.Credito;
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.ClienteRepository;
 import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
+import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Credito.dto.CreditoAllResponseDTO;
+import com.cblandon.inversiones.Credito.dto.CreditoCuotasResponseDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
+import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
+import com.cblandon.inversiones.Mapper.CreditoMapper;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
+import com.cblandon.inversiones.Utils.GenericMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -102,6 +109,29 @@ public class CreditoService {
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
+
+    }
+
+    @Transactional(readOnly = true)
+    public CreditoCuotasResponseDTO consultarCredito(Long idCredito) throws NoDataException {
+
+        Credito credito = creditoRepository.findById(idCredito)
+                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
+
+        /*mapeo manual sin utilizar Mapper
+        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
+
+        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
+                credito -> CreditoResponseDTO.builder()
+                        .idCredito(credito.getId())
+                        .cantidadPrestada(credito.getCantidadPrestada())
+                        .valorCuota(credito.getValorCuota())
+                        .cantidadCuotas(credito.getCantidadCuotas())
+                        .build()
+        ).collect(Collectors.toList());*/
+
+        CreditoCuotasResponseDTO creditoCuotas = CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
+        return creditoCuotas;
 
     }
 

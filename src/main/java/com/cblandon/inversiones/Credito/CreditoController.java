@@ -26,4 +26,11 @@ public class CreditoController {
         return ResponseEntity.ok().body(creditoService.allCreditos());
     }
 
+    @GetMapping("/consultarCredito/{idCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> consultarCredito(@PathVariable Long idCredito) {
+        return ResponseEntity.ok().body(creditoService.consultarCredito(idCredito));
+
+    }
+
 }

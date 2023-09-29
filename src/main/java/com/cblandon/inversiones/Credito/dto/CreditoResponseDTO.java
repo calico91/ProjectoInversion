@@ -14,8 +14,6 @@ import java.util.Date;
 public class CreditoResponseDTO {
 
     private Integer id;
-    private Double cantidadPrestada;
-    private Integer cantidadCuotas;
     private Date fechaCredito;
 
 }

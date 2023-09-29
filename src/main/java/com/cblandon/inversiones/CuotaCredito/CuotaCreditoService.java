@@ -29,7 +29,7 @@ public class CuotaCreditoService {
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
         if (cuotaCreditoDB.getValorAbonado() != null) {
-            throw new RequestException("cuota ya se encuentra cancelada, verifique la informacion", "4");
+            throw new RequestException(Constantes.CUOTA_YA_PAGADA, "4");
         }
 
         try {

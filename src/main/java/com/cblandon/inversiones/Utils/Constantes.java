@@ -10,4 +10,5 @@ public class Constantes {
 
     public static final String CLIENTE_NO_CREADO = "El cliente no se encuentra creado";
     public static final String CREDITO_ACTIVO = "A";
+    public static final String CUOTA_YA_PAGADA = "Cuota ya se encuentra cancelada, verifique la informacion";
 }
