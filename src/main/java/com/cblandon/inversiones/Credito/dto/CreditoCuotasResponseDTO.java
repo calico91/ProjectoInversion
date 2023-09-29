@@ -23,7 +23,7 @@ public class CreditoCuotasResponseDTO {
     private String estadoCredito;
 
     private Date fechaCredito;
-    
+
     private List<CuotasCreditoResponseDTO> listaCuotasCredito;
 
 

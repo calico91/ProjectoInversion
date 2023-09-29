@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CuotasCreditoResponseDTO {
 
+    private Integer id;
     private Double valorCuota;
 
     private LocalDate fechaCuota;

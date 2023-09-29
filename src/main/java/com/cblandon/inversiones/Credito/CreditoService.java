@@ -112,6 +112,7 @@ public class CreditoService {
 
     }
 
+    /// consulta credito y sus cuotas generadas
     @Transactional(readOnly = true)
     public CreditoCuotasResponseDTO consultarCredito(Long idCredito) throws NoDataException {
 
@@ -130,8 +131,7 @@ public class CreditoService {
                         .build()
         ).collect(Collectors.toList());*/
 
-        CreditoCuotasResponseDTO creditoCuotas = CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
-        return creditoCuotas;
+        return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
 
     }
 
