@@ -12,10 +12,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE )
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ClienteRepositoryTests {
 
     @Autowired
@@ -58,7 +59,7 @@ public class ClienteRepositoryTests {
 
     @DisplayName("Test para listar todos los clientes")
     @Test
-    void testListarClientes(){
+    void testListarClientes() {
         //given
         Cliente cliente2 = Cliente.builder()
                 .nombres("Christian")
@@ -76,6 +77,48 @@ public class ClienteRepositoryTests {
 
         //then
         assertThat(listaClientes).isNotNull();
+    }
+
+    @DisplayName("Test para obtener un cliente por ID")
+    @Test
+    void testObtenerClientePorId() {
+        clienteRepository.save(cliente);
+
+        //when - comportamiento o accion que vamos a probar
+        Cliente clienteBD = clienteRepository.findById(cliente.getId()).get();
+
+        //then
+        assertThat(clienteBD).isNotNull();
+    }
+
+    @DisplayName("Test para actualizar un cliente")
+    @Test
+    void testActualizarCliente() {
+        clienteRepository.save(cliente);
+
+        //when
+        Cliente clienteGuardado = clienteRepository.findById(cliente.getId()).get();
+        clienteGuardado.setEmail("donblan@gmail.com");
+        clienteGuardado.setNombres("prueba cliente");
+        clienteGuardado.setApellidos("prueba cliente");
+        Cliente clienteActualizado = clienteRepository.save(clienteGuardado);
+
+        //then
+        assertThat(clienteActualizado.getEmail()).isEqualTo("donblan@gmail.com");
+        assertThat(clienteActualizado.getNombres()).isEqualTo("prueba cliente");
+    }
+
+    @DisplayName("Test para eliminar un cliente")
+    @Test
+    void testEliminarCliente() {
+        clienteRepository.save(cliente);
+
+        //when
+        clienteRepository.deleteById(cliente.getId());
+        Optional<Cliente> clienteOptional = clienteRepository.findById(cliente.getId());
+
+        //then
+        assertThat(clienteOptional).isEmpty();
     }
 
 }
