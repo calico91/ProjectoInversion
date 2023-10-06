@@ -8,18 +8,23 @@ import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
+import com.cblandon.inversiones.Utils.UtilsMetodos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    UtilsMetodos utilsMetodos;
 
     @Autowired
     CreditoRepository creditoRepository;
@@ -32,17 +37,12 @@ public class ClienteService {
                     Constantes.DOCUMENTO_DUPLICADO, "1");
         }
 
-        try {
 
-            Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-            cliente.setUsuariocreador(SecurityContextHolder.getContext().getAuthentication().getName());
+        Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+        cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
 
-            /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-
-        }
+        /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
+        return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
 
     }
@@ -66,6 +66,7 @@ public class ClienteService {
     public ClienteResponseDTO consultarCliente(String cedula) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
+        System.out.println(clienteBD);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
@@ -88,39 +89,33 @@ public class ClienteService {
     }
 
     public ClienteResponseDTO actualizarCliente(String cedula, RegistrarClienteDTO registrarClienteDTO) {
-
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
 
-        try {
 
-            Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+        Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
-            clienteModificado.setId(clienteBD.getId());
-            clienteModificado.setUsuariomodificador(SecurityContextHolder.getContext().getAuthentication().getName());
-            clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
-            clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
+        clienteModificado.setId(clienteBD.getId());
+        clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
+        clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
+        clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
 
 
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
+        ClienteResponseDTO oso = Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
+        System.out.println(oso);
+        return oso;
 
     }
 
-    public ClienteResponseDTO deleteCliente(String cedula) {
-        if (clienteRepository.findByCedula(cedula) == null) {
+    public void deleteCliente(int idCliente) {
+        if (clienteRepository.findById(idCliente) == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        try {
-            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.deleteByCedula(cedula));
+        clienteRepository.deleteById(idCliente);
 
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
+
     }
 }

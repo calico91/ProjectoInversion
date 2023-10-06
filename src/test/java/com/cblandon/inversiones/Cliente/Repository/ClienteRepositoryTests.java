@@ -60,7 +60,6 @@ public class ClienteRepositoryTests {
     @DisplayName("Test para listar todos los clientes")
     @Test
     void testListarClientes() {
-        //given
         Cliente cliente2 = Cliente.builder()
                 .nombres("Christian")
                 .apellidos("Ramirez")
@@ -72,10 +71,8 @@ public class ClienteRepositoryTests {
         clienteRepository.save(cliente2);
         clienteRepository.save(cliente);
 
-        //when
         List<Cliente> listaClientes = clienteRepository.findAll();
 
-        //then
         assertThat(listaClientes).isNotNull();
     }
 
@@ -84,10 +81,8 @@ public class ClienteRepositoryTests {
     void testObtenerClientePorId() {
         clienteRepository.save(cliente);
 
-        //when - comportamiento o accion que vamos a probar
         Cliente clienteBD = clienteRepository.findById(cliente.getId()).get();
 
-        //then
         assertThat(clienteBD).isNotNull();
     }
 
@@ -96,14 +91,12 @@ public class ClienteRepositoryTests {
     void testActualizarCliente() {
         clienteRepository.save(cliente);
 
-        //when
         Cliente clienteGuardado = clienteRepository.findById(cliente.getId()).get();
         clienteGuardado.setEmail("donblan@gmail.com");
         clienteGuardado.setNombres("prueba cliente");
         clienteGuardado.setApellidos("prueba cliente");
         Cliente clienteActualizado = clienteRepository.save(clienteGuardado);
 
-        //then
         assertThat(clienteActualizado.getEmail()).isEqualTo("donblan@gmail.com");
         assertThat(clienteActualizado.getNombres()).isEqualTo("prueba cliente");
     }
@@ -113,11 +106,9 @@ public class ClienteRepositoryTests {
     void testEliminarCliente() {
         clienteRepository.save(cliente);
 
-        //when
         clienteRepository.deleteById(cliente.getId());
         Optional<Cliente> clienteOptional = clienteRepository.findById(cliente.getId());
 
-        //then
         assertThat(clienteOptional).isEmpty();
     }
 

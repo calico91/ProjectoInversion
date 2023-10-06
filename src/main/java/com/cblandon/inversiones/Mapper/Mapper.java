@@ -18,6 +18,7 @@ public interface Mapper {
     Mapper mapper = Mappers.getMapper(Mapper.class);
 
     ClienteResponseDTO clienteToClienteResponseDto(Cliente cliente);
+    RegistrarClienteDTO clienteToRegistrarClienteDto(Cliente cliente);
 
     ClienteAllResponseDTO clienteToClienteAllResponseDto(Cliente cliente);
 

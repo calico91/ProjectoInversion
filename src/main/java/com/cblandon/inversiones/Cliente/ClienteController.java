@@ -3,6 +3,7 @@ package com.cblandon.inversiones.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,9 @@ public class ClienteController {
         return ResponseEntity.ok().body(clienteService.actualizarCliente(cedula, registrarClienteDTO));
     }
 
-    @DeleteMapping("/eliminarCliente/{cedula}")
-    public ResponseEntity<?> eliminarCliente(@PathVariable String cedula) {
-        return ResponseEntity.ok().body(clienteService.deleteCliente(cedula));
+    @DeleteMapping("/eliminarCliente/{idCliente}")
+    public ResponseEntity<?> eliminarCliente(@PathVariable int idCliente) {
+        clienteService.deleteCliente(idCliente);
+        return new ResponseEntity<String>("Empleado eliminado exitosamente", HttpStatus.OK);
     }
 }
