@@ -3,19 +3,16 @@ package com.cblandon.inversiones.Cliente;
 import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.Credito.CreditoRepository;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.UtilsMetodos;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,9 +23,6 @@ public class ClienteService {
     @Autowired
     UtilsMetodos utilsMetodos;
 
-    @Autowired
-    CreditoRepository creditoRepository;
-
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
@@ -37,13 +31,11 @@ public class ClienteService {
                     Constantes.DOCUMENTO_DUPLICADO, "1");
         }
 
-
         Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
         cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
 
         /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
         return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
-
 
     }
 
@@ -66,12 +58,10 @@ public class ClienteService {
     public ClienteResponseDTO consultarCliente(String cedula) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        System.out.println(clienteBD);
         if (clienteBD == null) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
-        /*
-        mapeo manual sin utilizar Mapper
+        /*mapeo manual sin utilizar Mapper
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
 
         List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
@@ -94,7 +84,6 @@ public class ClienteService {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
 
-
         Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
         clienteModificado.setId(clienteBD.getId());
@@ -102,11 +91,7 @@ public class ClienteService {
         clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
         clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
 
-
-
-        ClienteResponseDTO oso = Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
-        System.out.println(oso);
-        return oso;
+        return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
     }
 
@@ -115,7 +100,6 @@ public class ClienteService {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
         clienteRepository.deleteById(idCliente);
-
 
     }
 }
