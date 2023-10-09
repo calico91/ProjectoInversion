@@ -18,6 +18,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> createCliente(@RequestBody RegistrarClienteDTO registrarClienteDTO) {
         return ResponseEntity.ok().body(clienteService.createCliente(registrarClienteDTO));
     }
