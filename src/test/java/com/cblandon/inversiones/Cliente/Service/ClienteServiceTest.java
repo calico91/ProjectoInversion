@@ -16,7 +16,6 @@ import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
-import com.cblandon.inversiones.Utils.UtilsMetodos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,9 +32,6 @@ public class ClienteServiceTest {
 
     @Mock
     private ClienteRepository clienteRepository;
-
-    @Mock
-    private UtilsMetodos utilsMetodos;
 
     @InjectMocks
     private ClienteService clienteService;
