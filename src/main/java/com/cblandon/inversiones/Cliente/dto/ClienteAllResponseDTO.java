@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClienteAllResponseDTO {
 
+    private Integer id;
     private String nombres;
     private String apellidos;
     private String email;

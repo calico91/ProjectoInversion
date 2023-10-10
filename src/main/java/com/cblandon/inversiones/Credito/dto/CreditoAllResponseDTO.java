@@ -16,13 +16,6 @@ public class CreditoAllResponseDTO {
 
 
     private Integer id;
-    private Double cantidadPrestada;
-
-    private Double interesPorcentaje;
-
-    private Integer cantidadCuotas;
-
-    private Double saldo;
 
     private String usuarioCreador;
 

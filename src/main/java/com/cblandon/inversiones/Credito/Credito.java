@@ -20,8 +20,6 @@ public class Credito {
     @Column(name = "id_credito")
     private Integer id;
 
-
-
     @Column(nullable = false, name = "usuario_creador_credito")
     private String usuarioCreador;
 

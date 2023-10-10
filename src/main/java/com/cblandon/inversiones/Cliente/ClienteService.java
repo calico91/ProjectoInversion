@@ -44,10 +44,10 @@ public class ClienteService {
 
             List<Cliente> clientes = clienteRepository.findAll();
 
-            List<ClienteAllResponseDTO> clienteResponseDTOS = clientes.stream().map(
+            List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
 
-            return clienteResponseDTOS;
+            return clienteResponseDTO;
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
