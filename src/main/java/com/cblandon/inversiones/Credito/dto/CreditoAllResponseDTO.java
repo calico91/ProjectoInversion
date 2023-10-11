@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.Credito.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +13,8 @@ import java.util.Date;
 @Builder
 public class CreditoAllResponseDTO {
 
-
     private Integer id;
-
     private String usuarioCreador;
-
     private String estadoCredito;
-
     private Date fechaCredito;
 }

@@ -25,9 +25,10 @@ public class CuotaCreditoService {
     public GenericMessageDTO pagarCuota(Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
         GenericMessageDTO mensajeRespuesta = GenericMessageDTO.builder().build();
-        Map<String, String> nombreMap = new HashMap<>();
+        Map<String, String> mapRespuesta = new HashMap<>();
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
+
         if (cuotaCreditoDB.getValorAbonado() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, "4");
         }
@@ -37,7 +38,7 @@ public class CuotaCreditoService {
             cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
             cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
-            nombreMap.put("estado", "cuota cancelada correctamente");
+            mapRespuesta.put("estado", "cuota cancelada correctamente");
 
             if (cuotaCancelada.getValorAbonado() != null &&
                     cuotaCancelada.getCuotaNumero() < cuotaCancelada.getNumeroCuotas()) {
@@ -59,9 +60,9 @@ public class CuotaCreditoService {
                 cuotaCreditoRepository.save(nuevaCuota);
 
             } else {
-                nombreMap.put("estado credito", "credito cancelado");
+                mapRespuesta.put("estado credito", "credito cancelado");
             }
-            mensajeRespuesta.setMessage(nombreMap);
+            mensajeRespuesta.setMessage(mapRespuesta);
             return mensajeRespuesta;
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());

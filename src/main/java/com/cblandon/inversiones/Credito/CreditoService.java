@@ -57,10 +57,6 @@ public class CreditoService {
                     registrarCreditoRequestDTO.getInteresPorcentaje(),
                     registrarCreditoRequestDTO.getFechaCuota());
 
-            Double valorPrimerCuota = calcularValorPrimeraCuota(
-                    registrarCreditoRequestDTO.getCantidadPrestada(),
-                    registrarCreditoRequestDTO.getCantidadCuotas());
-
             Double cuotaCapital = calcularCuotaCapital(
                     registrarCreditoRequestDTO.getCantidadPrestada(),
                     registrarCreditoRequestDTO.getCantidadCuotas());
@@ -79,7 +75,7 @@ public class CreditoService {
                         .fechaCuota(registrarCreditoRequestDTO.getFechaCuota())
                         .cuotaNumero(1)
                         .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
-                        .valorCuota(valorPrimerCuota + interesPrimerCuota)
+                        .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(cuotaCapital)
                         .valorCredito(registrarCreditoRequestDTO.getCantidadPrestada())
                         .valorInteres(interesPrimerCuota)
@@ -146,12 +142,6 @@ public class CreditoService {
         Double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
 
         return Math.rint(interesCredito);
-    }
-
-    private Double calcularValorPrimeraCuota(Double valorPrestado, Integer cantidadCuotas) {
-        Double valorCuota = (valorPrestado / cantidadCuotas);
-
-        return Math.rint(valorCuota);
     }
 
 }
