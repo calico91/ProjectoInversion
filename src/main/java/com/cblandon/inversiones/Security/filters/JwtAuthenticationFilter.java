@@ -46,13 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             userEntity = new ObjectMapper().readValue(request.getInputStream(), UserEntity.class);
             username = userEntity.getUsername();
             password = userEntity.getPassword();
-            Optional<UserEntity> user = userRepository.findByUsername(username);
 
-
-            if (user.isEmpty()) {
-
-                throw new RequestException("Usuario o contraseña invalido", "2");
-            }
         } catch (StreamReadException e) {
             throw new RuntimeException(e.getMessage());
         } catch (DatabindException e) {
@@ -82,6 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("token", token);
         httpResponse.put("Message", "Autenticacion Correcta");
         httpResponse.put("Username", user.getUsername());
+        httpResponse.put("status", HttpStatus.OK);
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.setStatus(HttpStatus.OK.value());
@@ -89,5 +84,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().flush();
 
         super.successfulAuthentication(request, response, chain, authResult);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
+                                              final AuthenticationException failed) throws IOException, ServletException {
+        final HttpStatus status = HttpStatus.UNAUTHORIZED;
+        if (failed.getMessage().equals("Bad Credentials")) {
+            response.setStatus(status.value());
+        }
+        Map<String, Object> httpResponse = new HashMap<>();
+        httpResponse.put("Message", "Credenciales invalidas");
+        httpResponse.put("status", HttpStatus.BAD_REQUEST.value());
+        response.setContentType("application/json");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
+        response.getWriter().flush();
     }
 }
