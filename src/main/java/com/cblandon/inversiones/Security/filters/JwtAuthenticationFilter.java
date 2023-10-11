@@ -74,9 +74,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         Map<String, Object> httpResponse = new HashMap<>();
         httpResponse.put("token", token);
-        httpResponse.put("Message", "Autenticacion Correcta");
-        httpResponse.put("Username", user.getUsername());
-        httpResponse.put("status", HttpStatus.OK);
+        httpResponse.put("message", "Autenticacion Correcta");
+        httpResponse.put("userDetails", user);
+        httpResponse.put("status", HttpStatus.OK.value());
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.setStatus(HttpStatus.OK.value());
@@ -89,10 +89,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
                                               final AuthenticationException failed) throws IOException, ServletException {
-        final HttpStatus status = HttpStatus.UNAUTHORIZED;
-        if (failed.getMessage().equals("Bad Credentials")) {
-            response.setStatus(status.value());
-        }
+
         Map<String, Object> httpResponse = new HashMap<>();
         httpResponse.put("Message", "Credenciales invalidas");
         httpResponse.put("status", HttpStatus.BAD_REQUEST.value());
