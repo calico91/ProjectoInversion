@@ -58,7 +58,7 @@ public class JwtUtils {
                     .getBody();
             return true;
         } catch (Exception e) {
-            log.error("Token invalido, error: ".concat(e.getMessage()));
+            log.error("invalid-token: ".concat(e.getMessage()));
             return false;
         }
     }
