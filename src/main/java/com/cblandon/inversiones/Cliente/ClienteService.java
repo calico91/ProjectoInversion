@@ -8,6 +8,7 @@ import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.UtilsMetodos;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
@@ -47,8 +49,12 @@ public class ClienteService {
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
 
+            log.info(clienteResponseDTO.toString());
+
             return clienteResponseDTO;
+
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
