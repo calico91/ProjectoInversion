@@ -91,7 +91,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                               final AuthenticationException failed) throws IOException, ServletException {
 
         Map<String, Object> httpResponse = new HashMap<>();
-        httpResponse.put("Message", "Credenciales invalidas");
+        httpResponse.put("Message", "Your credentials are incorrect");
         httpResponse.put("status", HttpStatus.BAD_REQUEST.value());
         response.setContentType("application/json");
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));

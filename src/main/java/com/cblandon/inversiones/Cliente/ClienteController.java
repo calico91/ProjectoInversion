@@ -2,13 +2,16 @@ package com.cblandon.inversiones.Cliente;
 
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.Utils.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +29,13 @@ public class ClienteController {
     @GetMapping("/consultarClientes")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> consultarClientes() {
-        return ResponseEntity.ok().body(clienteService.allClientes());
+        final Map<String, Object> infoMap = new HashMap<String, Object>();
+
+        infoMap.put("status", HttpStatus.OK.value());
+        infoMap.put("message", "successful");
+        infoMap.put("user", clienteService.allClientes());
+
+        return new ResponseHandler().generateResponse(infoMap, HttpStatus.OK);
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
