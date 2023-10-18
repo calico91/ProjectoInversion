@@ -48,7 +48,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("getUser")
-    public ResponseEntity<Object> getUser() {
-        return new  ResponseHandler().generateResponse("successful",HttpStatus.OK,userService.getUserDetails());
+    public ResponseEntity<Object> getUser(@RequestHeader("Authorization") final String token) {
+        return new  ResponseHandler().generateResponse("successful",HttpStatus.OK,userService.getUserDetails(token));
     }
 }

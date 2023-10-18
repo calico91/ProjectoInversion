@@ -4,6 +4,7 @@ import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Roles.Role;
 import com.cblandon.inversiones.Roles.Roles;
+import com.cblandon.inversiones.Security.jwt.JwtUtils;
 import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
@@ -35,9 +36,9 @@ public class UserService {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    UtilsMetodos utilsMetodos;
+    JwtUtils jwtUtils;
+    Map<String, Object> logInfo = new HashMap();
 
-    Map<String,Object> logInfo = new HashMap();
     public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
         Map<String, String> mensaje = new HashMap();
@@ -132,11 +133,11 @@ public class UserService {
 
     }
 
-    public UserDetails getUserDetails() {
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(utilsMetodos.obtenerUsuarioLogueado());
-        logInfo.put("userdetails",userDetails);
-        logInfo.put("userService","getUserDetails");
+    public UserDetails getUserDetails(String token) {
+        String username = jwtUtils.getUsernameFromToken(token.substring(7));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        logInfo.put("userdetails", userDetails);
+        logInfo.put("userService", "getUserDetails");
         log.info(logInfo.toString());
         return userDetails;
 
