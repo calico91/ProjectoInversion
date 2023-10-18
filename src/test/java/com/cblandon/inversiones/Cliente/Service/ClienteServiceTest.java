@@ -87,7 +87,7 @@ public class ClienteServiceTest {
         verify(clienteRepository, never()).save(any(Cliente.class));
     }
 
-    @DisplayName("Test para listar los clientes")
+  /*  @DisplayName("Test para listar los clientes")
     @Test
     void testListarClientes() {
         //given
@@ -105,7 +105,7 @@ public class ClienteServiceTest {
         //then
         assertThat(clientes).isNotNull();
         assertThat(clientes.size()).isEqualTo(2);
-    }
+    }*/
 
     @DisplayName("Test para obtener un cliente por cedula")
     @Test

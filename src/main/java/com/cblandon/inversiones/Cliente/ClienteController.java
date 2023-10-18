@@ -26,11 +26,10 @@ public class ClienteController {
         return ResponseEntity.ok().body(clienteService.createCliente(registrarClienteDTO));
     }
 
-    @GetMapping("/consultarClientes")
+    @GetMapping("/consultarClientes/{clientesCreditosActivos}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarClientes() {
-
-        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.allClientes());
+    public ResponseEntity<?> consultarClientes(@PathVariable String clientesCreditosActivos) {
+        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.allClientes(clientesCreditosActivos));
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")

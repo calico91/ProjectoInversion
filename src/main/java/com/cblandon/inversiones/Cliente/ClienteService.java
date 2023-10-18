@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +42,17 @@ public class ClienteService {
 
     }
 
-    public List<ClienteAllResponseDTO> allClientes() {
+    public List<ClienteAllResponseDTO> allClientes(String clientesCreditosActivos) {
         try {
+            List<Cliente> clientes = new ArrayList<>();
 
-            List<Cliente> clientes = clienteRepository.findAll();
+            if (clientesCreditosActivos.contains(Constantes.TRUE) ) {
+                clientes = clienteRepository.clientesCreditosActivos();
+            } else {
+                System.out.println("no entre");
+                clientes = clienteRepository.findAll();
+
+            }
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
@@ -106,6 +114,25 @@ public class ClienteService {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
         }
         clienteRepository.deleteById(idCliente);
+
+    }
+
+    public List<ClienteAllResponseDTO> clientesCreditosActivos() {
+        try {
+
+            List<Cliente> clientes = clienteRepository.clientesCreditosActivos();
+
+            List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
+                    cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
+
+            log.info(clienteResponseDTO.toString());
+
+            return clienteResponseDTO;
+
+        } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
 
     }
 }
