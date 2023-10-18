@@ -29,13 +29,8 @@ public class ClienteController {
     @GetMapping("/consultarClientes")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> consultarClientes() {
-        final Map<String, Object> infoMap = new HashMap<String, Object>();
 
-        infoMap.put("status", HttpStatus.OK.value());
-        infoMap.put("message", "successful");
-        infoMap.put("user", clienteService.allClientes());
-
-        return new ResponseHandler().generateResponse(infoMap, HttpStatus.OK);
+        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.allClientes());
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
