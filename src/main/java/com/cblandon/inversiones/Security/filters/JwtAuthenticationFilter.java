@@ -11,6 +11,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private JwtUtils jwtUtils;
@@ -77,7 +80,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("message", "Autenticacion Correcta");
         httpResponse.put("userDetails", user);
         httpResponse.put("status", HttpStatus.OK.value());
-
+        logger.info("login correcto"+httpResponse);
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -91,8 +94,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                               final AuthenticationException failed) throws IOException, ServletException {
 
         Map<String, Object> httpResponse = new HashMap<>();
-        httpResponse.put("Message", "Your credentials are incorrect");
-        httpResponse.put("status", HttpStatus.BAD_REQUEST.value());
+        httpResponse.put("message", "Your credentials are incorrect");
+        httpResponse.put("status", HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.getWriter().flush();

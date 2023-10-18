@@ -8,8 +8,13 @@ import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
+import com.cblandon.inversiones.Utils.ResponseHandler;
+import com.cblandon.inversiones.Utils.UtilsMetodos;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -25,7 +31,13 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    UtilsMetodos utilsMetodos;
+
+    Map<String,Object> logInfo = new HashMap();
     public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
         Map<String, String> mensaje = new HashMap();
@@ -119,4 +131,16 @@ public class UserService {
                 .build();
 
     }
+
+    public UserDetails getUserDetails() {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(utilsMetodos.obtenerUsuarioLogueado());
+        logInfo.put("userdetails",userDetails);
+        logInfo.put("userService","getUserDetails");
+        log.info(logInfo.toString());
+        return userDetails;
+
+    }
+
+
 }

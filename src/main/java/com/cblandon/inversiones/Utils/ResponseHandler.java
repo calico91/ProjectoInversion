@@ -18,6 +18,8 @@ public class ResponseHandler {
 
     public ResponseEntity<Object> generateResponse(final Map<String, Object> map, final HttpStatus httpStatus) {
         return new ResponseEntity<Object>(map, httpStatus);
+    }public ResponseEntity<Object> generateResponseController(final Object object, final HttpStatus httpStatus) {
+        return new ResponseEntity<Object>(object, httpStatus);
     }
 
     public ResponseEntity<Object> generateResponseWithoutData(final String message, final HttpStatus httpStatus) {
