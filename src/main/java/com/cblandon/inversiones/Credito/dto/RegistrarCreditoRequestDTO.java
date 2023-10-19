@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +23,10 @@ public class RegistrarCreditoRequestDTO {
     private String cedulaTitularCredito;
 
     @JsonProperty("fecha_cuota")
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaCuota;
+
+    @JsonProperty("fecha_credito")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fechaCredito;
 }

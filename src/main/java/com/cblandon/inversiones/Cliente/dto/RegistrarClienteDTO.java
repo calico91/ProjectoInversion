@@ -24,4 +24,6 @@ public class RegistrarClienteDTO {
     private String celular;
     private String pais;
     private String cedula;
+    private String observaciones;
+    private String direccion;
 }

@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.Credito;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Credito {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_credito", nullable = false)
-    private Date fechaCredito;
+    private LocalDate fechaCredito;
 
     @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
@@ -39,6 +40,6 @@ public class Credito {
 
     @PrePersist
     public void prePersit() {
-        this.fechaCredito = new Date();
+        this.fechaCredito = this.fechaCredito == null ? LocalDate.now() : this.fechaCredito;
     }
 }

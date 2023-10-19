@@ -38,6 +38,9 @@ public class Cliente {
     private String celular;
     @Column(nullable = false)
     private String pais;
+    private String observaciones;
+    @Column(nullable = false)
+    private String direccion;
     @Column(unique = true, nullable = false)
     private String cedula;
     @Column(name = "usuario_creador")
