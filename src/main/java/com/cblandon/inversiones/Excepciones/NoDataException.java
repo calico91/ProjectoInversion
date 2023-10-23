@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class NoDataException extends RuntimeException {
 
-    private String code;
+    private Integer status;
 
-    public NoDataException(String message, String code) {
+    public NoDataException(String message, Integer status) {
         super(message);
-        this.code = code;
+        this.status = status;
     }
 }

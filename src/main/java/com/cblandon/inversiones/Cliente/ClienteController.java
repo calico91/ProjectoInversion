@@ -23,7 +23,8 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> createCliente(@RequestBody RegistrarClienteDTO registrarClienteDTO) {
-        return ResponseEntity.ok().body(clienteService.createCliente(registrarClienteDTO));
+        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.createCliente(registrarClienteDTO));
+
     }
 
     @GetMapping("/consultarClientes/{clientesCreditosActivos}")
@@ -38,9 +39,9 @@ public class ClienteController {
 
     }
 
-    @PutMapping("/actualizarCliente/{cedula}")
-    public ResponseEntity<?> actualizarCliente(@PathVariable String cedula, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
-        return ResponseEntity.ok().body(clienteService.actualizarCliente(cedula, registrarClienteDTO));
+    @PutMapping("/actualizarCliente/{id}")
+    public ResponseEntity<?> actualizarCliente(@PathVariable Integer id, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
+        return ResponseEntity.ok().body(clienteService.actualizarCliente(id, registrarClienteDTO));
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")

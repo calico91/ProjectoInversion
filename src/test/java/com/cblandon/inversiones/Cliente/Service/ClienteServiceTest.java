@@ -25,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
@@ -125,14 +126,14 @@ public class ClienteServiceTest {
     void testActualizarCliente() {
 
         //given
-        given(clienteRepository.findByCedula("1")).willReturn(cliente);
+        given(clienteRepository.findById(1)).willReturn(Optional.ofNullable(cliente));
         cliente.setEmail("maelito@gmail.com");
         cliente.setNombres("Maelito");
         given(clienteRepository.save(cliente)).willReturn(cliente);
         RegistrarClienteDTO registrarClienteDTO = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
 
         //when
-        ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente("1", registrarClienteDTO);
+        ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente(1, registrarClienteDTO);
 
         //then
         assertThat(clienteActualizado.getEmail()).isEqualTo("maelito@gmail.com");

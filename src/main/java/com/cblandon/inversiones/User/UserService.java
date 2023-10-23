@@ -44,7 +44,7 @@ public class UserService {
         Map<String, String> mensaje = new HashMap();
         if (!consultarUser.isEmpty()) {
 
-            throw new RequestException(Constantes.USUARIO_REGISTRADO, "2");
+            throw new RequestException(Constantes.USUARIO_REGISTRADO, HttpStatus.BAD_REQUEST.value());
         }
 
         try {
@@ -81,7 +81,7 @@ public class UserService {
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
         if (usuariosConsulta.isEmpty()) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         try {
             List<UsuariosResponseDTO> usuariosResponseDto =
@@ -108,7 +108,7 @@ public class UserService {
         Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
         Map<String, String> mensaje = new HashMap();
         if (usuarioBD.isEmpty()) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         UserEntity usuarioModificado = UserEntity.builder()
                 .lastname(registrarClienteDTO.getLastname())

@@ -26,33 +26,32 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ("id_cliente"))
     private Integer id;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nombres;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String apellidos;
-    @Column(nullable = false)
-    @Email(message = "correo invalido")
+    @Column(length = 100)
     private String email;
     @Column(nullable = false)
     @Size(min = 10, max = 10, message = "el numero celular debe tener 10 caracteres")
     private String celular;
-    @Column(nullable = false)
+    @Column(length = 30)
     private String pais;
     private String observaciones;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String direccion;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 20)
     private String cedula;
-    @Column(name = "usuario_creador")
+    @Column(name = "usuario_creador", length = 50)
     private String usuariocreador;
-    @Column(name = "usuario_modificador")
+    @Column(name = "usuario_modificador", length = 50)
     private String usuariomodificador;
-    @Column(name = "fecha_creacion")
+    @Column(name = "fecha_creacion", length = 20)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
 
-    @Column(name = "fecha_modificacion")
+    @Column(name = "fecha_modificacion", length = 20)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date fechamodificacion;
@@ -62,6 +61,13 @@ public class Cliente {
 
     @PrePersist
     public void prePersit() {
+        System.out.println(pais + email);
+        if (this.pais == null) {
+            this.pais = "Colombia";
+        }
+        if (this.email == null) {
+            this.email = "NN";
+        }
         this.fechacreacion = new Date();
     }
 
@@ -69,6 +75,5 @@ public class Cliente {
     public void preUpdate() {
         this.fechamodificacion = new Date();
     }
-
 
 }

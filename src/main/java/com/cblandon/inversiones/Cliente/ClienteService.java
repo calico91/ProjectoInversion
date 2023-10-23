@@ -10,6 +10,7 @@ import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.UtilsMetodos;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,7 @@ public class ClienteService {
 
         if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()) != null) {
             throw new RequestException(
-                    Constantes.DOCUMENTO_DUPLICADO, "1");
+                    Constantes.DOCUMENTO_DUPLICADO, HttpStatus.BAD_REQUEST.value());
         }
 
         Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
@@ -46,7 +47,7 @@ public class ClienteService {
         try {
             List<Cliente> clientes = new ArrayList<>();
 
-            if (clientesCreditosActivos.contains(Constantes.TRUE) ) {
+            if (clientesCreditosActivos.contains(Constantes.TRUE)) {
                 clientes = clienteRepository.clientesCreditosActivos();
             } else {
                 System.out.println("no entre");
@@ -73,7 +74,7 @@ public class ClienteService {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula);
         if (clienteBD == null) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         /*mapeo manual sin utilizar Mapper
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
@@ -92,11 +93,9 @@ public class ClienteService {
 
     }
 
-    public ClienteResponseDTO actualizarCliente(String cedula, RegistrarClienteDTO registrarClienteDTO) {
-        Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        if (clienteBD == null) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
-        }
+    public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
+        Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
+                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
         Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
@@ -111,7 +110,7 @@ public class ClienteService {
 
     public void deleteCliente(int idCliente) {
         if (clienteRepository.findById(idCliente) == null) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3");
+            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         clienteRepository.deleteById(idCliente);
 

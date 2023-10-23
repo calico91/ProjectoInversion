@@ -7,6 +7,7 @@ import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,10 +28,10 @@ public class CuotaCreditoService {
         GenericMessageDTO mensajeRespuesta = GenericMessageDTO.builder().build();
         Map<String, String> mapRespuesta = new HashMap<>();
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
+                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
         if (cuotaCreditoDB.getValorAbonado() != null) {
-            throw new RequestException(Constantes.CUOTA_YA_PAGADA, "4");
+            throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
 
         try {

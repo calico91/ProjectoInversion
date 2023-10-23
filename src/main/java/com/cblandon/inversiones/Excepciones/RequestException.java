@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class RequestException extends RuntimeException {
-    private String code;
+    private Integer status;
 
-    public RequestException(String message, String code) {
+    public RequestException(String message, Integer status) {
         super(message);
-        this.code = code;
+        this.status = status;
     }
 }

@@ -18,6 +18,7 @@ import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class CreditoService {
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
         if (clienteBD == null) {
-            throw new RequestException(Constantes.CLIENTE_NO_CREADO, "1");
+            throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
         try {
 
@@ -115,7 +116,7 @@ public class CreditoService {
     public CreditoCuotasResponseDTO consultarCredito(Long idCredito) throws NoDataException {
 
         Credito credito = creditoRepository.findById(idCredito)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, "3"));
+                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
         /*mapeo manual sin utilizar Mapper
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
