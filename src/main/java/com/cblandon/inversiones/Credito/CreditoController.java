@@ -2,7 +2,9 @@ package com.cblandon.inversiones.Credito;
 
 
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
+import com.cblandon.inversiones.Utils.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,8 @@ public class CreditoController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<?> crearCredito(@RequestBody RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        return ResponseEntity.ok().body(creditoService.crearCredito(registrarCreditoRequestDTO));
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, creditoService.crearCredito(registrarCreditoRequestDTO));
     }
 
     @GetMapping("/consultarCreditos")
@@ -28,7 +31,7 @@ public class CreditoController {
 
     @GetMapping("/consultarCredito/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarCredito(@PathVariable Long idCredito) {
+    public ResponseEntity<?> consultarCredito(@PathVariable Integer idCredito) {
         return ResponseEntity.ok().body(creditoService.consultarCredito(idCredito));
 
     }

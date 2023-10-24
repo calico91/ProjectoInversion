@@ -88,8 +88,17 @@ public class CreditoService {
 
                 cuotaCreditoRepository.save(cuotaCredito);
             }
+            RegistrarCreditoResponseDTO registrarCreditoResponseDTO = RegistrarCreditoResponseDTO.builder()
+                    .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
+                    .fechaPago(registrarCreditoRequestDTO.getFechaCuota().toString())
+                    .valorPrimerCuota(cuotaCapital + interesPrimerCuota)
+                    .valorCuotas(cuotaCapital + (
+                            registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
+                            registrarCreditoRequestDTO.getCantidadPrestada())
+                    .build();
 
-            return Mapper.mapper.creditoToRegistrarCreditoResponseDTO(credito);
+
+            return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
 
@@ -113,7 +122,7 @@ public class CreditoService {
 
     /// consulta credito y sus cuotas generadas
     @Transactional(readOnly = true)
-    public CreditoCuotasResponseDTO consultarCredito(Long idCredito) throws NoDataException {
+    public CreditoCuotasResponseDTO consultarCredito(Integer idCredito) throws NoDataException {
 
         Credito credito = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
@@ -136,6 +145,12 @@ public class CreditoService {
 
     private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
         Double cuotaCapital = valorPrestado / cantidadCuotas;
+
+        return Math.rint(cuotaCapital);
+    }
+
+    private Double calcularInteres(Double valorPrestado, Integer cantidadCuotas, Double interesPorcentaje) {
+        Double cuotaCapital = (valorPrestado / cantidadCuotas) + (interesPorcentaje / 100);
 
         return Math.rint(cuotaCapital);
     }

@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegistrarCreditoResponseDTO {
 
-    private Double cantidadPrestada;
-
+    private Double valorPrimerCuota;
     private Integer cantidadCuotas;
+    private Double valorCuotas;
+    private String fechaPago;
 
 }
 
