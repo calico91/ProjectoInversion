@@ -49,6 +49,11 @@ public class CreditoService {
         if (clienteBD == null) {
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
+
+        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota())){
+            throw new RequestException(Constantes.ERROR_FECHAS, HttpStatus.BAD_REQUEST.value());
+        }
+
         try {
 
             Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
