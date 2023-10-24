@@ -20,5 +20,7 @@ public class ClienteAllResponseDTO {
     private String celular;
     private String pais;
     private String cedula;
+    private String direccion;
+    private String observaciones;
 
 }
