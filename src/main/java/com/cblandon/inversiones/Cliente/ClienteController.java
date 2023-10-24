@@ -23,25 +23,28 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> createCliente(@RequestBody RegistrarClienteDTO registrarClienteDTO) {
-        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.createCliente(registrarClienteDTO));
+        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, clienteService.createCliente(registrarClienteDTO));
 
     }
 
     @GetMapping("/consultarClientes/{clientesCreditosActivos}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> consultarClientes(@PathVariable String clientesCreditosActivos) {
-        return new ResponseHandler().generateResponse("successful",HttpStatus.OK,clienteService.allClientes(clientesCreditosActivos));
+        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, clienteService.allClientes(clientesCreditosActivos));
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
     public ResponseEntity<?> consultarCliente(@PathVariable String cedula) {
-        return ResponseEntity.ok().body(clienteService.consultarCliente(cedula));
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, clienteService.consultarCliente(cedula));
+
 
     }
 
     @PutMapping("/actualizarCliente/{id}")
     public ResponseEntity<?> actualizarCliente(@PathVariable Integer id, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
-        return ResponseEntity.ok().body(clienteService.actualizarCliente(id, registrarClienteDTO));
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, clienteService.actualizarCliente(id,registrarClienteDTO));
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")

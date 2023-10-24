@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,12 +44,11 @@ public class ClienteService {
 
     public List<ClienteAllResponseDTO> allClientes(String clientesCreditosActivos) {
         try {
-            List<Cliente> clientes = new ArrayList<>();
-
+            List<Cliente> clientes;
+            System.out.println(clientesCreditosActivos);
             if (clientesCreditosActivos.contains(Constantes.TRUE)) {
                 clientes = clienteRepository.clientesCreditosActivos();
             } else {
-                System.out.println("no entre");
                 clientes = clienteRepository.findAll();
 
             }
@@ -89,6 +87,7 @@ public class ClienteService {
         ).collect(Collectors.toList());*/
 
         ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
+        log.info(clienteResponseDTO.toString());
         return clienteResponseDTO;
 
     }
@@ -109,7 +108,7 @@ public class ClienteService {
     }
 
     public void deleteCliente(int idCliente) {
-        if (clienteRepository.findById(idCliente) == null) {
+        if (clienteRepository.findById(idCliente).isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         clienteRepository.deleteById(idCliente);

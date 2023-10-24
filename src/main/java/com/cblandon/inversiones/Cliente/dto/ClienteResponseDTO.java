@@ -17,12 +17,13 @@ import java.util.Set;
 @AllArgsConstructor
 public class ClienteResponseDTO {
 
+    private Integer id;
     private String nombres;
     private String apellidos;
-    private String email;
     private String celular;
-    private String pais;
     private String cedula;
+    private String direccion;
+    private String observaciones;
     private List<CreditoResponseDTO> listaCreditos;
 
 }
