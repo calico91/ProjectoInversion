@@ -45,12 +45,16 @@ public class CreditoService {
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
+        System.out.println(registrarCreditoRequestDTO.toString());
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
         if (clienteBD == null) {
+            log.error("cliente no creado");
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
 
-        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota())){
+        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota())) {
+            log.error("error en fechas");
+
             throw new RequestException(Constantes.ERROR_FECHAS, HttpStatus.BAD_REQUEST.value());
         }
 
@@ -68,6 +72,12 @@ public class CreditoService {
             Double cuotaCapital = calcularCuotaCapital(
                     registrarCreditoRequestDTO.getCantidadPrestada(),
                     registrarCreditoRequestDTO.getCantidadCuotas());
+
+            Double valorCuotas = cuotaCapital + (
+                    registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
+                    registrarCreditoRequestDTO.getCantidadPrestada();
+
+            Double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
             credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
             credito.setEstadoCredito(Constantes.CREDITO_ACTIVO);
@@ -94,17 +104,18 @@ public class CreditoService {
                 cuotaCreditoRepository.save(cuotaCredito);
             }
             RegistrarCreditoResponseDTO registrarCreditoResponseDTO = RegistrarCreditoResponseDTO.builder()
-                    .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
+                    .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas().toString())
                     .fechaPago(registrarCreditoRequestDTO.getFechaCuota().toString())
-                    .valorPrimerCuota(cuotaCapital + interesPrimerCuota)
-                    .valorCuotas(cuotaCapital + (
-                            registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
-                            registrarCreditoRequestDTO.getCantidadPrestada())
+                    .valorPrimerCuota(valorPrimerCuota.toString())
+                    .valorCredito(registrarCreditoRequestDTO.getCantidadPrestada().toString())
+                    .valorCuotas(valorCuotas.toString())
                     .build();
 
+            log.info(registrarCreditoResponseDTO.toString());
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
         }
