@@ -5,11 +5,13 @@ import com.cblandon.inversiones.Credito.dto.CreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper()
 public interface CuotaCreditoMapper {
 
-    CuotasCreditoResponseDTO creditoToCreditoResponseDTO(CuotaCredito cuotaCredito);
+    CuotaCreditoMapper mapperCuotaCredito =  Mappers.getMapper(CuotaCreditoMapper.class);
+    CuotasCreditoResponseDTO cuotaCreditoToCuotasCreditoResponseDTO(CuotaCredito cuotaCredito);
 
     Credito creditoResponseDTOToCredito(CreditoResponseDTO creditoResponseDTO);
 }

@@ -40,19 +40,18 @@ public class ClienteController {
 
 
     }
-    @GetMapping("/infoClienteCuotaCredito/{id}")
-    public ResponseEntity<?> infoClienteCuotaCredito(@PathVariable Integer id) {
+
+    @GetMapping("/infoClientesCuotaCredito")
+    public ResponseEntity<?> infoClientesCuotaCredito() {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, clienteService.infoClienteCuotaCredito(id));
-
-
+                "successful", HttpStatus.OK, clienteService.infoClientesCuotasPendientes());
     }
 
     @PutMapping("/actualizarCliente/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> actualizarCliente(@PathVariable Integer id, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, clienteService.actualizarCliente(id,registrarClienteDTO));
+                "successful", HttpStatus.OK, clienteService.actualizarCliente(id, registrarClienteDTO));
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")

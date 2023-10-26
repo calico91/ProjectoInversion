@@ -127,7 +127,7 @@ public class ClienteServiceTest {
 
         //given
         given(clienteRepository.findById(1)).willReturn(Optional.ofNullable(cliente));
-        cliente.setEmail("maelito@gmail.com");
+        cliente.setApellidos("blandito");
         cliente.setNombres("Maelito");
         given(clienteRepository.save(cliente)).willReturn(cliente);
         RegistrarClienteDTO registrarClienteDTO = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
@@ -136,7 +136,7 @@ public class ClienteServiceTest {
         ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente(1, registrarClienteDTO);
 
         //then
-        assertThat(clienteActualizado.getEmail()).isEqualTo("maelito@gmail.com");
+        assertThat(clienteActualizado.getApellidos()).isEqualTo("blandito");
         assertThat(clienteActualizado.getNombres()).isEqualTo("Maelito");
     }
 

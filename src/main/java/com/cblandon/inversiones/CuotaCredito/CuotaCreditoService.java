@@ -1,12 +1,16 @@
 package com.cblandon.inversiones.CuotaCredito;
 
 
+import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
+import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
+import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.GenericMessageDTO;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class CuotaCreditoService {
     private final CuotaCreditoRepository cuotaCreditoRepository;
 
@@ -66,6 +71,23 @@ public class CuotaCreditoService {
             mensajeRespuesta.setMessage(mapRespuesta);
             return mensajeRespuesta;
         } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
+
+    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente) {
+        try {
+
+            CuotaCredito infoCuotaCreditoCliente = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente);
+
+            return CuotaCreditoMapper.
+                    mapperCuotaCredito.
+                    cuotaCreditoToCuotasCreditoResponseDTO(infoCuotaCreditoCliente);
+
+
+        } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 

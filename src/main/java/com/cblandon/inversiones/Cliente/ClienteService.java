@@ -2,7 +2,7 @@ package com.cblandon.inversiones.Cliente;
 
 import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.InfoClienteCuotaCreditoDTO;
+import com.cblandon.inversiones.Cliente.dto.InfoClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -137,31 +136,28 @@ public class ClienteService {
 
     }
 
-    public InfoClienteCuotaCreditoDTO infoClienteCuotaCredito(Integer id) {
+
+    public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes() {
         try {
 
-            Tuple infoClienteCuotaCreditoBD = clienteRepository.infoClienteCuotaCredito(id);
+            List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes();
 
-            InfoClienteCuotaCreditoDTO infoClienteCuotaCredito = InfoClienteCuotaCreditoDTO.builder()
-                    .nombres(infoClienteCuotaCreditoBD.get("nombres").toString())
-                    .apellidos(infoClienteCuotaCreditoBD.get("apellidos").toString())
-                    .cedula(infoClienteCuotaCreditoBD.get("cedula").toString())
-                    .fechaCredito(infoClienteCuotaCreditoBD.get("fecha_credito").toString())
-                    .idCuotaCredito(Integer.parseInt(infoClienteCuotaCreditoBD.get("id_cuota_credito").toString()))
-                    .cuotaNumero(Integer.parseInt(infoClienteCuotaCreditoBD.get("numero_cuotas").toString()))
-                    .fechaAbono((String) infoClienteCuotaCreditoBD.get("fecha_abono"))
-                    .fechaCuota(infoClienteCuotaCreditoBD.get("fecha_cuota").toString())
-                    .numeroCuotas(Integer.parseInt(infoClienteCuotaCreditoBD.get("numero_cuotas").toString()))
-                    .valorAbonado(Double.parseDouble((String) infoClienteCuotaCreditoBD.get("valor_abonado")))
-                    .coutaCapital(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_capital").toString()))
-                    .valorCredito(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_credito").toString()))
-                    .valorCuota(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_cuota").toString()))
-                    .valorInteres(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_interes").toString()))
-                    .idCredito(Integer.parseInt(infoClienteCuotaCreditoBD.get("id_credito").toString()))
-                    .build();
-            log.info(infoClienteCuotaCredito.toString());
+            List<InfoClientesCuotaCreditoDTO> listaCreditosdto = infoClienteCuotaCreditoBD.stream().map(
+                    info -> InfoClientesCuotaCreditoDTO.builder()
+                            .idCliente(Integer.parseInt(info.get("id_cliente").toString()))
+                            .nombres(info.get("nombres").toString())
+                            .apellidos(info.get("apellidos").toString())
+                            .cedula(info.get("cedula").toString())
+                            .fechaCredito(info.get("fecha_credito").toString())
+                            .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
+                            .fechaAbono((String) info.get("fecha_abono"))
+                            .fechaCuota(info.get("fecha_cuota").toString())
+                            .idCredito(Integer.parseInt(info.get("id_credito").toString()))
+                            .build()
+            ).collect(Collectors.toList());
+            log.info(listaCreditosdto.toString());
 
-            return infoClienteCuotaCredito;
+            return listaCreditosdto;
 
         } catch (RuntimeException ex) {
             log.error(ex.getMessage());

@@ -9,21 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InfoClienteCuotaCreditoDTO {
+public class InfoClientesCuotaCreditoDTO {
 
+    private Integer idCliente;
     private String nombres;
     private String apellidos;
     private String cedula;
     private String fechaCredito;
-    private Integer idCuotaCredito;
-    private Integer cuotaNumero;
+    private Double valorCredito;
     private String fechaAbono;
     private String fechaCuota;
-    private Integer numeroCuotas;
-    private Double valorAbonado;
-    private Double coutaCapital;
-    private Double valorCredito;
-    private Double valorCuota;
-    private Double valorInteres;
+
     private Integer idCredito;
+
 }

@@ -18,13 +18,16 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente AND cr.estado_credito='A'", nativeQuery = true)
     List<Cliente> clientesCreditosActivos();
 
-    @Query(value = "SELECT cl.nombres,cl.apellidos,cl.cedula ,cr.fecha_credito, ccr.*" +
+
+    @Query(value = "SELECT cl.id_cliente, cl.nombres,cl.apellidos,cl.cedula ,cr.fecha_credito,ccr.valor_credito, " +
+            "            ccr.fecha_abono, ccr.fecha_cuota,cr.id_credito" +
             "            FROM apirest.credito cr" +
             "            INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
             "            INNER JOIN   apirest.cuota_credito ccr ON cr.id_credito= ccr.id_credito" +
-            "            WHERE cl.id_cliente=:id AND cr.estado_credito='A' order by id_cuota_credito desc limit 1;",
+            "            WHERE cr.estado_credito='A' AND ccr.fecha_abono IS NULL " +
+            "            AND fecha_cuota <= CURRENT_DATE() ORDER BY fecha_cuota ASC",
             nativeQuery = true)
-    Tuple infoClienteCuotaCredito(@Param("id") Integer id);
+    List<Tuple> infoClientesCuotasPendientes();
 
 
 }
