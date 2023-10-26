@@ -2,12 +2,14 @@ package com.cblandon.inversiones.Cliente;
 
 import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
+import com.cblandon.inversiones.Cliente.dto.InfoClienteCuotaCreditoDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 import com.cblandon.inversiones.Utils.UtilsMetodos;
+import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -129,6 +132,40 @@ public class ClienteService {
 
         } catch (RuntimeException ex) {
             log.error(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
+
+    public InfoClienteCuotaCreditoDTO infoClienteCuotaCredito(Integer id) {
+        try {
+
+            Tuple infoClienteCuotaCreditoBD = clienteRepository.infoClienteCuotaCredito(id);
+
+            InfoClienteCuotaCreditoDTO infoClienteCuotaCredito = InfoClienteCuotaCreditoDTO.builder()
+                    .nombres(infoClienteCuotaCreditoBD.get("nombres").toString())
+                    .apellidos(infoClienteCuotaCreditoBD.get("apellidos").toString())
+                    .cedula(infoClienteCuotaCreditoBD.get("cedula").toString())
+                    .fechaCredito(infoClienteCuotaCreditoBD.get("fecha_credito").toString())
+                    .idCuotaCredito(Integer.parseInt(infoClienteCuotaCreditoBD.get("id_cuota_credito").toString()))
+                    .cuotaNumero(Integer.parseInt(infoClienteCuotaCreditoBD.get("numero_cuotas").toString()))
+                    .fechaAbono((String) infoClienteCuotaCreditoBD.get("fecha_abono"))
+                    .fechaCuota(infoClienteCuotaCreditoBD.get("fecha_cuota").toString())
+                    .numeroCuotas(Integer.parseInt(infoClienteCuotaCreditoBD.get("numero_cuotas").toString()))
+                    .valorAbonado(Double.parseDouble((String) infoClienteCuotaCreditoBD.get("valor_abonado")))
+                    .coutaCapital(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_capital").toString()))
+                    .valorCredito(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_credito").toString()))
+                    .valorCuota(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_cuota").toString()))
+                    .valorInteres(Double.parseDouble(infoClienteCuotaCreditoBD.get("valor_interes").toString()))
+                    .idCredito(Integer.parseInt(infoClienteCuotaCreditoBD.get("id_credito").toString()))
+                    .build();
+            log.info(infoClienteCuotaCredito.toString());
+
+            return infoClienteCuotaCredito;
+
+        } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 

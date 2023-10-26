@@ -30,7 +30,7 @@ public class CuotaCreditoService {
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
-        if (cuotaCreditoDB.getValorAbonado() != null) {
+        if (cuotaCreditoDB.getFechaAbono() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
 

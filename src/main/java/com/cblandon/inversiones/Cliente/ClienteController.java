@@ -40,6 +40,13 @@ public class ClienteController {
 
 
     }
+    @GetMapping("/infoClienteCuotaCredito/{id}")
+    public ResponseEntity<?> infoClienteCuotaCredito(@PathVariable Integer id) {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, clienteService.infoClienteCuotaCredito(id));
+
+
+    }
 
     @PutMapping("/actualizarCliente/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
