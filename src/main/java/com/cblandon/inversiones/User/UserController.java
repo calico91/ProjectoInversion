@@ -32,6 +32,11 @@ public class UserController {
         return ResponseEntity.ok(userService.register(request));
     }
 
+    @GetMapping("pruebaConexion")
+    public ResponseEntity<?> pruebaConexion() {
+        return ResponseEntity.ok("conexion establecida");
+    }
+
     @GetMapping(value = "consultarUsuarios")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> consultarUsuarios() {
@@ -49,6 +54,6 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("getUser")
     public ResponseEntity<Object> getUser(@RequestHeader("Authorization") final String token) {
-        return new  ResponseHandler().generateResponse("successful",HttpStatus.OK,userService.getUserDetails(token));
+        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, userService.getUserDetails(token));
     }
 }
