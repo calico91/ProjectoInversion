@@ -13,5 +13,5 @@ public class Constantes {
     public static final String CUOTA_YA_PAGADA = "Cuota ya se encuentra cancelada, verifique la informacion";
     public static final String TRUE = "T";
     public static final String FALSE = "F";
-    public static final String ERROR_FECHAS = "Fecha credito no puede ser mayor a fecha cuota";
+    public static final String ERROR_FECHAS = "Fecha credito no puede ser mayor o igual a fecha cuota";
 }

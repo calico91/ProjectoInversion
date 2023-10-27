@@ -52,9 +52,10 @@ public class CreditoService {
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
 
-        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota())) {
-            log.error("error en fechas");
+        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota()) ||
+                registrarCreditoRequestDTO.getFechaCredito().equals(registrarCreditoRequestDTO.getFechaCuota())) {
 
+            log.error(Constantes.ERROR_FECHAS);
             throw new RequestException(Constantes.ERROR_FECHAS, HttpStatus.BAD_REQUEST.value());
         }
 
