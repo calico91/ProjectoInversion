@@ -2,9 +2,7 @@ package com.cblandon.inversiones.Cliente;
 
 
 import com.cblandon.inversiones.Credito.Credito;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
