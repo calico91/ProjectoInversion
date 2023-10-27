@@ -20,7 +20,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
 
     @Query(value = "SELECT cl.id_cliente, cl.nombres,cl.apellidos,cl.cedula ,cr.fecha_credito,ccr.valor_credito, " +
-            "            ccr.fecha_abono, ccr.fecha_cuota,cr.id_credito" +
+            "            ccr.fecha_abono, ccr.fecha_cuota,cr.id_credito, ccr.valor_cuota" +
             "            FROM apirest.credito cr" +
             "            INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
             "            INNER JOIN   apirest.cuota_credito ccr ON cr.id_credito= ccr.id_credito" +

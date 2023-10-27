@@ -1,8 +1,6 @@
-/*
--- Query: SELECT * FROM apirest.cliente
-LIMIT 0, 1000
-
--- Date: 2023-09-14 10:26
-*/
-INSERT INTO `` (`id`,`apellidos`,`cedula`,`celular`,`email`,`fechacreacion`,`fechamodificacion`,`nombres`,`pais`,`usuariocreador`,`usuariomodificador`) VALUES (1,'blandon','1','1234506789','maelo@gmail.com','2023-09-13',NULL,'maelo','chichombia','Maelito',NULL);
-INSERT INTO `` (`id`,`apellidos`,`cedula`,`celular`,`email`,`fechacreacion`,`fechamodificacion`,`nombres`,`pais`,`usuariocreador`,`usuariomodificador`) VALUES (2,'Viafara','2','3117676893','nn@gmail.com','2023-09-13',NULL,'Katherine','colombia','Maelito',NULL);
+id_credito,estado_credito,fecha_credito,usuario_creador_credito,id_cliente
+1,A,2023-10-01,blandon,1
+2,A,2023-10-01,blandon,2
+3,A,2023-10-01,blandon,3
+5,A,2023-10-01,blandon,2
+6,A,2023-10-24,maelito,4

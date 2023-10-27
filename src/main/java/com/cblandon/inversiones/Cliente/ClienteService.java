@@ -152,6 +152,7 @@ public class ClienteService {
                             .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
                             .fechaAbono((String) info.get("fecha_abono"))
                             .fechaCuota(info.get("fecha_cuota").toString())
+                            .valorCuota(Double.parseDouble(info.get("valor_cuota").toString()))
                             .idCredito(Integer.parseInt(info.get("id_credito").toString()))
                             .build()
             ).collect(Collectors.toList());
