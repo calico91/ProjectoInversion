@@ -48,7 +48,7 @@ public class CreditoService {
         System.out.println(registrarCreditoRequestDTO.toString());
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
         if (clienteBD == null) {
-            log.error("cliente no creado");
+            log.error(Constantes.CLIENTE_NO_CREADO);
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
 

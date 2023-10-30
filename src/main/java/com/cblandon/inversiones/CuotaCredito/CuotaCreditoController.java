@@ -21,8 +21,14 @@ public class CuotaCreditoController {
 
     @PutMapping("/pagarCuota/{idCuotaCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<?> actualizarCliente(@PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
+    public ResponseEntity<?> pagarCuota(@PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return ResponseEntity.ok().body(cuotaCreditoService.pagarCuota(idCuotaCredito, pagarCuotaRequestDTO));
+    }
+
+    @PutMapping("/pagarInteresCuota/{idCuotaCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public ResponseEntity<?> pagarInteresCuota(@PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
+        return ResponseEntity.ok().body(cuotaCreditoService.pagarInteresCuota(idCuotaCredito, pagarCuotaRequestDTO));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}")
