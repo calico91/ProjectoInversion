@@ -38,6 +38,9 @@ public class CuotaCreditoService {
         if (cuotaCreditoDB.getFechaAbono() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
+        if (!soloInteres && pagarCuotaRequestDTO.getValorAbonado() < cuotaCreditoDB.getValorCuota()) {
+            throw new RequestException(Constantes.ERROR_CUOTA, HttpStatus.BAD_REQUEST.value());
+        }
 
         Integer cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
         try {
@@ -77,14 +80,14 @@ public class CuotaCreditoService {
                 cuotaCreditoRepository.save(nuevaCuota);
 
             } else {
-                mapRespuesta.put("estado credito", "credito cancelado");
+                mapRespuesta.put("estadoCredito", "credito cancelado");
             }
-            mapRespuesta.put("estado cuota", "cuota cancelada correctamente");
-            mapRespuesta.put("cantidad cuotas", cuotaCreditoDB.getNumeroCuotas().toString());
+            mapRespuesta.put("estadoCuota", "cuota cancelada correctamente");
+            mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas().toString());
             if (soloInteres) {
-                mapRespuesta.put("cuotas pagadas", cuotasPagadasSoloInteres.toString());
+                mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres.toString());
             } else {
-                mapRespuesta.put("cuotas pagadas", cuotaCreditoDB.getCuotaNumero().toString());
+                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero().toString());
             }
             return mapRespuesta;
         } catch (RuntimeException ex) {
@@ -125,14 +128,5 @@ public class CuotaCreditoService {
 
         return Math.rint(interesCredito);
     }
-
-    private CuotaCredito consultarCuotaCredito(Integer codigoCuota) throws NoDataException {
-        CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-
-        if (cuotaCreditoDB.getFechaAbono() != null) {
-            throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
-        }
-        return cuotaCreditoDB;
-    }
+    
 }
