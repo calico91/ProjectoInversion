@@ -2,7 +2,7 @@
 -- Query: SELECT * FROM apirest.cliente
 LIMIT 0, 1000
 
--- Date: 2023-10-30 15:06
+-- Date: 2023-10-31 11:50
 */
 INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (1,'Carabali','66850016','3126081880','calle 54b 49d 05 piso 3',NULL,'2023-10-27','2023-10-27','Angela','Barrio cordoba reservado - sf',NULL,'maelito','maelito');
 INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (2,'Rojas','1151949825','3229162350','cra 1e #59-163','NN','2023-10-27',NULL,'Felipe','SF','Colombia','maelito',NULL);
@@ -31,3 +31,6 @@ INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,
 INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (25,'Hernandez','1143936925','3158288824','cra 26 g10 73b 45 marroquí 2','NN','2023-10-30',NULL,'Lessdy','Sf','Colombia','maelito',NULL);
 INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (26,'Graterol','3857677','3128705319','cra 26 33f 71 santa fe','NN','2023-10-30',NULL,'Hector','Fiador - maría del mar','Colombia','maelito',NULL);
 INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (27,'Vivas','1006055175','3012915079','cra 1 a9 73a 65','NN','2023-10-30',NULL,'Lorenzo','Fiador - harold vivas - cc 4640656 - cel 3122600524 - dir cra 1a9 73a 65','Colombia','maelito',NULL);
+INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (28,'Salcedo','6229155','3205510345','calle 55 1 94 bloque 7 apt 404','NN','2023-10-30',NULL,'David','Sf','Colombia','maelito',NULL);
+INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (29,'Buitrago','1144157641','3164903048','cra 1d 62 04 chimi','NN','2023-10-31',NULL,'Juan david','Sf','Colombia','maelito',NULL);
+INSERT INTO `` (`id_cliente`,`apellidos`,`cedula`,`celular`,`direccion`,`email`,`fecha_creacion`,`fecha_modificacion`,`nombres`,`observaciones`,`pais`,`usuario_creador`,`usuario_modificador`) VALUES (30,'Vinasco','31930954','3172196114','calle 15a 74 30 brisas limonar','NN','2023-10-31',NULL,'Consuelo','','Colombia','maelito',NULL);
