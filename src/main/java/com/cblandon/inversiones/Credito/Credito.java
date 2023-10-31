@@ -9,7 +9,8 @@ import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

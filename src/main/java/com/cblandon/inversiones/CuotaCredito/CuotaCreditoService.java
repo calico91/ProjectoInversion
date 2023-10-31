@@ -98,12 +98,12 @@ public class CuotaCreditoService {
 
     public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente) {
         try {
-
-            CuotaCredito infoCuotaCreditoCliente = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente);
+            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente);
+            log.info(infoCuotaCreditoClienteRes.toString());
 
             return CuotaCreditoMapper.
                     mapperCuotaCredito.
-                    cuotaCreditoToCuotasCreditoResponseDTO(infoCuotaCreditoCliente);
+                    cuotaCreditoToCuotasCreditoResponseDTO(infoCuotaCreditoClienteRes);
 
 
         } catch (RuntimeException ex) {
@@ -128,5 +128,5 @@ public class CuotaCreditoService {
 
         return Math.rint(interesCredito);
     }
-    
+
 }
