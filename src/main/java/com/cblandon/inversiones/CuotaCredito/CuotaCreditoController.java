@@ -25,14 +25,15 @@ public class CuotaCreditoController {
             @RequestParam("soloInteres") final boolean soloInteres,
             @PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, cuotaCreditoService.pagarCuota(
+                "Cuota cancelada correctamente", HttpStatus.OK, cuotaCreditoService.pagarCuota(
                         idCuotaCredito, pagarCuotaRequestDTO, soloInteres));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}")
     public ResponseEntity<?> infoCuotaCreditoCliente(@PathVariable Integer idCliente) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente));
+                "successful",
+                HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente));
     }
 
 

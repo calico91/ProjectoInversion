@@ -14,6 +14,6 @@ import java.util.Date;
 public class PagarCuotaRequestDTO {
 
     private Double valorAbonado;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    //@JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaAbono;
 }
