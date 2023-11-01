@@ -57,7 +57,7 @@ public class CuotaCreditoService {
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
             if (cuotaCancelada.getValorAbonado() != null &&
-                    cuotaCancelada.getCuotaNumero() < cuotaCancelada.getNumeroCuotas()) {
+                    cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()) {
 
                 Double interesCredito = calcularInteresCredito(
                         cuotaCancelada.getValorCredito(), cuotaCancelada.getInteresPorcentaje());
