@@ -36,4 +36,11 @@ public class CreditoController {
 
     }
 
+    @GetMapping("/infoClientesConCreditosActivos")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> infoClientesConCreditosActivos() {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, creditoService.infoClientesConCreditosActivos());
+    }
+
 }

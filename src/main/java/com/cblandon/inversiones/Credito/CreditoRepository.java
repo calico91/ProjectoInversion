@@ -18,4 +18,12 @@ public interface CreditoRepository extends JpaRepository<Credito, Integer> {
             "        where cl.idcliente = :id", nativeQuery = true)
     List<Credito> listaCreditosCliente(@Param("id") Integer id);
 
+    List<Credito> findByEstadoCreditoEquals(String estadoCredito);
+
+    @Query(value = "SELECT cl.id_cliente,cl.nombres,cl.apellidos,cl.cedula,cr.fecha_credito,cr.valor_credito " +
+            "FROM apirest.credito cr " +
+            "INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
+            "AND cr.estado_credito='A';",nativeQuery = true)
+    List<Tuple> infoClientesConCreditosActivos();
+
 }

@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 
 public class RegistrarCreditoRequestDTO {
-    private Double cantidadPrestada;
+    private Double valorCredito;
 
     private Double interesPorcentaje;
 

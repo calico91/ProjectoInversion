@@ -2,12 +2,8 @@ package com.cblandon.inversiones.Credito;
 
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.ClienteRepository;
-import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.Credito.dto.CreditoAllResponseDTO;
-import com.cblandon.inversiones.Credito.dto.CreditoCuotasResponseDTO;
-import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
-import com.cblandon.inversiones.Credito.dto.RegistrarCreditoResponseDTO;
+import com.cblandon.inversiones.Cliente.dto.InfoClientesCuotaCreditoDTO;
+import com.cblandon.inversiones.Credito.dto.*;
 import com.cblandon.inversiones.CuotaCredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
 import com.cblandon.inversiones.Excepciones.NoDataException;
@@ -15,7 +11,7 @@ import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.CreditoMapper;
 import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
-import com.cblandon.inversiones.Utils.GenericMessageDTO;
+import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -64,19 +58,19 @@ public class CreditoService {
             Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
 
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
-                    registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getValorCredito(),
                     registrarCreditoRequestDTO.getInteresPorcentaje(),
                     registrarCreditoRequestDTO.getFechaCuota(),
                     registrarCreditoRequestDTO.getFechaCredito()
             );
 
             Double cuotaCapital = calcularCuotaCapital(
-                    registrarCreditoRequestDTO.getCantidadPrestada(),
+                    registrarCreditoRequestDTO.getValorCredito(),
                     registrarCreditoRequestDTO.getCantidadCuotas());
 
             Double valorCuotas = cuotaCapital + (
                     registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
-                    registrarCreditoRequestDTO.getCantidadPrestada();
+                    registrarCreditoRequestDTO.getValorCredito();
 
             Double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
@@ -96,7 +90,7 @@ public class CreditoService {
                         .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
                         .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(cuotaCapital)
-                        .valorCredito(registrarCreditoRequestDTO.getCantidadPrestada())
+                        .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                         .valorInteres(interesPrimerCuota)
                         .interesPorcentaje(registrarCreditoRequestDTO.getInteresPorcentaje())
                         .credito(credito)
@@ -108,7 +102,7 @@ public class CreditoService {
                     .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas().toString())
                     .fechaPago(registrarCreditoRequestDTO.getFechaCuota().toString())
                     .valorPrimerCuota(valorPrimerCuota.toString())
-                    .valorCredito(registrarCreditoRequestDTO.getCantidadPrestada().toString())
+                    .valorCredito(registrarCreditoRequestDTO.getValorCredito().toString())
                     .valorCuotas(valorCuotas.toString())
                     .build();
 
@@ -126,9 +120,9 @@ public class CreditoService {
     public List<CreditoAllResponseDTO> allCreditos() {
 
         try {
-            List<Credito> creditos = creditoRepository.findAll();
+            List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
             List<CreditoAllResponseDTO> CreditoAllResponseDTO = creditos.stream().map(
-                    credito -> Mapper.mapper.creditoToCreditoAllResponseDTO(credito)).collect(Collectors.toList());
+                    Mapper.mapper::creditoToCreditoAllResponseDTO).collect(Collectors.toList());
 
             return CreditoAllResponseDTO;
         } catch (RuntimeException ex) {
@@ -157,6 +151,33 @@ public class CreditoService {
         ).collect(Collectors.toList());*/
 
         return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
+
+    }
+
+    public List<InfoClientesConCreditosActivosDTO> infoClientesConCreditosActivos() {
+        try {
+
+            List<Tuple> resultadoBD = creditoRepository.infoClientesConCreditosActivos() ;
+
+            List<InfoClientesConCreditosActivosDTO> listaClientes = resultadoBD.stream().map(
+                    info -> InfoClientesConCreditosActivosDTO.builder()
+                            .idCliente(Integer.parseInt(info.get("id_cliente").toString()))
+                            .nombres(info.get("nombres").toString())
+                            .apellidos(info.get("apellidos").toString())
+                            .cedula(info.get("cedula").toString())
+                            .fechaCredito(info.get("fecha_credito").toString())
+                            .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
+                            .build()
+            ).collect(Collectors.toList());
+            log.info(listaClientes.toString());
+
+            return listaClientes;
+
+        } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
 
     }
 

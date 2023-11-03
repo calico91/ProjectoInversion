@@ -46,6 +46,9 @@ public class CuotaCredito {
     @Column(name = "fecha_abono")
     private LocalDate fechaAbono;
 
+    @Column(name = "tipo_abono")
+    private String tipoAbono;
+
     @ManyToOne(targetEntity = Credito.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_credito")
     private Credito credito;

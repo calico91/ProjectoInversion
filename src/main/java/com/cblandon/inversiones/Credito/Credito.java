@@ -28,6 +28,10 @@ public class Credito {
     @Column(nullable = false)
     private String estadoCredito;
 
+    @Column(nullable = false)
+    private Double valorCredito;
+
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_credito", nullable = false)
     private LocalDate fechaCredito;
