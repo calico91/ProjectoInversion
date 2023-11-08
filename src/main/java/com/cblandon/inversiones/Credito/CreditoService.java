@@ -39,13 +39,12 @@ public class CreditoService {
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        System.out.println(registrarCreditoRequestDTO.toString());
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
+
         if (clienteBD == null) {
             log.error(Constantes.CLIENTE_NO_CREADO);
             throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
         }
-
         if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota()) ||
                 registrarCreditoRequestDTO.getFechaCredito().equals(registrarCreditoRequestDTO.getFechaCuota())) {
 
@@ -55,7 +54,15 @@ public class CreditoService {
 
         try {
 
-            Credito credito = Mapper.mapper.registrarCreditoRequestDTOToCredito(registrarCreditoRequestDTO);
+            Credito credito = Credito.builder()
+                    .fechaCredito(registrarCreditoRequestDTO.getFechaCredito())
+                    .valorCredito(registrarCreditoRequestDTO.getValorCredito())
+                    .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
+                    .estadoCredito(Constantes.CREDITO_ACTIVO)
+                    .cliente(clienteBD)
+                    .build();
+            
+            credito = creditoRepository.save(credito);
 
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
                     registrarCreditoRequestDTO.getValorCredito(),
@@ -74,11 +81,7 @@ public class CreditoService {
 
             Double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
-            credito.setUsuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName());
-            credito.setEstadoCredito(Constantes.CREDITO_ACTIVO);
-            credito.setCliente(clienteBD);
 
-            credito = creditoRepository.save(credito);
 
             /// cuando se registra un credito, se crea la primer cuota
             if (credito.getId() != null) {
@@ -110,6 +113,7 @@ public class CreditoService {
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
@@ -154,10 +158,10 @@ public class CreditoService {
 
     }
 
-    public List<InfoClientesConCreditosActivosDTO> infoClientesConCreditosActivos() {
+    public List<InfoClientesConCreditosActivosDTO> infoCreditosActivos() {
         try {
 
-            List<Tuple> resultadoBD = creditoRepository.infoClientesConCreditosActivos() ;
+            List<Tuple> resultadoBD = creditoRepository.infoClientesConCreditosActivos();
 
             List<InfoClientesConCreditosActivosDTO> listaClientes = resultadoBD.stream().map(
                     info -> InfoClientesConCreditosActivosDTO.builder()
@@ -197,6 +201,7 @@ public class CreditoService {
             Double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito) {
         fechaCredito = fechaCredito == null ? LocalDate.now() : fechaCredito;
         Long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
+        diasDiferencia = diasDiferencia == 31 ? 30 : diasDiferencia;
         Double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
 
         return Math.rint(interesCredito);

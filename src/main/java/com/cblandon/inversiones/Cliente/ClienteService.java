@@ -44,16 +44,11 @@ public class ClienteService {
 
     }
 
-    public List<ClienteAllResponseDTO> allClientes(String clientesCreditosActivos) {
+    public List<ClienteAllResponseDTO> allClientes() {
         try {
-            List<Cliente> clientes;
-            System.out.println(clientesCreditosActivos);
-            if (clientesCreditosActivos.contains(Constantes.TRUE)) {
-                clientes = clienteRepository.clientesCreditosActivos();
-            } else {
-                clientes = clienteRepository.findAll();
 
-            }
+            List<Cliente> clientes = clienteRepository.findAll();
+
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());

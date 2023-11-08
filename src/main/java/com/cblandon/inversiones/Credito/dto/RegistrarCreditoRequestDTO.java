@@ -15,8 +15,6 @@ import java.util.Date;
 @Builder
 
 public class RegistrarCreditoRequestDTO {
-    private Double valorCredito;
-
     private Double interesPorcentaje;
 
     private Integer cantidadCuotas;
@@ -28,4 +26,7 @@ public class RegistrarCreditoRequestDTO {
 
     //@JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaCredito;
+
+    private Double valorCredito;
+
 }

@@ -27,10 +27,10 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/consultarClientes/{clientesCreditosActivos}")
+    @GetMapping("/consultarClientes")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarClientes(@PathVariable String clientesCreditosActivos) {
-        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, clienteService.allClientes(clientesCreditosActivos));
+    public ResponseEntity<?> consultarClientes() {
+        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, clienteService.allClientes());
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
