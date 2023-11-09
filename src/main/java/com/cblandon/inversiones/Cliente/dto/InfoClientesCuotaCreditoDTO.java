@@ -20,6 +20,7 @@ public class InfoClientesCuotaCreditoDTO {
     private String fechaAbono;
     private String fechaCuota;
     private Double valorCuota;
+    private Double valorInteres;
     private Integer idCredito;
 
 }

@@ -146,6 +146,7 @@ public class ClienteService {
                             .cedula(info.get("cedula").toString())
                             .fechaCredito(info.get("fecha_credito").toString())
                             .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
+                            .valorInteres(Double.parseDouble(info.get("valor_interes").toString()))
                             .fechaAbono((String) info.get("fecha_abono"))
                             .fechaCuota(info.get("fecha_cuota").toString())
                             .valorCuota(Double.parseDouble(info.get("valor_cuota").toString()))
