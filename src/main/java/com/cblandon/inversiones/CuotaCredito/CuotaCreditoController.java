@@ -29,11 +29,12 @@ public class CuotaCreditoController {
                         idCuotaCredito, pagarCuotaRequestDTO, soloInteres));
     }
 
-    @GetMapping("/infoCuotaCreditoCliente/{idCliente}")
-    public ResponseEntity<?> infoCuotaCreditoCliente(@PathVariable Integer idCliente) {
+    @GetMapping("/infoCuotaCreditoCliente/{idCliente}/{idCredito}")
+    public ResponseEntity<?> infoCuotaCreditoCliente(
+            @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
                 "successful",
-                HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente));
+                HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente, idCredito));
     }
 
 

@@ -96,9 +96,9 @@ public class CuotaCreditoService {
 
     }
 
-    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente) {
+    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente,Integer idCredito) {
         try {
-            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente);
+            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente,idCredito);
             log.info(infoCuotaCreditoClienteRes.toString());
 
             return CuotaCreditoMapper.
