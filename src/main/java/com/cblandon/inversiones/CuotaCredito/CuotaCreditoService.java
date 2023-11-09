@@ -31,7 +31,7 @@ public class CuotaCreditoService {
     public Map<String, String> pagarCuota(
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO, boolean soloInteres)
             throws NoDataException {
-
+        log.info(pagarCuotaRequestDTO.toString());
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
@@ -54,6 +54,7 @@ public class CuotaCreditoService {
             }
 
             cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
+            cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
             if (cuotaCancelada.getValorAbonado() != null &&
@@ -96,9 +97,9 @@ public class CuotaCreditoService {
 
     }
 
-    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente,Integer idCredito) {
+    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
-            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente,idCredito);
+            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente, idCredito);
             log.info(infoCuotaCreditoClienteRes.toString());
 
             return CuotaCreditoMapper.
