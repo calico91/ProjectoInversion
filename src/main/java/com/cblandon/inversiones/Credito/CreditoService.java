@@ -2,7 +2,6 @@ package com.cblandon.inversiones.Credito;
 
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.ClienteRepository;
-import com.cblandon.inversiones.Cliente.dto.InfoClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.Credito.dto.*;
 import com.cblandon.inversiones.CuotaCredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
@@ -61,7 +60,7 @@ public class CreditoService {
                     .estadoCredito(Constantes.CREDITO_ACTIVO)
                     .cliente(clienteBD)
                     .build();
-            
+
             credito = creditoRepository.save(credito);
 
             Double interesPrimerCuota = calcularInteresPrimeraCuota(

@@ -12,6 +12,7 @@ import com.cblandon.inversiones.Utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,7 @@ public class ClienteService {
     public List<ClienteAllResponseDTO> allClientes() {
         try {
 
-            List<Cliente> clientes = clienteRepository.findAll();
+            List<Cliente> clientes = clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
