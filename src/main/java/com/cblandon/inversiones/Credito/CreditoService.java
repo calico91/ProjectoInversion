@@ -81,7 +81,6 @@ public class CreditoService {
             Double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
 
-
             /// cuando se registra un credito, se crea la primer cuota
             if (credito.getId() != null) {
 
@@ -157,14 +156,15 @@ public class CreditoService {
 
     }
 
-    public List<InfoClientesConCreditosActivosDTO> infoCreditosActivos() {
+    public List<InfoCreditosActivosDTO> infoCreditosActivos() {
         try {
 
             List<Tuple> resultadoBD = creditoRepository.infoClientesConCreditosActivos();
 
-            List<InfoClientesConCreditosActivosDTO> listaClientes = resultadoBD.stream().map(
-                    info -> InfoClientesConCreditosActivosDTO.builder()
+            List<InfoCreditosActivosDTO> listaClientes = resultadoBD.stream().map(
+                    info -> InfoCreditosActivosDTO.builder()
                             .idCliente(Integer.parseInt(info.get("id_cliente").toString()))
+                            .idCredito(Integer.parseInt(info.get("id_credito").toString()))
                             .nombres(info.get("nombres").toString())
                             .apellidos(info.get("apellidos").toString())
                             .cedula(info.get("cedula").toString())

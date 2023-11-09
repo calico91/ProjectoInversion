@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InfoClientesConCreditosActivosDTO {
+public class InfoCreditosActivosDTO {
 
     private Integer idCliente;
+    private Integer idCredito;
     private String nombres;
     private String apellidos;
     private String cedula;
