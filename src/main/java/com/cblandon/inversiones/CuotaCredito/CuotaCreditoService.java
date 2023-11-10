@@ -1,13 +1,17 @@
 package com.cblandon.inversiones.CuotaCredito;
 
 
+import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
+import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
+import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 
+import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,7 +19,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @Slf4j
@@ -128,6 +136,49 @@ public class CuotaCreditoService {
         Double interesCredito = valorPrestado * (interesPorcentaje / 100);
 
         return Math.rint(interesCredito);
+    }
+
+    public double calcularInteresActual(Integer idCredito) {
+        try {
+            List<Tuple> cuotas = cuotaCreditoRepository.infoCuotasPagadas(idCredito);
+
+            List<CuotasCreditoDTO> cuotasCreditoDTO = cuotas.stream().map(
+                    cuota -> CuotasCreditoDTO.builder()
+                            .fechaCredito(LocalDate.parse(cuota.get("fecha_credito").toString()))
+                            .id(Integer.parseInt(cuota.get("id_cuota_credito").toString()))
+                            .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
+                            .fechaCuota(LocalDate.parse(cuota.get("fecha_cuota").toString()))
+                            .interesPorcentaje(Double.parseDouble(cuota.get("interes_porcentaje").toString()))
+                            .numeroCuotas(Integer.parseInt(cuota.get("numero_cuotas").toString()))
+                            .valorCapital(Double.parseDouble(cuota.get("valor_capital").toString()))
+                            .valorCredito(Double.parseDouble(cuota.get("valor_credito").toString()))
+                            .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
+                            .build()).collect(Collectors.toList());
+
+            return calcularInteresActual(cuotasCreditoDTO);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+
+
+    }
+
+    private Double calcularInteresActual(List<CuotasCreditoDTO> listaCuotas) {
+        Long diasDiferencia = 1L;
+        Double interesActual = 0.0;
+
+        if (listaCuotas.size() == 1) {
+            diasDiferencia = DAYS.between(listaCuotas.get(0).getFechaCredito(), LocalDate.now());
+            interesActual = ((listaCuotas.get(0).getValorCredito() * (listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+
+        } else {
+            diasDiferencia = DAYS.between(listaCuotas.get(1).getFechaCuota(), LocalDate.now());
+            interesActual = ((listaCuotas.get(1).getValorCredito() * (listaCuotas.get(1).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+
+        }
+        return Math.rint(interesActual);
+
     }
 
 }

@@ -37,5 +37,13 @@ public class CuotaCreditoController {
                 HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente, idCredito));
     }
 
+    @GetMapping("/p/{idCredito}")
+    public ResponseEntity<?> p(
+            @PathVariable Integer idCredito) {
+        return new ResponseHandler().generateResponse(
+                "successful",
+                HttpStatus.OK, cuotaCreditoService.calcularInteresActual(idCredito));
+    }
+
 
 }

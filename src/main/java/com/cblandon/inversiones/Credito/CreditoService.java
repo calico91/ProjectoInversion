@@ -190,11 +190,6 @@ public class CreditoService {
         return Math.rint(cuotaCapital);
     }
 
-    private Double calcularInteres(Double valorPrestado, Integer cantidadCuotas, Double interesPorcentaje) {
-        Double cuotaCapital = (valorPrestado / cantidadCuotas) + (interesPorcentaje / 100);
-
-        return Math.rint(cuotaCapital);
-    }
 
     private Double calcularInteresPrimeraCuota(
             Double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito) {
