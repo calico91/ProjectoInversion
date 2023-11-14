@@ -22,11 +22,10 @@ public class CuotaCreditoController {
     @PutMapping("/pagarCuota/{idCuotaCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<?> pagarCuota(
-            @RequestParam("soloInteres") final boolean soloInteres,
             @PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return new ResponseHandler().generateResponse(
                 "Cuota cancelada correctamente", HttpStatus.OK, cuotaCreditoService.pagarCuota(
-                        idCuotaCredito, pagarCuotaRequestDTO, soloInteres));
+                        idCuotaCredito, pagarCuotaRequestDTO));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}/{idCredito}")

@@ -15,4 +15,7 @@ public class Constantes {
     public static final String FALSE = "F";
     public static final String ERROR_FECHAS = "Fecha credito no puede ser mayor o igual a fecha cuota";
     public static final String ERROR_CUOTA = "Valor abonado no puede ser menor al valor de la cuota";
+    public static final String CUOTA_NORMAL = "CN";
+    public static final String SOLO_INTERES = "SI";
+    public static final String ABONO_CAPITAL = "AC";
 }
