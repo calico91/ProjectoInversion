@@ -203,7 +203,6 @@ public class CuotaCreditoService {
 
             double capitalPagado = cuotas.stream().mapToDouble(
                     valorCapital -> Double.parseDouble(valorCapital.get("valor_capital").toString())).sum();
-            System.out.println(capitalPagado);
             infoCreditoySaldo.get(0).setCapitalPagado(capitalPagado);
 
             Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
@@ -263,7 +262,6 @@ public class CuotaCreditoService {
         mapRespuesta.put("interesActual", Math.rint(interesActual));
         mapRespuesta.put("saldoCredito", Math.rint(saldoCredito));
         mapRespuesta.put("ultimaCuotaPagada", ultimaCuotaPagada);
-        System.out.println(mapRespuesta.toString());
 
         return mapRespuesta;
     }
