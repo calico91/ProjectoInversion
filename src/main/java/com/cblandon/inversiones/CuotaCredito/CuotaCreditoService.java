@@ -1,6 +1,8 @@
 package com.cblandon.inversiones.CuotaCredito;
 
 
+import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.Credito.CreditoRepository;
 import com.cblandon.inversiones.CuotaCredito.dto.InfoCreditoySaldo;
 import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
@@ -16,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
@@ -28,15 +27,18 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Service
 @Slf4j
 public class CuotaCreditoService {
+    private final CreditoRepository creditoRepository;
     private final CuotaCreditoRepository cuotaCreditoRepository;
 
-    public CuotaCreditoService(CuotaCreditoRepository cuotaCreditoRepository) {
+    public CuotaCreditoService(CuotaCreditoRepository cuotaCreditoRepository,
+                               CreditoRepository creditoRepository) {
         this.cuotaCreditoRepository = cuotaCreditoRepository;
+        this.creditoRepository = creditoRepository;
     }
 
     Map<String, Object> mapRespuesta = new HashMap<>();
 
-    /// pagar cuota normal o solo interes
+    /// pagar cuota normal,solo interes o solo capital, dependiendo el tipo de abono
     public Map<String, Object> pagarCuota(
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
@@ -67,6 +69,7 @@ public class CuotaCreditoService {
             cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
+
             if (cuotaCancelada.getValorAbonado() != null &&
                     cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()) {
 
@@ -92,6 +95,13 @@ public class CuotaCreditoService {
                 cuotaCreditoRepository.save(nuevaCuota);
 
             } else {
+                Credito credito = creditoRepository.findById(cuotaCancelada.getCredito().getId())
+                        .orElseThrow(() -> new NoDataException(
+                                Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+
+                credito.setEstadoCredito("C");
+                creditoRepository.save(credito);
+
                 mapRespuesta.put("estadoCredito", "credito cancelado");
             }
             mapRespuesta.put("estadoCuota", "cuota cancelada correctamente");
@@ -109,60 +119,6 @@ public class CuotaCreditoService {
 
     }
 
-    /// abonar capital solo a capital
-    public Map<String, Object> pagarCapital(
-            Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
-            throws NoDataException {
-        CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-
-        if (cuotaCreditoDB.getFechaAbono() != null) {
-            throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
-        }
-        if (pagarCuotaRequestDTO.getValorAbonado() < cuotaCreditoDB.getValorCuota()) {
-            throw new RequestException(Constantes.ERROR_CUOTA, HttpStatus.BAD_REQUEST.value());
-        }
-
-        try {
-
-            cuotaCreditoDB.setValorInteres(0.0);
-            cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
-            cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
-
-            cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
-            cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
-            CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
-
-            if (cuotaCancelada.getValorAbonado() != null &&
-                    cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()) {
-
-                Double interesCredito = calcularInteresCredito(
-                        cuotaCancelada.getValorCredito(), cuotaCancelada.getInteresPorcentaje());
-                CuotaCredito nuevaCuota = CuotaCredito.builder().build();
-
-                nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
-                nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero());
-
-                nuevaCuota.setValorCuota(interesCredito + (cuotaCancelada.getValorCredito() / cuotaCreditoDB.getNumeroCuotas()));
-                nuevaCuota.setCredito(cuotaCancelada.getCredito());
-                nuevaCuota.setNumeroCuotas(cuotaCancelada.getNumeroCuotas());
-                nuevaCuota.setValorCredito(cuotaCancelada.getValorCredito());
-                nuevaCuota.setInteresPorcentaje(cuotaCancelada.getInteresPorcentaje());
-                nuevaCuota.setValorCapital(0.0);
-                nuevaCuota.setValorInteres(interesCredito);
-
-                cuotaCreditoRepository.save(nuevaCuota);
-
-            } else {
-                mapRespuesta.put("estadoCredito", "credito cancelado");
-            }
-
-            return mapRespuesta;
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
-
-    }
 
     /// cuotas que no se han pagado hasta la fecha
     public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
@@ -243,6 +199,7 @@ public class CuotaCreditoService {
         Double interesActual = 0.0;
         Double saldoCredito = 0.0;
         String ultimaCuotaPagada = "";
+
 
         if (listaCuotas.size() == 1) {
             diasDiferencia = DAYS.between(listaCuotas.get(0).getFechaCredito(), LocalDate.now());

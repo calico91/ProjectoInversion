@@ -17,6 +17,7 @@ public class PagarCuotaRequestDTO {
     //@JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaAbono;
     private String tipoAbono;
+    private String estadoCredito;
 
 
 }
