@@ -37,12 +37,12 @@ public class CuotaCreditoController {
                 HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente, idCredito));
     }
 
-    @GetMapping("/p/{idCredito}")
-    public ResponseEntity<?> p(
+    @GetMapping("/infoCreditoySaldo/{idCredito}")
+    public ResponseEntity<?> infoCreditoySaldo(
             @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
                 "successful",
-                HttpStatus.OK, cuotaCreditoService.calcularInteresActual(idCredito));
+                HttpStatus.OK, cuotaCreditoService.infoCreditoySaldo(idCredito));
     }
 
 

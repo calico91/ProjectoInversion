@@ -1,7 +1,5 @@
 package com.cblandon.inversiones.CuotaCredito.dto;
 
-import com.cblandon.inversiones.Credito.Credito;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,7 +9,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CuotasCreditoDTO {
+public class InfoCreditoySaldo {
 
 
     private Integer id;
@@ -20,9 +18,7 @@ public class CuotasCreditoDTO {
     private LocalDate fechaCuota;
     private Integer numeroCuotas;
     private Integer cuotaNumero;
-    private Double valorAbonado;
 
-    private Double valorCapital;
 
     private Double valorInteres;
 
@@ -30,11 +26,13 @@ public class CuotasCreditoDTO {
 
     private Double interesPorcentaje;
 
-    private LocalDate fechaAbono;
-
-    private String tipoAbono;
-
     private LocalDate fechaCredito;
+
+    private Double interesHoy;
+
+    private Double saldoCredito;
+    private Double capitalPagado;
+    private String ultimaCuotaPagada;
 
 
 }

@@ -1,14 +1,12 @@
 package com.cblandon.inversiones.CuotaCredito;
 
 
-import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
-import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoDTO;
+import com.cblandon.inversiones.CuotaCredito.dto.InfoCreditoySaldo;
 import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
-import com.cblandon.inversiones.Mapper.Mapper;
 import com.cblandon.inversiones.Utils.Constantes;
 
 import jakarta.persistence.Tuple;
@@ -18,10 +16,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -34,9 +34,9 @@ public class CuotaCreditoService {
         this.cuotaCreditoRepository = cuotaCreditoRepository;
     }
 
-    Map<String, String> mapRespuesta = new HashMap<>();
+    Map<String, Object> mapRespuesta = new HashMap<>();
 
-    public Map<String, String> pagarCuota(
+    public Map<String, Object> pagarCuota(
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO, boolean soloInteres)
             throws NoDataException {
         log.info(pagarCuotaRequestDTO.toString());
@@ -58,7 +58,7 @@ public class CuotaCreditoService {
                 cuotaCreditoDB.setValorCapital(0.0);
             } else {
                 cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
-
+                cuotaCreditoDB.setValorCapital(cuotaCreditoDB.getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
             }
 
             cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
@@ -83,7 +83,7 @@ public class CuotaCreditoService {
                 nuevaCuota.setNumeroCuotas(cuotaCancelada.getNumeroCuotas());
                 nuevaCuota.setValorCredito(cuotaCancelada.getValorCredito());
                 nuevaCuota.setInteresPorcentaje(cuotaCancelada.getInteresPorcentaje());
-                nuevaCuota.setValorCapital(cuotaCancelada.getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
+                nuevaCuota.setValorCapital(0.0);
                 nuevaCuota.setValorInteres(interesCredito);
 
                 cuotaCreditoRepository.save(nuevaCuota);
@@ -122,6 +122,44 @@ public class CuotaCreditoService {
 
     }
 
+    public InfoCreditoySaldo infoCreditoySaldo(Integer idCredito) {
+        try {
+            List<Tuple> cuotas = cuotaCreditoRepository.infoCuotasPagadas(idCredito);
+
+            List<InfoCreditoySaldo> infoCreditoySaldo = cuotas.stream().map(
+                    cuota -> InfoCreditoySaldo.builder()
+                            .fechaCredito(LocalDate.parse(cuota.get("fecha_credito").toString()))
+                            .id(Integer.parseInt(cuota.get("id_cuota_credito").toString()))
+                            .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
+                            .fechaCuota(LocalDate.parse(cuota.get("fecha_cuota").toString()))
+                            .interesPorcentaje(Double.parseDouble(cuota.get("interes_porcentaje").toString()))
+                            .numeroCuotas(Integer.parseInt(cuota.get("numero_cuotas").toString()))
+                            .valorCredito(Double.parseDouble(cuota.get("valor_credito").toString()))
+                            .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
+                            .valorCuota(Double.parseDouble(cuota.get("valor_cuota").toString()))
+                            .build()).collect(Collectors.toList());
+
+            double capitalPagado = cuotas.stream().mapToDouble(
+                    valorCapital -> Double.parseDouble(valorCapital.get("valor_capital").toString())).sum();
+            System.out.println(capitalPagado);
+            infoCreditoySaldo.get(0).setCapitalPagado(capitalPagado);
+
+            Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
+            infoCreditoySaldo.get(0).setInteresHoy((Double) datosCredito.get("interesActual"));
+            infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
+            infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
+
+
+            return infoCreditoySaldo.get(0);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+
+
+    }
+
+
     private LocalDate calcularFechaProximaCuota(String fechaCuotaAnterior) {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -138,47 +176,34 @@ public class CuotaCreditoService {
         return Math.rint(interesCredito);
     }
 
-    public double calcularInteresActual(Integer idCredito) {
-        try {
-            List<Tuple> cuotas = cuotaCreditoRepository.infoCuotasPagadas(idCredito);
 
-            List<CuotasCreditoDTO> cuotasCreditoDTO = cuotas.stream().map(
-                    cuota -> CuotasCreditoDTO.builder()
-                            .fechaCredito(LocalDate.parse(cuota.get("fecha_credito").toString()))
-                            .id(Integer.parseInt(cuota.get("id_cuota_credito").toString()))
-                            .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
-                            .fechaCuota(LocalDate.parse(cuota.get("fecha_cuota").toString()))
-                            .interesPorcentaje(Double.parseDouble(cuota.get("interes_porcentaje").toString()))
-                            .numeroCuotas(Integer.parseInt(cuota.get("numero_cuotas").toString()))
-                            .valorCapital(Double.parseDouble(cuota.get("valor_capital").toString()))
-                            .valorCredito(Double.parseDouble(cuota.get("valor_credito").toString()))
-                            .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
-                            .build()).collect(Collectors.toList());
-
-            return calcularInteresActual(cuotasCreditoDTO);
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex.getMessage());
-        }
-
-
-    }
-
-    private Double calcularInteresActual(List<CuotasCreditoDTO> listaCuotas) {
+    private Map<String, Object> calcularInteresActualySaldo(List<InfoCreditoySaldo> listaCuotas) {
         Long diasDiferencia = 1L;
         Double interesActual = 0.0;
+        Double saldoCredito = 0.0;
+        String ultimaCuotaPagada = "";
 
         if (listaCuotas.size() == 1) {
             diasDiferencia = DAYS.between(listaCuotas.get(0).getFechaCredito(), LocalDate.now());
             interesActual = ((listaCuotas.get(0).getValorCredito() * (listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
-
+            saldoCredito = interesActual + (
+                    listaCuotas.get(0).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
+            ultimaCuotaPagada = listaCuotas.get(0).getFechaCredito().toString();
         } else {
+
             diasDiferencia = DAYS.between(listaCuotas.get(1).getFechaCuota(), LocalDate.now());
             interesActual = ((listaCuotas.get(1).getValorCredito() * (listaCuotas.get(1).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
-
+            saldoCredito = interesActual + (
+                    listaCuotas.get(1).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
+            ultimaCuotaPagada = listaCuotas.get(1).getFechaCuota().toString();
         }
-        return Math.rint(interesActual);
 
+        mapRespuesta.put("interesActual", Math.rint(interesActual));
+        mapRespuesta.put("saldoCredito", Math.rint(saldoCredito));
+        mapRespuesta.put("ultimaCuotaPagada", ultimaCuotaPagada);
+        System.out.println(mapRespuesta.toString());
+
+        return mapRespuesta;
     }
 
 }
