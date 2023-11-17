@@ -19,5 +19,7 @@ public class PagarCuotaRequestDTO {
     private String tipoAbono;
     private String estadoCredito;
 
+    private boolean abonoExtra;
+
 
 }

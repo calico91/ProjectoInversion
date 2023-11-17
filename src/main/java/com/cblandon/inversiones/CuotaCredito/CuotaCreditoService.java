@@ -46,9 +46,9 @@ public class CuotaCreditoService {
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
-        if (cuotaCreditoDB.getFechaAbono() != null) {
+       /* if (cuotaCreditoDB.getFechaAbono() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
-        }
+        }*/
 
 
         Integer cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
@@ -69,15 +69,23 @@ public class CuotaCreditoService {
             cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
-
+            ///si la cantidad de cuotas pagadas es mayor o igual a la cuotas pactadas
+            /// o se envia la constante C, el credito con esta cuota queda saldado
             if (cuotaCancelada.getValorAbonado() != null &&
-                    cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()) {
+                    cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()
+                    && !pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
 
                 Double interesCredito = calcularInteresCredito(
                         cuotaCancelada.getValorCredito(), cuotaCancelada.getInteresPorcentaje());
                 CuotaCredito nuevaCuota = CuotaCredito.builder().build();
 
-                nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
+                ///si es un abono extraordinario, no cambia la fecha de la proxima cuota
+                if (pagarCuotaRequestDTO.isAbonoExtra()) {
+                    nuevaCuota.setFechaCuota(cuotaCreditoDB.getFechaCuota());
+                } else {
+                    nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
+
+                }
                 if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                         pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
                     nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero());
@@ -95,18 +103,21 @@ public class CuotaCreditoService {
                 cuotaCreditoRepository.save(nuevaCuota);
 
             } else {
+                System.out.println("entre a saldar credito");
                 Credito credito = creditoRepository.findById(cuotaCancelada.getCredito().getId())
                         .orElseThrow(() -> new NoDataException(
                                 Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
-                credito.setEstadoCredito("C");
+                credito.setEstadoCredito(Constantes.CREDITO_PAGADO);
                 creditoRepository.save(credito);
 
-                mapRespuesta.put("estadoCredito", "credito cancelado");
+                mapRespuesta.put("estadoCredito", "Credito pagado en su totalidad");
             }
-            mapRespuesta.put("estadoCuota", "cuota cancelada correctamente");
+            mapRespuesta.put("estadoCuota", "cuota pagada correctamente");
             mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas().toString());
-            if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES)) {
+
+            if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
+                    pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
                 mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres.toString());
             } else {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero().toString());
@@ -153,9 +164,11 @@ public class CuotaCreditoService {
                             .interesPorcentaje(Double.parseDouble(cuota.get("interes_porcentaje").toString()))
                             .numeroCuotas(Integer.parseInt(cuota.get("numero_cuotas").toString()))
                             .valorCredito(Double.parseDouble(cuota.get("valor_credito").toString()))
-                            .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
                             .valorCuota(Double.parseDouble(cuota.get("valor_cuota").toString()))
                             .build()).collect(Collectors.toList());
+
+            infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
+                    infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
 
             double capitalPagado = cuotas.stream().mapToDouble(
                     valorCapital -> Double.parseDouble(valorCapital.get("valor_capital").toString())).sum();
@@ -166,7 +179,7 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
 
-
+            log.info(infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
         } catch (RuntimeException ex) {
             ex.printStackTrace();
@@ -203,14 +216,18 @@ public class CuotaCreditoService {
 
         if (listaCuotas.size() == 1) {
             diasDiferencia = DAYS.between(listaCuotas.get(0).getFechaCredito(), LocalDate.now());
-            interesActual = ((listaCuotas.get(0).getValorCredito() * (listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+            interesActual = ((listaCuotas.get(0).getValorCredito() * (
+                    listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+            interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
             saldoCredito = interesActual + (
                     listaCuotas.get(0).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
             ultimaCuotaPagada = listaCuotas.get(0).getFechaCredito().toString();
         } else {
 
             diasDiferencia = DAYS.between(listaCuotas.get(1).getFechaCuota(), LocalDate.now());
-            interesActual = ((listaCuotas.get(1).getValorCredito() * (listaCuotas.get(1).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+            interesActual = ((listaCuotas.get(1).getValorCredito() * (
+                    listaCuotas.get(1).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+            interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
             saldoCredito = interesActual + (
                     listaCuotas.get(1).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
             ultimaCuotaPagada = listaCuotas.get(1).getFechaCuota().toString();

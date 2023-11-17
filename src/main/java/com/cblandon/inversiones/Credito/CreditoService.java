@@ -90,7 +90,7 @@ public class CreditoService {
                         .cuotaNumero(1)
                         .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
                         .valorCuota(cuotaCapital + interesPrimerCuota)
-                        .valorCapital(cuotaCapital)
+                        .valorCapital(0.0)
                         .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                         .valorInteres(interesPrimerCuota)
                         .interesPorcentaje(registrarCreditoRequestDTO.getInteresPorcentaje())

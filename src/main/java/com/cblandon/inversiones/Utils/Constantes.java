@@ -18,4 +18,5 @@ public class Constantes {
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
     public static final String ABONO_CAPITAL = "AC";
+    public static final String CREDITO_PAGADO = "C";
 }
