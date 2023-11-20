@@ -49,6 +49,9 @@ public class CuotaCredito {
     @Column(name = "tipo_abono")
     private String tipoAbono;
 
+    @Column(name = "abono_extra")
+    private Boolean abonoExtra;
+
     @ManyToOne(targetEntity = Credito.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_credito")
     private Credito credito;
