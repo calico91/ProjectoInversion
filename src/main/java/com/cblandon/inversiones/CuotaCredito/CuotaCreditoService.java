@@ -72,8 +72,11 @@ public class CuotaCreditoService {
             ///si la cantidad de cuotas pagadas es mayor o igual a la cuotas pactadas
             /// o se envia la constante C, el credito con esta cuota queda saldado
             if (cuotaCancelada.getValorAbonado() != null &&
-                    cuotaCancelada.getCuotaNumero() <= cuotaCancelada.getNumeroCuotas()
-                    && !pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
+                    cuotaCancelada.getCuotaNumero() < cuotaCancelada.getNumeroCuotas()) {
+                pagarCuotaRequestDTO.setEstadoCredito(Constantes.CREDITO_PAGADO);
+
+            }
+            if (!pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
 
                 Double interesCredito = calcularInteresCredito(
                         cuotaCancelada.getValorCredito(), cuotaCancelada.getInteresPorcentaje());
@@ -88,7 +91,7 @@ public class CuotaCreditoService {
                 }
                 if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                         pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-                    nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero());
+                    nuevaCuota.setCuotaNumero(cuotaCreditoDB.getCuotaNumero());
                 } else {
                     nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero() + 1);
                 }
