@@ -44,9 +44,34 @@ public class CuotaCreditoService {
         log.info(pagarCuotaRequestDTO.toString());
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-
+        System.out.println(cuotaCreditoDB.getCredito().getId());
         if (cuotaCreditoDB.getFechaAbono() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
+        }
+
+        List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.findByCreditoEqualsOrderByIdDesc(
+                cuotaCreditoDB.getCredito());
+
+        double capitalPagado = cuotasPagas.stream().mapToDouble(
+                        valorCapital -> valorCapital.getValorCapital())
+                .sum();
+        System.out.println(capitalPagado);
+
+        Long diasDiferencia = DAYS.between(cuotasPagas.get(1).getFechaCuota(), LocalDate.now());
+        System.out.println("dias" + diasDiferencia);
+        double interesActual = ((cuotaCreditoDB.getValorCredito() * (
+                cuotaCreditoDB.getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+        System.out.println(interesActual);
+
+        Double saldoCredito = interesActual + (
+                cuotaCreditoDB.getValorCredito() - capitalPagado);
+        if (saldoCredito < cuotaCreditoDB.getValorCredito() / cuotaCreditoDB.getNumeroCuotas()) {
+            System.out.println("realice el saldo del credito");
+        }
+
+        System.out.println(saldoCredito);
+        if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.CUOTA_NORMAL)) {
+            throw new RequestException("por aqui no puede pagar", HttpStatus.BAD_REQUEST.value());
         }
 
         Integer cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
@@ -92,7 +117,7 @@ public class CuotaCreditoService {
                 CuotaCredito nuevaCuota = CuotaCredito.builder().build();
 
                 ///si es un abono extraordinario, no cambia la fecha de la proxima cuota
-                if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
+                if (pagarCuotaRequestDTO.isAbonoExtra()) {
                     nuevaCuota.setFechaCuota(cuotaCreditoDB.getFechaCuota());
                 } else {
                     nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
@@ -135,8 +160,8 @@ public class CuotaCreditoService {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero().toString());
             }
             return mapRespuesta;
-        } catch (
-                RuntimeException ex) {
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -240,10 +265,9 @@ public class CuotaCreditoService {
         if (listaCuotas.size() != 1) {
             /// al realizar abonos extraordinarios, calcula mal el interes actual ya que no toma la
             /// fecha del ultimo pago, sino la fecha de la proxima cuota
-            if (listaCuotas.get(1).getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-                for (int i = 0; i < listaCuotas.size(); i++) {
-                    if (listaCuotas.get(i).getTipoAbono().equals(Constantes.CUOTA_NORMAL)
-                            || listaCuotas.get(i).getTipoAbono().equals(Constantes.SOLO_INTERES)) {
+            if (listaCuotas.get(1).getAbonoExtra()) {
+                for (int i = 1; i < listaCuotas.size(); i++) {
+                    if (!listaCuotas.get(i).getAbonoExtra()) {
                         index = i;
                         break;
                     }
@@ -262,8 +286,7 @@ public class CuotaCreditoService {
         diasDiferencia = DAYS.between(diaCalcularInteres, LocalDate.now());
 
         interesActual = ((listaCuotas.get(0).getValorCredito() * (
-                listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia)
-                - listaCuotas.get(0).getAbonoExtraPagado();
+                listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
 
         interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
         saldoCredito = interesActual + (
@@ -279,4 +302,35 @@ public class CuotaCreditoService {
         return mapRespuesta;
     }
 
+    //SELECT  ccr.* FROM apirest.cuota_credito ccr where ccr.fecha_abono IS NOT NULL and  MONTH(ccr.fecha_cuota)=11;
+
+    private Double calcularInteresActual(
+            LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje) {
+
+        Long diasDiferencia = DAYS.between(diaCalcularInteres, LocalDate.now());
+
+        Double interesActual = ((valorCredito * (
+                interesPorcentaje / 100) / 30) * diasDiferencia);
+
+        return interesActual;
+    }
+
+    private void calcularSaldoVSCuotaCapital(List<CuotaCredito> cuotasPagas) {
+        double capitalPagado = cuotasPagas.stream().mapToDouble(
+                        valorCapital -> valorCapital.getValorCapital())
+                .sum();
+        System.out.println(capitalPagado);
+
+        Long diasDiferencia = DAYS.between(cuotasPagas.get(1).getFechaCuota(), LocalDate.now());
+        System.out.println("dias" + diasDiferencia);
+        double interesActual = ((cuotasPagas.get(0).getValorCredito() * (
+                cuotasPagas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+        System.out.println(interesActual);
+
+        Double saldoCredito = interesActual + (
+                cuotasPagas.get(0).getValorCredito() - capitalPagado);
+        if (saldoCredito < cuotasPagas.get(0).getValorCredito() / cuotasPagas.get(0).getNumeroCuotas()) {
+            System.out.println("realice el saldo del credito");
+        }
+    }
 }

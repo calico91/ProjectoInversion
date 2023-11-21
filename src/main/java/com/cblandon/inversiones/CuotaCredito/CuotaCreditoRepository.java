@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.CuotaCredito;
 
+import com.cblandon.inversiones.Credito.Credito;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,6 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "   WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito desc;",
             nativeQuery = true)
     List<Tuple> infoCuotasPagadas(@Param("idCredito") Integer idCredito);
+
+    List<CuotaCredito> findByCreditoEqualsOrderByIdDesc(Credito idCredito);
 }
