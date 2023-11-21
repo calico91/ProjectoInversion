@@ -49,8 +49,8 @@ public class CuotaCreditoService {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
 
-
         Integer cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
+
         try {
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES)) {
 
@@ -61,6 +61,7 @@ public class CuotaCreditoService {
                 /// si el credito se paga en su totalidad, se separa el interes del capital
                 if (pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
                     cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorInteres());
+
                 } else {
                     cuotaCreditoDB.setValorInteres(0.0);
                 }
@@ -78,7 +79,7 @@ public class CuotaCreditoService {
 
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
-            ///si la cantidad de cuotas pagadas es mayor o igual a la cuotas pactadas
+            ///si la cantidad de cuotas pagadas es mayor a las cuotas pactadas
             /// o se envia la constante C, el credito con esta cuota queda saldado
             if (cuotaCancelada.getCuotaNumero() > cuotaCancelada.getNumeroCuotas()) {
                 pagarCuotaRequestDTO.setEstadoCredito(Constantes.CREDITO_PAGADO);
@@ -91,12 +92,12 @@ public class CuotaCreditoService {
                 CuotaCredito nuevaCuota = CuotaCredito.builder().build();
 
                 ///si es un abono extraordinario, no cambia la fecha de la proxima cuota
-                if (pagarCuotaRequestDTO.isAbonoExtra()) {
+                if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
                     nuevaCuota.setFechaCuota(cuotaCreditoDB.getFechaCuota());
                 } else {
                     nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
-
                 }
+
                 if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                         pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
                     nuevaCuota.setCuotaNumero(cuotaCreditoDB.getCuotaNumero());
