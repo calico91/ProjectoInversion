@@ -43,36 +43,15 @@ public class CuotaCreditoService {
             throws NoDataException {
         log.info(pagarCuotaRequestDTO.toString());
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-        System.out.println(cuotaCreditoDB.getCredito().getId());
+                .orElseThrow(() -> new NoDataException(
+                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+
         if (cuotaCreditoDB.getFechaAbono() != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
 
         List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.findByCreditoEqualsOrderByIdDesc(
                 cuotaCreditoDB.getCredito());
-
-        double capitalPagado = cuotasPagas.stream().mapToDouble(
-                        valorCapital -> valorCapital.getValorCapital())
-                .sum();
-        System.out.println(capitalPagado);
-
-        Long diasDiferencia = DAYS.between(cuotasPagas.get(1).getFechaCuota(), LocalDate.now());
-        System.out.println("dias" + diasDiferencia);
-        double interesActual = ((cuotaCreditoDB.getValorCredito() * (
-                cuotaCreditoDB.getInteresPorcentaje() / 100) / 30) * diasDiferencia);
-        System.out.println(interesActual);
-
-        Double saldoCredito = interesActual + (
-                cuotaCreditoDB.getValorCredito() - capitalPagado);
-        if (saldoCredito < cuotaCreditoDB.getValorCredito() / cuotaCreditoDB.getNumeroCuotas()) {
-            System.out.println("realice el saldo del credito");
-        }
-
-        System.out.println(saldoCredito);
-        if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.CUOTA_NORMAL)) {
-            throw new RequestException("por aqui no puede pagar", HttpStatus.BAD_REQUEST.value());
-        }
 
         Integer cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
 
@@ -94,6 +73,8 @@ public class CuotaCreditoService {
                 cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
 
             } else {
+                permitirPagarCuotaNormal(cuotasPagas);
+
                 cuotaCreditoDB.setValorCapital(cuotaCreditoDB.getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
             }
 
@@ -103,10 +84,11 @@ public class CuotaCreditoService {
             cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
 
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
-
+            
             ///si la cantidad de cuotas pagadas es mayor a las cuotas pactadas
             /// o se envia la constante C, el credito con esta cuota queda saldado
-            if (cuotaCancelada.getCuotaNumero() > cuotaCancelada.getNumeroCuotas()) {
+            if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.CUOTA_NORMAL)
+                    && cuotaCancelada.getCuotaNumero() >= cuotaCancelada.getNumeroCuotas()) {
                 pagarCuotaRequestDTO.setEstadoCredito(Constantes.CREDITO_PAGADO);
             }
 
@@ -256,10 +238,6 @@ public class CuotaCreditoService {
 
 
     private Map<String, Object> calcularInteresActualySaldo(List<InfoCreditoySaldo> listaCuotas) {
-        Long diasDiferencia = 1L;
-        Double interesActual = 0.0;
-        Double saldoCredito = 0.0;
-        String ultimaCuotaPagada = "";
         int index = 0;
 
         if (listaCuotas.size() != 1) {
@@ -278,21 +256,21 @@ public class CuotaCreditoService {
 
         }
 
-        System.out.println(index);
         LocalDate diaCalcularInteres = index == 0
                 ? listaCuotas.get(index).getFechaCredito()
                 : listaCuotas.get(index).getFechaCuota();
 
-        diasDiferencia = DAYS.between(diaCalcularInteres, LocalDate.now());
-
-        interesActual = ((listaCuotas.get(0).getValorCredito() * (
-                listaCuotas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
+        Double interesActual = calcularInteresActual(
+                diaCalcularInteres,
+                listaCuotas.get(0).getValorCredito(),
+                listaCuotas.get(0).getInteresPorcentaje());
 
         interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
-        saldoCredito = interesActual + (
+
+        Double saldoCredito = interesActual + (
                 listaCuotas.get(0).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
 
-        ultimaCuotaPagada = diaCalcularInteres.toString();
+        String ultimaCuotaPagada = diaCalcularInteres.toString();
 
 
         mapRespuesta.put("interesActual", Math.rint(interesActual));
@@ -315,22 +293,26 @@ public class CuotaCreditoService {
         return interesActual;
     }
 
-    private void calcularSaldoVSCuotaCapital(List<CuotaCredito> cuotasPagas) {
+    /// calcula si el valor del saldo es mayor al valor de la cuota capital
+    /// para permitir dejar hacer el abono normal
+    private void permitirPagarCuotaNormal(List<CuotaCredito> cuotasPagas) {
+
         double capitalPagado = cuotasPagas.stream().mapToDouble(
                         valorCapital -> valorCapital.getValorCapital())
                 .sum();
-        System.out.println(capitalPagado);
-
-        Long diasDiferencia = DAYS.between(cuotasPagas.get(1).getFechaCuota(), LocalDate.now());
-        System.out.println("dias" + diasDiferencia);
-        double interesActual = ((cuotasPagas.get(0).getValorCredito() * (
-                cuotasPagas.get(0).getInteresPorcentaje() / 100) / 30) * diasDiferencia);
-        System.out.println(interesActual);
+        int index = cuotasPagas.size() != 1 ? 1 : 0;
+        double interesActual = calcularInteresActual(
+                cuotasPagas.get(index).getFechaCuota(),
+                cuotasPagas.get(0).getValorCredito(),
+                cuotasPagas.get(0).getInteresPorcentaje());
 
         Double saldoCredito = interesActual + (
                 cuotasPagas.get(0).getValorCredito() - capitalPagado);
-        if (saldoCredito < cuotasPagas.get(0).getValorCredito() / cuotasPagas.get(0).getNumeroCuotas()) {
-            System.out.println("realice el saldo del credito");
+        if (saldoCredito < (cuotasPagas.get(0).getValorCredito() / cuotasPagas.get(0).getNumeroCuotas())) {
+
+            throw new RequestException(
+                    Constantes.NO_PUEDE_PAGAR_CUOTA_NORMAL,
+                    HttpStatus.BAD_REQUEST.value());
         }
     }
 }
