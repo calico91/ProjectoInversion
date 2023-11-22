@@ -36,7 +36,8 @@ public class SecurityConfig {
     JwtAuthorizationFilter authorizationFilter;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
+    SecurityFilterChain securityFilterChain(
+            HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userRepository);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
