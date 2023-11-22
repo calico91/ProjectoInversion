@@ -37,11 +37,13 @@ public class CuotaCreditoService {
 
     Map<String, Object> mapRespuesta = new HashMap<>();
 
-    /// pagar cuota normal,solo interes o solo capital, dependiendo el tipo de abono
+    /// pagar cuota normal,solo interes o solo capital,
     public Map<String, Object> pagarCuota(
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
+
         log.info(pagarCuotaRequestDTO.toString());
+
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(
                         Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
@@ -62,6 +64,7 @@ public class CuotaCreditoService {
                 cuotaCreditoDB.setValorCapital(0.0);
 
             } else if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
+
                 /// si el credito se paga en su totalidad, se separa el interes del capital
                 if (pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
                     cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorInteres());
@@ -74,7 +77,6 @@ public class CuotaCreditoService {
 
             } else {
                 permitirPagarCuotaNormal(cuotasPagas);
-
                 cuotaCreditoDB.setValorCapital(cuotaCreditoDB.getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
             }
 
@@ -84,7 +86,7 @@ public class CuotaCreditoService {
             cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
 
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
-            
+
             ///si la cantidad de cuotas pagadas es mayor a las cuotas pactadas
             /// o se envia la constante C, el credito con esta cuota queda saldado
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.CUOTA_NORMAL)
