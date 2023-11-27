@@ -156,6 +156,7 @@ public class CreditoService {
 
     }
 
+    /// consulta informacion de los creditos activos y algunos datos del cliente
     public List<InfoCreditosActivosDTO> infoCreditosActivos() {
         try {
 
@@ -178,7 +179,6 @@ public class CreditoService {
 
         } catch (RuntimeException ex) {
             log.error(ex.getMessage());
-            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 

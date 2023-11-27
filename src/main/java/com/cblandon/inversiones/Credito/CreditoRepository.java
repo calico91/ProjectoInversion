@@ -24,7 +24,7 @@ public interface CreditoRepository extends JpaRepository<Credito, Integer> {
             "cr.fecha_credito,cr.valor_credito " +
             "FROM apirest.credito cr " +
             "INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
-            "AND cr.estado_credito='A';", nativeQuery = true)
+            "AND cr.estado_credito='A' ORDER BY cr.id_credito DESC ;", nativeQuery = true)
     List<Tuple> infoClientesConCreditosActivos();
 
 }
