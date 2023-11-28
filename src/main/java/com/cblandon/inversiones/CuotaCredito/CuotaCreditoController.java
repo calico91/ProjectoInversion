@@ -24,7 +24,7 @@ public class CuotaCreditoController {
     public ResponseEntity<?> pagarCuota(
             @PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return new ResponseHandler().generateResponse(
-                "Cuota cancelada correctamente", HttpStatus.OK, cuotaCreditoService.pagarCuota(
+                "successful", HttpStatus.OK, cuotaCreditoService.pagarCuota(
                         idCuotaCredito, pagarCuotaRequestDTO));
     }
 
@@ -44,5 +44,12 @@ public class CuotaCreditoController {
                 HttpStatus.OK, cuotaCreditoService.infoCreditoySaldo(idCredito));
     }
 
-
+    @GetMapping("/infoInteresYCapitalMes/{mes}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> infoInteresYCapitalMes(
+            @PathVariable Integer mes) {
+        return new ResponseHandler().generateResponse(
+                "successful",
+                HttpStatus.OK, cuotaCreditoService.infoInteresYCapitalMes(mes));
+    }
 }
