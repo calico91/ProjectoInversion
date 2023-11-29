@@ -29,6 +29,14 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
 
     List<CuotaCredito> findByCreditoEqualsOrderByIdDesc(Credito idCredito);
 
+
+  /*  SELECT  ccr.*
+    FROM apirest.cuota_credito ccr
+    where ccr.fecha_abono IS NOT NULL
+    AND ccr.fecha_cuota BETWEEN '2023-11-01' AND '2023-11-30'
+    cambiar por esta consulta
+    */
+
     @Query(value = "SELECT  ccr.* " +
             "FROM apirest.cuota_credito ccr " +
             "WHERE ccr.fecha_abono IS NOT NULL AND MONTH (ccr.fecha_cuota)=:mes",
