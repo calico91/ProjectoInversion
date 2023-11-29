@@ -134,8 +134,10 @@ public class CuotaCreditoService {
 
                 mapRespuesta.put("estadoCredito", "Credito pagado en su totalidad");
             }
-            mapRespuesta.put("estadoCuota", "cuota pagada correctamente");
+            mapRespuesta.put("estadoCuota", "Cuota cancelada correctamente");
             mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas().toString());
+            mapRespuesta.put("valorAbonado", pagarCuotaRequestDTO.getValorAbonado().toString());
+            mapRespuesta.put("tipoAbono", pagarCuotaRequestDTO.getTipoAbono());
 
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                     pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
@@ -145,7 +147,6 @@ public class CuotaCreditoService {
             }
             return mapRespuesta;
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -214,13 +215,32 @@ public class CuotaCreditoService {
             log.info(infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 
 
     }
 
+
+    public Map<String, Object> infoInteresYCapitalMes(Integer mes) {
+        try {
+            List<CuotaCredito> interesYcapital = cuotaCreditoRepository.infoInteresYCapitalMes(mes);
+
+            double capitalMes = interesYcapital.stream().mapToDouble(
+                    CuotaCredito::getValorCapital).sum();
+
+            double interesMes = interesYcapital.stream().mapToDouble(
+                    CuotaCredito::getValorInteres).sum();
+
+            mapRespuesta.put("capitalMes", Math.rint(capitalMes));
+            mapRespuesta.put("interesMes", Math.rint(interesMes));
+
+            return mapRespuesta;
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
 
     private LocalDate calcularFechaProximaCuota(String fechaCuotaAnterior) {
 
@@ -282,7 +302,6 @@ public class CuotaCreditoService {
         return mapRespuesta;
     }
 
-    //SELECT  ccr.* FROM apirest.cuota_credito ccr where ccr.fecha_abono IS NOT NULL and  MONTH(ccr.fecha_cuota)=11;
 
     private Double calcularInteresActual(
             LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje) {
