@@ -136,6 +136,8 @@ public class CuotaCreditoService {
             }
             mapRespuesta.put("estadoCuota", "Cuota cancelada correctamente");
             mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas().toString());
+            mapRespuesta.put("valorAbonado", pagarCuotaRequestDTO.getValorAbonado().toString());
+            mapRespuesta.put("tipoAbono", pagarCuotaRequestDTO.getTipoAbono());
 
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                     pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
