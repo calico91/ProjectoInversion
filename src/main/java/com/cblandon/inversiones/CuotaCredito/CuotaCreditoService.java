@@ -68,12 +68,13 @@ public class CuotaCreditoService {
                 /// si el credito se paga en su totalidad, se separa el interes del capital
                 if (pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
                     cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorInteres());
+                    cuotaCreditoDB.setValorCapital(
+                            pagarCuotaRequestDTO.getValorAbonado() - pagarCuotaRequestDTO.getValorInteres());
 
                 } else {
                     cuotaCreditoDB.setValorInteres(0.0);
+                    cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
                 }
-
-                cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
 
             } else {
                 permitirPagarCuotaNormal(cuotasPagas);
