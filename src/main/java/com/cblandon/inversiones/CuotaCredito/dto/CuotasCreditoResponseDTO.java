@@ -31,6 +31,10 @@ public class CuotasCreditoResponseDTO {
     private Double interesPorcentaje;
 
     private LocalDate fechaAbono;
+
+    private Double interesMora;
+
+    private Integer diasMora;
 }
 
 
