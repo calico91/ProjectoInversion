@@ -170,7 +170,7 @@ public class CuotaCreditoService {
             double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
-            infoCuotaPagar.setValorCapital(infoCuotaPagar.getValorCredito()/infoCuotaPagar.getNumeroCuotas());
+            infoCuotaPagar.setValorCapital(infoCuotaPagar.getValorCredito() / infoCuotaPagar.getNumeroCuotas());
             infoCuotaPagar.setDiasMora(calcularDiasDiferenciaEntreFechas(
                     infoCuotaCreditoClienteRes.getFechaCuota(), LocalDate.now()));
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
@@ -233,10 +233,9 @@ public class CuotaCreditoService {
             throw new RuntimeException(ex.getMessage());
         }
 
-
     }
 
-
+    /// informacion del capital y mes generado segun el mes seleccionado
     public Map<String, Object> infoInteresYCapitalMes(Integer mes) {
         try {
             List<CuotaCredito> interesYcapital = cuotaCreditoRepository.infoInteresYCapitalMes(mes);
@@ -251,6 +250,33 @@ public class CuotaCreditoService {
             mapRespuesta.put("interesMes", Math.rint(interesMes));
 
             return mapRespuesta;
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
+        try {
+            CuotaCredito ultimaCuotaGenerada = cuotaCreditoRepository.ultimaCuotaGenerada(idCredito);
+
+            if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)
+                    || ultimaCuotaGenerada.getFechaCuota().isEqual(fechaNueva)) {
+                throw new RequestException(Constantes.ERROR_FECHA_NUEVA, HttpStatus.BAD_REQUEST.value());
+            }
+
+            double interesDias = (calcularInteresCredito(
+                    ultimaCuotaGenerada.getValorCredito(), ultimaCuotaGenerada.getInteresPorcentaje()) / 30)
+                    * calcularDiasDiferenciaEntreFechas(
+                    ultimaCuotaGenerada.getFechaCuota(), fechaNueva);
+
+            ultimaCuotaGenerada.setFechaCuota(fechaNueva);
+            ultimaCuotaGenerada.setValorInteres(interesDias + ultimaCuotaGenerada.getValorInteres());
+            ultimaCuotaGenerada.setValorCuota(interesDias + ultimaCuotaGenerada.getValorCuota());
+
+            return CuotaCreditoMapper.
+                    mapperCuotaCredito.
+                    cuotaCreditoToCuotasCreditoResponseDTO(cuotaCreditoRepository.save(ultimaCuotaGenerada));
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());

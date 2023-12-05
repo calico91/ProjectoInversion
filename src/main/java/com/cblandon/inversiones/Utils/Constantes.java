@@ -20,4 +20,5 @@ public class Constantes {
     public static final String ABONO_CAPITAL = "AC";
     public static final String CREDITO_PAGADO = "C";
     public static final String NO_PUEDE_PAGAR_CUOTA_NORMAL = "No puede pagar la cuota normal, realice el pago por modulo de credito";
+    public static final String ERROR_FECHA_NUEVA = "La fecha nueva no puede ser menor o igual a la fecha de la cuota";
 }

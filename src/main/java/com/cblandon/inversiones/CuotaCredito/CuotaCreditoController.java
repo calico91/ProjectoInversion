@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cuotaCredito")
@@ -51,5 +53,14 @@ public class CuotaCreditoController {
         return new ResponseHandler().generateResponse(
                 "successful",
                 HttpStatus.OK, cuotaCreditoService.infoInteresYCapitalMes(mes));
+    }
+
+    @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> modificarFechaPago(
+            @PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, cuotaCreditoService.modificarFechaPago(
+                        fechaNueva, idCredito));
     }
 }

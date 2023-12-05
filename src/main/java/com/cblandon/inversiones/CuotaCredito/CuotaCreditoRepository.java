@@ -42,4 +42,9 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "WHERE ccr.fecha_abono IS NOT NULL AND MONTH (ccr.fecha_cuota)=:mes",
             nativeQuery = true)
     List<CuotaCredito> infoInteresYCapitalMes(@Param("mes") Integer mes);
+
+    @Query(value = "SELECT * FROM apirest.cuota_credito " +
+            "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",
+            nativeQuery = true)
+    CuotaCredito ultimaCuotaGenerada(@Param("idCredito") int idCredito);
 }
