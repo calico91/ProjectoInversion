@@ -257,11 +257,11 @@ public class CuotaCreditoService {
     }
 
     public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
+
         try {
             CuotaCredito ultimaCuotaGenerada = cuotaCreditoRepository.ultimaCuotaGenerada(idCredito);
 
-            if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)
-                    || ultimaCuotaGenerada.getFechaCuota().isEqual(fechaNueva)) {
+            if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)) {
                 throw new RequestException(Constantes.ERROR_FECHA_NUEVA, HttpStatus.BAD_REQUEST.value());
             }
 
