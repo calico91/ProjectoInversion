@@ -74,16 +74,15 @@ public class CreditoService {
                     registrarCreditoRequestDTO.getValorCredito(),
                     registrarCreditoRequestDTO.getCantidadCuotas());
 
-            Double valorCuotas = cuotaCapital + (
+            double valorCuotas = cuotaCapital + (
                     registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
                     registrarCreditoRequestDTO.getValorCredito();
 
-            Double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
+            double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
 
             /// cuando se registra un credito, se crea la primer cuota
             if (credito.getId() != null) {
-
 
                 CuotaCredito cuotaCredito = CuotaCredito.builder()
                         .fechaCuota(registrarCreditoRequestDTO.getFechaCuota())
@@ -102,16 +101,15 @@ public class CreditoService {
             RegistrarCreditoResponseDTO registrarCreditoResponseDTO = RegistrarCreditoResponseDTO.builder()
                     .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas().toString())
                     .fechaPago(registrarCreditoRequestDTO.getFechaCuota().toString())
-                    .valorPrimerCuota(valorPrimerCuota.toString())
+                    .valorPrimerCuota(Double.toString(valorPrimerCuota))
                     .valorCredito(registrarCreditoRequestDTO.getValorCredito().toString())
-                    .valorCuotas(valorCuotas.toString())
+                    .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
             log.info(registrarCreditoResponseDTO.toString());
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
@@ -123,10 +121,9 @@ public class CreditoService {
 
         try {
             List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
-            List<CreditoAllResponseDTO> CreditoAllResponseDTO = creditos.stream().map(
-                    Mapper.mapper::creditoToCreditoAllResponseDTO).collect(Collectors.toList());
 
-            return CreditoAllResponseDTO;
+            return creditos.stream().map(
+                    Mapper.mapper::creditoToCreditoAllResponseDTO).collect(Collectors.toList());
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -184,19 +181,19 @@ public class CreditoService {
 
     }
 
-    private Double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
-        Double cuotaCapital = valorPrestado / cantidadCuotas;
+    private double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {
+        double cuotaCapital = valorPrestado / cantidadCuotas;
 
         return Math.rint(cuotaCapital);
     }
 
 
-    private Double calcularInteresPrimeraCuota(
-            Double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito) {
+    private double calcularInteresPrimeraCuota(
+            double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito) {
         fechaCredito = fechaCredito == null ? LocalDate.now() : fechaCredito;
-        Long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
+        long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
         diasDiferencia = diasDiferencia == 31 ? 30 : diasDiferencia;
-        Double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
+        double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
 
         return Math.rint(interesCredito);
     }
