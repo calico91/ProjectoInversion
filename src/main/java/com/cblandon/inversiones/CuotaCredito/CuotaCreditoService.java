@@ -377,17 +377,24 @@ public class CuotaCreditoService {
         }
     }
 
+    /// por cada tres dias se genera un interes de mas por 5 mil pesos
     private Double calcularInteresMora(LocalDate fechaCuota) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
-        double interesMora = 0.0;
-        if (diasDiferencia >= 3) {
-            while (diasDiferencia % 3 != 0) {
-                diasDiferencia--;
-            }
-            interesMora = (Double.parseDouble(Integer.toString(diasDiferencia)) / 3) * 5000;
-        }
-        return interesMora;
+        log.info("dias mora:" + diasDiferencia);
 
+        int diasCobrar = 0;
+
+        if (diasDiferencia >= 3) {
+            for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
+                if (i % 4 == 0) {
+                    i = 1;
+                    diasCobrar++;
+                }
+                i++;
+            }
+        }
+
+        return (Double.parseDouble(Integer.toString(diasCobrar))) * 5000;
     }
 
 
