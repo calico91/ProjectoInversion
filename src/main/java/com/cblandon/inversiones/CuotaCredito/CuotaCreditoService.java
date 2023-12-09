@@ -386,8 +386,8 @@ public class CuotaCreditoService {
 
         if (diasDiferencia >= 3) {
             for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
-                if (i % 4 == 0) {
-                    i = 1;
+                if (i % 3 == 0) {
+                    i = 0;
                     diasCobrar++;
                 }
                 i++;
