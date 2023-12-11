@@ -348,7 +348,7 @@ public class CuotaCreditoService {
             LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje) {
 
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(diaCalcularInteres, LocalDate.now());
-        
+
         return ((valorCredito * (
                 interesPorcentaje / 100) / 30) * diasDiferencia);
     }
@@ -400,8 +400,8 @@ public class CuotaCreditoService {
 
     private int calcularDiasDiferenciaEntreFechas(LocalDate fechaInicial, LocalDate fechaFinal) {
         long diasDiferencia = DAYS.between(fechaInicial, fechaFinal);
-        diasDiferencia = diasDiferencia == -1 ? 0 :diasDiferencia;
-        
+        diasDiferencia = diasDiferencia <= 0 ? 0 : diasDiferencia;
+
         return Integer.parseInt(Long.toString(diasDiferencia));
     }
 }
