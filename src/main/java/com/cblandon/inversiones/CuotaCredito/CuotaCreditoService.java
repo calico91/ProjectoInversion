@@ -392,13 +392,15 @@ public class CuotaCreditoService {
         int diasCobrar = 0;
 
         if (diasDiferencia >= 3) {
-            for (int i = 1; diasDiferencia >= 0; diasDiferencia--) {
+            for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
                 if (i == 3) {
                     i = -1;
                     diasCobrar++;
                 }
                 i++;
             }
+            System.out.println("dias cobrar" + diasCobrar);
+
         }
         log.info("dias a cobrar:" + diasCobrar);
         return (Double.parseDouble(Integer.toString(diasCobrar))) * 5000;
