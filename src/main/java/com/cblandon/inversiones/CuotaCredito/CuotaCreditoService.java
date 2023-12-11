@@ -223,6 +223,8 @@ public class CuotaCreditoService {
 
 
             Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
+
+            infoCreditoySaldo.get(0).setInteresMora((Double) datosCredito.get("interesMora"));
             infoCreditoySaldo.get(0).setInteresHoy((Double) datosCredito.get("interesActual"));
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
@@ -328,9 +330,13 @@ public class CuotaCreditoService {
                 listaCuotas.get(0).getValorCredito(),
                 listaCuotas.get(0).getInteresPorcentaje());
 
-        interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
+        double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota());
+        System.out.println(interesMora);
 
-        double saldoCredito = interesActual + (
+        ///interesActual = interesActual <= 0.0 ? 0.0 : interesActual;
+        interesActual = Math.max(interesActual, 0.0);
+
+        double saldoCredito = interesMora + interesActual + (
                 listaCuotas.get(0).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
 
         String ultimaCuotaPagada = diaCalcularInteres.toString();
@@ -339,6 +345,7 @@ public class CuotaCreditoService {
         mapRespuesta.put("interesActual", Math.rint(interesActual));
         mapRespuesta.put("saldoCredito", Math.rint(saldoCredito));
         mapRespuesta.put("ultimaCuotaPagada", ultimaCuotaPagada);
+        mapRespuesta.put("interesMora", interesMora);
 
         return mapRespuesta;
     }
