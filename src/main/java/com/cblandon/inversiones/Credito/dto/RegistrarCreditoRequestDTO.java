@@ -29,4 +29,6 @@ public class RegistrarCreditoRequestDTO {
 
     private Double valorCredito;
 
+    private String modalidad;
+
 }

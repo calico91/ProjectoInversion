@@ -36,6 +36,9 @@ public class Credito {
     @Column(name = "fecha_credito", nullable = false)
     private LocalDate fechaCredito;
 
+    @Column(nullable = false)
+    private String modalidad;
+
     @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;

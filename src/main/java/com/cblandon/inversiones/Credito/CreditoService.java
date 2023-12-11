@@ -54,6 +54,7 @@ public class CreditoService {
         try {
 
             Credito credito = Credito.builder()
+                    .modalidad(registrarCreditoRequestDTO.getModalidad())
                     .fechaCredito(registrarCreditoRequestDTO.getFechaCredito())
                     .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                     .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
@@ -67,7 +68,8 @@ public class CreditoService {
                     registrarCreditoRequestDTO.getValorCredito(),
                     registrarCreditoRequestDTO.getInteresPorcentaje(),
                     registrarCreditoRequestDTO.getFechaCuota(),
-                    registrarCreditoRequestDTO.getFechaCredito()
+                    registrarCreditoRequestDTO.getFechaCredito(),
+                    registrarCreditoRequestDTO.getModalidad()
             );
 
             Double cuotaCapital = calcularCuotaCapital(
@@ -189,11 +191,12 @@ public class CreditoService {
 
 
     private double calcularInteresPrimeraCuota(
-            double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito) {
+            double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito, String modalidad) {
+        int diasSegunModalidad = modalidad.equals(Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
         fechaCredito = fechaCredito == null ? LocalDate.now() : fechaCredito;
         long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
         diasDiferencia = diasDiferencia == 31 ? 30 : diasDiferencia;
-        double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / 30) * diasDiferencia);
+        double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / diasSegunModalidad) * diasDiferencia);
 
         return Math.rint(interesCredito);
     }
