@@ -109,7 +109,8 @@ public class CuotaCreditoService {
                 if (pagarCuotaRequestDTO.isAbonoExtra()) {
                     nuevaCuota.setFechaCuota(cuotaCreditoDB.getFechaCuota());
                 } else {
-                    nuevaCuota.setFechaCuota(calcularFechaProximaCuota(cuotaCancelada.getFechaCuota().toString()));
+                    nuevaCuota.setFechaCuota(calcularFechaProximaCuota(
+                            cuotaCancelada.getFechaCuota().toString(), cuotaCreditoDB.getCredito().getModalidad()));
                 }
 
                 if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
@@ -205,6 +206,7 @@ public class CuotaCreditoService {
                             .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
                             .tipoAbono(Optional.ofNullable((String) cuota.get("tipo_abono")).orElse("CP"))
                             .abonoExtra(Optional.ofNullable((Boolean) cuota.get("abono_extra")).orElse(false))
+                            .modalidad(cuota.get("modalidad").toString())
                             .build()).collect(Collectors.toList());
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
@@ -237,7 +239,7 @@ public class CuotaCreditoService {
 
     }
 
-    /// informacion del capital y mes generado segun el mes seleccionado
+    /// informacion del capital e interes generado segun el mes seleccionado
     public Map<String, Object> infoInteresYCapitalMes(Integer mes) {
         try {
             List<CuotaCredito> interesYcapital = cuotaCreditoRepository.infoInteresYCapitalMes(mes);
@@ -285,14 +287,19 @@ public class CuotaCreditoService {
         }
     }
 
-    private LocalDate calcularFechaProximaCuota(String fechaCuotaAnterior) {
-
+    private LocalDate calcularFechaProximaCuota(String fechaCuotaAnterior, String modalidad) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaAnterior = LocalDate.parse(fechaCuotaAnterior, dtf);
         int diasMes = fechaAnterior.lengthOfMonth();
-        fechaAnterior = fechaAnterior.plusDays(diasMes);
 
-        return fechaAnterior;
+
+        if (modalidad.equals(Constantes.MODALIDAD_QUINCENAL)) {
+            diasMes = diasMes / 2;
+            diasMes = (int) Math.ceil(Double.parseDouble(Integer.toString(diasMes)));
+        }
+        return fechaAnterior.plusDays(diasMes);
+
+
     }
 
     private double calcularInteresCredito(double valorPrestado, double interesPorcentaje) {

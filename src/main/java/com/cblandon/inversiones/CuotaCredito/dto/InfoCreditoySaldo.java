@@ -37,6 +37,7 @@ public class InfoCreditoySaldo {
     private Boolean abonoExtra;
     private double abonoExtraPagado;
     private double interesMora;
+    private String modalidad;
 
 
 }
