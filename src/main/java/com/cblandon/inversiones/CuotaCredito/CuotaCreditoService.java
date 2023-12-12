@@ -206,6 +206,7 @@ public class CuotaCreditoService {
                             .valorInteres(Double.parseDouble(cuota.get("valor_interes").toString()))
                             .tipoAbono(Optional.ofNullable((String) cuota.get("tipo_abono")).orElse("CP"))
                             .abonoExtra(Optional.ofNullable((Boolean) cuota.get("abono_extra")).orElse(false))
+                            .modalidad(cuota.get("modalidad").toString())
                             .build()).collect(Collectors.toList());
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
@@ -238,7 +239,7 @@ public class CuotaCreditoService {
 
     }
 
-    /// informacion del capital y mes generado segun el mes seleccionado
+    /// informacion del capital e interes generado segun el mes seleccionado
     public Map<String, Object> infoInteresYCapitalMes(Integer mes) {
         try {
             List<CuotaCredito> interesYcapital = cuotaCreditoRepository.infoInteresYCapitalMes(mes);
