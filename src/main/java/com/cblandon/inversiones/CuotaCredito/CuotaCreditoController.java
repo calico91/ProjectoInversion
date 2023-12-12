@@ -46,13 +46,15 @@ public class CuotaCreditoController {
                 HttpStatus.OK, cuotaCreditoService.infoCreditoySaldo(idCredito));
     }
 
-    @GetMapping("/infoInteresYCapitalMes/{mes}")
+    @GetMapping("/reporteInteresyCapital")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> infoInteresYCapitalMes(
-            @PathVariable Integer mes) {
+    public ResponseEntity<?> reporteInteresyCapital(
+            @RequestParam String fechaInicial,
+            @RequestParam String fechaFinal
+    ) {
         return new ResponseHandler().generateResponse(
                 "successful",
-                HttpStatus.OK, cuotaCreditoService.infoInteresYCapitalMes(mes));
+                HttpStatus.OK, cuotaCreditoService.reporteInteresyCapital(fechaInicial, fechaFinal));
     }
 
     @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")

@@ -47,8 +47,8 @@ public class CreditoService {
         if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota()) ||
                 registrarCreditoRequestDTO.getFechaCredito().equals(registrarCreditoRequestDTO.getFechaCuota())) {
 
-            log.error(Constantes.ERROR_FECHAS);
-            throw new RequestException(Constantes.ERROR_FECHAS, HttpStatus.BAD_REQUEST.value());
+            log.error(Constantes.ERROR_FECHAS_CREDITO);
+            throw new RequestException(Constantes.ERROR_FECHAS_CREDITO, HttpStatus.BAD_REQUEST.value());
         }
 
         try {

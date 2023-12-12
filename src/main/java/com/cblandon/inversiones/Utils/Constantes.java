@@ -13,7 +13,7 @@ public class Constantes {
     public static final String CUOTA_YA_PAGADA = "Cuota ya se encuentra cancelada, verifique la informacion";
     public static final String TRUE = "T";
     public static final String FALSE = "F";
-    public static final String ERROR_FECHAS = "Fecha credito no puede ser mayor o igual a fecha cuota";
+    public static final String ERROR_FECHAS_CREDITO = "Fecha credito no puede ser mayor o igual a fecha cuota";
     public static final String ERROR_CUOTA = "Valor abonado no puede ser menor al valor de la cuota";
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
@@ -23,4 +23,6 @@ public class Constantes {
     public static final String ERROR_FECHA_NUEVA = "La fecha nueva no puede ser menor a la fecha de la cuota";
     public static final String MODALIDAD_MENSUAL = "mensual";
     public static final String MODALIDAD_QUINCENAL = "quincenal";
+
+    public static final String ERROR_FECHAS_REPORTE = "Fecha inicial no puede ser mayor o igual a fecha final";
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Integer> {
@@ -29,19 +30,12 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
 
     List<CuotaCredito> findByCreditoEqualsOrderByIdDesc(Credito idCredito);
 
-
-  /*  SELECT  ccr.*
-    FROM apirest.cuota_credito ccr
-    where ccr.fecha_abono IS NOT NULL
-    AND ccr.fecha_cuota BETWEEN '2023-11-01' AND '2023-11-30'
-    cambiar por esta consulta
-    */
-
-    @Query(value = "SELECT  ccr.* " +
-            "FROM apirest.cuota_credito ccr " +
-            "WHERE ccr.fecha_abono IS NOT NULL AND MONTH (ccr.fecha_cuota)=:mes",
+    @Query(value = "SELECT  ccr.*" +
+            "    FROM apirest.cuota_credito ccr" +
+            "    where ccr.fecha_abono IS NOT NULL" +
+            "    AND ccr.fecha_abono BETWEEN :fechaInicial AND :fechaFinal",
             nativeQuery = true)
-    List<CuotaCredito> infoInteresYCapitalMes(@Param("mes") int mes);
+    List<CuotaCredito> reporteInteresyCapital(@Param("fechaInicial") String fechaInicial, @Param("fechaFinal") String fechaFinal);
 
     @Query(value = "SELECT * FROM apirest.cuota_credito " +
             "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",

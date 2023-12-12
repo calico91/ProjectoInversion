@@ -240,9 +240,13 @@ public class CuotaCreditoService {
     }
 
     /// informacion del capital e interes generado segun el mes seleccionado
-    public Map<String, Object> infoInteresYCapitalMes(Integer mes) {
+    public Map<String, Object> reporteInteresyCapital(String fechaInicial, String fechaFinal) {
         try {
-            List<CuotaCredito> interesYcapital = cuotaCreditoRepository.infoInteresYCapitalMes(mes);
+          /*  if (fechaInicial.isAfter(fechaFinal) || fechaInicial.equals(fechaFinal)) {
+
+                throw new RequestException(Constantes.ERROR_FECHAS_REPORTE, HttpStatus.BAD_REQUEST.value());
+            }*/
+            List<CuotaCredito> interesYcapital = cuotaCreditoRepository.reporteInteresyCapital(fechaInicial.toString(), fechaFinal.toString());
 
             double capitalMes = interesYcapital.stream().mapToDouble(
                     CuotaCredito::getValorCapital).sum();
@@ -252,6 +256,8 @@ public class CuotaCreditoService {
 
             mapRespuesta.put("capitalMes", Math.rint(capitalMes));
             mapRespuesta.put("interesMes", Math.rint(interesMes));
+
+            log.info("informacion capital e interes "+mapRespuesta);
 
             return mapRespuesta;
 
