@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/credito")
 public class CreditoController {
 
-    @Autowired
-    private CreditoService creditoService;
+    private final CreditoService creditoService;
+
+    public CreditoController(CreditoService creditoService) {
+        this.creditoService = creditoService;
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
