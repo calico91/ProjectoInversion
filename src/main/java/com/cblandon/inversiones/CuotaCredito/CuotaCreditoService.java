@@ -257,7 +257,7 @@ public class CuotaCreditoService {
             mapRespuesta.put("capitalMes", Math.rint(capitalMes));
             mapRespuesta.put("interesMes", Math.rint(interesMes));
 
-            log.info("informacion capital e interes "+mapRespuesta);
+            log.info("informacion capital e interes " + mapRespuesta);
 
             return mapRespuesta;
 
@@ -341,7 +341,8 @@ public class CuotaCreditoService {
         double interesActual = calcularInteresActual(
                 diaCalcularInteres,
                 listaCuotas.get(0).getValorCredito(),
-                listaCuotas.get(0).getInteresPorcentaje());
+                listaCuotas.get(0).getInteresPorcentaje(),
+                listaCuotas.get(0).getModalidad());
 
         double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota());
         System.out.println(interesMora);
@@ -365,12 +366,13 @@ public class CuotaCreditoService {
 
     ///calcula el interes al dia de hoy
     private double calcularInteresActual(
-            LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje) {
+            LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje, String modalidad) {
+        int diasSegunModalidad = modalidad.equals(Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
 
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(diaCalcularInteres, LocalDate.now());
 
         return ((valorCredito * (
-                interesPorcentaje / 100) / 30) * diasDiferencia);
+                interesPorcentaje / 100) / diasSegunModalidad) * diasDiferencia);
     }
 
     /// calcula si el valor del saldo es mayor al valor de la cuota capital
@@ -385,7 +387,8 @@ public class CuotaCreditoService {
         double interesActual = calcularInteresActual(
                 cuotasPagas.get(index).getFechaCuota(),
                 cuotasPagas.get(0).getValorCredito(),
-                cuotasPagas.get(0).getInteresPorcentaje());
+                cuotasPagas.get(0).getInteresPorcentaje(),
+                cuotasPagas.get(0).getCredito().getModalidad());
 
         double saldoCredito = interesActual + (
                 cuotasPagas.get(0).getValorCredito() - capitalPagado);
