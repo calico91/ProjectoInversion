@@ -271,12 +271,14 @@ public class CuotaCreditoService {
         try {
             CuotaCredito ultimaCuotaGenerada = cuotaCreditoRepository.ultimaCuotaGenerada(idCredito);
 
+            int diasSegunModalidad = ultimaCuotaGenerada.getCredito().getModalidad().equals(Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
+
             if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)) {
                 throw new RequestException(Constantes.ERROR_FECHA_NUEVA, HttpStatus.BAD_REQUEST.value());
             }
 
             double interesDias = (calcularInteresCredito(
-                    ultimaCuotaGenerada.getValorCredito(), ultimaCuotaGenerada.getInteresPorcentaje()) / 30)
+                    ultimaCuotaGenerada.getValorCredito(), ultimaCuotaGenerada.getInteresPorcentaje()) / diasSegunModalidad)
                     * calcularDiasDiferenciaEntreFechas(
                     ultimaCuotaGenerada.getFechaCuota(), fechaNueva);
 
