@@ -41,10 +41,10 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/infoClientesCuotaCredito")
-    public ResponseEntity<?> infoClientesCuotaCredito() {
+    @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
+    public ResponseEntity<?> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, clienteService.infoClientesCuotasPendientes());
+                "successful", HttpStatus.OK, clienteService.infoClientesCuotasPendientes(fechaFiltro));
     }
 
     @PutMapping("/actualizarCliente/{id}")
