@@ -41,4 +41,6 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",
             nativeQuery = true)
     CuotaCredito ultimaCuotaGenerada(@Param("idCredito") int idCredito);
+
+    //List<CuotaCredito> findCuotaCreditoEquals();
 }
