@@ -12,12 +12,15 @@ import com.cblandon.inversiones.Utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +55,7 @@ public class ClienteService {
 
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
-                    cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
+                    Mapper.mapper::clienteToClienteAllResponseDto).collect(Collectors.toList());
 
             log.info(clienteResponseDTO.toString());
 
@@ -119,7 +122,7 @@ public class ClienteService {
             List<Cliente> clientes = clienteRepository.clientesCreditosActivos();
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
-                    cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
+                    Mapper.mapper::clienteToClienteAllResponseDto).collect(Collectors.toList());
 
             log.info(clienteResponseDTO.toString());
 
@@ -132,11 +135,13 @@ public class ClienteService {
 
     }
 
-
-    public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes() {
+    /// listqa de cuotas pendientes de la fecha actual para atras
+    public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
+        //spring.jpa.show-sql=true
         try {
 
-            List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes();
+
+            List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes(fechaFiltro);
 
             List<InfoClientesCuotaCreditoDTO> listaCreditosdto = infoClienteCuotaCreditoBD.stream().map(
                     info -> InfoClientesCuotaCreditoDTO.builder()
@@ -159,7 +164,6 @@ public class ClienteService {
 
         } catch (RuntimeException ex) {
             log.error(ex.getMessage());
-            ex.printStackTrace();
             throw new RuntimeException(ex.getMessage());
         }
 

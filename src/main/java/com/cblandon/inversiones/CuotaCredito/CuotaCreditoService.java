@@ -159,7 +159,6 @@ public class CuotaCreditoService {
     }
 
 
-    /// cuotas que no se han pagado hasta la fecha
     public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
             CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente, idCredito);
@@ -222,11 +221,12 @@ public class CuotaCreditoService {
                     .mapToDouble(InfoCreditoySaldo::getValorInteres).sum();
 
             infoCreditoySaldo.get(0).setAbonoExtraPagado(interesExtraPagado);
-
+            double valorCuota = infoCreditoySaldo.get(0).getValorCuota();
 
             Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
 
             infoCreditoySaldo.get(0).setInteresMora((Double) datosCredito.get("interesMora"));
+            infoCreditoySaldo.get(0).setValorCuota((Double) datosCredito.get("interesMora") + valorCuota);
             infoCreditoySaldo.get(0).setInteresHoy((Double) datosCredito.get("interesActual"));
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
@@ -285,6 +285,8 @@ public class CuotaCreditoService {
             ultimaCuotaGenerada.setFechaCuota(fechaNueva);
             ultimaCuotaGenerada.setValorInteres(interesDias + ultimaCuotaGenerada.getValorInteres());
             ultimaCuotaGenerada.setValorCuota(interesDias + ultimaCuotaGenerada.getValorCuota());
+
+            cuotaCreditoRepository.save(ultimaCuotaGenerada);
 
             return CuotaCreditoMapper.
                     mapperCuotaCredito.
