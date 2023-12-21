@@ -122,7 +122,7 @@ public class ClienteService {
             List<Cliente> clientes = clienteRepository.clientesCreditosActivos();
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
-                    cliente -> Mapper.mapper.clienteToClienteAllResponseDto(cliente)).collect(Collectors.toList());
+                    Mapper.mapper::clienteToClienteAllResponseDto).collect(Collectors.toList());
 
             log.info(clienteResponseDTO.toString());
 
