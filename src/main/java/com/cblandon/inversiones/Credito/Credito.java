@@ -39,9 +39,7 @@ public class Credito {
     @Column(nullable = false)
     private String modalidad;
 
-    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY) @JoinColumn(name = "id_cliente") private Cliente cliente;
 
     @OneToMany(targetEntity = CuotaCredito.class, fetch = FetchType.LAZY, mappedBy = "credito")
     private List<CuotaCredito> listaCuotasCredito;

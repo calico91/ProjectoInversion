@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.Credito;
 
 
+import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.Utils.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,14 @@ public class CreditoController {
         return new ResponseHandler().generateResponse(
                 "successful", HttpStatus.OK, creditoService.infoCreditosActivos());
     }
+
+    @PutMapping("/modificarEstadoCredito/{idCredito}/{estadoCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> modificarEstadoCredito(@PathVariable Integer idCredito,
+                                                    @PathVariable String estadoCredito) {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, estadoCredito));
+    }
+
 
 }
