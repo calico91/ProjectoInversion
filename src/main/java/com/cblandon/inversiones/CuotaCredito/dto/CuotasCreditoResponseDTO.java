@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class CuotasCreditoResponseDTO {
 
     private Integer id;
+
     private Double valorCuota;
 
     private LocalDate fechaCuota;
@@ -30,11 +31,14 @@ public class CuotasCreditoResponseDTO {
 
     private Double interesPorcentaje;
 
+    private String tipoAbono;
+
     private LocalDate fechaAbono;
 
     private Double interesMora;
 
     private Integer diasMora;
+
 }
 
 
