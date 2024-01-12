@@ -65,4 +65,12 @@ public class CuotaCreditoController {
                 "successful", HttpStatus.OK, cuotaCreditoService.modificarFechaPago(
                         fechaNueva, idCredito));
     }
+
+    @GetMapping("/consultarAbonosRealizados/{idCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<?> consultarAbonosRealizados(
+            @PathVariable int idCredito) {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, cuotaCreditoService.consultarAbonosRealizados(idCredito));
+    }
 }
