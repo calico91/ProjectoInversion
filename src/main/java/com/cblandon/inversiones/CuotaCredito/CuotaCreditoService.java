@@ -306,17 +306,10 @@ public class CuotaCreditoService {
             List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizados(
                     idCredito);
 
-            System.out.println(cuotasPagas.get(2).getTipoAbono());
-            System.out.println(cuotasPagas.get(2).getId());
 
-            List<CuotasCreditoResponseDTO> lista =  cuotasPagas.stream().map(
+            return cuotasPagas.stream().map(
                     CuotaCreditoMapper.
                             mapperCuotaCredito::cuotaCreditoToCuotasCreditoResponseDTO).collect(Collectors.toList());
-
-            System.out.println(lista.get(2).getTipoAbono());
-            System.out.println(lista.get(2).getId());
-
-            return  lista;
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
