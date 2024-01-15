@@ -306,7 +306,7 @@ public class CuotaCreditoService {
             List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizados(
                     idCredito);
 
-
+            cuotasPagas.remove(cuotasPagas.size()-1);
             return cuotasPagas.stream().map(
                     CuotaCreditoMapper.
                             mapperCuotaCredito::cuotaCreditoToCuotasCreditoResponseDTO).collect(Collectors.toList());
