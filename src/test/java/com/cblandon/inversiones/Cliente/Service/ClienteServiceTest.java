@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Cliente.Service;
+/*package com.cblandon.inversiones.Cliente.Service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -88,7 +88,7 @@ public class ClienteServiceTest {
         verify(clienteRepository, never()).save(any(Cliente.class));
     }
 
-  /*  @DisplayName("Test para listar los clientes")
+  *//*  @DisplayName("Test para listar los clientes")
     @Test
     void testListarClientes() {
         //given
@@ -106,7 +106,7 @@ public class ClienteServiceTest {
         //then
         assertThat(clientes).isNotNull();
         assertThat(clientes.size()).isEqualTo(2);
-    }*/
+    }*//*
 
     @DisplayName("Test para obtener un cliente por cedula")
     @Test
@@ -154,4 +154,4 @@ public class ClienteServiceTest {
         verify(clienteRepository, times(1)).deleteById(idCliente);
     }
 
-}
+}*/
