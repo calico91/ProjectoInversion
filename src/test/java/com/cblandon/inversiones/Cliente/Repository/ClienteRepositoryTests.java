@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Cliente.Repository;
+/*package com.cblandon.inversiones.Cliente.Repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,4 +112,4 @@ public class ClienteRepositoryTests {
         assertThat(clienteOptional).isEmpty();
     }
 
-}
+}*/

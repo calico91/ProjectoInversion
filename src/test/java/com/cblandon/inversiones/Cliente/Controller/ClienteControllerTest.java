@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Cliente.Controller;
+/*package com.cblandon.inversiones.Cliente.Controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,7 +31,7 @@ import java.util.Optional;
 public class ClienteControllerTest {
 
 
-    /*@Autowired
+    *//*@Autowired
     private MockMvc mockMvc;
 
     @MockBean
@@ -70,5 +70,5 @@ public class ClienteControllerTest {
                 .andExpect(jsonPath("$.nombre", is(cliente.getNombres())))
                 .andExpect(jsonPath("$.apellido", is(cliente.getApellidos())))
                 .andExpect(jsonPath("$.email", is(cliente.getEmail())));
-    }*/
-}
+    }*//*
+}*/
