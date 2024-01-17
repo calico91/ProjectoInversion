@@ -57,7 +57,7 @@ public class CuotaCreditoService {
 
         try {
 
-            /*switch (pagarCuotaRequestDTO.getTipoAbono()) {
+            switch (pagarCuotaRequestDTO.getTipoAbono()) {
                 case Constantes.SOLO_INTERES -> {
                     cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorAbonado());
                     cuotaCreditoDB.setValorCapital(0.0);
@@ -83,34 +83,8 @@ public class CuotaCreditoService {
                             pagarCuotaRequestDTO.getValorAbonado() - capitalCuotaNormal);
                 }
 
-            }*/
-
-
-            if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES)) {
-
-                cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorAbonado());
-                cuotaCreditoDB.setValorCapital(0.0);
-
-            } else if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-
-                /// si el credito se paga en su totalidad, se separa el interes del capital
-                if (pagarCuotaRequestDTO.getEstadoCredito().equals(Constantes.CREDITO_PAGADO)) {
-                    cuotaCreditoDB.setValorInteres(pagarCuotaRequestDTO.getValorInteres());
-                    cuotaCreditoDB.setValorCapital(
-                            pagarCuotaRequestDTO.getValorAbonado() - pagarCuotaRequestDTO.getValorInteres());
-
-                } else {
-                    cuotaCreditoDB.setValorInteres(0.0);
-                    cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
-                }
-
-            } else {
-                ///Cuota normal
-                permitirPagarCuotaNormal(cuotasPagas);
-                cuotaCreditoDB.setValorCapital(capitalCuotaNormal);
-                cuotaCreditoDB.setValorInteres(
-                        pagarCuotaRequestDTO.getValorAbonado() - capitalCuotaNormal);
             }
+
 
             cuotaCreditoDB.setAbonoExtra(pagarCuotaRequestDTO.isAbonoExtra());
             cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
@@ -479,4 +453,6 @@ public class CuotaCreditoService {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
     }
+
+
 }

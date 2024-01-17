@@ -21,7 +21,6 @@ public class CuotaCredito {
     private Integer id;
     @Column(name = "valor_cuota", nullable = false)
     private Double valorCuota;
-
     @Column(name = "fecha_cuota", nullable = false)
     private LocalDate fechaCuota;
     @Column(name = "numero_cuotas")
@@ -55,11 +54,6 @@ public class CuotaCredito {
     @ManyToOne(targetEntity = Credito.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_credito")
     private Credito credito;
-
-    /*@PreUpdate
-    public void preUpdate() {
-        this.fechamodificacion = new Date();
-    }*/
 
 
 }

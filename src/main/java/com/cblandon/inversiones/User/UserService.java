@@ -4,12 +4,11 @@ import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Roles.Role;
 import com.cblandon.inversiones.Roles.Roles;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
+import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
-import com.cblandon.inversiones.utils.UtilsMetodos;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

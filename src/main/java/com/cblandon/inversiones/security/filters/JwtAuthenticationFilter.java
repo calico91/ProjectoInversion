@@ -1,6 +1,6 @@
-package com.cblandon.inversiones.Security.filters;
+package com.cblandon.inversiones.security.filters;
 
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
+import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.UserEntity;
 import com.cblandon.inversiones.user.UserRepository;
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -27,13 +27,12 @@ import java.util.Map;
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    private UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserRepository userRepository) {
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
-        this.userRepository = userRepository;
     }
 
     @Override
