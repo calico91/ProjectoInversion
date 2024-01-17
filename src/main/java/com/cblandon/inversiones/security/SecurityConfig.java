@@ -1,18 +1,18 @@
-package com.cblandon.inversiones.Security;
+package com.cblandon.inversiones.security;
 
 
-import com.cblandon.inversiones.Security.filters.JwtAuthenticationFilter;
-import com.cblandon.inversiones.Security.filters.JwtAuthorizationFilter;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.UserDetailsServiceImpl;
-import com.cblandon.inversiones.User.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cblandon.inversiones.security.filters.JwtAuthenticationFilter;
+import com.cblandon.inversiones.security.filters.JwtAuthorizationFilter;
+import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,31 +20,26 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Autowired
-    JwtUtils jwtUtils;
-    @Autowired
-    UserRepository userRepository;
+    final JwtUtils jwtUtils;
 
+    final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    JwtAuthorizationFilter authorizationFilter;
+    final JwtAuthorizationFilter authorizationFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userRepository);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
         return httpSecurity.cors().and()
-                .csrf(config -> config.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                             "/user/pruebaConexion",
@@ -52,9 +47,7 @@ public class SecurityConfig {
                             "/doc/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .sessionManagement(session -> {
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

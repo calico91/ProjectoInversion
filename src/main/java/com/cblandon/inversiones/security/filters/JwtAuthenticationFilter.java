@@ -1,9 +1,8 @@
-package com.cblandon.inversiones.Security.filters;
+package com.cblandon.inversiones.security.filters;
 
-import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.UserEntity;
-import com.cblandon.inversiones.User.UserRepository;
+import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.UserEntity;
+import com.cblandon.inversiones.user.UserRepository;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,19 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    private UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserRepository userRepository) {
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
-        this.userRepository = userRepository;
     }
 
     @Override

@@ -1,8 +1,6 @@
-package com.cblandon.inversiones.Security.jwt;
+package com.cblandon.inversiones.security.jwt;
 
-import com.cblandon.inversiones.User.UserDetailsServiceImpl;
-import com.cblandon.inversiones.User.UserEntity;
-import com.cblandon.inversiones.User.UserRepository;
+import com.cblandon.inversiones.user.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +18,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,15 +26,18 @@ import java.util.stream.Collectors;
 public class JwtUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    final UserDetailsServiceImpl userDetailsService;
+
+    public JwtUtils(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     // Generar token de acceso
     public String generateAccesToken(String username) {
         UserDetails user = userDetailsService.loadUserByUsername(username);
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
-        List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
         return Jwts.builder()
                 .claim("Roles", roles)

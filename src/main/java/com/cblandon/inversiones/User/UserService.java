@@ -1,16 +1,16 @@
-package com.cblandon.inversiones.User;
+package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Roles.Role;
 import com.cblandon.inversiones.Roles.Roles;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
-import com.cblandon.inversiones.User.dto.UsuariosResponseDTO;
-import com.cblandon.inversiones.Utils.Constantes;
-import com.cblandon.inversiones.Utils.GenericMessageDTO;
+import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
+import com.cblandon.inversiones.utils.Constantes;
+import com.cblandon.inversiones.utils.GenericMessageDTO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,25 +22,22 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    JwtUtils jwtUtils;
-    Map<String, Object> logInfo = new HashMap();
+    final JwtUtils jwtUtils;
+
 
     public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
-        Map<String, String> mensaje = new HashMap();
-        if (!consultarUser.isEmpty()) {
+        Map<String, String> mensaje = new HashMap<>();
+        if (consultarUser.isPresent()) {
 
             throw new RequestException(Constantes.USUARIO_REGISTRADO, HttpStatus.BAD_REQUEST.value());
         }
@@ -82,7 +79,7 @@ public class UserService {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
         try {
-            List<UsuariosResponseDTO> usuariosResponseDto =
+            return
                     usuariosConsulta.stream().map(usuario -> UsuariosResponseDTO.builder().
                             username(usuario.getUsername())
                             .lastname(usuario.getLastname())
@@ -92,9 +89,9 @@ public class UserService {
                             .roles(usuario.getRoles().stream().map(
                                     roles -> roles.getName().toString()).collect(Collectors.toSet()))
                             .build()
-                    ).collect(Collectors.toList());
+                    ).toList();
 
-            return usuariosResponseDto;
+
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -104,7 +101,7 @@ public class UserService {
     public GenericMessageDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
 
         Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
-        Map<String, String> mensaje = new HashMap();
+        Map<String, String> mensaje = new HashMap<>();
         if (usuarioBD.isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
         }
@@ -132,13 +129,13 @@ public class UserService {
     }
 
     public UserDetails getUserDetails(String token) {
+        Map<String, Object> logInfo = new HashMap<>();
         String username = jwtUtils.getUsernameFromToken(token.substring(7));
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        logInfo.put("userdetails", userDetails);
         logInfo.put("userService", "getUserDetails");
+        logInfo.put("userdetails", userDetails);
         log.info(logInfo.toString());
         return userDetails;
-
     }
 
 

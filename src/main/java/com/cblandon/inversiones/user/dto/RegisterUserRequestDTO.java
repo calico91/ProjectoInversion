@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.User.dto;
+package com.cblandon.inversiones.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,12 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuariosResponseDTO {
-
+public class RegisterUserRequestDTO {
     String username;
+    String password;
     String firstname;
     String lastname;
-    String email;
     String country;
+    String email;
     Set<String> roles = new HashSet<>();
 }

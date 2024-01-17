@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.CuotaCredito;
+package com.cblandon.inversiones.cuotacredito;
 
 import com.cblandon.inversiones.Credito.Credito;
 import jakarta.persistence.Tuple;
@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Integer> {

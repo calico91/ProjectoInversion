@@ -2,34 +2,24 @@ package com.cblandon.inversiones.Credito;
 
 import com.cblandon.inversiones.Cliente.Cliente;
 import com.cblandon.inversiones.Cliente.ClienteRepository;
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.dto.*;
-import com.cblandon.inversiones.CuotaCredito.CuotaCreditoRepository;
-import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
-import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
+import com.cblandon.inversiones.cuotacredito.CuotaCreditoRepository;
+import com.cblandon.inversiones.cuotacredito.CuotaCredito;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.CreditoMapper;
-import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.Mapper.Mapper;
-import com.cblandon.inversiones.Utils.Constantes;
-import com.cblandon.inversiones.Utils.ResponseHandler;
+import com.cblandon.inversiones.utils.Constantes;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;

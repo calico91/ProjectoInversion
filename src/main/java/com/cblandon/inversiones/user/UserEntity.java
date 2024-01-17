@@ -1,13 +1,10 @@
-package com.cblandon.inversiones.User;
+package com.cblandon.inversiones.user;
 
-import java.util.Collection;
 import java.util.Set;
 
 import com.cblandon.inversiones.Roles.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.User;
+package com.cblandon.inversiones.user;
 
 import java.util.Optional;
 

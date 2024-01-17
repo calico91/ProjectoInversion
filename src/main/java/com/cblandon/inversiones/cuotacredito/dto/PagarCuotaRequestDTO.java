@@ -1,11 +1,8 @@
-package com.cblandon.inversiones.CuotaCredito.dto;
+package com.cblandon.inversiones.cuotacredito.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor

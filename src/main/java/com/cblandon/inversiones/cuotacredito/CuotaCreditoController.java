@@ -1,9 +1,8 @@
-package com.cblandon.inversiones.CuotaCredito;
+package com.cblandon.inversiones.cuotacredito;
 
-import com.cblandon.inversiones.Cliente.ClienteService;
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
-import com.cblandon.inversiones.Utils.ResponseHandler;
+import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
+import com.cblandon.inversiones.utils.Constantes;
+import com.cblandon.inversiones.utils.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,54 +22,54 @@ public class CuotaCreditoController {
 
     @PutMapping("/pagarCuota/{idCuotaCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<?> pagarCuota(
+    public ResponseEntity<Object> pagarCuota(
             @PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, cuotaCreditoService.pagarCuota(
+                Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.pagarCuota(
                         idCuotaCredito, pagarCuotaRequestDTO));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}/{idCredito}")
-    public ResponseEntity<?> infoCuotaCreditoCliente(
+    public ResponseEntity<Object> infoCuotaCreditoCliente(
             @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
-                "successful",
+                Constantes.SUCCESSFUL,
                 HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente, idCredito));
     }
 
     @GetMapping("/infoCreditoySaldo/{idCredito}")
-    public ResponseEntity<?> infoCreditoySaldo(
+    public ResponseEntity<Object> infoCreditoySaldo(
             @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
-                "successful",
+                Constantes.SUCCESSFUL,
                 HttpStatus.OK, cuotaCreditoService.infoCreditoySaldo(idCredito));
     }
 
     @GetMapping("/reporteInteresyCapital")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> reporteInteresyCapital(
+    public ResponseEntity<Object> reporteInteresyCapital(
             @RequestParam String fechaInicial,
             @RequestParam String fechaFinal
     ) {
         return new ResponseHandler().generateResponse(
-                "successful",
+                Constantes.SUCCESSFUL,
                 HttpStatus.OK, cuotaCreditoService.reporteInteresyCapital(fechaInicial, fechaFinal));
     }
 
     @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> modificarFechaPago(
+    public ResponseEntity<Object> modificarFechaPago(
             @PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, cuotaCreditoService.modificarFechaPago(
+                Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.modificarFechaPago(
                         fechaNueva, idCredito));
     }
 
     @GetMapping("/consultarAbonosRealizados/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarAbonosRealizados(
+    public ResponseEntity<Object> consultarAbonosRealizados(
             @PathVariable int idCredito) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, cuotaCreditoService.consultarAbonosRealizados(idCredito));
+                Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.consultarAbonosRealizados(idCredito));
     }
 }
