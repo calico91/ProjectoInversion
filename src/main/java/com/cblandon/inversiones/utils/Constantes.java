@@ -11,10 +11,7 @@ public class Constantes {
     public static final String CLIENTE_NO_CREADO = "El cliente no se encuentra creado";
     public static final String CREDITO_ACTIVO = "A";
     public static final String CUOTA_YA_PAGADA = "Cuota ya se encuentra cancelada, verifique la informacion";
-    public static final String TRUE = "T";
-    public static final String FALSE = "F";
     public static final String ERROR_FECHAS_CREDITO = "Fecha credito no puede ser mayor o igual a fecha cuota";
-    public static final String ERROR_CUOTA = "Valor abonado no puede ser menor al valor de la cuota";
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
     public static final String ABONO_CAPITAL = "AC";
@@ -24,7 +21,6 @@ public class Constantes {
     public static final String MODALIDAD_MENSUAL = "mensual";
     public static final String MODALIDAD_QUINCENAL = "quincenal";
 
-    public static final String ERROR_FECHAS_REPORTE = "Fecha inicial no puede ser mayor o igual a fecha final";
 
     public static final String SUCCESSFUL ="successful";
     public static final String INTERES_MORA = "interesMora";

@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Mapper;
+package com.cblandon.inversiones.mapper;
 
 import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Credito.dto.CreditoCuotasResponseDTO;
@@ -14,5 +14,4 @@ public interface CreditoMapper {
     CreditoResponseDTO creditoToCreditoResponseDTO(Credito credito);
     CreditoCuotasResponseDTO creditoToCreditoCuotasResponseDTO(Credito credito);
 
-    Credito creditoResponseDTOToCredito(CreditoResponseDTO creditoResponseDTO);
 }

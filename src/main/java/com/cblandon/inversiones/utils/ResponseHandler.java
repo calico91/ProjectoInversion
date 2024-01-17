@@ -16,11 +16,6 @@ public class ResponseHandler {
         return new ResponseEntity<>(map, httpStatus);
     }
 
-    public ResponseEntity<Object> generateResponse(final Map<String, Object> map, final HttpStatus httpStatus) {
-        return new ResponseEntity<>(map, httpStatus);
-    }public ResponseEntity<Object> generateResponseController(final Object object, final HttpStatus httpStatus) {
-        return new ResponseEntity<>(object, httpStatus);
-    }
 
     public ResponseEntity<Object> generateResponseWithoutData(final String message, final HttpStatus httpStatus) {
         final Map<String, Object> map = new HashMap<>();

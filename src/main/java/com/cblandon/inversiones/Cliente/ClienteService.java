@@ -6,7 +6,7 @@ import com.cblandon.inversiones.Cliente.dto.InfoClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Mapper.Mapper;
+import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.UtilsMetodos;
 import jakarta.persistence.Tuple;

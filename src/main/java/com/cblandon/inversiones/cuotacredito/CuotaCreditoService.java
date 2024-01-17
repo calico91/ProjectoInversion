@@ -8,7 +8,7 @@ import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
+import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
 import jakarta.persistence.Tuple;
