@@ -1,9 +1,7 @@
 package com.cblandon.inversiones.CuotaCredito;
 
-import com.cblandon.inversiones.Cliente.ClienteService;
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
-import com.cblandon.inversiones.Utils.ResponseHandler;
+import com.cblandon.inversiones.utils.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

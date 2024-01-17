@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Utils;
+package com.cblandon.inversiones.utils;
 
 public class Constantes {
 

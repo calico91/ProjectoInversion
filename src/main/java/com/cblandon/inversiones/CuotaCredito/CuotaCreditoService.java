@@ -1,8 +1,6 @@
 package com.cblandon.inversiones.CuotaCredito;
 
 
-import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.Credito.Credito;
 import com.cblandon.inversiones.Credito.CreditoRepository;
 import com.cblandon.inversiones.CuotaCredito.dto.InfoCreditoySaldo;
@@ -11,8 +9,7 @@ import com.cblandon.inversiones.CuotaCredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.Excepciones.NoDataException;
 import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
-import com.cblandon.inversiones.Mapper.Mapper;
-import com.cblandon.inversiones.Utils.Constantes;
+import com.cblandon.inversiones.utils.Constantes;
 
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;

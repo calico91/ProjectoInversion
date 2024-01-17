@@ -1,53 +1,48 @@
-package com.cblandon.inversiones.User;
+package com.cblandon.inversiones.user;
 
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.dto.RegisterUserRequestDTO;
-import com.cblandon.inversiones.Utils.ResponseHandler;
-import com.cblandon.inversiones.Utils.UtilsMetodos;
+import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
+import com.cblandon.inversiones.utils.GenericMessageDTO;
+import com.cblandon.inversiones.utils.ResponseHandler;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    private UserDetailsService userDetailsService;
-
-    private UtilsMetodos utilsMetodos;
+    private final UserService userService;
 
 
     @PostMapping(value = "register")
-    public ResponseEntity<?> register(@RequestBody RegisterUserRequestDTO request) {
+    public ResponseEntity<GenericMessageDTO> register(@RequestBody RegisterUserRequestDTO request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
     @GetMapping("pruebaConexion")
-    public ResponseEntity<?> pruebaConexion() {
+    public ResponseEntity<String> pruebaConexion() {
         return ResponseEntity.ok("conexion establecida");
     }
 
     @GetMapping(value = "consultarUsuarios")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarUsuarios() {
+    public ResponseEntity<List<UsuariosResponseDTO>> consultarUsuarios() {
 
         return ResponseEntity.ok(userService.consultarUsuarios());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/actualizarUsuario/{username}")
-    public ResponseEntity<?> actualizarUsuario(@PathVariable String username,
-                                               @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<GenericMessageDTO> actualizarUsuario(@PathVariable String username,
+                                                               @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         return ResponseEntity.ok().body(userService.actualizarUsuario(username, registerUserRequestDTO));
     }
 

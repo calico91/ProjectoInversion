@@ -1,9 +1,8 @@
 package com.cblandon.inversiones.Security.filters;
 
-import com.cblandon.inversiones.Excepciones.RequestException;
 import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.UserEntity;
-import com.cblandon.inversiones.User.UserRepository;
+import com.cblandon.inversiones.user.UserEntity;
+import com.cblandon.inversiones.user.UserRepository;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 @Slf4j

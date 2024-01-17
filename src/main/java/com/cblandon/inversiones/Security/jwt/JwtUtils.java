@@ -1,8 +1,6 @@
 package com.cblandon.inversiones.Security.jwt;
 
-import com.cblandon.inversiones.User.UserDetailsServiceImpl;
-import com.cblandon.inversiones.User.UserEntity;
-import com.cblandon.inversiones.User.UserRepository;
+import com.cblandon.inversiones.user.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +18,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

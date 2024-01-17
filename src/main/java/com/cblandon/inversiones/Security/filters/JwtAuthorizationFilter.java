@@ -2,8 +2,8 @@ package com.cblandon.inversiones.Security.filters;
 
 
 import com.cblandon.inversiones.Security.jwt.JwtUtils;
-import com.cblandon.inversiones.User.UserDetailsServiceImpl;
-import com.cblandon.inversiones.Utils.ResponseHandler;
+import com.cblandon.inversiones.user.UserDetailsServiceImpl;
+import com.cblandon.inversiones.utils.ResponseHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;

@@ -1,10 +1,8 @@
 package com.cblandon.inversiones.Credito;
 
 
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
-import com.cblandon.inversiones.Utils.ResponseHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cblandon.inversiones.utils.ResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
