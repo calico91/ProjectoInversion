@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.CuotaCredito.dto;
+package com.cblandon.inversiones.cuotacredito.dto;
 
 import lombok.*;
 

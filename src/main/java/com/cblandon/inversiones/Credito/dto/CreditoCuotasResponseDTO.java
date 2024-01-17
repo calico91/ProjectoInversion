@@ -1,7 +1,6 @@
 package com.cblandon.inversiones.Credito.dto;
 
-import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.CuotaCredito.dto.CuotasCreditoResponseDTO;
+import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

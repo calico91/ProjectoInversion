@@ -1,11 +1,10 @@
 package com.cblandon.inversiones.Credito;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.CuotaCredito.CuotaCredito;
+import com.cblandon.inversiones.cuotacredito.CuotaCredito;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -25,4 +25,5 @@ public class Constantes {
     public static final String MODALIDAD_QUINCENAL = "quincenal";
 
     public static final String ERROR_FECHAS_REPORTE = "Fecha inicial no puede ser mayor o igual a fecha final";
+    public static final String INTERES_MORA = "interesMora";
 }

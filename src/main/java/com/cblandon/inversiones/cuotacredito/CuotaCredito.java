@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.CuotaCredito;
+package com.cblandon.inversiones.cuotacredito;
 
 import com.cblandon.inversiones.Credito.Credito;
 import jakarta.persistence.*;
