@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Roles;
+package com.cblandon.inversiones.roles;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

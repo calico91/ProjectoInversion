@@ -1,8 +1,6 @@
-package com.cblandon.inversiones.Roles.dto;
+package com.cblandon.inversiones.roles.dto;
 
-import com.cblandon.inversiones.Roles.Role;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.cblandon.inversiones.roles.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

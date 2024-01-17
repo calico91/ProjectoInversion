@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Roles;
+package com.cblandon.inversiones.roles;
 
 
 import jakarta.persistence.*;
