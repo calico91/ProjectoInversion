@@ -171,6 +171,7 @@ public class CuotaCreditoService {
             double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
+            infoCuotaPagar.setValorInteres(interesMora+infoCuotaPagar.getValorInteres());
             infoCuotaPagar.setValorCapital(infoCuotaPagar.getValorCredito() / infoCuotaPagar.getNumeroCuotas());
             infoCuotaPagar.setDiasMora(calcularDiasDiferenciaEntreFechas(
                     infoCuotaCreditoClienteRes.getFechaCuota(), LocalDate.now()));
