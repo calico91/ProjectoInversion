@@ -1,9 +1,9 @@
 package com.cblandon.inversiones.user;
 
-import com.cblandon.inversiones.Excepciones.NoDataException;
-import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Roles.Role;
-import com.cblandon.inversiones.Roles.Roles;
+import com.cblandon.inversiones.excepciones.NoDataException;
+import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.roles.Role;
+import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;

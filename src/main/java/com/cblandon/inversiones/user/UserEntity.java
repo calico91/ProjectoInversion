@@ -2,7 +2,7 @@ package com.cblandon.inversiones.user;
 
 import java.util.Set;
 
-import com.cblandon.inversiones.Roles.Roles;
+import com.cblandon.inversiones.roles.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 

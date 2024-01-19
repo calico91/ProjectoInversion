@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.cuotacredito;
 
-import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.credito.Credito;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

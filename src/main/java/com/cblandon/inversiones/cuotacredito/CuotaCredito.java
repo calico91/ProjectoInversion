@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.cuotacredito;
 
-import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.credito.Credito;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,14 +1,14 @@
 package com.cblandon.inversiones.cuotacredito;
 
 
-import com.cblandon.inversiones.Credito.Credito;
-import com.cblandon.inversiones.Credito.CreditoRepository;
+import com.cblandon.inversiones.credito.Credito;
+import com.cblandon.inversiones.credito.CreditoRepository;
 import com.cblandon.inversiones.cuotacredito.dto.InfoCreditoySaldo;
 import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
-import com.cblandon.inversiones.Excepciones.NoDataException;
-import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Mapper.CuotaCreditoMapper;
+import com.cblandon.inversiones.excepciones.NoDataException;
+import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
 import jakarta.persistence.Tuple;
@@ -171,6 +171,7 @@ public class CuotaCreditoService {
             double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
+            infoCuotaPagar.setValorInteres(interesMora+infoCuotaPagar.getValorInteres());
             infoCuotaPagar.setValorCapital(infoCuotaPagar.getValorCredito() / infoCuotaPagar.getNumeroCuotas());
             infoCuotaPagar.setDiasMora(calcularDiasDiferenciaEntreFechas(
                     infoCuotaCreditoClienteRes.getFechaCuota(), LocalDate.now()));
