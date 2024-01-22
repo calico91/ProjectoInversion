@@ -3,6 +3,7 @@ package com.cblandon.inversiones.cuotacredito;
 
 import com.cblandon.inversiones.credito.Credito;
 import com.cblandon.inversiones.credito.CreditoRepository;
+import com.cblandon.inversiones.cuotacredito.dto.AbonosRealizadosResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.InfoCreditoySaldo;
 import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
@@ -160,7 +161,7 @@ public class CuotaCreditoService {
     }
 
 
-    public CuotasCreditoResponseDTO infoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
+    public CuotasCreditoResponseDTO consultarInfoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
             CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente, idCredito);
             log.info(infoCuotaCreditoClienteRes.toString());
@@ -171,12 +172,12 @@ public class CuotaCreditoService {
             double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
-            infoCuotaPagar.setValorInteres(interesMora+infoCuotaPagar.getValorInteres());
+            infoCuotaPagar.setValorInteres(interesMora + infoCuotaPagar.getValorInteres());
             infoCuotaPagar.setValorCapital(infoCuotaPagar.getValorCredito() / infoCuotaPagar.getNumeroCuotas());
             infoCuotaPagar.setDiasMora(calcularDiasDiferenciaEntreFechas(
                     infoCuotaCreditoClienteRes.getFechaCuota(), LocalDate.now()));
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
-
+            log.info("consultarInfoCuotaCreditoCliente " + infoCuotaPagar);
 
             return infoCuotaPagar;
 
@@ -190,7 +191,7 @@ public class CuotaCreditoService {
 
 
     ///saldo del credito hasta la fecha y otros datos del credito
-    public InfoCreditoySaldo infoCreditoySaldo(Integer idCredito) {
+    public InfoCreditoySaldo consultarInfoCreditoySaldo(Integer idCredito) {
         try {
             List<Tuple> cuotas = cuotaCreditoRepository.infoCuotasPagadas(idCredito);
 
@@ -233,9 +234,10 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
 
-            log.info(infoCreditoySaldo.get(0).toString());
+            log.info("consultarInfoCreditoySaldo " + infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -261,6 +263,7 @@ public class CuotaCreditoService {
             return mapRespuesta;
 
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -285,29 +288,39 @@ public class CuotaCreditoService {
             ultimaCuotaGenerada.setValorInteres(interesDias + ultimaCuotaGenerada.getValorInteres());
             ultimaCuotaGenerada.setValorCuota(interesDias + ultimaCuotaGenerada.getValorCuota());
 
-            cuotaCreditoRepository.save(ultimaCuotaGenerada);
+            CuotaCredito cuotaGenerada = cuotaCreditoRepository.save(ultimaCuotaGenerada);
+            log.info("modificarFechaPago " + cuotaGenerada.toString());
 
             return CuotaCreditoMapper.
                     mapperCuotaCredito.
-                    cuotaCreditoToCuotasCreditoResponseDTO(cuotaCreditoRepository.save(ultimaCuotaGenerada));
+                    cuotaCreditoToCuotasCreditoResponseDTO(cuotaGenerada);
 
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
 
-    public List<CuotasCreditoResponseDTO> consultarAbonosRealizados(int idCredito) {
+    public List<AbonosRealizadosResponseDTO> consultarAbonosRealizados(int idCredito) {
 
         try {
-            List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizados(
+            List<Tuple> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizados(
                     idCredito);
 
             cuotasPagas.remove(cuotasPagas.size() - 1);
+
+            log.info("consultarAbonosRealizados " + cuotasPagas.size());
+
             return cuotasPagas.stream().map(
-                    CuotaCreditoMapper.
-                            mapperCuotaCredito::cuotaCreditoToCuotasCreditoResponseDTO).toList();
+                    cuota -> AbonosRealizadosResponseDTO.builder()
+                            .valorAbonado(Double.parseDouble(cuota.get("valor_abonado").toString()))
+                            .fechaAbono(LocalDate.parse(cuota.get("fecha_cuota").toString()))
+                            .tipoAbono(cuota.get("tipo_abono").toString())
+                            .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
+                            .build()).toList();
 
         } catch (RuntimeException ex) {
+            log.error(ex.toString());
             throw new RuntimeException(ex.getMessage());
         }
     }

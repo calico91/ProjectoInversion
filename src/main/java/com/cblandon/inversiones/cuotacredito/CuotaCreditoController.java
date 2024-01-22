@@ -34,7 +34,7 @@ public class CuotaCreditoController {
             @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL,
-                HttpStatus.OK, cuotaCreditoService.infoCuotaCreditoCliente(idCliente, idCredito));
+                HttpStatus.OK, cuotaCreditoService.consultarInfoCuotaCreditoCliente(idCliente, idCredito));
     }
 
     @GetMapping("/infoCreditoySaldo/{idCredito}")
@@ -42,7 +42,7 @@ public class CuotaCreditoController {
             @PathVariable Integer idCredito) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL,
-                HttpStatus.OK, cuotaCreditoService.infoCreditoySaldo(idCredito));
+                HttpStatus.OK, cuotaCreditoService.consultarInfoCreditoySaldo(idCredito));
     }
 
     @GetMapping("/reporteInteresyCapital")

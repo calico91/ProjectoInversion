@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -105,7 +104,7 @@ public class CreditoService {
                     .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
-            log.info(registrarCreditoResponseDTO.toString());
+            log.info("crearCredito "+registrarCreditoResponseDTO.toString());
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
@@ -121,9 +120,11 @@ public class CreditoService {
         try {
             List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
 
+            log.info("Allcreditos "+ creditos);
             return creditos.stream().map(
                     Mapper.mapper::creditoToCreditoAllResponseDTO).toList();
         } catch (RuntimeException ex) {
+            log.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -148,12 +149,14 @@ public class CreditoService {
                         .build()
         ).collect(Collectors.toList());*/
 
+        log.info("consultarCredito "+credito);
+
         return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
 
     }
 
     /// consulta informacion de los creditos activos y algunos datos del cliente
-    public List<InfoCreditosActivosDTO> infoCreditosActivos() {
+    public List<InfoCreditosActivosDTO> consultarInfoCreditosActivos() {
         try {
 
             List<Tuple> resultadoBD = creditoRepository.infoClientesConCreditosActivos();
@@ -168,8 +171,9 @@ public class CreditoService {
                             .fechaCredito(info.get("fecha_credito").toString())
                             .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
                             .build()
-            ).collect(Collectors.toList());
-            log.info(listaClientes.toString());
+            ).toList();
+
+            log.info("consultarInfoCreditosActivos "+listaClientes);
 
             return listaClientes;
 
