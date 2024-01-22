@@ -244,19 +244,13 @@ public class CuotaCreditoService {
     }
 
     /// informacion del capital e interes generado segun el mes seleccionado
-    public Map<String, Object> reporteInteresyCapital(String fechaInicial, String fechaFinal) {
+    public Map<String, Object> generarReporteInteresyCapital(String fechaInicial, String fechaFinal) {
         try {
 
-            List<CuotaCredito> interesYcapital = cuotaCreditoRepository.reporteInteresyCapital(fechaInicial, fechaFinal);
+            Tuple interesYcapital = cuotaCreditoRepository.reporteInteresyCapital(fechaInicial, fechaFinal);
 
-            double capitalMes = interesYcapital.stream().mapToDouble(
-                    CuotaCredito::getValorCapital).sum();
-
-            double interesMes = interesYcapital.stream().mapToDouble(
-                    CuotaCredito::getValorInteres).sum();
-
-            mapRespuesta.put("capitalMes", Math.rint(capitalMes));
-            mapRespuesta.put("interesMes", Math.rint(interesMes));
+            mapRespuesta.put("capitalMes", Math.rint(Double.parseDouble(interesYcapital.get("valorCapital").toString())));
+            mapRespuesta.put("interesMes", Math.rint(Double.parseDouble(interesYcapital.get("valorInteres").toString())));
 
             log.info("informacion capital e interes " + mapRespuesta);
 

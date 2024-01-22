@@ -29,12 +29,12 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
 
     List<CuotaCredito> findByCreditoEqualsOrderByIdDesc(Credito idCredito);
 
-    @Query(value = "SELECT  ccr.*" +
+    @Query(value = "SELECT  sum(valor_capital) as valorCapital, sum(valor_interes) as valorInteres " +
             "    FROM apirest.cuota_credito ccr" +
             "    where ccr.fecha_abono IS NOT NULL" +
             "    AND ccr.fecha_abono BETWEEN :fechaInicial AND :fechaFinal",
             nativeQuery = true)
-    List<CuotaCredito> reporteInteresyCapital(@Param("fechaInicial") String fechaInicial, @Param("fechaFinal") String fechaFinal);
+    Tuple reporteInteresyCapital(@Param("fechaInicial") String fechaInicial, @Param("fechaFinal") String fechaFinal);
 
     @Query(value = "SELECT * FROM apirest.cuota_credito " +
             "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",

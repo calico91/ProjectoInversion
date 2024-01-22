@@ -53,7 +53,7 @@ public class CuotaCreditoController {
     ) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL,
-                HttpStatus.OK, cuotaCreditoService.reporteInteresyCapital(fechaInicial, fechaFinal));
+                HttpStatus.OK, cuotaCreditoService.generarReporteInteresyCapital(fechaInicial, fechaFinal));
     }
 
     @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")
