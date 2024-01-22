@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "credito")
+@Table(name = "credito", indexes = @Index(name = "estadoCredito_index",columnList = "estadoCredito"))
 public class Credito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

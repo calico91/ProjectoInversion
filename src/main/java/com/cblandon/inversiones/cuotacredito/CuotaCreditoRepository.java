@@ -41,7 +41,8 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     CuotaCredito ultimaCuotaGenerada(@Param("idCredito") int idCredito);
 
-    @Query(value = "SELECT * FROM apirest.cuota_credito WHERE id_credito = :idCredito",
+    @Query(value = "SELECT *" +
+            " FROM apirest.cuota_credito WHERE id_credito = :idCredito",
             nativeQuery = true)
-    List<CuotaCredito> consultarAbonosRealizados(@Param("idCredito") int idCredito);
+    List<Tuple> consultarAbonosRealizados(@Param("idCredito") int idCredito);
 }

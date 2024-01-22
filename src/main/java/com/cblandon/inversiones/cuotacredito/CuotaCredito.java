@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "multi_index", columnList = "fecha_cuota,fecha_abono" ))
 public class CuotaCredito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

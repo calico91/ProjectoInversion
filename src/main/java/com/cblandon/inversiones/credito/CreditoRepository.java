@@ -11,11 +11,6 @@ import java.util.List;
 @Repository
 public interface CreditoRepository extends JpaRepository<Credito, Integer> {
 
-    @Query(value = "Select cr.*" +
-            "        from apirest.credito cr inner join apirest.cliente cl on cr.id_cliente = cl.idcliente" +
-            "        where cl.idcliente = :id", nativeQuery = true)
-    List<Credito> listaCreditosCliente(@Param("id") Integer id);
-
     List<Credito> findByEstadoCreditoEquals(String estadoCredito);
 
     @Query(value = "SELECT cl.id_cliente,cl.nombres,cl.apellidos,cl.cedula,cr.id_credito, " +
