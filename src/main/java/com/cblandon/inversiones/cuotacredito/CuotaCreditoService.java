@@ -249,8 +249,15 @@ public class CuotaCreditoService {
 
             Tuple interesYcapital = cuotaCreditoRepository.reporteInteresyCapital(fechaInicial, fechaFinal);
 
-            mapRespuesta.put("capitalMes", Math.rint(Double.parseDouble(interesYcapital.get("valorCapital").toString())));
-            mapRespuesta.put("interesMes", Math.rint(Double.parseDouble(interesYcapital.get("valorInteres").toString())));
+
+            double valorCapital = interesYcapital.get("valorCapital") == null
+                    ? 0.0 : Double.parseDouble(interesYcapital.get("valorCapital").toString());
+
+            double valorInteres = interesYcapital.get("valorInteres") == null
+                    ? 0.0 : Double.parseDouble(interesYcapital.get("valorInteres").toString());
+
+            mapRespuesta.put("capitalMes", Math.rint(valorCapital));
+            mapRespuesta.put("interesMes", Math.rint(valorInteres));
 
             log.info("informacion capital e interes " + mapRespuesta);
 
