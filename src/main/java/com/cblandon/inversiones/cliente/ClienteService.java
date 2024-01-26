@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,8 +26,8 @@ public class ClienteService {
 
     final ClienteRepository clienteRepository;
 
-    final UtilsMetodos utilsMetodos;
 
+    final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
@@ -36,12 +35,15 @@ public class ClienteService {
             throw new RequestException(
                     Constantes.DOCUMENTO_DUPLICADO, HttpStatus.BAD_REQUEST.value());
         }
+        try {
+            Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+            cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
 
-        Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-        cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
+            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
-        /// el repository devuelve un cliente y con el mapper lo convierto a dtoresponse
-        return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
 
     }
 
@@ -52,7 +54,7 @@ public class ClienteService {
 
 
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
-                    Mapper.mapper::clienteToClienteAllResponseDto).collect(Collectors.toList());
+                    Mapper.mapper::clienteToClienteAllResponseDto).toList();
 
             log.info(clienteResponseDTO.toString());
 
@@ -136,7 +138,7 @@ public class ClienteService {
                             .valorCuota(Double.parseDouble(info.get("valor_cuota").toString()))
                             .idCredito(Integer.parseInt(info.get("id_credito").toString()))
                             .build()
-            ).collect(Collectors.toList());
+            ).toList();
             log.info(listaCreditosdto.toString());
 
             return listaCreditosdto;
