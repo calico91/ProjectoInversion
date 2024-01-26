@@ -101,8 +101,10 @@ public class CuotaCreditoService {
 
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
 
-            ///si la cantidad de cuotas pagadas es mayor a las cuotas pactadas
-            /// o se envia la constante C, el credito con esta cuota queda saldado
+            /*
+              si la cantidad de cuotas pagadas es mayor a las cuotas pactadas
+              o se envia la constante C, el credito con esta cuota queda saldado
+             */
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.CUOTA_NORMAL)
                     && cuotaCancelada.getCuotaNumero() >= cuotaCancelada.getNumeroCuotas()) {
                 pagarCuotaRequestDTO.setEstadoCredito(Constantes.CREDITO_PAGADO);
@@ -114,7 +116,9 @@ public class CuotaCreditoService {
                         cuotaCancelada.getCredito().getValorCredito(), cuotaCancelada.getInteresPorcentaje());
                 CuotaCredito nuevaCuota = CuotaCredito.builder().build();
 
-                ///si es un abono extraordinario, no cambia la fecha de la proxima cuota
+                /*
+                 * si es un abono extraordinario, no cambia la fecha de la proxima cuota
+                 * */
                 if (pagarCuotaRequestDTO.isAbonoExtra()) {
                     nuevaCuota.setFechaCuota(cuotaCreditoDB.getFechaCuota());
                 } else {
@@ -368,8 +372,8 @@ public class CuotaCreditoService {
         int index = 0;
 
         if (listaCuotas.size() != 1) {
-            /// al realizar abonos extraordinarios, calcula mal el interes actual ya que no toma la
-            /// fecha del ultimo pago, sino la fecha de la proxima cuota
+            /* al realizar abonos extraordinarios, calcula mal el interes actual ya que no toma la
+             fecha del ultimo pago, sino la fecha de la proxima cuota*/
             if (Boolean.TRUE.equals(listaCuotas.get(1).getAbonoExtra())) {
                 for (int i = 1; i < listaCuotas.size(); i++) {
                     if (Boolean.FALSE.equals(listaCuotas.get(i).getAbonoExtra())) {
@@ -450,7 +454,9 @@ public class CuotaCreditoService {
         }
     }
 
-    /// por cada tres dias se genera un interes de mas por 5 mil pesos
+    /**
+     * por cada tres dias se genera un interes de mas por 5 mil pesos
+     */
     private Double calcularInteresMora(LocalDate fechaCuota) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
         log.info("dias de mora:" + diasDiferencia);
