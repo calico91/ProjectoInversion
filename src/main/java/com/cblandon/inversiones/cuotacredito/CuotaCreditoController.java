@@ -3,6 +3,7 @@ package com.cblandon.inversiones.cuotacredito;
 import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class CuotaCreditoController {
     @PutMapping("/pagarCuota/{idCuotaCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<Object> pagarCuota(
-            @PathVariable Integer idCuotaCredito, @RequestBody PagarCuotaRequestDTO pagarCuotaRequestDTO) {
+            @PathVariable Integer idCuotaCredito, @RequestBody @Valid PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.pagarCuota(
                         idCuotaCredito, pagarCuotaRequestDTO));

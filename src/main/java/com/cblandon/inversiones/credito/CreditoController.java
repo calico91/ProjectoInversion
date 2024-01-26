@@ -4,6 +4,7 @@ package com.cblandon.inversiones.credito;
 import com.cblandon.inversiones.credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +22,7 @@ public class CreditoController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<Object> crearCredito(@RequestBody RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
+    public ResponseEntity<Object> crearCredito(@RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.crearCredito(registrarCreditoRequestDTO));
     }
@@ -49,7 +50,7 @@ public class CreditoController {
     @PutMapping("/modificarEstadoCredito/{idCredito}/{estadoCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Object> modificarEstadoCredito(@PathVariable Integer idCredito,
-                                                    @PathVariable String estadoCredito) {
+                                                         @PathVariable String estadoCredito) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, estadoCredito));
     }

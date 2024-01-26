@@ -37,9 +37,6 @@ public class CuotaCredito {
     @Column(name = "valor_interes", nullable = false)
     private Double valorInteres;
 
-    @Column(name = "valor_credito", nullable = false)
-    private Double valorCredito;
-
     @Column(nullable = false, name = "interes_porcentaje")
     private Double interesPorcentaje;
 

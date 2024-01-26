@@ -55,6 +55,7 @@ public class CreditoService {
                     .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                     .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
                     .estadoCredito(Constantes.CREDITO_ACTIVO)
+                    .saldoCredito(registrarCreditoRequestDTO.getValorCredito())
                     .cliente(clienteBD)
                     .build();
 
@@ -79,7 +80,9 @@ public class CreditoService {
             double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
 
-            /// cuando se registra un credito, se crea la primer cuota
+            /**
+             * cuando se registra un credito, se crea la primer cuota
+             */
             if (credito.getId() != null) {
 
                 CuotaCredito cuotaCredito = CuotaCredito.builder()
@@ -88,7 +91,6 @@ public class CreditoService {
                         .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
                         .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(0.0)
-                        .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                         .valorInteres(interesPrimerCuota)
                         .interesPorcentaje(registrarCreditoRequestDTO.getInteresPorcentaje())
                         .credito(credito)
@@ -104,7 +106,7 @@ public class CreditoService {
                     .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
-            log.info("crearCredito "+registrarCreditoResponseDTO.toString());
+            log.info("crearCredito " + registrarCreditoResponseDTO.toString());
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
@@ -120,7 +122,7 @@ public class CreditoService {
         try {
             List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
 
-            log.info("Allcreditos "+ creditos);
+            log.info("Allcreditos " + creditos);
             return creditos.stream().map(
                     Mapper.mapper::creditoToCreditoAllResponseDTO).toList();
         } catch (RuntimeException ex) {
@@ -149,7 +151,7 @@ public class CreditoService {
                         .build()
         ).collect(Collectors.toList());*/
 
-        log.info("consultarCredito "+credito);
+        log.info("consultarCredito " + credito);
 
         return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
 
@@ -173,7 +175,7 @@ public class CreditoService {
                             .build()
             ).toList();
 
-            log.info("consultarInfoCreditosActivos "+listaClientes);
+            log.info("consultarInfoCreditosActivos " + listaClientes);
 
             return listaClientes;
 
