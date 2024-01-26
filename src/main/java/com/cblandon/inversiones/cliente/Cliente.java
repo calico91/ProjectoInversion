@@ -3,7 +3,6 @@ package com.cblandon.inversiones.cliente;
 
 import com.cblandon.inversiones.credito.Credito;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,7 +27,6 @@ public class Cliente {
     @Column(length = 100)
     private String email;
     @Column(nullable = false)
-    @Size(min = 10, max = 10, message = "el numero celular debe tener 10 caracteres")
     private String celular;
     @Column(length = 30)
     private String pais;
@@ -56,18 +54,18 @@ public class Cliente {
 
     @PrePersist
     public void prePersit() {
-        if (this.pais == null) {
-            this.pais = "Colombia";
+        if (pais == null) {
+            pais = "Colombia";
         }
-        if (this.email == null) {
-            this.email = "NN";
+        if (email == null) {
+            email = "NN";
         }
         this.fechacreacion = new Date();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.fechamodificacion = new Date();
+        fechamodificacion = new Date();
     }
 
 }
