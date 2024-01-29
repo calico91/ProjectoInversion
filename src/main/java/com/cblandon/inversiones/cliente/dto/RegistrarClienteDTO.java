@@ -1,42 +1,41 @@
 package com.cblandon.inversiones.cliente.dto;
 
+import com.cblandon.inversiones.excepciones.validation.anotation.ValidDocument;
+import com.cblandon.inversiones.excepciones.validation.anotation.ValidNullBlank;
 import com.cblandon.inversiones.utils.Constantes;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegistrarClienteDTO {
 
-    private Integer id;
+    Integer id;
 
-    @NotNull(message = Constantes.NOT_NULL)
-    @NotBlank(message = Constantes.NOT_BLANK)
-    private String nombres;
+    @ValidNullBlank
+    String nombres;
 
-    @NotNull(message = Constantes.NOT_NULL)
-    @NotBlank(message = Constantes.NOT_BLANK)
-    private String apellidos;
+    @ValidNullBlank
+    String apellidos;
 
     @Email(regexp = Constantes.REGEX_EMAIL)
-    private String email;
+    String email;
 
     @Size(min = 10, max = 10, message = Constantes.VALIDAR_CELULAR)
-    private String celular;
+    String celular;
 
-    private String pais;
+    String pais;
 
-    @NotNull(message = Constantes.NOT_NULL)
-    @NotBlank(message = Constantes.NOT_BLANK)
-    private String cedula;
+    @ValidDocument
+    @ValidNullBlank
+    String cedula;
 
-    private String observaciones;
+    String observaciones;
 
-    private String direccion;
+    String direccion;
 }
