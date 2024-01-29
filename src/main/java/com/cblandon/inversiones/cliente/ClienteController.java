@@ -46,7 +46,7 @@ public class ClienteController {
 
     @PutMapping("/actualizarCliente/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> actualizarCliente(@PathVariable Integer id, @RequestBody RegistrarClienteDTO registrarClienteDTO) {
+    public ResponseEntity<Object> actualizarCliente(@PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.actualizarCliente(id, registrarClienteDTO));
     }

@@ -1,26 +1,24 @@
 package com.cblandon.inversiones.cliente.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ClienteAllResponseDTO {
 
-    private Integer id;
-    private String nombres;
-    private String apellidos;
-    private String email;
-    private String celular;
-    private String pais;
-    private String cedula;
-    private String direccion;
-    private String observaciones;
+     Integer id;
+     String nombres;
+     String apellidos;
+     String email;
+     String celular;
+     String pais;
+     String cedula;
+     String direccion;
+     String observaciones;
 
 }
