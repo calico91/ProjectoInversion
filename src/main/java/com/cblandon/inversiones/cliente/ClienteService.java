@@ -39,9 +39,11 @@ public class ClienteService {
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
             cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
 
+            log.info("createCliente ");
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
         } catch (RuntimeException ex) {
+            log.error("createCliente " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -56,12 +58,12 @@ public class ClienteService {
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     Mapper.mapper::clienteToClienteAllResponseDto).toList();
 
-            log.info(clienteResponseDTO.toString());
+            log.info("allClientes " + clienteResponseDTO.toString());
 
             return clienteResponseDTO;
 
         } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
+            log.error("allClientes " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -70,10 +72,11 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public ClienteResponseDTO consultarCliente(String cedula) {
 
-        Cliente clienteBD = clienteRepository.findByCedula(cedula);
-        if (clienteBD == null) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
-        }
+        try {
+            Cliente clienteBD = clienteRepository.findByCedula(cedula);
+            if (clienteBD == null) {
+                throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
+            }
         /*mapeo manual sin utilizar Mapper
         List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
 
@@ -86,24 +89,38 @@ public class ClienteService {
                         .build()
         ).collect(Collectors.toList());*/
 
-        ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
-        log.info(clienteResponseDTO.toString());
-        return clienteResponseDTO;
+            ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
+            log.info("consultarCliente " + clienteResponseDTO.toString());
+            return clienteResponseDTO;
+        } catch (RuntimeException ex) {
+            log.error("consultarCliente " + ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+
 
     }
 
     public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
-        Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
-                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
-        Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
+        try {
+            Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
+                    () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
-        clienteModificado.setId(clienteBD.getId());
-        clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
-        clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
-        clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
+            Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
 
-        return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
+            clienteModificado.setId(clienteBD.getId());
+            clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
+            clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
+            clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
+
+            log.info("actualizarCliente ");
+            return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
+            
+        } catch (RuntimeException ex) {
+            log.error("actualizarCliente " + ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+
 
     }
 

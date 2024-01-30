@@ -50,23 +50,22 @@ public class CreditoService {
         try {
 
             Credito credito = Credito.builder()
-                    .modalidad(registrarCreditoRequestDTO.getModalidad())
                     .fechaCredito(registrarCreditoRequestDTO.getFechaCredito())
                     .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                     .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
                     .estadoCredito(Constantes.CREDITO_ACTIVO)
                     .saldoCredito(registrarCreditoRequestDTO.getValorCredito())
                     .cliente(clienteBD)
+                    .modalidad(registrarCreditoRequestDTO.getModalidad())
                     .build();
 
             credito = creditoRepository.save(credito);
-
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
                     registrarCreditoRequestDTO.getValorCredito(),
                     registrarCreditoRequestDTO.getInteresPorcentaje(),
                     registrarCreditoRequestDTO.getFechaCuota(),
                     registrarCreditoRequestDTO.getFechaCredito(),
-                    registrarCreditoRequestDTO.getModalidad()
+                    credito.getModalidad().getId()
             );
 
             Double cuotaCapital = calcularCuotaCapital(
@@ -110,7 +109,8 @@ public class CreditoService {
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
+            ex.printStackTrace();
+            log.error("crearCredito " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
         }
@@ -126,7 +126,7 @@ public class CreditoService {
             return creditos.stream().map(
                     Mapper.mapper::creditoToCreditoAllResponseDTO).toList();
         } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
+            log.error("Allcreditos " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -180,7 +180,7 @@ public class CreditoService {
             return listaClientes;
 
         } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
+            log.error("consultarInfoCreditosActivos " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -200,7 +200,7 @@ public class CreditoService {
             return "Estado de credito " + creditoModificado.getEstadoCredito();
 
         } catch (RuntimeException ex) {
-            throw new RuntimeException(ex.getMessage());
+            throw new RuntimeException("Estado de credito " + ex.getMessage());
         }
     }
 
@@ -212,8 +212,9 @@ public class CreditoService {
 
 
     private double calcularInteresPrimeraCuota(
-            double valorPrestado, Double interesPorcentaje, LocalDate fechaCuota, LocalDate fechaCredito, String modalidad) {
-        int diasSegunModalidad = modalidad.equals(Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
+            double valorPrestado, Double interesPorcentaje,
+            LocalDate fechaCuota, LocalDate fechaCredito, int codigoModalidad) {
+        int diasSegunModalidad = codigoModalidad == Constantes.CODIGO_MODALIDAD_MENSUAL ? 30 : 15;
         fechaCredito = fechaCredito == null ? LocalDate.now() : fechaCredito;
         long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
         diasDiferencia = diasDiferencia == 31 ? 30 : diasDiferencia;

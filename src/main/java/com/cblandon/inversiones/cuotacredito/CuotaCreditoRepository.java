@@ -20,10 +20,11 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
     CuotaCredito infoCuotaCreditoCliente(
             @Param("idCliente") Integer idCliente, @Param("idCredito") Integer idCredito);
 
-    @Query(value = "     SELECT cr.valor_credito, cr.fecha_credito,cr.modalidad, ccr.* " +
-            "   FROM apirest.cuota_credito ccr " +
-            "   INNER JOIN apirest.credito cr ON cr.id_credito = ccr.id_credito " +
-            "   WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito desc",
+    @Query(value = "    SELECT cr.valor_credito, cr.fecha_credito, m.description AS modalidad, ccr.* \n" +
+            "           FROM apirest.cuota_credito ccr \n" +
+            "           INNER JOIN apirest.credito cr ON cr.id_credito = ccr.id_credito \n" +
+            "           INNER JOIN apirest.modalidad m ON m.id_modalidad = cr.id_modalidad\n" +
+            "           WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito DESC",
             nativeQuery = true)
     List<Tuple> infoCuotasPagadas(@Param("idCredito") Integer idCredito);
 

@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.cuotacredito.dto;
 
+import com.cblandon.inversiones.modalidad.Modalidad;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoCreditoySaldo {
+public class InfoCreditoySaldoResponseDTO {
 
 
     private Integer id;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cblandon.inversiones.cliente.Cliente;
 import com.cblandon.inversiones.cuotacredito.CuotaCredito;
+import com.cblandon.inversiones.modalidad.Modalidad;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "credito", indexes = @Index(name = "estadoCredito_index",columnList = "estadoCredito"))
+@Table(name = "credito", indexes = @Index(name = "estadoCredito_index", columnList = "estadoCredito"))
 public class Credito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,17 +36,20 @@ public class Credito {
     @Column(name = "fecha_credito", nullable = false)
     private LocalDate fechaCredito;
 
-    @Column(nullable = false)
-    private String modalidad;
 
-    @Column(name = "saldo_credito",nullable = false)
+    @Column(name = "saldo_credito", nullable = false)
     private Double saldoCredito;
 
-    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY) @JoinColumn(name = "id_cliente")
+    @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @OneToMany(targetEntity = CuotaCredito.class, fetch = FetchType.LAZY, mappedBy = "credito")
     private List<CuotaCredito> listaCuotasCredito;
+
+    @ManyToOne
+    @JoinColumn(name = "id_modalidad")
+    private Modalidad modalidad;
 
     @PrePersist
     public void prePersit() {
