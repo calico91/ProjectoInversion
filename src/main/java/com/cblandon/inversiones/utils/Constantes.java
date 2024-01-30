@@ -20,6 +20,8 @@ public class Constantes {
     public static final String ERROR_FECHA_NUEVA = "La fecha nueva no puede ser menor a la fecha de la cuota";
     public static final String MODALIDAD_MENSUAL = "mensual";
     public static final String MODALIDAD_QUINCENAL = "quincenal";
+    public static final int CODIGO_MODALIDAD_MENSUAL = 1;
+    public static final int CODIGO_MODALIDAD_QUINCENAL = 2;
 
     public static final String SUCCESSFUL ="successful";
     public static final String ERROR ="Error";
