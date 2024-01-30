@@ -47,12 +47,12 @@ public class CreditoController {
                 Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.consultarInfoCreditosActivos());
     }
 
-    @PutMapping("/modificarEstadoCredito/{idCredito}/{estadoCredito}")
+    @PutMapping("/modificarEstadoCredito/{idCredito}/{idEstadoCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> modificarEstadoCredito(@PathVariable Integer idCredito,
-                                                         @PathVariable String estadoCredito) {
+    public ResponseEntity<Object> modificarEstadoCredito(@PathVariable int idCredito,
+                                                         @PathVariable int idEstadoCredito) {
         return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, estadoCredito));
+                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, idEstadoCredito));
     }
 
 

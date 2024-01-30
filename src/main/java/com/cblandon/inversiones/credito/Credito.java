@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cblandon.inversiones.cliente.Cliente;
 import com.cblandon.inversiones.cuotacredito.CuotaCredito;
+import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.modalidad.Modalidad;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,29 +16,27 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "credito", indexes = @Index(name = "estadoCredito_index", columnList = "estadoCredito"))
+@Table(name = "credito")
 public class Credito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credito")
     private Integer id;
 
-    @Column(nullable = false, name = "usuario_creador_credito")
+    @Column(nullable = false, name = "usuario_creador_credito", length = 20)
     private String usuarioCreador;
 
-    @Column(nullable = false)
-    private String estadoCredito;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 10)
     private Double valorCredito;
 
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_credito", nullable = false)
+    @Column(name = "fecha_credito", nullable = false, length = 10)
     private LocalDate fechaCredito;
 
 
-    @Column(name = "saldo_credito", nullable = false)
+    @Column(name = "saldo_credito", nullable = false, length = 10)
     private Double saldoCredito;
 
     @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
@@ -50,6 +49,10 @@ public class Credito {
     @ManyToOne
     @JoinColumn(name = "id_modalidad")
     private Modalidad modalidad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estado_credito")
+    private EstadoCredito idEstadoCredito;
 
     @PrePersist
     public void prePersit() {

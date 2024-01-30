@@ -5,6 +5,7 @@ import com.cblandon.inversiones.cliente.ClienteRepository;
 import com.cblandon.inversiones.credito.dto.*;
 import com.cblandon.inversiones.cuotacredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.cuotacredito.CuotaCredito;
+import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
@@ -53,10 +54,10 @@ public class CreditoService {
                     .fechaCredito(registrarCreditoRequestDTO.getFechaCredito())
                     .valorCredito(registrarCreditoRequestDTO.getValorCredito())
                     .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
-                    .estadoCredito(Constantes.CREDITO_ACTIVO)
                     .saldoCredito(registrarCreditoRequestDTO.getValorCredito())
                     .cliente(clienteBD)
                     .modalidad(registrarCreditoRequestDTO.getModalidad())
+                    .idEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_ACTIVO, null))
                     .build();
 
             credito = creditoRepository.save(credito);
@@ -79,7 +80,7 @@ public class CreditoService {
             double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
 
-            /**
+            /*
              * cuando se registra un credito, se crea la primer cuota
              */
             if (credito.getId() != null) {
@@ -109,7 +110,6 @@ public class CreditoService {
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error("crearCredito " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
@@ -120,7 +120,7 @@ public class CreditoService {
     public List<CreditoAllResponseDTO> allCreditos() {
 
         try {
-            List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
+            List<Credito> creditos = creditoRepository.findByIdEstadoCreditoEquals(Constantes.ID_CREDITO_ACTIVO);
 
             log.info("Allcreditos " + creditos);
             return creditos.stream().map(
@@ -180,13 +180,14 @@ public class CreditoService {
             return listaClientes;
 
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             log.error("consultarInfoCreditosActivos " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
     }
 
-    public String modificarEstadoCredito(int idCredito, String estadoCredito) throws NoDataException {
+    public String modificarEstadoCredito(int idCredito, int idstadoCredito) throws NoDataException {
 
         try {
             Credito creditoConsultado = creditoRepository.findById(idCredito)
@@ -194,10 +195,10 @@ public class CreditoService {
                             Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
 
-            creditoConsultado.setEstadoCredito(estadoCredito);
+            creditoConsultado.setIdEstadoCredito(new EstadoCredito(idstadoCredito, null));
             Credito creditoModificado = creditoRepository.save(creditoConsultado);
 
-            return "Estado de credito " + creditoModificado.getEstadoCredito();
+            return "Estado de credito " + creditoModificado.getIdEstadoCredito().getDescripcion();
 
         } catch (RuntimeException ex) {
             throw new RuntimeException("Estado de credito " + ex.getMessage());

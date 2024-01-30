@@ -16,6 +16,7 @@ public class Modalidad {
     @Id
     @Column(name = "id_modalidad")
     private Integer id;
+    @Column(length = 20)
     private String description;
     @OneToMany(mappedBy = "modalidad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Credito> listaCreditos;
