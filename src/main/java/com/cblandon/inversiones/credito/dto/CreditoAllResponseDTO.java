@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Credito.dto;
+package com.cblandon.inversiones.credito.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

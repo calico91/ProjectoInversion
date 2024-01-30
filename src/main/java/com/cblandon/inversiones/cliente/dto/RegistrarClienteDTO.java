@@ -1,10 +1,5 @@
-package com.cblandon.inversiones.Cliente.dto;
+package com.cblandon.inversiones.cliente.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

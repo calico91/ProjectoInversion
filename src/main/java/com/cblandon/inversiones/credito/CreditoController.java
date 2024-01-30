@@ -1,7 +1,8 @@
-package com.cblandon.inversiones.Credito;
+package com.cblandon.inversiones.credito;
 
 
-import com.cblandon.inversiones.Credito.dto.RegistrarCreditoRequestDTO;
+import com.cblandon.inversiones.credito.dto.RegistrarCreditoRequestDTO;
+import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,37 +21,37 @@ public class CreditoController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<?> crearCredito(@RequestBody RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
+    public ResponseEntity<Object> crearCredito(@RequestBody RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, creditoService.crearCredito(registrarCreditoRequestDTO));
+                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.crearCredito(registrarCreditoRequestDTO));
     }
 
     @GetMapping("/consultarCreditos")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarCreditos() {
+    public ResponseEntity<Object> consultarCreditos() {
         return ResponseEntity.ok().body(creditoService.allCreditos());
     }
 
     @GetMapping("/consultarCredito/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> consultarCredito(@PathVariable Integer idCredito) {
+    public ResponseEntity<Object> consultarCredito(@PathVariable Integer idCredito) {
         return ResponseEntity.ok().body(creditoService.consultarCredito(idCredito));
 
     }
 
     @GetMapping("/infoCreditosActivos")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> infoCreditosActivos() {
+    public ResponseEntity<Object> infoCreditosActivos() {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, creditoService.infoCreditosActivos());
+                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.infoCreditosActivos());
     }
 
     @PutMapping("/modificarEstadoCredito/{idCredito}/{estadoCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<?> modificarEstadoCredito(@PathVariable Integer idCredito,
+    public ResponseEntity<Object> modificarEstadoCredito(@PathVariable Integer idCredito,
                                                     @PathVariable String estadoCredito) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, estadoCredito));
+                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.modificarEstadoCredito(idCredito, estadoCredito));
     }
 
 

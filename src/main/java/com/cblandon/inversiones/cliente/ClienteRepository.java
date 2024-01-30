@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Cliente;
+package com.cblandon.inversiones.cliente;
 
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,13 +10,6 @@ import java.util.List;
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
     Cliente findByCedula(String cedula);
-
-    Cliente deleteByCedula(String cedula);
-
-    @Query(value = "SELECT cl.* " +
-            "FROM apirest.credito cr " +
-            "INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente AND cr.estado_credito='A'", nativeQuery = true)
-    List<Cliente> clientesCreditosActivos();
 
 
     @Query(value = "SELECT cl.id_cliente, cl.nombres,cl.apellidos,cl.cedula ,cr.fecha_credito,ccr.valor_credito, " +

@@ -1,6 +1,5 @@
-package com.cblandon.inversiones.Credito;
+package com.cblandon.inversiones.credito;
 
-import com.cblandon.inversiones.Cliente.Cliente;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface CreditoRepository extends JpaRepository<Credito, Integer> {

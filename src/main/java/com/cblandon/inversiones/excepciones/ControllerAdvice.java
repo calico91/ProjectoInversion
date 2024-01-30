@@ -1,6 +1,6 @@
-package com.cblandon.inversiones.Excepciones;
+package com.cblandon.inversiones.excepciones;
 
-import com.cblandon.inversiones.Excepciones.dto.ErrorDTO;
+import com.cblandon.inversiones.excepciones.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

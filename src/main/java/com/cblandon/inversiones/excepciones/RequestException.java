@@ -1,10 +1,12 @@
-package com.cblandon.inversiones.Excepciones;
+package com.cblandon.inversiones.excepciones;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class RequestException extends RuntimeException {
-    private Integer status;
+    private final Integer status;
 
     public RequestException(String message, Integer status) {
         super(message);

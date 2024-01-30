@@ -1,17 +1,17 @@
-package com.cblandon.inversiones.Cliente;
+package com.cblandon.inversiones.cliente;
 
-import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.InfoClientesCuotaCreditoDTO;
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.Excepciones.NoDataException;
-import com.cblandon.inversiones.Excepciones.RequestException;
+import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
+import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
+import com.cblandon.inversiones.cliente.dto.InfoClientesCuotaCreditoDTO;
+import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.excepciones.NoDataException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ClienteService {
-    @Autowired
-    ClienteRepository clienteRepository;
 
-    @Autowired
-    UtilsMetodos utilsMetodos;
+    final ClienteRepository clienteRepository;
+
+    final UtilsMetodos utilsMetodos;
 
 
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
@@ -113,24 +113,6 @@ public class ClienteService {
 
     }
 
-    public List<ClienteAllResponseDTO> clientesCreditosActivos() {
-        try {
-
-            List<Cliente> clientes = clienteRepository.clientesCreditosActivos();
-
-            List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
-                    Mapper.mapper::clienteToClienteAllResponseDto).collect(Collectors.toList());
-
-            log.info(clienteResponseDTO.toString());
-
-            return clienteResponseDTO;
-
-        } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-
-    }
 
     /// listqa de cuotas pendientes de la fecha actual para atras
     public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {

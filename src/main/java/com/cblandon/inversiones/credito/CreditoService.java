@@ -1,18 +1,18 @@
-package com.cblandon.inversiones.Credito;
+package com.cblandon.inversiones.credito;
 
-import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.Cliente.ClienteRepository;
-import com.cblandon.inversiones.Credito.dto.*;
+import com.cblandon.inversiones.cliente.Cliente;
+import com.cblandon.inversiones.cliente.ClienteRepository;
+import com.cblandon.inversiones.credito.dto.*;
 import com.cblandon.inversiones.cuotacredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.cuotacredito.CuotaCredito;
-import com.cblandon.inversiones.Excepciones.NoDataException;
-import com.cblandon.inversiones.Excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.NoDataException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
 import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
 import jakarta.persistence.Tuple;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,14 +27,11 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class CreditoService {
-    @Autowired
-    CreditoRepository creditoRepository;
-
-    @Autowired
-    ClienteRepository clienteRepository;
-    @Autowired
-    CuotaCreditoRepository cuotaCreditoRepository;
+    final CreditoRepository creditoRepository;
+    final ClienteRepository clienteRepository;
+    final CuotaCreditoRepository cuotaCreditoRepository;
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
@@ -125,7 +122,7 @@ public class CreditoService {
             List<Credito> creditos = creditoRepository.findByEstadoCreditoEquals("A");
 
             return creditos.stream().map(
-                    Mapper.mapper::creditoToCreditoAllResponseDTO).collect(Collectors.toList());
+                    Mapper.mapper::creditoToCreditoAllResponseDTO).toList();
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }

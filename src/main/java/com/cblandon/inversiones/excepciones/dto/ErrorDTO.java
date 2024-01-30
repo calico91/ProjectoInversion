@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Excepciones.dto;
+package com.cblandon.inversiones.excepciones.dto;
 
 import lombok.Builder;
 import lombok.Data;

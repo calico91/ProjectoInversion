@@ -1,7 +1,7 @@
-package com.cblandon.inversiones.Cliente;
+package com.cblandon.inversiones.cliente;
 
 
-import com.cblandon.inversiones.Credito.Credito;
+import com.cblandon.inversiones.credito.Credito;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -56,7 +56,6 @@ public class Cliente {
 
     @PrePersist
     public void prePersit() {
-        System.out.println(pais + email);
         if (this.pais == null) {
             this.pais = "Colombia";
         }

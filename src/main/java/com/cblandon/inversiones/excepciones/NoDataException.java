@@ -1,11 +1,13 @@
-package com.cblandon.inversiones.Excepciones;
+package com.cblandon.inversiones.excepciones;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class NoDataException extends RuntimeException {
 
-    private Integer status;
+    private final Integer status;
 
     public NoDataException(String message, Integer status) {
         super(message);

@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.Cliente.dto;
+package com.cblandon.inversiones.cliente.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
