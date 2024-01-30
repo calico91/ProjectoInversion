@@ -119,7 +119,7 @@ public class UserService {
                         .collect(Collectors.toSet()))
                 .build();
 
-        usuarioModificado.setId(usuarioBD.get().id);
+        usuarioModificado.setId(usuarioBD.get().getId());
         userRepository.save(usuarioModificado);
         mensaje.put("message", Constantes.USUARIO_MODIFICADO);
         return GenericMessageDTO.builder()
