@@ -24,7 +24,10 @@ public class ControllerAdvice {
 
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<ErrorDTO> requestException(RequestException ex) {
-        ErrorDTO error = ErrorDTO.builder().status(ex.getStatus()).message(ex.getMessage()).build();
+        ErrorDTO error = ErrorDTO.builder()
+                .status(ex.getStatus())
+                .message(ex.getMessage().toString())
+                .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -44,7 +47,7 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Object> runtimeExeceptionHandler(MethodArgumentTypeMismatchException ex) {
+    public ResponseEntity<Object> runtimeExeceptionHandler() {
 
         return new ResponseHandler().generateResponseError(
                 Constantes.ERROR, HttpStatus.BAD_REQUEST, "El tipo de dato enviado es incorrecto");
