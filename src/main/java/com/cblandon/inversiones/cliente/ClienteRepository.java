@@ -17,7 +17,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "            FROM apirest.credito cr" +
             "            INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
             "            INNER JOIN   apirest.cuota_credito ccr ON cr.id_credito= ccr.id_credito" +
-            "            WHERE cr.estado_credito='A' AND ccr.fecha_abono IS NULL " +
+            "            WHERE cr.id_estado_credito=1 AND ccr.fecha_abono IS NULL " +
             "            AND fecha_cuota <= :fechaFiltro ORDER BY fecha_cuota ASC",
             nativeQuery = true)
     List<Tuple> infoClientesCuotasPendientes(@Param("fechaFiltro") String fechaFiltro);

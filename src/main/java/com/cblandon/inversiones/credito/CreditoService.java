@@ -36,6 +36,7 @@ public class CreditoService {
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
+        log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
         if (clienteBD == null) {
             log.error(Constantes.CLIENTE_NO_CREADO);

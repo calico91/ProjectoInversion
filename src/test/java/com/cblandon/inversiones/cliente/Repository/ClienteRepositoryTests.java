@@ -1,9 +1,10 @@
-/*package com.cblandon.inversiones.Cliente.Repository;
+package com.cblandon.inversiones.cliente.Repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.Cliente.ClienteRepository;
+
+import com.cblandon.inversiones.cliente.Cliente;
+import com.cblandon.inversiones.cliente.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ public class ClienteRepositoryTests {
                 .celular("3104657100")
                 .pais("colombia")
                 .cedula("11414")
+                .direccion("cali")
                 .build();
     }
 
@@ -47,6 +49,7 @@ public class ClienteRepositoryTests {
                 .celular("3104657100")
                 .pais("colombia")
                 .cedula("1141400")
+                .direccion("cali")
                 .build();
 
         //when - acción o el comportamiento que vamos a probar
@@ -67,6 +70,7 @@ public class ClienteRepositoryTests {
                 .celular("3104657100")
                 .pais("colombia")
                 .cedula("1141400")
+                .direccion("cali")
                 .build();
         clienteRepository.save(cliente2);
         clienteRepository.save(cliente);
@@ -112,4 +116,4 @@ public class ClienteRepositoryTests {
         assertThat(clienteOptional).isEmpty();
     }
 
-}*/
+}

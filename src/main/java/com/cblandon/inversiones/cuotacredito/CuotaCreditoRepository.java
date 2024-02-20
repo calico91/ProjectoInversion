@@ -14,7 +14,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "            FROM apirest.credito cr" +
             "            INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +
             "            INNER JOIN   apirest.cuota_credito ccr ON cr.id_credito= ccr.id_credito" +
-            "            WHERE cl.id_cliente=:idCliente AND cr.estado_credito='A' " +
+            "            WHERE cl.id_cliente=:idCliente AND cr.id_estado_credito=1 " +
             "            AND cr.id_credito=:idCredito ORDER BY id_cuota_credito desc limit 1",
             nativeQuery = true)
     CuotaCredito infoCuotaCreditoCliente(
