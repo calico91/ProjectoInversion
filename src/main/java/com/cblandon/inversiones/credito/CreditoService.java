@@ -6,6 +6,7 @@ import com.cblandon.inversiones.credito.dto.*;
 import com.cblandon.inversiones.cuotacredito.CuotaCreditoRepository;
 import com.cblandon.inversiones.cuotacredito.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
+import com.cblandon.inversiones.estado_credito.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
@@ -32,6 +33,7 @@ public class CreditoService {
     final CreditoRepository creditoRepository;
     final ClienteRepository clienteRepository;
     final CuotaCreditoRepository cuotaCreditoRepository;
+    final EstadoCreditoRepository estadoCreditoRepository;
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
@@ -181,7 +183,6 @@ public class CreditoService {
             return listaClientes;
 
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error("consultarInfoCreditosActivos " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
@@ -195,11 +196,15 @@ public class CreditoService {
                     .orElseThrow(() -> new NoDataException(
                             Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
+            EstadoCredito estadoCredito = estadoCreditoRepository.findById(idstadoCredito).orElseThrow(
+                    () -> new NoDataException(
+                            Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
-            creditoConsultado.setIdEstadoCredito(new EstadoCredito(idstadoCredito, null));
-            Credito creditoModificado = creditoRepository.save(creditoConsultado);
+            creditoConsultado.setIdEstadoCredito(estadoCredito);
+            creditoRepository.save(creditoConsultado);
 
-            return "Estado de credito " + creditoModificado.getIdEstadoCredito().getDescripcion();
+
+            return "Estado de credito " + estadoCredito.getDescripcion();
 
         } catch (RuntimeException ex) {
             throw new RuntimeException("Estado de credito " + ex.getMessage());
