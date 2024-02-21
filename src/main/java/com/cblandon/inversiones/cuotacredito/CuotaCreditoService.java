@@ -340,8 +340,8 @@ public class CuotaCreditoService {
             return cuotasPagas.stream().map(
                     cuota -> AbonosRealizadosResponseDTO.builder()
                             .valorAbonado(Double.parseDouble(cuota.get("valor_abonado").toString()))
-                            .fechaAbono(LocalDate.parse(cuota.get("fecha_cuota").toString()))
-                            .tipoAbono(cuota.get("tipo_abono").toString())
+                            .fechaAbono(LocalDate.parse(cuota.get("fecha_abono").toString()))
+                            .tipoAbono((String) cuota.get("tipo_abono"))
                             .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
                             .build()).toList();
 
