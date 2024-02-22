@@ -24,9 +24,9 @@ public class Cliente {
     private String nombres;
     @Column(nullable = false, length = 50)
     private String apellidos;
-    @Column(length = 100)
+    @Column(length = 80)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String celular;
     @Column(length = 30)
     private String pais;
@@ -35,9 +35,9 @@ public class Cliente {
     private String direccion;
     @Column(unique = true, nullable = false, length = 20)
     private String cedula;
-    @Column(name = "usuario_creador", length = 50)
+    @Column(name = "usuario_creador", length = 25)
     private String usuariocreador;
-    @Column(name = "usuario_modificador", length = 50)
+    @Column(name = "usuario_modificador", length = 25)
     private String usuariomodificador;
     @Column(name = "fecha_creacion", length = 20)
     @DateTimeFormat(pattern = "dd/MM/yyyy")

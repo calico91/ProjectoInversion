@@ -1,4 +1,4 @@
-/*package com.cblandon.inversiones.Cliente.Service;
+package com.cblandon.inversiones.cliente.Service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -8,14 +8,15 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
 
-import com.cblandon.inversiones.Cliente.Cliente;
-import com.cblandon.inversiones.Cliente.ClienteRepository;
-import com.cblandon.inversiones.Cliente.ClienteService;
-import com.cblandon.inversiones.Cliente.dto.ClienteAllResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.Cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.Excepciones.RequestException;
-import com.cblandon.inversiones.Mapper.Mapper;
+import com.cblandon.inversiones.cliente.Cliente;
+import com.cblandon.inversiones.cliente.ClienteRepository;
+import com.cblandon.inversiones.cliente.ClienteService;
+import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
+import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
+import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
+import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.mapper.Mapper;
+import com.cblandon.inversiones.utils.UtilsMetodos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,10 +36,15 @@ public class ClienteServiceTest {
     @Mock
     private ClienteRepository clienteRepository;
 
+
     @InjectMocks
     private ClienteService clienteService;
 
     private Cliente cliente;
+
+    final UtilsMetodos utilsMetodos = new UtilsMetodos();
+
+
 
 
     @BeforeEach
@@ -50,6 +57,7 @@ public class ClienteServiceTest {
                 .pais("colombia")
                 .cedula("1")
                 .celular("310125121")
+                .usuariocreador("blandon")
                 .build();
 
 
@@ -57,12 +65,13 @@ public class ClienteServiceTest {
 
     @DisplayName("Test para guardar un cliente")
     @Test
-    void testGuardarCliente() {
+    void testCreateCliente() {
         //given
         given(clienteRepository.findByCedula(cliente.getCedula()))
                 .willReturn(null);
         given(clienteRepository.save(cliente)).willReturn(cliente);
-        RegistrarClienteDTO clienteDTO = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
+
+        RegistrarClienteDTO clienteDTO = Mapper.mapper.clienteToRegistrarClienteDTO(cliente);
 
         //when
         ClienteResponseDTO clienteGuardado = clienteService.createCliente(clienteDTO);
@@ -77,7 +86,7 @@ public class ClienteServiceTest {
     void testGuardarClienteConThrowException() {
         //given
         given(clienteRepository.findByCedula(cliente.getCedula())).willReturn(cliente);
-        RegistrarClienteDTO registrarClienteDto = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
+        RegistrarClienteDTO registrarClienteDto = Mapper.mapper.clienteToRegistrarClienteDTO(cliente);
 
         //when
         assertThrows(RequestException.class, () -> {
@@ -88,7 +97,7 @@ public class ClienteServiceTest {
         verify(clienteRepository, never()).save(any(Cliente.class));
     }
 
-  *//*  @DisplayName("Test para listar los clientes")
+   @DisplayName("Test para listar los clientes")
     @Test
     void testListarClientes() {
         //given
@@ -98,7 +107,7 @@ public class ClienteServiceTest {
                 .apellidos("maelito")
                 .email("j2@gmail.com")
                 .build();
-        given(clienteRepository.findAll()).willReturn(List.of(cliente, cliente2));
+        given(clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))).willReturn(List.of(cliente, cliente2));
 
         //when
         List<ClienteAllResponseDTO> clientes = clienteService.allClientes();
@@ -106,7 +115,7 @@ public class ClienteServiceTest {
         //then
         assertThat(clientes).isNotNull();
         assertThat(clientes.size()).isEqualTo(2);
-    }*//*
+    }
 
     @DisplayName("Test para obtener un cliente por cedula")
     @Test
@@ -130,7 +139,7 @@ public class ClienteServiceTest {
         cliente.setApellidos("blandito");
         cliente.setNombres("Maelito");
         given(clienteRepository.save(cliente)).willReturn(cliente);
-        RegistrarClienteDTO registrarClienteDTO = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
+        RegistrarClienteDTO registrarClienteDTO = Mapper.mapper.clienteToRegistrarClienteDTO(cliente);
 
         //when
         ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente(1, registrarClienteDTO);
@@ -144,7 +153,7 @@ public class ClienteServiceTest {
     @Test
     void testEliminarCliente() {
         //given
-        int idCliente = 1;
+       int idCliente = 1;
         willDoNothing().given(clienteRepository).deleteById(idCliente);
 
         //when
@@ -154,4 +163,4 @@ public class ClienteServiceTest {
         verify(clienteRepository, times(1)).deleteById(idCliente);
     }
 
-}*/
+}

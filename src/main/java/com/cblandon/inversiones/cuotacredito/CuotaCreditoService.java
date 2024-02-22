@@ -7,6 +7,7 @@ import com.cblandon.inversiones.cuotacredito.dto.AbonosRealizadosResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.InfoCreditoySaldoResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
 import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
+import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
@@ -149,7 +150,7 @@ public class CuotaCreditoService {
                         .orElseThrow(() -> new NoDataException(
                                 Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
-                credito.setEstadoCredito(Constantes.CREDITO_PAGADO);
+                credito.setIdEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_PAGADO, null));
                 creditoRepository.save(credito);
 
                 mapRespuesta.put("estadoCredito", "Credito pagado en su totalidad");
@@ -184,10 +185,10 @@ public class CuotaCreditoService {
                     mapperCuotaCredito.
                     cuotaCreditoToCuotasCreditoResponseDTO(infoCuotaCreditoClienteRes);
 
-            System.out.println(infoCuotaCreditoClienteRes.getFechaCuota());
             double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
+            infoCuotaPagar.setValorInteres(infoCuotaPagar.getValorInteres() + interesMora);
 
             infoCuotaPagar.setValorCapital(
                     infoCuotaCreditoClienteRes.getCredito().getValorCredito() / infoCuotaPagar.getNumeroCuotas());
@@ -346,6 +347,7 @@ public class CuotaCreditoService {
                             .build()).toList();
 
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             log.error("consultarAbonosRealizados " + ex.toString());
             throw new RuntimeException(ex.getMessage());
         }

@@ -55,7 +55,6 @@ public class ClienteControllerTest {
                 .build();
 
         RegistrarClienteDTO registrarClienteDTO = Mapper.mapper.clienteToRegistrarClienteDto(cliente);
-        System.out.println(registrarClienteDTO);
         given(clienteService.createCliente(registrarClienteDTO))
                 .willAnswer((invocation) -> invocation.getArgument(0));
 

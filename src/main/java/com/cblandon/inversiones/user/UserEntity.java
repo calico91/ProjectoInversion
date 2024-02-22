@@ -20,11 +20,13 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 25)
     String username;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     String lastname;
+    @Column(nullable = false, length = 30)
     String firstname;
+    @Column(length = 25)
     String country;
     String password;
     @Column(nullable = false, unique = true)

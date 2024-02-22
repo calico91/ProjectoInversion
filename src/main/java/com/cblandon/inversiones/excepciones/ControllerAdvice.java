@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,10 @@ public class ControllerAdvice {
 
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<ErrorDTO> requestException(RequestException ex) {
-        ErrorDTO error = ErrorDTO.builder().status(ex.getStatus()).message(ex.getMessage()).build();
+        ErrorDTO error = ErrorDTO.builder()
+                .status(ex.getStatus())
+                .message(ex.getMessage().toString())
+                .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -40,5 +44,12 @@ public class ControllerAdvice {
                 errors -> error.put(errors.getField(), errors.getDefaultMessage()));
         return new ResponseHandler().generateResponseError(
                 Constantes.ERROR, HttpStatus.BAD_REQUEST, error);
+    }
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> runtimeExeceptionHandler() {
+
+        return new ResponseHandler().generateResponseError(
+                Constantes.ERROR, HttpStatus.BAD_REQUEST, "El tipo de dato enviado es incorrecto");
     }
 }
