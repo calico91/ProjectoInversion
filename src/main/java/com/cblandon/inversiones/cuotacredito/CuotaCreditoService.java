@@ -51,8 +51,6 @@ public class CuotaCreditoService {
 
         validarEstadoCuota(cuotaCreditoDB.getFechaAbono());
 
-        List<CuotaCredito> cuotasPagas = cuotaCreditoRepository.findByCreditoEqualsOrderByIdDesc(
-                cuotaCreditoDB.getCredito());
 
         int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
         double capitalCuotaNormal = cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas();
@@ -84,7 +82,11 @@ public class CuotaCreditoService {
                 }
 
                 default -> {
-                    permitirPagarCuotaNormal(cuotasPagas);
+                    permitirPagarCuotaNormal(cuotaCreditoDB.getCredito().getSaldoCredito(),
+                            cuotaCreditoDB.getFechaCuota(), cuotaCreditoDB.getCredito().getValorCredito(),
+                            cuotaCreditoDB.getInteresPorcentaje(), cuotaCreditoDB.getCredito().getModalidad().getDescription(),
+                            cuotaCreditoDB.getNumeroCuotas());
+
                     cuotaCreditoDB.setValorCapital(capitalCuotaNormal);
                     cuotaCreditoDB.setValorInteres(
                             pagarCuotaRequestDTO.getValorAbonado() - capitalCuotaNormal);
@@ -167,10 +169,10 @@ public class CuotaCreditoService {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero().toString());
             }
 
-            log.info("pagarCuota" + mapRespuesta);
+            log.info("pagarCuota " + mapRespuesta);
             return mapRespuesta;
         } catch (RuntimeException ex) {
-            log.error("pagarCuota" + ex.getMessage());
+            log.error("pagarCuota " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -233,15 +235,15 @@ public class CuotaCreditoService {
                             .tipoAbono(Optional.ofNullable((String) cuota.get("tipo_abono")).orElse("CP"))
                             .abonoExtra(Optional.ofNullable((Boolean) cuota.get("abono_extra")).orElse(false))
                             .modalidad(cuota.get("modalidad").toString())
+                            .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
                             .build()).toList();
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
 
-            double capitalPagado = cuotas.stream().mapToDouble(
-                            valorCapital -> Double.parseDouble(valorCapital.get("valor_capital").toString()))
-                    .sum();
-            infoCreditoySaldo.get(0).setCapitalPagado(capitalPagado);
+
+            infoCreditoySaldo.get(0).setCapitalPagado(
+                    infoCreditoySaldo.get(0).getValorCredito() - infoCreditoySaldo.get(0).getSaldoCredito());
 
             double interesExtraPagado = infoCreditoySaldo.stream()
                     .filter(InfoCreditoySaldoResponseDTO::getAbonoExtra)
@@ -439,22 +441,16 @@ public class CuotaCreditoService {
      * calcula si el valor del saldo es mayor al valor de la cuota capital
      * para permitir dejar hacer el abono normal
      */
-    private void permitirPagarCuotaNormal(List<CuotaCredito> cuotasPagas) {
+    private void permitirPagarCuotaNormal(Double saldoCredito, LocalDate fechaCuota, double valorCredito,
+                                          double interesPorcentaje, String modalidad, int numeroCuotas) {
 
-        double capitalPagado = cuotasPagas.stream().mapToDouble(
-                        CuotaCredito::getValorCapital)
-                .sum();
-
-        int index = cuotasPagas.size() != 1 ? 1 : 0;
         double interesActual = calcularInteresActual(
-                cuotasPagas.get(index).getFechaCuota(),
-                cuotasPagas.get(0).getCredito().getValorCredito(),
-                cuotasPagas.get(0).getInteresPorcentaje(),
-                cuotasPagas.get(0).getCredito().getModalidad().getDescription());
+                fechaCuota,
+                valorCredito,
+                interesPorcentaje,
+                modalidad);
 
-        double saldoCredito = interesActual + (
-                cuotasPagas.get(0).getCredito().getValorCredito() - capitalPagado);
-        if (saldoCredito < (cuotasPagas.get(0).getCredito().getValorCredito() / cuotasPagas.get(0).getNumeroCuotas())) {
+        if ((saldoCredito + interesActual) < (valorCredito / numeroCuotas)) {
 
             throw new RequestException(
                     Constantes.NO_PUEDE_PAGAR_CUOTA_NORMAL,
