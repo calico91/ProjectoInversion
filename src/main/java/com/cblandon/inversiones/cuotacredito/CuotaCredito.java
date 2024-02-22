@@ -37,7 +37,7 @@ public class CuotaCredito {
     @Column(name = "valor_interes", nullable = false, length = 10)
     private Double valorInteres;
 
-    @Column(nullable = false, name = "interes_porcentaje", length = 2)
+    @Column(nullable = false, name = "interes_porcentaje", length = 3)
     private Double interesPorcentaje;
 
     @Column(name = "fecha_abono", length = 10)
