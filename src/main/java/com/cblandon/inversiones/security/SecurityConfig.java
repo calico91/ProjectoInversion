@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                             "/user/pruebaConexion",
+                            "/user/register",
                             "/v3/api-docs/**",
                             "/doc/**").permitAll();
                     auth.anyRequest().authenticated();

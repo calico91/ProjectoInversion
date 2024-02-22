@@ -206,7 +206,6 @@ public class CuotaCreditoService {
 
 
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error("consultarInfoCuotaCreditoCliente " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }

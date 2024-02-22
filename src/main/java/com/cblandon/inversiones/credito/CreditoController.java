@@ -27,11 +27,6 @@ public class CreditoController {
                 Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.crearCredito(registrarCreditoRequestDTO));
     }
 
-    @GetMapping("/consultarCreditos")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> consultarCreditos() {
-        return ResponseEntity.ok().body(creditoService.allCreditos());
-    }
 
     @GetMapping("/consultarCredito/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
