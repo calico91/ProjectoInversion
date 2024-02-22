@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface CreditoRepository extends JpaRepository<Credito, Integer> {
 
-    List<Credito> findByIdEstadoCreditoEquals(int idEstadoCredito);
-
     @Query(value = "SELECT cl.id_cliente,cl.nombres,cl.apellidos,cl.cedula,cr.id_credito, " +
             "cr.fecha_credito,cr.valor_credito " +
             "FROM apirest.credito cr " +

@@ -4,6 +4,7 @@ import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
+import com.cblandon.inversiones.roles.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
@@ -25,22 +26,26 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    private final RolesRepository rolesRepository;
 
     final JwtUtils jwtUtils;
 
 
-    public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
-        Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
-        Map<String, String> mensaje = new HashMap<>();
-        if (consultarUser.isPresent()) {
+    public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
 
+        Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
+
+        if (consultarUser.isPresent()) {
             throw new RequestException(Constantes.USUARIO_REGISTRADO, HttpStatus.BAD_REQUEST.value());
         }
+
+        Map<String, String> mensaje = new HashMap<>();
 
         try {
             UserEntity user = UserEntity.builder()
@@ -52,10 +57,10 @@ public class UserService {
                     .build();
 
             user.setPassword(passwordEncoder.encode(registerUserRequestDTO.getPassword()));
+
             Set<Roles> authorities = registerUserRequestDTO.getRoles().stream()
-                    .map(role -> Roles.builder()
-                            .name(Role.valueOf(role))
-                            .build())
+                    .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
+                            () -> new RequestException(Constantes.ROL_NO_ENCONTRADO, HttpStatus.BAD_REQUEST.value())))
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);

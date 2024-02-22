@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.cuotacredito;
 
-import com.cblandon.inversiones.credito.Credito;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Integer> {
-
+    //@EntityGraph(attributePaths = {"id", "username"})
     @Query(value = "     SELECT ccr.*" +
             "            FROM apirest.credito cr" +
             "            INNER JOIN apirest.cliente cl ON cr.id_cliente = cl.id_cliente " +

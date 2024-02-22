@@ -120,20 +120,6 @@ public class CreditoService {
 
     }
 
-    public List<CreditoAllResponseDTO> allCreditos() {
-
-        try {
-            List<Credito> creditos = creditoRepository.findByIdEstadoCreditoEquals(Constantes.ID_CREDITO_ACTIVO);
-
-            log.info("Allcreditos " + creditos);
-            return creditos.stream().map(
-                    Mapper.mapper::creditoToCreditoAllResponseDTO).toList();
-        } catch (RuntimeException ex) {
-            log.error("Allcreditos " + ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-
-    }
 
     /// consulta credito y sus cuotas generadas
     @Transactional(readOnly = true)

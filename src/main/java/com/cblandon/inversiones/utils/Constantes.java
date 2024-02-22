@@ -34,4 +34,6 @@ public class Constantes {
     public static final String CREDITO_ANULADO_INSERT = "Anulado";
     public static final int ID_CREDITO_ACTIVO = 1;
     public static final int ID_CREDITO_PAGADO = 2;
+
+    public static final String ROL_NO_ENCONTRADO = "El rol no existe";
 }
