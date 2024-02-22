@@ -233,15 +233,15 @@ public class CuotaCreditoService {
                             .tipoAbono(Optional.ofNullable((String) cuota.get("tipo_abono")).orElse("CP"))
                             .abonoExtra(Optional.ofNullable((Boolean) cuota.get("abono_extra")).orElse(false))
                             .modalidad(cuota.get("modalidad").toString())
+                            .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
                             .build()).toList();
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
 
-            double capitalPagado = cuotas.stream().mapToDouble(
-                            valorCapital -> Double.parseDouble(valorCapital.get("valor_capital").toString()))
-                    .sum();
-            infoCreditoySaldo.get(0).setCapitalPagado(capitalPagado);
+            
+            infoCreditoySaldo.get(0).setCapitalPagado(
+                    infoCreditoySaldo.get(0).getValorCredito() - infoCreditoySaldo.get(0).getSaldoCredito());
 
             double interesExtraPagado = infoCreditoySaldo.stream()
                     .filter(InfoCreditoySaldoResponseDTO::getAbonoExtra)
