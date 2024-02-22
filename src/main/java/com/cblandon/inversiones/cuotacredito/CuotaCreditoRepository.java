@@ -30,8 +30,6 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     List<Tuple> infoCuotasPagadas(@Param("idCredito") Integer idCredito);
 
-    List<CuotaCredito> findByCreditoEqualsOrderByIdDesc(Credito idCredito);
-
     @Query(value = "SELECT  sum(valor_capital) as valorCapital, sum(valor_interes) as valorInteres " +
             "    FROM apirest.cuota_credito ccr" +
             "    where ccr.fecha_abono IS NOT NULL" +
@@ -44,8 +42,8 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     CuotaCredito ultimaCuotaGenerada(@Param("idCredito") int idCredito);
 
-    @Query(value = "SELECT *" +
-            " FROM apirest.cuota_credito WHERE id_credito = :idCredito",
+    @Query(value = "SELECT ccr.valor_abonado, ccr.fecha_abono, ccr.tipo_abono, ccr.couta_numero" +
+            "       FROM apirest.cuota_credito as ccr WHERE id_credito = :idCredito",
             nativeQuery = true)
     List<Tuple> consultarAbonosRealizados(@Param("idCredito") int idCredito);
 }
