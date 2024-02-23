@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-    Cliente findByCedula(String cedula);
+    Optional<Cliente> findByCedula(String cedula);
 
 
     @Query(value = "SELECT cl.id_cliente, cl.nombres,cl.apellidos,cl.cedula ,cr.fecha_credito,cr.valor_credito, " +

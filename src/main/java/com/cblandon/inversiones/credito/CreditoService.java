@@ -37,17 +37,13 @@ public class CreditoService {
 
 
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito());
         log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
-        if (clienteBD == null) {
-            log.error(Constantes.CLIENTE_NO_CREADO);
-            throw new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value());
-        }
+        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito())
+                .orElseThrow(() -> new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value()));
+
         if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota()) ||
                 registrarCreditoRequestDTO.getFechaCredito().equals(registrarCreditoRequestDTO.getFechaCuota())) {
-
-            log.error(Constantes.ERROR_FECHAS_CREDITO);
             throw new RequestException(Constantes.ERROR_FECHAS_CREDITO, HttpStatus.BAD_REQUEST.value());
         }
 
@@ -128,17 +124,6 @@ public class CreditoService {
         Credito credito = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
-        /*mapeo manual sin utilizar Mapper
-        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
-
-        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
-                credito -> CreditoResponseDTO.builder()
-                        .idCredito(credito.getId())
-                        .cantidadPrestada(credito.getCantidadPrestada())
-                        .valorCuota(credito.getValorCuota())
-                        .cantidadCuotas(credito.getCantidadCuotas())
-                        .build()
-        ).collect(Collectors.toList());*/
 
         log.info("consultarCredito " + credito);
 

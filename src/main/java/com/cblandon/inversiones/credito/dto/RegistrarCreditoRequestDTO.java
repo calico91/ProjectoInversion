@@ -26,10 +26,10 @@ public class RegistrarCreditoRequestDTO {
     @ValidNullBlank
     private String cedulaTitularCredito;
 
-    //@JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaCuota;
 
-    //@JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaCredito;
 
     @NotNull(message = Constantes.NOT_NULL)
