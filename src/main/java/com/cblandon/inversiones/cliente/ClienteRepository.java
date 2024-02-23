@@ -23,5 +23,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             nativeQuery = true)
     List<Tuple> infoClientesCuotasPendientes(@Param("fechaFiltro") String fechaFiltro);
 
-
 }
