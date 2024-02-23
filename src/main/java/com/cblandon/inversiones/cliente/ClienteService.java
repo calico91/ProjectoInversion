@@ -25,14 +25,14 @@ import java.util.List;
 public class ClienteService {
 
     final ClienteRepository clienteRepository;
-
-
+    
     final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
     @Transactional
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
+        log.info("createCliente registrarClienteDTO: ".concat(registrarClienteDTO.toString()));
 
-        if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()) != null) {
+        if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()).isPresent()) {
             throw new RequestException(
                     Constantes.DOCUMENTO_DUPLICADO, HttpStatus.BAD_REQUEST.value());
         }
@@ -40,11 +40,10 @@ public class ClienteService {
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
             cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
 
-            log.info("createCliente ");
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
         } catch (RuntimeException ex) {
-            log.error("createCliente " + ex.getMessage());
+            log.error("createCliente ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -56,16 +55,15 @@ public class ClienteService {
 
             List<Cliente> clientes = clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
-
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     Mapper.mapper::clienteToClienteAllResponseDto).toList();
 
-            log.info("allClientes " + clienteResponseDTO.toString());
+            log.info("allClientes ".concat(clienteResponseDTO.toString()));
 
             return clienteResponseDTO;
 
         } catch (RuntimeException ex) {
-            log.error("allClientes " + ex.getMessage());
+            log.error("allClientes ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -73,15 +71,19 @@ public class ClienteService {
 
     @Transactional(readOnly = true)
     public ClienteResponseDTO consultarCliente(String cedula) {
+
         Cliente clienteBD = clienteRepository.findByCedula(cedula).orElseThrow(
                 () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
         try {
+
             ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
-            log.info("consultarCliente " + clienteResponseDTO.toString());
+            log.info("consultarCliente ".concat(clienteResponseDTO.toString()));
             return clienteResponseDTO;
+
         } catch (RuntimeException ex) {
-            log.error("consultarCliente " + ex.getMessage());
+
+            log.error("consultarCliente ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -91,18 +93,18 @@ public class ClienteService {
     @Transactional
     public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
 
+        log.info("actualizarCliente ".concat(registrarClienteDTO.toString()));
+        Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
+                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+
         try {
-            Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
-                    () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
             Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-
             clienteModificado.setId(clienteBD.getId());
             clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
             clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
             clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
 
-            log.info("actualizarCliente ");
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
         } catch (RuntimeException ex) {
@@ -128,9 +130,8 @@ public class ClienteService {
      */
     @Transactional(readOnly = true)
     public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
-        //spring.jpa.show-sql=true
-        try {
 
+        try {
 
             List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes(fechaFiltro);
 
@@ -149,12 +150,12 @@ public class ClienteService {
                             .idCredito(Integer.parseInt(info.get("id_credito").toString()))
                             .build()
             ).toList();
-            log.info(listaCreditosdto.toString());
+            log.info("infoClientesCuotasPendientes ".concat(listaCreditosdto.toString()));
 
             return listaCreditosdto;
 
         } catch (RuntimeException ex) {
-            log.error(ex.getMessage());
+            log.error("infoClientesCuotasPendientes ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
 
