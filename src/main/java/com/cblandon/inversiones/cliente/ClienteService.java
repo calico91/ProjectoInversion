@@ -29,6 +29,7 @@ public class ClienteService {
 
     final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
+    @Transactional
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
 
         if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()) != null) {
@@ -49,6 +50,7 @@ public class ClienteService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<ClienteAllResponseDTO> allClientes() {
         try {
 
@@ -71,24 +73,10 @@ public class ClienteService {
 
     @Transactional(readOnly = true)
     public ClienteResponseDTO consultarCliente(String cedula) {
+        Cliente clienteBD = clienteRepository.findByCedula(cedula).orElseThrow(
+                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
         try {
-            Cliente clienteBD = clienteRepository.findByCedula(cedula);
-            if (clienteBD == null) {
-                throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
-            }
-        /*mapeo manual sin utilizar Mapper
-        List<Credito> listaCreditos = creditoRepository.listaCreditosCliente(clienteBD.getId());
-
-        List<CreditoResponseDTO> listaCreditosdto = listaCreditos.stream().map(
-                credito -> CreditoResponseDTO.builder()
-                        .idCredito(credito.getId())
-                        .cantidadPrestada(credito.getCantidadPrestada())
-                        .valorCuota(credito.getValorCuota())
-                        .cantidadCuotas(credito.getCantidadCuotas())
-                        .build()
-        ).collect(Collectors.toList());*/
-
             ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
             log.info("consultarCliente " + clienteResponseDTO.toString());
             return clienteResponseDTO;
@@ -100,6 +88,7 @@ public class ClienteService {
 
     }
 
+    @Transactional
     public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
 
         try {
@@ -115,7 +104,7 @@ public class ClienteService {
 
             log.info("actualizarCliente ");
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
-            
+
         } catch (RuntimeException ex) {
             log.error("actualizarCliente " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
@@ -124,6 +113,7 @@ public class ClienteService {
 
     }
 
+    @Transactional
     public void deleteCliente(int idCliente) {
         if (clienteRepository.findById(idCliente).isEmpty()) {
             throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
@@ -133,7 +123,10 @@ public class ClienteService {
     }
 
 
-    /// listqa de cuotas pendientes de la fecha actual para atras
+    /**
+     * lista de cuotas pendientes de la fecha actual para atras
+     */
+    @Transactional(readOnly = true)
     public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
         //spring.jpa.show-sql=true
         try {
