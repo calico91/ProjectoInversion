@@ -35,7 +35,7 @@ public class CreditoService {
     final CuotaCreditoRepository cuotaCreditoRepository;
     final EstadoCreditoRepository estadoCreditoRepository;
 
-
+    @Transactional()
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
@@ -105,11 +105,11 @@ public class CreditoService {
                     .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
-            log.info("crearCredito " + registrarCreditoResponseDTO.toString());
+            log.info("crearCredito ".concat(registrarCreditoResponseDTO.toString()));
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            log.error("crearCredito " + ex.getMessage());
+            log.error("crearCredito ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
 
         }
@@ -117,21 +117,22 @@ public class CreditoService {
     }
 
 
-    /// consulta credito y sus cuotas generadas
     @Transactional(readOnly = true)
     public CreditoCuotasResponseDTO consultarCredito(Integer idCredito) throws NoDataException {
 
         Credito credito = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
 
-
-        log.info("consultarCredito " + credito);
+        log.info("consultarCredito ".concat(credito.toString()));
 
         return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
-
     }
 
-    /// consulta informacion de los creditos activos y algunos datos del cliente
+    /**
+     * consulta credito y sus cuotas generadas
+     */
+
+    @Transactional(readOnly = true)
     public List<InfoCreditosActivosDTO> consultarInfoCreditosActivos() {
         try {
 
@@ -149,36 +150,37 @@ public class CreditoService {
                             .build()
             ).toList();
 
-            log.info("consultarInfoCreditosActivos " + listaClientes);
+            log.info("consultarInfoCreditosActivos ".concat(listaClientes.toString()));
 
             return listaClientes;
 
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCreditosActivos " + ex.getMessage());
+            log.error("consultarInfoCreditosActivos ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
 
     }
 
+    @Transactional()
     public String modificarEstadoCredito(int idCredito, int idstadoCredito) throws NoDataException {
 
+        Credito creditoConsultado = creditoRepository.findById(idCredito)
+                .orElseThrow(() -> new NoDataException(
+                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+
+        EstadoCredito estadoCredito = estadoCreditoRepository.findById(idstadoCredito).orElseThrow(
+                () -> new NoDataException(
+                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+
         try {
-            Credito creditoConsultado = creditoRepository.findById(idCredito)
-                    .orElseThrow(() -> new NoDataException(
-                            Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-
-            EstadoCredito estadoCredito = estadoCreditoRepository.findById(idstadoCredito).orElseThrow(
-                    () -> new NoDataException(
-                            Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
-
             creditoConsultado.setIdEstadoCredito(estadoCredito);
             creditoRepository.save(creditoConsultado);
 
 
-            return "Estado de credito " + estadoCredito.getDescripcion();
+            return "Estado de credito ".concat(estadoCredito.getDescripcion());
 
         } catch (RuntimeException ex) {
-            throw new RuntimeException("Estado de credito " + ex.getMessage());
+            throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
     }
 
