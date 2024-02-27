@@ -32,6 +32,8 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     @Email(message = "correo invalido")
     String email;
+    @Column(length = 100)
+    String imagen;
     @Enumerated(EnumType.STRING)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",

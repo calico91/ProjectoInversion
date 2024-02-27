@@ -2,6 +2,7 @@ package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.imagenes.ImagenesService;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
@@ -17,7 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,17 +33,17 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final UserDetailsServiceImpl userDetailsService;
-
     private final RolesRepository rolesRepository;
+    private final JwtUtils jwtUtils;
+    private final ImagenesService imagenesService;
 
-    final JwtUtils jwtUtils;
 
+    public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO, MultipartFile archivo) throws RequestException {
 
-    public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
+        log.info("registerUserRequestDTO: ".concat(registerUserRequestDTO.toString()));
+        log.info("archivo: ".concat(archivo.toString()));
 
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
@@ -64,14 +70,16 @@ public class UserService {
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);
+            user.setImagen(imagenesService.guardarArchivo(archivo));
 
             userRepository.save(user);
             mensaje.put("message", Constantes.USUARIO_CREADO);
             return GenericMessageDTO.builder()
                     .message(mensaje)
                     .build();
-        } catch (RuntimeException ex) {
-            throw new RuntimeException(ex);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -141,6 +149,31 @@ public class UserService {
         logInfo.put("userdetails", userDetails);
         log.info(logInfo.toString());
         return userDetails;
+
+    }
+
+    public String cargarImagen(MultipartFile imagen, int idUsuario) {
+
+        UserEntity usuario = userRepository.findById(idUsuario).orElseThrow(
+                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+
+        if (!imagen.isEmpty()) {
+            String nombreArchivo = imagen.getOriginalFilename();
+            Path rutaArchivo = Paths.get("imagenes").resolve(nombreArchivo).toAbsolutePath();
+
+            try {
+                Files.copy(imagen.getInputStream(), rutaArchivo);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            usuario.setImagen(nombreArchivo);
+
+            userRepository.save(usuario);
+        }
+
+
+        return "userDetails";
     }
 
 

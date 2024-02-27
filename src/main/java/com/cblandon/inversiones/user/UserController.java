@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class UserController {
 
 
     @PostMapping(value = "register")
-    public ResponseEntity<GenericMessageDTO> register(@RequestBody RegisterUserRequestDTO request) {
-        return ResponseEntity.ok(userService.register(request));
+    public ResponseEntity<GenericMessageDTO> register(@RequestBody RegisterUserRequestDTO request, @RequestParam MultipartFile imagen) {
+        return ResponseEntity.ok(userService.register(request, imagen));
     }
 
     @GetMapping("pruebaConexion")
@@ -50,5 +51,14 @@ public class UserController {
     @GetMapping("getUser")
     public ResponseEntity<Object> getUser(@RequestHeader("Authorization") final String token) {
         return new ResponseHandler().generateResponse("successful", HttpStatus.OK, userService.getUserDetails(token));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("cargarImagen")
+    public ResponseEntity<Object> cargarImagen(
+            @RequestParam("imagen") MultipartFile imagen, @RequestParam("idUsuario") int idUsuario) {
+
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, userService.cargarImagen(imagen, idUsuario));
     }
 }
