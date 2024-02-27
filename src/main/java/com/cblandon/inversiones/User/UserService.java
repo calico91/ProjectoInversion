@@ -43,7 +43,6 @@ public class UserService {
     public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO, MultipartFile archivo) throws RequestException {
 
         log.info("registerUserRequestDTO: ".concat(registerUserRequestDTO.toString()));
-        log.info("archivo: ".concat(archivo.toString()));
 
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
@@ -70,7 +69,9 @@ public class UserService {
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);
-            user.setImagen(imagenesService.guardarArchivo(archivo));
+            if (archivo != null) {
+                user.setImagen(imagenesService.guardarArchivo(archivo));
+            }
 
             userRepository.save(user);
             mensaje.put("message", Constantes.USUARIO_CREADO);
@@ -99,6 +100,7 @@ public class UserService {
                             .firstname(usuario.getFirstname())
                             .country(usuario.getCountry())
                             .email(usuario.getEmail())
+                            .imagen(imagenesService.cargarArchivo(usuario.getImagen()))
                             .roles(usuario.getRoles().stream().map(
                                     roles -> roles.getName().toString()).collect(Collectors.toSet()))
                             .build()

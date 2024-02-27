@@ -57,14 +57,14 @@ public class ImagenesService {
         }
     }
 
-    public Resource cargarArchivo(String nombreArchivo) {
+    public String cargarArchivo(String nombreArchivo) {
         try {
             Path file = rutaImagenes.resolve(nombreArchivo);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
-                return resource;
+                return resource.getURL().toString();
             } else {
-                throw new Exception();
+                return null;
             }
         } catch (Exception ex) {
             System.err.println("error IO");

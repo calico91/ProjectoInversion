@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.user.dto;
 
+import org.springframework.core.io.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class UsuariosResponseDTO {
     String lastname;
     String email;
     String country;
+    String imagen;
     Set<String> roles = new HashSet<>();
 }

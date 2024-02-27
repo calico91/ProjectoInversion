@@ -4,6 +4,7 @@ import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
 import com.cblandon.inversiones.utils.ResponseHandler;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,10 @@ public class UserController {
 
 
     @PostMapping(value = "register")
-    public ResponseEntity<GenericMessageDTO> register(@RequestBody RegisterUserRequestDTO request, @RequestParam MultipartFile imagen) {
+    public ResponseEntity<GenericMessageDTO> register(
+            @RequestPart("cliente") RegisterUserRequestDTO request,
+            @RequestPart(name = "archivo", required = false) MultipartFile imagen) {
+
         return ResponseEntity.ok(userService.register(request, imagen));
     }
 
