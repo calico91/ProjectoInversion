@@ -28,7 +28,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "           FROM apirest.cuota_credito ccr " +
             "           INNER JOIN apirest.credito cr ON cr.id_credito = ccr.id_credito " +
             "           INNER JOIN apirest.modalidad m ON m.id_modalidad = cr.id_modalidad" +
-            "           WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 2",
+            "           WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito DESC",
             nativeQuery = true)
     List<Tuple> consultarInfoCreditoySaldo(@Param("idCredito") Integer idCredito);
 
