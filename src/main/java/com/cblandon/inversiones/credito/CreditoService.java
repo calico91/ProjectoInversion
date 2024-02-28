@@ -193,13 +193,13 @@ public class CreditoService {
     private double calcularInteresPrimeraCuota(
             double valorPrestado, Double interesPorcentaje,
             LocalDate fechaCuota, LocalDate fechaCredito, int codigoModalidad) {
+
         int diasSegunModalidad = codigoModalidad == Constantes.CODIGO_MODALIDAD_MENSUAL ? 30 : 15;
         fechaCredito = fechaCredito == null ? LocalDate.now() : fechaCredito;
         long diasDiferencia = DAYS.between(fechaCredito, fechaCuota);
         diasDiferencia = diasDiferencia == 31 ? 30 : diasDiferencia;
-        double interesCredito = ((valorPrestado * (interesPorcentaje / 100) / diasSegunModalidad) * diasDiferencia);
 
-        return Math.rint(interesCredito);
+        return Math.rint(((valorPrestado * (interesPorcentaje / 100) / diasSegunModalidad) * diasDiferencia));
     }
 
 }
