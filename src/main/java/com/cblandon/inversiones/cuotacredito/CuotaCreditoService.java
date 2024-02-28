@@ -182,24 +182,34 @@ public class CuotaCreditoService {
     public CuotasCreditoResponseDTO consultarInfoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
 
-            CuotaCredito infoCuotaCreditoClienteRes = cuotaCreditoRepository.infoCuotaCreditoCliente(idCliente, idCredito);
-            CuotasCreditoResponseDTO infoCuotaPagar = CuotaCreditoMapper.
-                    mapperCuotaCredito.
-                    cuotaCreditoToCuotasCreditoResponseDTO(infoCuotaCreditoClienteRes);
+            Tuple infoConsulta = cuotaCreditoRepository.consultarCuotaCreditoCliente(idCliente, idCredito);
 
-            double interesMora = calcularInteresMora(infoCuotaCreditoClienteRes.getFechaCuota());
+            CuotasCreditoResponseDTO infoCuotaPagar = CuotasCreditoResponseDTO.builder()
+                    .id(Integer.parseInt(infoConsulta.get("id_cuota_credito").toString()))
+                    .valorCuota(Double.parseDouble(infoConsulta.get("valor_cuota").toString()))
+                    .fechaCuota(LocalDate.parse(infoConsulta.get("fecha_cuota").toString()))
+                    .numeroCuotas(Integer.parseInt(infoConsulta.get("numero_cuotas").toString()))
+                    .valorCapital(Double.parseDouble(infoConsulta.get("valor_capital").toString()))
+                    .valorInteres(Double.parseDouble(infoConsulta.get("valor_interes").toString()))
+                    .interesPorcentaje(Double.parseDouble(infoConsulta.get("interes_porcentaje").toString()))
+                    .cuotaNumero(Integer.parseInt(infoConsulta.get("couta_numero").toString()))
+                    .valorCredito(Double.parseDouble(infoConsulta.get("valor_credito").toString()))
+                    .build();
+
+
+            double interesMora = calcularInteresMora(infoCuotaPagar.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
             infoCuotaPagar.setValorInteres(infoCuotaPagar.getValorInteres() + interesMora);
 
             infoCuotaPagar.setValorCapital(
-                    infoCuotaCreditoClienteRes.getCredito().getValorCredito() / infoCuotaPagar.getNumeroCuotas());
+                    infoCuotaPagar.getValorCredito() / infoCuotaPagar.getNumeroCuotas());
 
             infoCuotaPagar.setDiasMora(calcularDiasDiferenciaEntreFechas(
-                    infoCuotaCreditoClienteRes.getFechaCuota(), LocalDate.now()));
+                    infoCuotaPagar.getFechaCuota(), LocalDate.now()));
 
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
-            infoCuotaPagar.setValorCredito(infoCuotaCreditoClienteRes.getCredito().getValorCredito());
+            infoCuotaPagar.setValorCredito(infoCuotaPagar.getValorCredito());
             log.info("consultarInfoCuotaCreditoCliente " + infoCuotaPagar);
 
             return infoCuotaPagar;
@@ -218,7 +228,7 @@ public class CuotaCreditoService {
      */
     public InfoCreditoySaldoResponseDTO consultarInfoCreditoySaldo(Integer idCredito) {
         try {
-            List<Tuple> cuotas = cuotaCreditoRepository.infoCuotasPagadas(idCredito);
+            List<Tuple> cuotas = cuotaCreditoRepository.consultarInfoCreditoySaldo(idCredito);
 
             List<InfoCreditoySaldoResponseDTO> infoCreditoySaldo = cuotas.stream().map(
                     cuota -> InfoCreditoySaldoResponseDTO.builder()
@@ -272,7 +282,7 @@ public class CuotaCreditoService {
     public Map<String, Object> generarReporteInteresyCapital(String fechaInicial, String fechaFinal) {
         try {
 
-            Tuple interesYcapital = cuotaCreditoRepository.reporteInteresyCapital(fechaInicial, fechaFinal);
+            Tuple interesYcapital = cuotaCreditoRepository.generarReporteInteresyCapital(fechaInicial, fechaFinal);
 
 
             double valorCapital = interesYcapital.get("valorCapital") == null
@@ -297,7 +307,7 @@ public class CuotaCreditoService {
     public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
 
         try {
-            CuotaCredito ultimaCuotaGenerada = cuotaCreditoRepository.ultimaCuotaGenerada(idCredito);
+            CuotaCredito ultimaCuotaGenerada = cuotaCreditoRepository.consultarUltimaCuotaGenerada(idCredito);
 
             int diasSegunModalidad = ultimaCuotaGenerada.getCredito().getModalidad().getDescription().equals(
                     Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
@@ -332,7 +342,7 @@ public class CuotaCreditoService {
     public List<AbonosRealizadosResponseDTO> consultarAbonosRealizados(int idCredito) {
 
         try {
-            List<Tuple> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizados(
+            List<Tuple> cuotasPagas = cuotaCreditoRepository.consultarAbonosRealizadosPorCredito(
                     idCredito);
 
             cuotasPagas.remove(cuotasPagas.size() - 1);
