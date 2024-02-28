@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CuotasCreditoResponseDTO {
 
     private Integer id;
