@@ -53,9 +53,9 @@ public class CuotaCreditoService {
 
 
         int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
-        double capitalCuotaNormal = cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas();
-        log.info("" + capitalCuotaNormal);
 
+        double capitalCuotaNormal = Math.rint(
+                cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
 
         try {
 
@@ -77,7 +77,9 @@ public class CuotaCreditoService {
                         cuotaCreditoDB.setValorInteres(0.0);
                         cuotaCreditoDB.setValorCapital(pagarCuotaRequestDTO.getValorAbonado());
                         cuotaCreditoDB.getCredito().setSaldoCredito(
-                                cuotaCreditoDB.getCredito().getSaldoCredito() - pagarCuotaRequestDTO.getValorAbonado());
+                                Math.rint(
+                                        cuotaCreditoDB.getCredito().getSaldoCredito()
+                                                - pagarCuotaRequestDTO.getValorAbonado()));
                     }
                 }
 
@@ -89,9 +91,9 @@ public class CuotaCreditoService {
 
                     cuotaCreditoDB.setValorCapital(capitalCuotaNormal);
                     cuotaCreditoDB.setValorInteres(
-                            pagarCuotaRequestDTO.getValorAbonado() - capitalCuotaNormal);
+                            Math.rint(pagarCuotaRequestDTO.getValorAbonado() - capitalCuotaNormal));
                     cuotaCreditoDB.getCredito().setSaldoCredito(
-                            cuotaCreditoDB.getCredito().getSaldoCredito() - capitalCuotaNormal);
+                            Math.rint(cuotaCreditoDB.getCredito().getSaldoCredito() - capitalCuotaNormal));
                 }
 
             }
@@ -136,8 +138,8 @@ public class CuotaCreditoService {
                 } else {
                     nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero() + 1);
                 }
-                nuevaCuota.setValorCuota(interesCredito + (
-                        cuotaCancelada.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas()));
+                nuevaCuota.setValorCuota(Math.rint(interesCredito + (
+                        cuotaCancelada.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas())));
                 nuevaCuota.setCredito(cuotaCancelada.getCredito());
                 nuevaCuota.setNumeroCuotas(cuotaCancelada.getNumeroCuotas());
                 nuevaCuota.setInteresPorcentaje(cuotaCancelada.getInteresPorcentaje());
@@ -421,8 +423,7 @@ public class CuotaCreditoService {
 
         interesActual = Math.max(interesActual, 0.0);
 
-        double saldoCredito = interesMora + interesActual + (
-                listaCuotas.get(0).getValorCredito() - listaCuotas.get(0).getCapitalPagado());
+        double saldoCredito = interesMora + interesActual + listaCuotas.get(0).getSaldoCredito();
 
         String ultimaCuotaPagada = diaCalcularInteres.toString();
 
