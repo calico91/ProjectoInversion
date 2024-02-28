@@ -51,7 +51,6 @@ public class CuotaCreditoService {
 
         validarEstadoCuota(cuotaCreditoDB.getFechaAbono());
 
-
         int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
 
         double capitalCuotaNormal = Math.rint(
@@ -256,17 +255,12 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setCapitalPagado(
                     infoCreditoySaldo.get(0).getValorCredito() - infoCreditoySaldo.get(0).getSaldoCredito());
 
-            double interesExtraPagado = infoCreditoySaldo.stream()
-                    .filter(InfoCreditoySaldoResponseDTO::getAbonoExtra)
-                    .mapToDouble(InfoCreditoySaldoResponseDTO::getValorInteres).sum();
-
-            infoCreditoySaldo.get(0).setAbonoExtraPagado(interesExtraPagado);
-            double valorCuota = infoCreditoySaldo.get(0).getValorCuota();
 
             Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
 
             infoCreditoySaldo.get(0).setInteresMora((Double) datosCredito.get(Constantes.INTERES_MORA));
-            infoCreditoySaldo.get(0).setValorCuota((Double) datosCredito.get("interesMora") + valorCuota);
+            infoCreditoySaldo.get(0).setValorCuota(
+                    (Double) datosCredito.get("interesMora") + infoCreditoySaldo.get(0).getValorCuota());
             infoCreditoySaldo.get(0).setInteresHoy((Double) datosCredito.get("interesActual"));
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
@@ -405,7 +399,6 @@ public class CuotaCreditoService {
             } else {
                 index = 1;
             }
-
         }
 
         LocalDate diaCalcularInteres = index == 0
@@ -436,7 +429,9 @@ public class CuotaCreditoService {
         return mapRespuesta;
     }
 
-    ///calcula el interes al dia de hoy
+    /**
+     * calcula el interes al dia de hoy
+     */
     private double calcularInteresActual(
             LocalDate diaCalcularInteres, double valorCredito, double interesPorcentaje, String modalidad) {
         int diasSegunModalidad = modalidad.equals(Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
