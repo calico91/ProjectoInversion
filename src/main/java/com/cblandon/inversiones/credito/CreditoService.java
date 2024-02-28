@@ -10,7 +10,6 @@ import com.cblandon.inversiones.estado_credito.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
-import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
 import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
