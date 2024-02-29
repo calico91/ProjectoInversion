@@ -73,4 +73,20 @@ public class CuotaCreditoController {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.consultarAbonosRealizados(idCredito));
     }
+
+    @GetMapping("/consultarUltimosAbonosRealizados/{cantidadAbonos}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<Object> consultarUltimosAbonosRealizados(
+            @PathVariable int cantidadAbonos) {
+
+        try {
+            return new ResponseHandler().generateResponse(
+                    Constantes.SUCCESSFUL,
+                    HttpStatus.OK, cuotaCreditoService.consultarUltimosAbonosRealizados(cantidadAbonos));
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
 }

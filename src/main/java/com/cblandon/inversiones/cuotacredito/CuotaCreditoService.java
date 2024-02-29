@@ -336,6 +336,9 @@ public class CuotaCreditoService {
         }
     }
 
+    /**
+     * abonos que se han realizado a un credito
+     */
     public List<AbonosRealizadosResponseDTO> consultarAbonosRealizados(int idCredito) {
 
         try {
@@ -355,7 +358,34 @@ public class CuotaCreditoService {
                             .build()).toList();
 
         } catch (RuntimeException ex) {
-            log.error("consultarAbonosRealizados " + ex.toString());
+            log.error("consultarAbonosRealizados " + ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    /**
+     * ultimos x abonos que se han realizado en general, esto para comparar con presupuesto
+     */
+    public List<AbonosRealizadosResponseDTO> consultarUltimosAbonosRealizados(int cantidadAbonos) {
+
+        try {
+
+            List<Tuple> ultimosAbonosRealizados = cuotaCreditoRepository.consultarUltimosAbonosRealizados(cantidadAbonos);
+
+            List<AbonosRealizadosResponseDTO> ultimosAbonosRealizadosDTO = ultimosAbonosRealizados.stream().map(
+                    abonos -> AbonosRealizadosResponseDTO.builder()
+                            .nombres(abonos.get("nombres").toString())
+                            .apellidos(abonos.get("apellidos").toString())
+                            .valorAbonado(Double.parseDouble(abonos.get("valor_abonado").toString()))
+                            .fechaAbono(LocalDate.parse(abonos.get("fecha_abono").toString().substring(0, 10)))
+                            .build()).toList();
+
+            log.info("consultarUltimosAbonosRealizados: ".concat(ultimosAbonosRealizadosDTO.toString()));
+            return ultimosAbonosRealizadosDTO;
+
+
+        } catch (RuntimeException ex) {
+            log.error("consultarUltimosAbonosRealizados " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
