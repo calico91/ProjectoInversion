@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -41,7 +42,8 @@ public class CuotaCredito {
     private Double interesPorcentaje;
 
     @Column(name = "fecha_abono", length = 10)
-    private LocalDate fechaAbono;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime fechaAbono;
 
     @Column(name = "tipo_abono", length = 20)
     private String tipoAbono;

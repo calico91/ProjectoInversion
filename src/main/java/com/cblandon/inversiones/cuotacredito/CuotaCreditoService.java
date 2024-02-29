@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -49,7 +50,7 @@ public class CuotaCreditoService {
                 .orElseThrow(() -> new NoDataException(
                         Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
 
-        validarEstadoCuota(cuotaCreditoDB.getFechaAbono());
+        validarEstadoCuota(cuotaCreditoDB.getValorAbonado());
 
         int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
 
@@ -100,7 +101,7 @@ public class CuotaCreditoService {
 
             cuotaCreditoDB.setAbonoExtra(pagarCuotaRequestDTO.isAbonoExtra());
             cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
-            cuotaCreditoDB.setFechaAbono(pagarCuotaRequestDTO.getFechaAbono());
+            cuotaCreditoDB.setFechaAbono(LocalDateTime.now());
             cuotaCreditoDB.setTipoAbono(pagarCuotaRequestDTO.getTipoAbono());
 
             CuotaCredito cuotaCancelada = cuotaCreditoRepository.save(cuotaCreditoDB);
@@ -348,13 +349,12 @@ public class CuotaCreditoService {
             return cuotasPagas.stream().map(
                     cuota -> AbonosRealizadosResponseDTO.builder()
                             .valorAbonado(Double.parseDouble(cuota.get("valor_abonado").toString()))
-                            .fechaAbono(LocalDate.parse(cuota.get("fecha_abono").toString()))
+                            .fechaAbono(LocalDate.parse(cuota.get("fecha_abono").toString().substring(0, 10)))
                             .tipoAbono((String) cuota.get("tipo_abono"))
                             .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
                             .build()).toList();
 
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error("consultarAbonosRealizados " + ex.toString());
             throw new RuntimeException(ex.getMessage());
         }
@@ -494,8 +494,8 @@ public class CuotaCreditoService {
         return Integer.parseInt(Long.toString(diasDiferencia));
     }
 
-    private void validarEstadoCuota(LocalDate fechaAbono) {
-        if (fechaAbono != null) {
+    private void validarEstadoCuota(Double valorAbono) {
+        if (valorAbono != null) {
             throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
         }
     }
