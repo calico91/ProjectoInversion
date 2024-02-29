@@ -9,12 +9,14 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class AbonosRealizadosResponseDTO {
 
     private Double valorAbonado;
     private String tipoAbono;
     private LocalDate fechaAbono;
     private Integer cuotaNumero;
-
+    private String nombres;
+    private String apellidos;
 
 }

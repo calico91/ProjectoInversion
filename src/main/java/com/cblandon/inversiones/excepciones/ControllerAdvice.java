@@ -6,6 +6,7 @@ import com.cblandon.inversiones.utils.ResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -47,9 +48,16 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Object> runtimeExeceptionHandler() {
+    public ResponseEntity<Object> methodArgumentTypeMismatchException() {
 
         return new ResponseHandler().generateResponseError(
                 Constantes.ERROR, HttpStatus.BAD_REQUEST, "El tipo de dato enviado es incorrecto");
+    }
+
+    @ExceptionHandler(value = MissingPathVariableException.class)
+    public ResponseEntity<Object> missingPathVariableException(MissingPathVariableException ex) {
+
+        return new ResponseHandler().generateResponseError(
+                Constantes.ERROR, HttpStatus.BAD_REQUEST, "Se require parametro ".concat(ex.getVariableName()));
     }
 }

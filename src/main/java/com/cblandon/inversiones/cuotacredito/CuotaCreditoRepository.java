@@ -44,7 +44,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
     CuotaCredito consultarUltimaCuotaGenerada(@Param("idCredito") int idCredito);
 
     @Query(value = "SELECT ccr.valor_abonado, ccr.fecha_abono, ccr.tipo_abono, ccr.couta_numero" +
-            "       FROM apirest.cuota_credito as ccr WHERE id_credito = :idCredito",
+            "       FROM apirest.cuota_credito as ccr WHERE id_credito = :idCredito ORDER BY fecha_abono DESC",
             nativeQuery = true)
     List<Tuple> consultarAbonosRealizadosPorCredito(@Param("idCredito") int idCredito);
 
@@ -53,8 +53,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "       INNER JOIN apirest.credito cr using(id_credito) " +
             "       INNER JOIN apirest.cliente cl using(id_cliente)" +
             "       WHERE valor_abonado IS NOT NULL " +
-            "       ORDER BY fecha_abono DESC LIMIT 15", nativeQuery = true)
-    List<Tuple> consultarUltimosAbonosRealizados();
-
+            "       ORDER BY fecha_abono DESC LIMIT :cantidadAbonos", nativeQuery = true)
+    List<Tuple> consultarUltimosAbonosRealizados(@Param("cantidadAbonos") int cantidadAbonos);
 
 }
