@@ -323,11 +323,14 @@ public class CuotaCreditoService {
             ultimaCuotaGenerada.setValorCuota(interesDias + ultimaCuotaGenerada.getValorCuota());
 
             CuotaCredito cuotaGenerada = cuotaCreditoRepository.save(ultimaCuotaGenerada);
-            log.info("modificarFechaPago " + cuotaGenerada);
 
-            return CuotaCreditoMapper.
+            CuotasCreditoResponseDTO cuotasCreditoResponseDTO = CuotaCreditoMapper.
                     mapperCuotaCredito.
                     cuotaCreditoToCuotasCreditoResponseDTO(cuotaGenerada);
+
+            log.info("modificarFechaPago " + cuotasCreditoResponseDTO.toString());
+
+            return cuotasCreditoResponseDTO;
 
         } catch (RuntimeException ex) {
 
