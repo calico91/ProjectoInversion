@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "29d644b5-0602-4255-be69-b05aa5160a74",
-		"name": "ProyectoInversionLocal",
+		"_postman_id": "2ae162f9-7081-4b4e-b65d-fb5f685de878",
+		"name": "ProyectoInversionProduccion",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24336740",
-		"_collection_link": "https://cloudy-eclipse-812867.postman.co/workspace/Listo~ee891a82-cc11-4c28-8514-0d7781fce60d/collection/24336740-29d644b5-0602-4255-be69-b05aa5160a74?action=share&source=collection_link&creator=24336740"
+		"_exporter_id": "24336740"
 	},
 	"item": [
 		{
@@ -751,15 +750,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://10.102.1.13:8091/login",
-					"protocol": "http",
+					"raw": "https://inversiones.up.railway.app/login",
+					"protocol": "https",
 					"host": [
-						"10",
-						"102",
-						"1",
-						"13"
+						"inversiones",
+						"up",
+						"railway",
+						"app"
 					],
-					"port": "8091",
 					"path": [
 						"login"
 					]
