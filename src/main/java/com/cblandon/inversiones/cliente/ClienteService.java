@@ -2,7 +2,7 @@ package com.cblandon.inversiones.cliente;
 
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.cliente.dto.InfoClientesCuotaCreditoDTO;
+import com.cblandon.inversiones.cliente.dto.ClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
@@ -129,14 +129,14 @@ public class ClienteService {
      * lista de cuotas pendientes de la fecha actual para atras
      */
     @Transactional(readOnly = true)
-    public List<InfoClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
+    public List<ClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
 
         try {
 
             List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes(fechaFiltro);
 
-            List<InfoClientesCuotaCreditoDTO> listaCreditosdto = infoClienteCuotaCreditoBD.stream().map(
-                    info -> InfoClientesCuotaCreditoDTO.builder()
+            List<ClientesCuotaCreditoDTO> listaCreditosdto = infoClienteCuotaCreditoBD.stream().map(
+                    info -> ClientesCuotaCreditoDTO.builder()
                             .idCliente(Integer.parseInt(info.get("id_cliente").toString()))
                             .nombres(info.get("nombres").toString())
                             .apellidos(info.get("apellidos").toString())

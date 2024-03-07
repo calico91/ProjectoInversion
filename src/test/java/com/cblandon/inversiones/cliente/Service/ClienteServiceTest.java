@@ -13,7 +13,7 @@ import com.cblandon.inversiones.cliente.ClienteRepository;
 import com.cblandon.inversiones.cliente.ClienteService;
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
-import com.cblandon.inversiones.cliente.dto.InfoClientesCuotaCreditoDTO;
+import com.cblandon.inversiones.cliente.dto.ClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -52,7 +51,7 @@ class ClienteServiceTest {
 
     private Cliente cliente;
 
-    private InfoClientesCuotaCreditoDTO infoClientesCuotaCreditoDTO;
+    private ClientesCuotaCreditoDTO infoClientesCuotaCreditoDTO;
 
 
     @BeforeEach
