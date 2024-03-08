@@ -18,7 +18,6 @@ import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
-import jakarta.persistence.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,9 +49,6 @@ class ClienteServiceTest {
     private ClienteService clienteService;
 
     private Cliente cliente;
-
-    private ClientesCuotaCreditoDTO infoClientesCuotaCreditoDTO;
-
 
     @BeforeEach
     void setup() {
@@ -201,22 +196,35 @@ class ClienteServiceTest {
 
     @DisplayName("Test para listar de cuotas pendientes de la fecha actual para atras")
     @Test
-    void infoClientesCuotasPendientesTes() {
-        Tuple mockedTuple = mock(Tuple.class);
+    void consultarClientesCuotasPendientesTes() {
+
+        ClientesCuotaCreditoDTO obj1 = ClientesCuotaCreditoDTO.builder()
+                .idCliente(1)
+                .valorCuota(80000.0)
+                .fechaCuota(LocalDate.now())
+                .build();
+
+        ClientesCuotaCreditoDTO obj2 = ClientesCuotaCreditoDTO.builder()
+                .idCliente(2)
+                .valorCuota(1000.0)
+                .fechaCuota(LocalDate.now())
+                .build();
+
         LocalDate fechaFiltro = LocalDate.now();
 
-        List<Tuple> listTuple = new ArrayList<>();
-        listTuple.add(mockedTuple);
-
-        //given(clienteRepository.infoClientesCuotasPendientes(fechaFiltro)).willReturn(listTuple);
+        given(clienteRepository.consultarClientesCuotasPendientes(fechaFiltro))
+                .willReturn(List.of(obj1, obj2));
 
         //when
-        clienteService.infoClientesCuotasPendientes(fechaFiltro);
+        List<ClientesCuotaCreditoDTO> resultado = clienteService.infoClientesCuotasPendientes(fechaFiltro);
 
         //then
-        verify(clienteRepository, times(1)).consultarClientesCuotasPendientes(fechaFiltro);
+        assertThat(resultado)
+                .hasSize(2)
+                .isNotNull();
+
+
     }
-
-
+    
 }
 
