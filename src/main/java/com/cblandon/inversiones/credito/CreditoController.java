@@ -39,7 +39,7 @@ public class CreditoController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Object> infoCreditosActivos() {
         return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.consultarInfoCreditosActivos());
+                Constantes.SUCCESSFUL, HttpStatus.OK, creditoService.consultarCreditosActivos());
     }
 
     @PutMapping("/modificarEstadoCredito/{idCredito}/{idEstadoCredito}")
