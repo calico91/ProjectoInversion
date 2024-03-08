@@ -4,37 +4,31 @@ package com.cblandon.inversiones.credito.dto;
 import com.cblandon.inversiones.excepciones.validation.anotation.ValidNullBlank;
 import com.cblandon.inversiones.modalidad.Modalidad;
 import com.cblandon.inversiones.utils.Constantes;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
 
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Builder
+public record RegistrarCreditoRequestDTO(@NotNull(message = Constantes.NOT_NULL)
+                                         Double interesPorcentaje,
 
-public class RegistrarCreditoRequestDTO {
+                                         @NotNull(message = Constantes.NOT_NULL)
+                                         Integer cantidadCuotas,
 
-    @NotNull(message = Constantes.NOT_NULL)
-    private Double interesPorcentaje;
+                                         @ValidNullBlank
+                                         String cedulaTitularCredito,
 
-    @NotNull(message = Constantes.NOT_NULL)
-    private Integer cantidadCuotas;
+                                         //@JsonFormat(pattern = "dd/MM/yyyy")
+                                         LocalDate fechaCuota,
 
-    @ValidNullBlank
-    private String cedulaTitularCredito;
+                                         //@JsonFormat(pattern = "dd/MM/yyyy")
+                                         LocalDate fechaCredito,
 
-    //@JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate fechaCuota;
+                                         @NotNull(message = Constantes.NOT_NULL)
+                                         Double valorCredito,
+                                         Modalidad modalidad) {
 
-    //@JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate fechaCredito;
-
-    @NotNull(message = Constantes.NOT_NULL)
-    private Double valorCredito;
-
-    private Modalidad modalidad;
 
 }

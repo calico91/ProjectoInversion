@@ -1,19 +1,10 @@
 package com.cblandon.inversiones.credito.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Builder
-public class CreditoResponseDTO {
-
-    private Integer id;
-    private Date fechaCredito;
-
+public record CreditoResponseDTO(Integer id, Date fechaCredito) {
 }
