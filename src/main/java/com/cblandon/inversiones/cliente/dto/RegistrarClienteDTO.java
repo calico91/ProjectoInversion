@@ -4,11 +4,7 @@ import com.cblandon.inversiones.excepciones.validation.anotation.ValidDocument;
 import com.cblandon.inversiones.excepciones.validation.anotation.ValidNullBlank;
 import com.cblandon.inversiones.utils.Constantes;
 import jakarta.validation.constraints.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-
-@Builder
 public record RegistrarClienteDTO(Integer id,
                                   @ValidNullBlank
                                   String nombres,

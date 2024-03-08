@@ -163,10 +163,10 @@ public class CreditoService {
             creditoConsultado.setIdEstadoCredito(estadoCredito);
             creditoRepository.save(creditoConsultado);
 
-
             return "Estado de credito ".concat(estadoCredito.getDescripcion());
 
         } catch (RuntimeException ex) {
+            log.error("modificarEstadoCredito");
             throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
     }
