@@ -2,9 +2,6 @@ package com.cblandon.inversiones.security.filters;
 
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.UserEntity;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -37,9 +34,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
 
-        UserEntity userEntity = null;
-        String username = "";
-        String password = "";
+        UserEntity userEntity;
+        String username;
+        String password;
 
 
         try {
@@ -47,10 +44,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             username = userEntity.getUsername();
             password = userEntity.getPassword();
 
-        } catch (StreamReadException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (DatabindException e) {
-            throw new RuntimeException(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -88,7 +81,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void unsuccessfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
-                                              final AuthenticationException failed) throws IOException, ServletException {
+                                              final AuthenticationException failed) throws IOException {
 
         Map<String, Object> httpResponse = new HashMap<>();
         httpResponse.put("message", "Your credentials are incorrect");

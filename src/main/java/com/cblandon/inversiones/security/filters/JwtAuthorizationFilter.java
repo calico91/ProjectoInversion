@@ -63,14 +63,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void responseClient(final HttpServletResponse response, final ResponseEntity<Object> responseEntity) {
-        try {
+    private void responseClient(final HttpServletResponse response, final ResponseEntity<Object> responseEntity) throws IOException {
+
             response.setStatus(responseEntity.getStatusCode().value());
             response.setContentType("application/json");
             response.getWriter().write(new ObjectMapper().writeValueAsString(responseEntity.getBody()));
             response.getWriter().flush();
-        } catch (IOException e) {
-            e.getMessage();
-        }
+
     }
 }

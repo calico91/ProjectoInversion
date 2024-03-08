@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fcab66c5-6d78-4adc-9d64-67fe12ad08db",
-		"name": "ProyectoInversionProduccion",
+		"_postman_id": "40e7d512-da19-4f0f-88ec-023c0a097318",
+		"name": "ProyectoInversionLocal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24336740",
-		"_collection_link": "https://cloudy-eclipse-812867.postman.co/workspace/Listo~ee891a82-cc11-4c28-8514-0d7781fce60d/collection/24336740-fcab66c5-6d78-4adc-9d64-67fe12ad08db?action=share&source=collection_link&creator=24336740"
+		"_exporter_id": "24336740"
 	},
 	"item": [
 		{
@@ -18,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -27,12 +26,57 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Byron\",\r\n    \"lastname\": \"Quinones\",\r\n    \"email\": \"nuevo@gmail.com\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"username\": \"blandon\",\r\n    \"password\": \"maelito\",\r\n    \"firstname\": \"Cristian\",\r\n    \"lastname\": \"Blandon\",\r\n    \"email\": \"calico@gmail.com\",\r\n    \"country\": \"Locombia\",\r\n    \"roles\": [\r\n        \"ROLE_USER\",\r\n        \"ROLE_ADMIN\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registrarUsuarioFoto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cliente",
+									"type": "file",
+									"src": "/C:/Users/Playtech/Downloads/cliente.json"
+								},
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/Users/Playtech/Downloads/image (1).png"
+								}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:8091/user/register",
@@ -100,7 +144,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -126,6 +170,48 @@
 							"path": [
 								"user",
 								"consultarUsuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerUsuarioLogueado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"maelito\",\r\n    \"password\": \"123456\",\r\n    \"firstname\": \"Ismael\",\r\n    \"lastname\": \"Blandon\",\r\n    \"country\": \"compartir\",\r\n    \"roles\": [\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/user/getUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"user",
+								"getUser"
 							]
 						}
 					},
@@ -186,7 +272,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -195,7 +281,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombres\": \"prueba\",\r\n    \"apellidos\": \"Rojas\",\r\n    \"celular\": \"3229162350\",\r\n    \"pais\": \"colombia\",\r\n    \"cedula\": \"20\",\r\n    \"direccion\": \"cra 1e 59-163\",\r\n    \"observaciones\": \"\"\r\n}",
+							"raw": "{\r\n    \"nombres\": \"angela\",\r\n    \"apellidos\": \"carabali\",\r\n    \"celular\": \"3222350036\",\r\n    \"pais\": \"colombia\",\r\n    \"cedula\": \"66850016\",\r\n    \"email\":\"dsfdsdsfdafdsafdsfdfadsafdsfdfd@e.de\",\r\n    \"direccion\": \"cra 1e 59-163\",\r\n    \"observaciones\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -227,7 +313,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -244,13 +330,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://10.102.1.13:8091/cliente/consultarClientes",
+							"raw": "http://10.102.1.64:8091/cliente/consultarClientes",
 							"protocol": "http",
 							"host": [
 								"10",
 								"102",
 								"1",
-								"13"
+								"64"
 							],
 							"port": "8091",
 							"path": [
@@ -272,7 +358,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -289,7 +375,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/cliente/consultarClientePorCedula/67028776",
+							"raw": "http://localhost:8091/cliente/consultarClientePorCedula/8548",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -298,7 +384,7 @@
 							"path": [
 								"cliente",
 								"consultarClientePorCedula",
-								"67028776"
+								"8548"
 							]
 						}
 					},
@@ -439,7 +525,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -448,7 +534,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cantidadPrestada\": 1200000,\r\n    \"interesPorcentaje\": 7,\r\n    \"cantidadCuotas\": 10,\r\n    \"cedulaTitularCredito\": \"20\",\r\n    \"fechaCuota\": \"01/11/2023\",\r\n    \"fechaCredito\": \"09/10/2023\"\r\n}",
+							"raw": "{\r\n    \"interesPorcentaje\": 7,\r\n    \"cantidadCuotas\": 10,\r\n    \"cedulaTitularCredito\": \"188\",\r\n    \"fechaCuota\": \"15/02/2024\",\r\n    \"fechaCredito\": \"26/01/2024\",\r\n    \"valorCredito\": 10000,\r\n    \"modalidad\":{\r\n        \"id\":1\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -595,6 +681,47 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "modificarEstadoCredito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nombres\":\"Ismael\",\r\n\"apellidos\":\"Blandon Rendon\",\r\n\"email\":\"maelito@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/credito/modificarEstadoCredito/102/A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"credito",
+								"modificarEstadoCredito",
+								"102",
+								"A"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -609,7 +736,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -618,7 +745,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"valorAbonado\": 50000,\r\n    \"fechaAbono\":\"01/03/2023\"\r\n}",
+							"raw": "{\r\n    \"valorAbonado\": 1700,\r\n    \"fechaAbono\": \"01/02/2024\",\r\n    \"abonoExtra\": false,\r\n    \"estadoCredito\": \"A\",\r\n    \"tipoAbono\": \"CN\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -626,7 +753,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/cuotaCredito/pagarCuota/36?soloInteres=false",
+							"raw": "http://localhost:8091/cuotaCredito/pagarCuota/410",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -635,13 +762,48 @@
 							"path": [
 								"cuotaCredito",
 								"pagarCuota",
-								"36"
-							],
-							"query": [
+								"410"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificarFechaPago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "soloInteres",
-									"value": "false"
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valorAbonado\": 500000,\r\n    \"fechaAbono\": \"01/03/2023\",\r\n    \"abonoExtra\": false,\r\n    \"estadoCredito\": \"A\",\r\n    \"tipoAbono\": \"CN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cuotaCredito/modificarFechaPago/2024-01-10/34",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cuotaCredito",
+								"modificarFechaPago",
+								"2024-01-10",
+								"34"
 							]
 						}
 					},
@@ -658,7 +820,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -675,7 +837,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/cuotaCredito/infoCuotaCreditoCliente/35/47",
+							"raw": "http://localhost:8091/cuotaCredito/infoCuotaCreditoCliente/9/111",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -684,8 +846,8 @@
 							"path": [
 								"cuotaCredito",
 								"infoCuotaCreditoCliente",
-								"35",
-								"47"
+								"9",
+								"111"
 							]
 						}
 					},
@@ -702,7 +864,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{inversiones}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -719,7 +881,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8091/cuotaCredito/infoCreditoySaldo/55",
+							"raw": "http://localhost:8091/cuotaCredito/infoCreditoySaldo/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -728,7 +890,171 @@
 							"path": [
 								"cuotaCredito",
 								"infoCreditoySaldo",
-								"55"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reporteInteresyCapital",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fechaInicial",
+									"value": "2023/12/01",
+									"type": "text"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2023/11/30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8091/cuotaCredito/reporteInteresyCapital",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cuotaCredito",
+								"reporteInteresyCapital"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cuotasSinPagarDelMes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaInicial\": \"2023/12/01\",\r\n    \"fechaFinal\": \"2023/12/31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cuotaCredito/cuotasSinPagarDelMes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cuotaCredito",
+								"cuotasSinPagarDelMes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultarAbonosRealizadosXcredito",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaInicial\": \"2023/12/01\",\r\n    \"fechaFinal\": \"2023/12/31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8091/cuotaCredito/consultarAbonosRealizados/57",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cuotaCredito",
+								"consultarAbonosRealizados",
+								"57"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultarUltimosAbonosRealizados",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8091/cuotaCredito/consultarUltimosAbonosRealizados/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"cuotaCredito",
+								"consultarUltimosAbonosRealizados",
+								"3"
 							]
 						}
 					},
@@ -737,7 +1063,32 @@
 			]
 		},
 		{
+			"name": "Actuator",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse (responseBody) ;\r",
+							"postman.setEnvironmentVariable (\"token\", jsonData. token) ;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -751,13 +1102,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://10.102.1.13:8091/login",
+					"raw": "http://localhost:8091/login",
 					"protocol": "http",
 					"host": [
-						"10",
-						"102",
-						"1",
-						"13"
+						"localhost"
 					],
 					"port": "8091",
 					"path": [

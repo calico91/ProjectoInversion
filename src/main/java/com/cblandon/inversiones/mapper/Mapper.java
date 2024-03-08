@@ -6,9 +6,11 @@ import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.credito.Credito;
 import com.cblandon.inversiones.credito.dto.CreditoAllResponseDTO;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
-@org.mapstruct.Mapper(uses = CreditoMapper.class)
+@org.mapstruct.Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = CreditoMapper.class)
+
 public interface Mapper {
 
     Mapper mapper = Mappers.getMapper(Mapper.class);

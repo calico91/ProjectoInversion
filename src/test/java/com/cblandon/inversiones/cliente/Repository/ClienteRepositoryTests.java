@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ClienteRepositoryTests {
+class ClienteRepositoryTests {
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -41,7 +41,7 @@ public class ClienteRepositoryTests {
     @DisplayName("Test para guardar un cliente")
     @Test
     void testGuardarCliente() {
-        //given - dado o condición previa o configuración
+        //given
         Cliente cliente2 = Cliente.builder()
                 .nombres("Christian")
                 .apellidos("Ramirez")
@@ -57,7 +57,7 @@ public class ClienteRepositoryTests {
 
         //then - verificar la salida
         assertThat(clienteGuardado).isNotNull();
-        assertThat(clienteGuardado.getId()).isGreaterThan(0);
+        assertThat(clienteGuardado.getId()).isPositive();
     }
 
     @DisplayName("Test para listar todos los clientes")
