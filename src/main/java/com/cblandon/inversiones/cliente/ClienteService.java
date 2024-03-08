@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ import java.util.List;
 public class ClienteService {
 
     final ClienteRepository clienteRepository;
-    
+
     final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
     @Transactional
@@ -129,27 +130,13 @@ public class ClienteService {
      * lista de cuotas pendientes de la fecha actual para atras
      */
     @Transactional(readOnly = true)
-    public List<ClientesCuotaCreditoDTO> infoClientesCuotasPendientes(String fechaFiltro) {
+    public List<ClientesCuotaCreditoDTO> infoClientesCuotasPendientes(LocalDate fechaFiltro) {
 
         try {
 
-            List<Tuple> infoClienteCuotaCreditoBD = clienteRepository.infoClientesCuotasPendientes(fechaFiltro);
+            List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(fechaFiltro);
 
-            List<ClientesCuotaCreditoDTO> listaCreditosdto = infoClienteCuotaCreditoBD.stream().map(
-                    info -> ClientesCuotaCreditoDTO.builder()
-                            .idCliente(Integer.parseInt(info.get("id_cliente").toString()))
-                            .nombres(info.get("nombres").toString())
-                            .apellidos(info.get("apellidos").toString())
-                            .cedula(info.get("cedula").toString())
-                            .fechaCredito(info.get("fecha_credito").toString())
-                            .valorCredito(Double.parseDouble(info.get("valor_credito").toString()))
-                            .valorInteres(Double.parseDouble(info.get("valor_interes").toString()))
-                            .fechaAbono((String) info.get("fecha_abono"))
-                            .fechaCuota(info.get("fecha_cuota").toString())
-                            .valorCuota(Double.parseDouble(info.get("valor_cuota").toString()))
-                            .idCredito(Integer.parseInt(info.get("id_credito").toString()))
-                            .build()
-            ).toList();
+
             log.info("infoClientesCuotasPendientes ".concat(listaCreditosdto.toString()));
 
             return listaCreditosdto;

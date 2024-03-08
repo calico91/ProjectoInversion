@@ -183,7 +183,6 @@ public class CuotaCreditoService {
 
     public CuotasCreditoResponseDTO consultarInfoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
-
             Tuple infoConsulta = cuotaCreditoRepository.consultarCuotaCreditoCliente(idCliente, idCredito);
 
             CuotasCreditoResponseDTO infoCuotaPagar = CuotasCreditoResponseDTO.builder()

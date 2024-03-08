@@ -31,6 +31,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -202,7 +203,7 @@ class ClienteServiceTest {
     @Test
     void infoClientesCuotasPendientesTes() {
         Tuple mockedTuple = mock(Tuple.class);
-        String fechaFiltro = "2022-04-15";
+        LocalDate fechaFiltro = LocalDate.now();
 
         List<Tuple> listTuple = new ArrayList<>();
         listTuple.add(mockedTuple);
@@ -213,9 +214,8 @@ class ClienteServiceTest {
         clienteService.infoClientesCuotasPendientes(fechaFiltro);
 
         //then
-        verify(clienteRepository, times(1)).infoClientesCuotasPendientes(fechaFiltro);
+        verify(clienteRepository, times(1)).consultarClientesCuotasPendientes(fechaFiltro);
     }
-
 
 
 }
