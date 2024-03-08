@@ -91,7 +91,7 @@ class ClienteServiceTest {
 
         //then
         assertThat(clienteGuardado).isNotNull();
-        assertThat(clienteGuardado.getCedula()).isEqualTo(cliente.getCedula());
+        assertThat(clienteGuardado.cedula()).isEqualTo(cliente.getCedula());
 
     }
 
@@ -175,8 +175,8 @@ class ClienteServiceTest {
         ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente(1, registrarClienteDTO);
 
         //then
-        assertThat(clienteActualizado.getApellidos()).isEqualTo("blandito");
-        assertThat(clienteActualizado.getNombres()).isEqualTo("Maelito");
+        assertThat(clienteActualizado.apellidos()).isEqualTo("blandito");
+        assertThat(clienteActualizado.nombres()).isEqualTo("Maelito");
     }
 
     @DisplayName("Test para actualizar un cliente con throw")
@@ -223,8 +223,7 @@ class ClienteServiceTest {
                 .hasSize(2)
                 .isNotNull();
 
-
     }
-    
+
 }
 

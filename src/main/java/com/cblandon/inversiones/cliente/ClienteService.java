@@ -9,7 +9,6 @@ import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.UtilsMetodos;
-import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -33,7 +32,7 @@ public class ClienteService {
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
         log.info("createCliente registrarClienteDTO: ".concat(registrarClienteDTO.toString()));
 
-        if (clienteRepository.findByCedula(registrarClienteDTO.getCedula()).isPresent()) {
+        if (clienteRepository.findByCedula(registrarClienteDTO.cedula()).isPresent()) {
             throw new RequestException(
                     Constantes.DOCUMENTO_DUPLICADO, HttpStatus.BAD_REQUEST.value());
         }
@@ -133,12 +132,9 @@ public class ClienteService {
     public List<ClientesCuotaCreditoDTO> infoClientesCuotasPendientes(LocalDate fechaFiltro) {
 
         try {
-
             List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(fechaFiltro);
 
-
             log.info("infoClientesCuotasPendientes ".concat(listaCreditosdto.toString()));
-
             return listaCreditosdto;
 
         } catch (RuntimeException ex) {
