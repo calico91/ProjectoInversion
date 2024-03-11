@@ -38,42 +38,42 @@ public class CreditoService {
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
-        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.getCedulaTitularCredito())
+        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
                 .orElseThrow(() -> new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value()));
 
-        if (registrarCreditoRequestDTO.getFechaCredito().isAfter(registrarCreditoRequestDTO.getFechaCuota()) ||
-                registrarCreditoRequestDTO.getFechaCredito().equals(registrarCreditoRequestDTO.getFechaCuota())) {
+        if (registrarCreditoRequestDTO.fechaCredito().isAfter(registrarCreditoRequestDTO.fechaCuota()) ||
+                registrarCreditoRequestDTO.fechaCredito().equals(registrarCreditoRequestDTO.fechaCuota())) {
             throw new RequestException(Constantes.ERROR_FECHAS_CREDITO, HttpStatus.BAD_REQUEST.value());
         }
 
         try {
 
             Credito credito = Credito.builder()
-                    .fechaCredito(registrarCreditoRequestDTO.getFechaCredito())
-                    .valorCredito(registrarCreditoRequestDTO.getValorCredito())
+                    .fechaCredito(registrarCreditoRequestDTO.fechaCredito())
+                    .valorCredito(registrarCreditoRequestDTO.valorCredito())
                     .usuarioCreador(SecurityContextHolder.getContext().getAuthentication().getName())
-                    .saldoCredito(registrarCreditoRequestDTO.getValorCredito())
+                    .saldoCredito(registrarCreditoRequestDTO.valorCredito())
                     .cliente(clienteBD)
-                    .modalidad(registrarCreditoRequestDTO.getModalidad())
+                    .modalidad(registrarCreditoRequestDTO.modalidad())
                     .idEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_ACTIVO, null))
                     .build();
 
             credito = creditoRepository.save(credito);
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
-                    registrarCreditoRequestDTO.getValorCredito(),
-                    registrarCreditoRequestDTO.getInteresPorcentaje(),
-                    registrarCreditoRequestDTO.getFechaCuota(),
-                    registrarCreditoRequestDTO.getFechaCredito(),
+                    registrarCreditoRequestDTO.valorCredito(),
+                    registrarCreditoRequestDTO.interesPorcentaje(),
+                    registrarCreditoRequestDTO.fechaCuota(),
+                    registrarCreditoRequestDTO.fechaCredito(),
                     credito.getModalidad().getId()
             );
 
             Double cuotaCapital = calcularCuotaCapital(
-                    registrarCreditoRequestDTO.getValorCredito(),
-                    registrarCreditoRequestDTO.getCantidadCuotas());
+                    registrarCreditoRequestDTO.valorCredito(),
+                    registrarCreditoRequestDTO.cantidadCuotas());
 
             double valorCuotas = cuotaCapital + (
-                    registrarCreditoRequestDTO.getInteresPorcentaje() / 100) *
-                    registrarCreditoRequestDTO.getValorCredito();
+                    registrarCreditoRequestDTO.interesPorcentaje() / 100) *
+                    registrarCreditoRequestDTO.valorCredito();
 
             double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
 
@@ -84,23 +84,23 @@ public class CreditoService {
             if (credito.getId() != null) {
 
                 CuotaCredito cuotaCredito = CuotaCredito.builder()
-                        .fechaCuota(registrarCreditoRequestDTO.getFechaCuota())
+                        .fechaCuota(registrarCreditoRequestDTO.fechaCuota())
                         .cuotaNumero(1)
-                        .numeroCuotas(registrarCreditoRequestDTO.getCantidadCuotas())
+                        .numeroCuotas(registrarCreditoRequestDTO.cantidadCuotas())
                         .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(0.0)
                         .valorInteres(interesPrimerCuota)
-                        .interesPorcentaje(registrarCreditoRequestDTO.getInteresPorcentaje())
+                        .interesPorcentaje(registrarCreditoRequestDTO.interesPorcentaje())
                         .credito(credito)
                         .build();
 
                 cuotaCreditoRepository.save(cuotaCredito);
             }
             RegistrarCreditoResponseDTO registrarCreditoResponseDTO = RegistrarCreditoResponseDTO.builder()
-                    .cantidadCuotas(registrarCreditoRequestDTO.getCantidadCuotas().toString())
-                    .fechaPago(registrarCreditoRequestDTO.getFechaCuota().toString())
+                    .cantidadCuotas(registrarCreditoRequestDTO.cantidadCuotas().toString())
+                    .fechaPago(registrarCreditoRequestDTO.fechaCuota().toString())
                     .valorPrimerCuota(Double.toString(valorPrimerCuota))
-                    .valorCredito(registrarCreditoRequestDTO.getValorCredito().toString())
+                    .valorCredito(registrarCreditoRequestDTO.valorCredito().toString())
                     .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
@@ -163,10 +163,10 @@ public class CreditoService {
             creditoConsultado.setIdEstadoCredito(estadoCredito);
             creditoRepository.save(creditoConsultado);
 
-
             return "Estado de credito ".concat(estadoCredito.getDescripcion());
 
         } catch (RuntimeException ex) {
+            log.error("modificarEstadoCredito");
             throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
     }

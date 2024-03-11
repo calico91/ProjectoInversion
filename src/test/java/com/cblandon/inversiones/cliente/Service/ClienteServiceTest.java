@@ -18,7 +18,6 @@ import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
-import jakarta.persistence.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,9 +49,6 @@ class ClienteServiceTest {
     private ClienteService clienteService;
 
     private Cliente cliente;
-
-    private ClientesCuotaCreditoDTO infoClientesCuotaCreditoDTO;
-
 
     @BeforeEach
     void setup() {
@@ -95,7 +91,7 @@ class ClienteServiceTest {
 
         //then
         assertThat(clienteGuardado).isNotNull();
-        assertThat(clienteGuardado.getCedula()).isEqualTo(cliente.getCedula());
+        assertThat(clienteGuardado.cedula()).isEqualTo(cliente.getCedula());
 
     }
 
@@ -179,8 +175,8 @@ class ClienteServiceTest {
         ClienteResponseDTO clienteActualizado = clienteService.actualizarCliente(1, registrarClienteDTO);
 
         //then
-        assertThat(clienteActualizado.getApellidos()).isEqualTo("blandito");
-        assertThat(clienteActualizado.getNombres()).isEqualTo("Maelito");
+        assertThat(clienteActualizado.apellidos()).isEqualTo("blandito");
+        assertThat(clienteActualizado.nombres()).isEqualTo("Maelito");
     }
 
     @DisplayName("Test para actualizar un cliente con throw")
@@ -200,23 +196,34 @@ class ClienteServiceTest {
 
     @DisplayName("Test para listar de cuotas pendientes de la fecha actual para atras")
     @Test
-    void infoClientesCuotasPendientesTes() {
-        Tuple mockedTuple = mock(Tuple.class);
-        String fechaFiltro = "2022-04-15";
+    void consultarClientesCuotasPendientesTes() {
 
-        List<Tuple> listTuple = new ArrayList<>();
-        listTuple.add(mockedTuple);
+        ClientesCuotaCreditoDTO obj1 = ClientesCuotaCreditoDTO.builder()
+                .idCliente(1)
+                .valorCuota(80000.0)
+                .fechaCuota(LocalDate.now())
+                .build();
 
-        //given(clienteRepository.infoClientesCuotasPendientes(fechaFiltro)).willReturn(listTuple);
+        ClientesCuotaCreditoDTO obj2 = ClientesCuotaCreditoDTO.builder()
+                .idCliente(2)
+                .valorCuota(1000.0)
+                .fechaCuota(LocalDate.now())
+                .build();
+
+        LocalDate fechaFiltro = LocalDate.now();
+
+        given(clienteRepository.consultarClientesCuotasPendientes(fechaFiltro))
+                .willReturn(List.of(obj1, obj2));
 
         //when
-        clienteService.infoClientesCuotasPendientes(fechaFiltro);
+        List<ClientesCuotaCreditoDTO> resultado = clienteService.infoClientesCuotasPendientes(fechaFiltro);
 
         //then
-        verify(clienteRepository, times(1)).infoClientesCuotasPendientes(fechaFiltro);
+        assertThat(resultado)
+                .hasSize(2)
+                .isNotNull();
+
     }
-
-
 
 }
 

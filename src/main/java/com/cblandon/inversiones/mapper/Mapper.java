@@ -4,8 +4,6 @@ import com.cblandon.inversiones.cliente.Cliente;
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.credito.Credito;
-import com.cblandon.inversiones.credito.dto.CreditoAllResponseDTO;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
@@ -22,8 +20,6 @@ public interface Mapper {
 
     Cliente registrarClienteDTOToCliente(RegistrarClienteDTO registrarClienteDTO);
 
-
-    CreditoAllResponseDTO creditoToCreditoAllResponseDTO(Credito credito);
 
 
 }

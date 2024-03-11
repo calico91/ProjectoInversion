@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cliente")
@@ -41,7 +43,7 @@ public class ClienteController {
     @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
     public ResponseEntity<Object> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
         return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.infoClientesCuotasPendientes(fechaFiltro));
+                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.infoClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
     }
 
     @PutMapping("/actualizarCliente/{id}")
