@@ -3,10 +3,7 @@ package com.cblandon.inversiones.cuotacredito;
 
 import com.cblandon.inversiones.credito.Credito;
 import com.cblandon.inversiones.credito.CreditoRepository;
-import com.cblandon.inversiones.cuotacredito.dto.AbonosRealizadosResponseDTO;
-import com.cblandon.inversiones.cuotacredito.dto.InfoCreditoySaldoResponseDTO;
-import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
-import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
+import com.cblandon.inversiones.cuotacredito.dto.*;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
@@ -160,15 +157,15 @@ public class CuotaCreditoService {
                 mapRespuesta.put("estadoCredito", "Credito pagado en su totalidad");
             }
             mapRespuesta.put("estadoCuota", "Cuota cancelada correctamente");
-            mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas().toString());
-            mapRespuesta.put("valorAbonado", pagarCuotaRequestDTO.getValorAbonado().toString());
+            mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas());
+            mapRespuesta.put("valorAbonado", pagarCuotaRequestDTO.getValorAbonado());
             mapRespuesta.put("tipoAbono", pagarCuotaRequestDTO.getTipoAbono());
 
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                     pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-                mapRespuesta.put("cuotasPagadas", Integer.toString(cuotasPagadasSoloInteres));
+                mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres);
             } else {
-                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero().toString());
+                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
             }
 
             log.info("pagarCuota " + mapRespuesta);
@@ -353,6 +350,7 @@ public class CuotaCreditoService {
 
             return cuotasPagas.stream().map(
                     cuota -> AbonosRealizadosResponseDTO.builder()
+                            .id(Integer.parseInt(cuota.get("id_cuota_credito").toString()))
                             .valorAbonado(Double.parseDouble(cuota.get("valor_abonado").toString()))
                             .fechaAbono(LocalDate.parse(cuota.get("fecha_abono").toString().substring(0, 10)))
                             .tipoAbono((String) cuota.get("tipo_abono"))
@@ -388,6 +386,25 @@ public class CuotaCreditoService {
 
         } catch (RuntimeException ex) {
             log.error("consultarUltimosAbonosRealizados " + ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    /**
+     * consulta informacion de un abono, por si se necesita compartir nuevamente el comprobante
+     */
+    public AbonoPorIdDTO consultarAbonoPorId(int idCuotaCredito) {
+
+        try {
+
+            AbonoPorIdDTO abonoPorId = cuotaCreditoRepository.consultarAbonoPorId(idCuotaCredito);
+
+            log.info("consultarAbonoPorId: ".concat(abonoPorId.toString()));
+            return abonoPorId;
+
+
+        } catch (RuntimeException ex) {
+            log.error("consultarAbonoPorId " + ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }

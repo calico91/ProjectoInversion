@@ -216,7 +216,7 @@ class ClienteServiceTest {
                 .willReturn(List.of(obj1, obj2));
 
         //when
-        List<ClientesCuotaCreditoDTO> resultado = clienteService.infoClientesCuotasPendientes(fechaFiltro);
+        List<ClientesCuotaCreditoDTO> resultado = clienteService.consultarClientesCuotasPendientes(fechaFiltro);
 
         //then
         assertThat(resultado)

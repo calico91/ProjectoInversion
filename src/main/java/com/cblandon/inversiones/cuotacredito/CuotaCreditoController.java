@@ -59,8 +59,7 @@ public class CuotaCreditoController {
 
     @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> modificarFechaPago(
-            @PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
+    public ResponseEntity<Object> modificarFechaPago(@PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.modificarFechaPago(
                         fechaNueva, idCredito));
@@ -68,16 +67,14 @@ public class CuotaCreditoController {
 
     @GetMapping("/consultarAbonosRealizados/{idCredito}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> consultarAbonosRealizados(
-            @PathVariable int idCredito) {
+    public ResponseEntity<Object> consultarAbonosRealizados(@PathVariable int idCredito) {
         return new ResponseHandler().generateResponse(
                 Constantes.SUCCESSFUL, HttpStatus.OK, cuotaCreditoService.consultarAbonosRealizados(idCredito));
     }
 
     @GetMapping("/consultarUltimosAbonosRealizados/{cantidadAbonos}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> consultarUltimosAbonosRealizados(
-            @PathVariable int cantidadAbonos) {
+    public ResponseEntity<Object> consultarUltimosAbonosRealizados(@PathVariable int cantidadAbonos) {
 
         try {
             return new ResponseHandler().generateResponse(
@@ -88,5 +85,19 @@ public class CuotaCreditoController {
             throw new RuntimeException(ex.getMessage());
         }
 
+    }
+
+    @GetMapping("/consultarAbonoPorId/{idCuotaCredito}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<Object> consultarAbonoPorId(@PathVariable int idCuotaCredito) {
+
+        try {
+            return new ResponseHandler().generateResponse(
+                    Constantes.SUCCESSFUL,
+                    HttpStatus.OK, cuotaCreditoService.consultarAbonoPorId(idCuotaCredito));
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }

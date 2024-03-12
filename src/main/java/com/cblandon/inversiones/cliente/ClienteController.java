@@ -43,7 +43,7 @@ public class ClienteController {
     @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
     public ResponseEntity<Object> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
         return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.infoClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
+                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
     }
 
     @PutMapping("/actualizarCliente/{id}")
