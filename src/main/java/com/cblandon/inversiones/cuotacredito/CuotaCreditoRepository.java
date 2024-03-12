@@ -1,10 +1,13 @@
 package com.cblandon.inversiones.cuotacredito;
 
+import com.cblandon.inversiones.credito.dto.CreditosActivosDTO;
+import com.cblandon.inversiones.cuotacredito.dto.AbonoPorIdDTO;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Integer> {
@@ -43,7 +46,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     CuotaCredito consultarUltimaCuotaGenerada(@Param("idCredito") int idCredito);
 
-    @Query(value = "SELECT ccr.valor_abonado, ccr.fecha_abono, ccr.tipo_abono, ccr.couta_numero" +
+    @Query(value = "SELECT ccr.valor_abonado, ccr.fecha_abono, ccr.tipo_abono, ccr.couta_numero, ccr.id_cuota_credito" +
             "       FROM apirest.cuota_credito as ccr WHERE id_credito = :idCredito ORDER BY fecha_abono DESC",
             nativeQuery = true)
     List<Tuple> consultarAbonosRealizadosPorCredito(@Param("idCredito") int idCredito);
@@ -55,5 +58,11 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "       WHERE valor_abonado IS NOT NULL " +
             "       ORDER BY fecha_abono DESC LIMIT :cantidadAbonos", nativeQuery = true)
     List<Tuple> consultarUltimosAbonosRealizados(@Param("cantidadAbonos") int cantidadAbonos);
+
+    @Query(value = "SELECT  new com.cblandon.inversiones.cuotacredito.dto.AbonoPorIdDTO(ccr.id,ccr.valorAbonado," +
+            "ccr.fechaAbono,ccr.tipoAbono,ccr.numeroCuotas, ccr.cuotaNumero )" +
+            "FROM CuotaCredito ccr " +
+            "WHERE ccr.id = :idCuotaCredito")
+    AbonoPorIdDTO consultarAbonoPorId(@Param("idCuotaCredito") int idCuotaCredito);
 
 }

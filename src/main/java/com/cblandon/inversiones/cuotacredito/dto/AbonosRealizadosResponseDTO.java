@@ -5,6 +5,6 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record AbonosRealizadosResponseDTO(Double valorAbonado, String tipoAbono, LocalDate fechaAbono,
+public record AbonosRealizadosResponseDTO(Integer id, Double valorAbonado, String tipoAbono, LocalDate fechaAbono,
                                           Integer cuotaNumero, String nombres, String apellidos) {
 }
