@@ -4,10 +4,9 @@ import com.cblandon.inversiones.cliente.Cliente;
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
-@org.mapstruct.Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = CreditoMapper.class)
+@org.mapstruct.Mapper( uses = CreditoMapper.class)
 
 public interface Mapper {
 
