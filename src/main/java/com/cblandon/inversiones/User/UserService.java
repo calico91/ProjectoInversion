@@ -6,6 +6,7 @@ import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.Constantes;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -140,6 +142,25 @@ public class UserService {
         logInfo.put("userdetails", userDetails);
         log.info(logInfo.toString());
         return userDetails;
+    }
+
+    public Map<String, Object> authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+
+        UserEntity user = userRepository.findByUsernameAndIdMovil(
+                authBiometriaRequestDTO.username(), authBiometriaRequestDTO.idMovil()).orElseThrow(() ->
+                new UsernameNotFoundException("Autenticacion biometrica fallida"));
+
+
+        String token = jwtUtils.generateAccesToken(user.getUsername());
+
+        Map<String, Object> httpResponse = new HashMap<>();
+        httpResponse.put("token", token);
+        httpResponse.put("message", "Autenticacion Correcta");
+        httpResponse.put("userDetails", userDetailsService.loadUserByUsername(authBiometriaRequestDTO.username()));
+        httpResponse.put("status", HttpStatus.OK.value());
+
+
+        return httpResponse;
     }
 
 
