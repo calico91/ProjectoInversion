@@ -44,6 +44,7 @@ public class SecurityConfig {
                     auth.requestMatchers(
                             "/user/pruebaConexion",
                             "/user/register",
+                            "/user/auth-biometrica",
                             "/v3/api-docs/**",
                             "/doc/**").permitAll();
                     auth.anyRequest().authenticated();

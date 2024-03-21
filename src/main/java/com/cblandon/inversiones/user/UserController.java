@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.user;
 
+import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
@@ -50,5 +51,12 @@ public class UserController {
     @GetMapping("getUser")
     public ResponseEntity<Object> getUser(@RequestHeader("Authorization") final String token) {
         return new ResponseHandler().generateResponse("successful", HttpStatus.OK, userService.getUserDetails(token));
+    }
+
+    @PostMapping("auth-biometrica")
+    public ResponseEntity<Object> authBiometrica(@RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+
+
+        return new ResponseEntity<>(userService.authBiometrica(authBiometriaRequestDTO), HttpStatus.OK);
     }
 }
