@@ -14,6 +14,9 @@ import com.cblandon.inversiones.utils.GenericMessageDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -79,6 +82,7 @@ public class UserService {
     }
 
     public List<UsuariosResponseDTO> consultarUsuarios() {
+
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
         if (usuariosConsulta.isEmpty()) {
@@ -146,10 +150,13 @@ public class UserService {
 
     public Map<String, Object> authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
 
-        UserEntity user = userRepository.findByUsernameAndIdMovil(
-                authBiometriaRequestDTO.username(), authBiometriaRequestDTO.idMovil()).orElseThrow(() ->
+        UserEntity user = userRepository.findByUsername(
+                authBiometriaRequestDTO.username()).orElseThrow(() ->
                 new UsernameNotFoundException("Autenticacion biometrica fallida"));
 
+        if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), user.getIdMovil())) {
+            throw new UsernameNotFoundException("Autenticacion biometrica fallida");
+        }
 
         String token = jwtUtils.generateAccesToken(user.getUsername());
 

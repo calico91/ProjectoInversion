@@ -38,7 +38,7 @@ public class UserEntity {
             joinColumns = @JoinColumn(
                     name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Roles> roles;
-    @Column(length = 25)
+    @Column(length = 100)
     String idMovil;
 
 }

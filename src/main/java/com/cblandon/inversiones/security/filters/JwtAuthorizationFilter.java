@@ -53,7 +53,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 try {
                     jwtUtils.getClaim(token, Claims::getExpiration);
                 } catch (RuntimeException e) {
-                    message = "token-has-expired";
+                    message = "Token caduco, inicie sesion de nuevo";
                 }
                 responseClient(response,
                         new ResponseHandler().generateResponseWithoutData(message, HttpStatus.UNAUTHORIZED));
