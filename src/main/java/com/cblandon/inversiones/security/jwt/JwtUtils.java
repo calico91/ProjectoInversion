@@ -24,6 +24,9 @@ import java.util.function.Function;
 public class JwtUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
+
+    @Value("${security.jwt.user.generator}")
+    private String usuarioGenerador;
     final UserDetailsServiceImpl userDetailsService;
 
     public JwtUtils(UserDetailsServiceImpl userDetailsService) {
@@ -38,6 +41,7 @@ public class JwtUtils {
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
         return Jwts.builder()
+                .setIssuer(usuarioGenerador)
                 .claim("Roles", roles)
                 .setSubject(username)
                 .setIssuedAt(Date.from(issuedAt))
