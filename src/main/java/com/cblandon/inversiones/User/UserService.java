@@ -1,22 +1,22 @@
 package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
+import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +46,7 @@ public class UserService {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
         if (consultarUser.isPresent()) {
-            throw new RequestException(Constantes.USUARIO_REGISTRADO, HttpStatus.BAD_REQUEST.value());
+            throw new RequestException(RequestExceptionMensajes.USUARIO_REGISTRADO);
         }
 
         Map<String, String> mensaje = new HashMap<>();
@@ -64,7 +64,7 @@ public class UserService {
 
             Set<Roles> authorities = registerUserRequestDTO.getRoles().stream()
                     .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
-                            () -> new RequestException(Constantes.ROL_NO_ENCONTRADO, HttpStatus.BAD_REQUEST.value())))
+                            () -> new RequestException(RequestExceptionMensajes.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);
@@ -148,6 +148,7 @@ public class UserService {
         return userDetails;
     }
 
+
     public Map<String, Object> authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
 
         UserEntity user = userRepository.findByUsername(
@@ -157,7 +158,6 @@ public class UserService {
         if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), user.getIdMovil())) {
             throw new UsernameNotFoundException("Autenticacion biometrica fallida");
         }
-
         String token = jwtUtils.generateAccesToken(user.getUsername());
 
         Map<String, Object> httpResponse = new HashMap<>();
@@ -170,5 +170,23 @@ public class UserService {
         return httpResponse;
     }
 
+    /**
+     * se registra el id del dispositivo con el cual se desea hacer auth biometrica
+     */
+    public String registrarDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
+        try {
 
+            UserEntity user = userRepository.findByUsername(
+                    registrarDispositivoDTO.username()).orElseThrow(() ->
+                    new UsernameNotFoundException("No se encontro usuario"));
+
+            user.setIdMovil(passwordEncoder.encode(registrarDispositivoDTO.idDispositivo()));
+            userRepository.save(user);
+
+            return "Dispositivo vinculado correctamente";
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+
+    }
 }

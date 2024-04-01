@@ -2,6 +2,7 @@ package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
 import com.cblandon.inversiones.utils.ResponseHandler;
@@ -58,5 +59,12 @@ public class UserController {
 
 
         return new ResponseEntity<>(userService.authBiometrica(authBiometriaRequestDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("registrar-dispositivo")
+    public ResponseEntity<Object> registrarDispositivo(@RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
+        return new ResponseHandler().generateResponse(
+                "successful", HttpStatus.OK, userService.registrarDispositivo(registrarDispositivoDTO));
+
     }
 }
