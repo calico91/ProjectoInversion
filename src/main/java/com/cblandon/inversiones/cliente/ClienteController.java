@@ -22,7 +22,8 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> createCliente(@RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
-        return new ResponseHandler().generateResponse(Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.createCliente(registrarClienteDTO));
+        return new ResponseHandler().generateResponse(
+                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.createCliente(registrarClienteDTO));
 
     }
 
