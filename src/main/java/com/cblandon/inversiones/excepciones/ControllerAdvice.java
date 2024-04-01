@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.excepciones;
 
 import com.cblandon.inversiones.excepciones.dto.ErrorDTO;
+import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class ControllerAdvice {
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<ErrorDTO> requestException(RequestException ex) {
         ErrorDTO error = ErrorDTO.builder()
-                .status(ex.getStatus())
-                .message(ex.getMessage().toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(ex.getRequestExceptionMensajes().getMessage())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

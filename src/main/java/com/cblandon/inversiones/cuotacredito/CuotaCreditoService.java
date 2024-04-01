@@ -6,10 +6,11 @@ import com.cblandon.inversiones.credito.CreditoRepository;
 import com.cblandon.inversiones.cuotacredito.dto.*;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
+import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -306,7 +307,7 @@ public class CuotaCreditoService {
                     Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
 
             if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)) {
-                throw new RequestException(Constantes.ERROR_FECHA_NUEVA, HttpStatus.BAD_REQUEST.value());
+                throw new RequestException(RequestExceptionMensajes.ERROR_FECHA_NUEVA);
             }
 
             double interesDias = (calcularInteresCredito(
@@ -506,9 +507,7 @@ public class CuotaCreditoService {
 
         if ((saldoCredito + interesActual) < (valorCredito / numeroCuotas)) {
 
-            throw new RequestException(
-                    Constantes.NO_PUEDE_PAGAR_CUOTA_NORMAL,
-                    HttpStatus.BAD_REQUEST.value());
+            throw new RequestException(RequestExceptionMensajes.NO_PUEDE_PAGAR_CUOTA_NORMAL);
         }
     }
 
@@ -545,7 +544,7 @@ public class CuotaCreditoService {
 
     private void validarEstadoCuota(Double valorAbono) {
         if (valorAbono != null) {
-            throw new RequestException(Constantes.CUOTA_YA_PAGADA, HttpStatus.BAD_REQUEST.value());
+            throw new RequestException(RequestExceptionMensajes.CUOTA_YA_PAGADA);
         }
     }
 

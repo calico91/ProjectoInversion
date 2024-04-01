@@ -8,10 +8,10 @@ import com.cblandon.inversiones.cuotacredito.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.estado_credito.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
-import jakarta.persistence.Tuple;
+import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,11 +39,11 @@ public class CreditoService {
         log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
-                .orElseThrow(() -> new RequestException(Constantes.CLIENTE_NO_CREADO, HttpStatus.BAD_REQUEST.value()));
+                .orElseThrow(() -> new RequestException(RequestExceptionMensajes.CLIENTE_NO_CREADO));
 
         if (registrarCreditoRequestDTO.fechaCredito().isAfter(registrarCreditoRequestDTO.fechaCuota()) ||
                 registrarCreditoRequestDTO.fechaCredito().equals(registrarCreditoRequestDTO.fechaCuota())) {
-            throw new RequestException(Constantes.ERROR_FECHAS_CREDITO, HttpStatus.BAD_REQUEST.value());
+            throw new RequestException(RequestExceptionMensajes.ERROR_FECHAS_CREDITO);
         }
 
         try {

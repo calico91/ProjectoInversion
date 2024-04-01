@@ -1,7 +1,7 @@
 package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
@@ -12,6 +12,7 @@ import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.GenericMessageDTO;
+import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class UserService {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
         if (consultarUser.isPresent()) {
-            throw new RequestException(Constantes.USUARIO_REGISTRADO, HttpStatus.BAD_REQUEST.value());
+            throw new RequestException(RequestExceptionMensajes.USUARIO_REGISTRADO);
         }
 
         Map<String, String> mensaje = new HashMap<>();
@@ -63,7 +64,7 @@ public class UserService {
 
             Set<Roles> authorities = registerUserRequestDTO.getRoles().stream()
                     .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
-                            () -> new RequestException(Constantes.ROL_NO_ENCONTRADO, HttpStatus.BAD_REQUEST.value())))
+                            () -> new RequestException(RequestExceptionMensajes.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);
