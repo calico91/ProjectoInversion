@@ -173,7 +173,7 @@ public class UserService {
     /**
      * se registra el id del dispositivo con el cual se desea hacer auth biometrica
      */
-    public String registrarDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
+    public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
         try {
 
             UserEntity user = userRepository.findByUsername(
