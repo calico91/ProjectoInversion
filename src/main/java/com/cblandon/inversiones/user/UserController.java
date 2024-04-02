@@ -61,10 +61,10 @@ public class UserController {
         return new ResponseEntity<>(userService.authBiometrica(authBiometriaRequestDTO), HttpStatus.OK);
     }
 
-    @PostMapping("registrar-dispositivo")
-    public ResponseEntity<Object> registrarDispositivo(@RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
+    @PostMapping("vincular-dispositivo")
+    public ResponseEntity<Object> vincularDispositivo(@RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
         return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, userService.registrarDispositivo(registrarDispositivoDTO));
+                "successful", HttpStatus.OK, userService.vincularDispositivo(registrarDispositivoDTO));
 
     }
 }
