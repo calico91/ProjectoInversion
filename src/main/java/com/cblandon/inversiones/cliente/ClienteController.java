@@ -1,8 +1,6 @@
 package com.cblandon.inversiones.cliente;
 
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
-import com.cblandon.inversiones.utils.Constantes;
-import com.cblandon.inversiones.utils.ResponseHandler;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,38 +20,38 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<GenericResponseDTO> createCliente(@RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
+    public ResponseEntity<GenericResponseDTO> createCliente(
+            @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
-        return ResponseEntity.ok().body(
-                GenericResponseDTO.genericResponse(clienteService.createCliente(registrarClienteDTO)));
+        return GenericResponseDTO.genericResponse(clienteService.createCliente(registrarClienteDTO));
 
     }
 
     @GetMapping("/consultarClientes")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> consultarClientes() {
-        return new ResponseHandler().generateResponse(Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.allClientes());
+    public ResponseEntity<GenericResponseDTO> consultarClientes() {
+        return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
-    public ResponseEntity<Object> consultarCliente(@PathVariable String cedula) {
-        return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.consultarCliente(cedula));
+    public ResponseEntity<GenericResponseDTO> consultarCliente(@PathVariable String cedula) {
+        return GenericResponseDTO.genericResponse(clienteService.consultarCliente(cedula));
 
 
     }
 
     @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
-    public ResponseEntity<Object> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
-        return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
+    public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
+        return GenericResponseDTO.genericResponse(
+                clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
     }
 
     @PutMapping("/actualizarCliente/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> actualizarCliente(@PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
-        return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.actualizarCliente(id, registrarClienteDTO));
+    public ResponseEntity<GenericResponseDTO> actualizarCliente(
+            @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
+
+        return GenericResponseDTO.genericResponse(clienteService.actualizarCliente(id, registrarClienteDTO));
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")

@@ -130,7 +130,6 @@ public class CreditoService {
     /**
      * consulta credito y sus cuotas generadas
      */
-
     @Transactional(readOnly = true)
     public List<CreditosActivosDTO> consultarCreditosActivos() {
         try {
