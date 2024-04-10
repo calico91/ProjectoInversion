@@ -512,7 +512,8 @@ public class CuotaCreditoService {
     }
 
     /**
-     * por cada tres dias se genera un interes de mas por 5 mil pesos
+     * por cada tres dias se genera un interes de mas por 5 mil pesos,
+     * despues de la primer mora, suma cada 4 dias 5k de mora, y maximo 25 de mora por cuota
      */
     private Double calcularInteresMora(LocalDate fechaCuota) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
@@ -549,6 +550,5 @@ public class CuotaCreditoService {
             throw new RequestException(RequestExceptionMensajes.CUOTA_YA_PAGADA);
         }
     }
-
 
 }

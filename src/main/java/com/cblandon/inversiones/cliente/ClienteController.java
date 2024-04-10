@@ -3,6 +3,7 @@ package com.cblandon.inversiones.cliente;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
+import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,10 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> createCliente(@RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
-        return new ResponseHandler().generateResponse(
-                Constantes.SUCCESSFUL, HttpStatus.OK, clienteService.createCliente(registrarClienteDTO));
+    public ResponseEntity<GenericResponseDTO> createCliente(@RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
+
+        return ResponseEntity.ok().body(
+                GenericResponseDTO.genericResponse(clienteService.createCliente(registrarClienteDTO)));
 
     }
 
