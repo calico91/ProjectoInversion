@@ -531,7 +531,9 @@ public class CuotaCreditoService {
 
         }
         log.info("dias a cobrar:" + diasCobrar);
-        return (Double.parseDouble(Integer.toString(diasCobrar))) * 5000;
+        double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
+        valorMora =  valorMora >= 25000 ? 25000 : valorMora;
+        return valorMora;
     }
 
 

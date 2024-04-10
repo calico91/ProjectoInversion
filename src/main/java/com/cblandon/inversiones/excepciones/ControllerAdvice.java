@@ -18,11 +18,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity<ErrorDTO> runtimeExeceptionHandler(RuntimeException ex) {
-        ErrorDTO error = ErrorDTO.builder().status(1).message(ex.getMessage()).build();
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+
 
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<ErrorDTO> requestException(RequestException ex) {
@@ -61,4 +57,14 @@ public class ControllerAdvice {
         return new ResponseHandler().generateResponseError(
                 Constantes.ERROR, HttpStatus.BAD_REQUEST, "Se require parametro ".concat(ex.getVariableName()));
     }
+
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity<Object> illegalArgumentException() {
+
+        return new ResponseHandler().generateResponseError(
+                Constantes.ERROR, HttpStatus.BAD_REQUEST, "Error con la informacion suministrada");
+    }
+
+
+
 }
