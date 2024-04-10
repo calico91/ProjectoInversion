@@ -88,6 +88,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("status", HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().flush();
     }
 }

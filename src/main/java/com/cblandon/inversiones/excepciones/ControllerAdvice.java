@@ -4,8 +4,10 @@ import com.cblandon.inversiones.excepciones.dto.ErrorDTO;
 import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
+import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +19,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-
 
 
     @ExceptionHandler(value = RequestException.class)
@@ -65,6 +66,12 @@ public class ControllerAdvice {
                 Constantes.ERROR, HttpStatus.BAD_REQUEST, "Error con la informacion suministrada");
     }
 
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public ResponseEntity<GenericResponseDTO> usernameNotFoundException(UsernameNotFoundException ex) {
+
+        return GenericResponseDTO.genericError(
+                ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
 
 
 }
