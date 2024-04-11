@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.excepciones;
 
-import com.cblandon.inversiones.excepciones.dto.ErrorDTO;
 import com.cblandon.inversiones.excepciones.request_exception.RequestException;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.ResponseHandler;
@@ -16,33 +15,35 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class ControllerAdvice {
 
 
     @ExceptionHandler(value = RequestException.class)
-    public ResponseEntity<ErrorDTO> requestException(RequestException ex) {
-        ErrorDTO error = ErrorDTO.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getRequestExceptionMensajes().getMessage())
-                .build();
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<GenericResponseDTO> requestException(RequestException ex) {
+        return GenericResponseDTO.genericError(
+                ex.getRequestExceptionMensajes().getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = NoDataException.class)
-    public ResponseEntity<ErrorDTO> noDataException(NoDataException ex) {
-        ErrorDTO error = ErrorDTO.builder().status(ex.getStatus()).message(ex.getMessage()).build();
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    public ResponseEntity<GenericResponseDTO> noDataException(NoDataException ex) {
+        return GenericResponseDTO.genericError(
+                ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<GenericResponseDTO> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        /*
         Map<String, Object> error = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(
-                errors -> error.put(errors.getField(), errors.getDefaultMessage()));
-        return new ResponseHandler().generateResponseError(
-                Constantes.ERROR, HttpStatus.BAD_REQUEST, error);
+                errors -> error.put(errors.getField(), errors.getDefaultMessage()));*/
+        String mensaje = "Campo " + ex.getBindingResult().getFieldErrors().get(0).getField().concat(" " +
+                Objects.requireNonNull(ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage()));
+
+
+        return GenericResponseDTO.genericError(mensaje, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
@@ -70,7 +71,7 @@ public class ControllerAdvice {
     public ResponseEntity<GenericResponseDTO> usernameNotFoundException(UsernameNotFoundException ex) {
 
         return GenericResponseDTO.genericError(
-                ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+                ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

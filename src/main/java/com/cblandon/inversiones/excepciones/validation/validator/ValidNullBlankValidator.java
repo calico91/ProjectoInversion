@@ -11,12 +11,12 @@ public class ValidNullBlankValidator implements ConstraintValidator<ValidNullBla
 
         if (value == null) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("No debe ser null").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("no debe ser null").addConstraintViolation();
             return false;
         }
         if (value.isEmpty()) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("No puede estar vacio").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("no puede estar vacio").addConstraintViolation();
             return false;
         }
 

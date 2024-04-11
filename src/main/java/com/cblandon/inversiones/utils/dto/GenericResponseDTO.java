@@ -21,14 +21,14 @@ public class GenericResponseDTO {
         return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
     }
 
-    public static ResponseEntity<GenericResponseDTO> genericError(String mensajeError, int httpStatus) {
+    public static ResponseEntity<GenericResponseDTO> genericError(String mensajeError, HttpStatus httpStatus) {
 
         GenericResponseDTO genericErrorDto = new GenericResponseDTO();
         genericErrorDto.setData("error");
-        genericErrorDto.setStatus(httpStatus);
+        genericErrorDto.setStatus(httpStatus.value());
         genericErrorDto.setMessage(mensajeError);
 
-        return new ResponseEntity<>(genericErrorDto, HttpStatus.OK);
+        return new ResponseEntity<>(genericErrorDto, httpStatus);
     }
 
     public static GenericResponseDTO genericResponseLogin(Object data) {

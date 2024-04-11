@@ -19,7 +19,7 @@ public class Constantes {
     public static final String NOT_NULL = "No puede ser nulo";
     public static final String NOT_BLANK = "No puede estar vacio";
     public static final String REGEX_EMAIL = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    public static final String VALIDAR_CELULAR = "El numero celular debe tener 10 caracteres";
+    public static final String VALIDAR_CELULAR = "debe tener 10 caracteres";
     public static final String CREDITO_ACTIVO_INSERT = "Activo";
     public static final String CREDITO_PAGADO_INSERT = "Pagado";
     public static final String CREDITO_ANULADO_INSERT = "Anulado";
