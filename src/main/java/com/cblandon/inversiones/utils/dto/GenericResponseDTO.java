@@ -31,5 +31,15 @@ public class GenericResponseDTO {
         return new ResponseEntity<>(genericErrorDto, HttpStatus.OK);
     }
 
+    public static GenericResponseDTO genericResponseLogin(Object data) {
+
+        GenericResponseDTO genericResponseDto = new GenericResponseDTO();
+        genericResponseDto.setStatus(HttpStatus.OK.value());
+        genericResponseDto.setMessage(Constantes.SUCCESSFUL);
+        genericResponseDto.setData(data);
+
+        return genericResponseDto;
+    }
+
 
 }

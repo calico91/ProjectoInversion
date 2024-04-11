@@ -2,6 +2,8 @@ package com.cblandon.inversiones.security.filters;
 
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.UserEntity;
+import com.cblandon.inversiones.user.dto.AuthResponseDTO;
+import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -65,13 +67,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader("Authorization", token);
 
-        Map<String, Object> httpResponse = new HashMap<>();
-        httpResponse.put("token", token);
-        httpResponse.put("message", "Autenticacion Correcta");
-        httpResponse.put("userDetails", user);
-        httpResponse.put("status", HttpStatus.OK.value());
-        logger.info("login correcto" + httpResponse);
-        response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
+
+        AuthResponseDTO authResponseDTO = AuthResponseDTO.builder()
+                .username(user.getUsername())
+                .token(token)
+                .authorities(user.getAuthorities())
+                .build();
+        logger.info("login correcto" + authResponseDTO);
+
+        response.getWriter().write(new ObjectMapper().writeValueAsString(
+                GenericResponseDTO.genericResponseLogin(authResponseDTO)));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().flush();
@@ -84,7 +89,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                               final AuthenticationException failed) throws IOException {
 
         Map<String, Object> httpResponse = new HashMap<>();
-        httpResponse.put("message", "Your credentials are incorrect");
+        httpResponse.put("message", "Credenciales incorrectas");
         httpResponse.put("status", HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));

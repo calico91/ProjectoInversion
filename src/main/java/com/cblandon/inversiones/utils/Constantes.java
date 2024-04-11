@@ -2,9 +2,8 @@ package com.cblandon.inversiones.utils;
 
 public class Constantes {
 
-    public static final String DATOS_NO_ENCONTRADOS = "No se encontraron resultados con los parametros de busqueda ingresados";
-    public static final String USUARIO_CREADO = "Usario creado correctamente";
-    public static final String USUARIO_MODIFICADO = "Usuario modificado correctamente";
+    public static final String DATOS_NO_ENCONTRADOS =
+            "No se encontraron resultados con los parametros de busqueda ingresados";
 
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
@@ -26,5 +25,6 @@ public class Constantes {
     public static final String CREDITO_ANULADO_INSERT = "Anulado";
     public static final int ID_CREDITO_ACTIVO = 1;
     public static final int ID_CREDITO_PAGADO = 2;
+    public static final String AUTH_BIOMETRICA_FALLIDA = "Autenticacion biometrica fallida";
 
 }

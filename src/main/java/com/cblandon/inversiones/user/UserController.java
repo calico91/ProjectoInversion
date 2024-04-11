@@ -6,7 +6,6 @@ import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +51,10 @@ public class UserController {
     }
 
     @PostMapping("auth-biometrica")
-    public ResponseEntity<Object> authBiometrica(@RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+    public ResponseEntity<GenericResponseDTO> authBiometrica(
+            @RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
 
-
-        return new ResponseEntity<>(userService.authBiometrica(authBiometriaRequestDTO), HttpStatus.OK);
+        return GenericResponseDTO.genericResponse(userService.authBiometrica(authBiometriaRequestDTO));
     }
 
     @PostMapping("vincular-dispositivo")
