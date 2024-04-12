@@ -6,11 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NoDataException extends RuntimeException {
-
+public class RequestException extends RuntimeException {
     private final MensajesErrorEnum mensajesErrorEnum;
 
-    public NoDataException(MensajesErrorEnum mensajesErrorEnum) {
+    public RequestException(MensajesErrorEnum mensajesErrorEnum) {
         this.mensajesErrorEnum = mensajesErrorEnum;
     }
 }
+
+
+
+

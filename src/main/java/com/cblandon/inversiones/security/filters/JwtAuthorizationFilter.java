@@ -3,7 +3,8 @@ package com.cblandon.inversiones.security.filters;
 
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.UserDetailsServiceImpl;
-import com.cblandon.inversiones.utils.ResponseHandler;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
+import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -49,26 +50,25 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             } else {
-                String message = "";
                 try {
                     jwtUtils.getClaim(token, Claims::getExpiration);
                 } catch (RuntimeException e) {
-                    message = "Token caduco, inicie sesion de nuevo";
+                    responseClient(response,
+                            GenericResponseDTO.genericError(MensajesErrorEnum.TOKEN_CADUCO, HttpStatus.UNAUTHORIZED));
                 }
-                responseClient(response,
-                        new ResponseHandler().generateResponseWithoutData(message, HttpStatus.UNAUTHORIZED));
                 return;
             }
         }
         filterChain.doFilter(request, response);
     }
 
-    private void responseClient(final HttpServletResponse response, final ResponseEntity<Object> responseEntity) throws IOException {
+    private void responseClient(final HttpServletResponse response,
+                                final ResponseEntity<GenericResponseDTO> responseEntity) throws IOException {
 
-            response.setStatus(responseEntity.getStatusCode().value());
-            response.setContentType("application/json");
-            response.getWriter().write(new ObjectMapper().writeValueAsString(responseEntity.getBody()));
-            response.getWriter().flush();
+        response.setStatus(responseEntity.getStatusCode().value());
+        response.setContentType("application/json");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(responseEntity.getBody()));
+        response.getWriter().flush();
 
     }
 }

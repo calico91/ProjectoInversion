@@ -1,14 +1,14 @@
 package com.cblandon.inversiones.user;
 
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.request_exception.RequestException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.utils.Constantes;
-import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class UserService {
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
         if (consultarUser.isPresent()) {
-            throw new RequestException(RequestExceptionMensajes.USUARIO_REGISTRADO);
+            throw new RequestException(MensajesErrorEnum.USUARIO_REGISTRADO);
         }
 
 
@@ -60,7 +60,7 @@ public class UserService {
 
             Set<Roles> authorities = registerUserRequestDTO.getRoles().stream()
                     .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
-                            () -> new RequestException(RequestExceptionMensajes.ROL_NO_ENCONTRADO)))
+                            () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
 
             user.setRoles(authorities);
@@ -79,7 +79,7 @@ public class UserService {
 
         List<UserEntity> usuariosConsulta = userRepository.findAll();
         if (usuariosConsulta.isEmpty()) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
+            throw new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS);
         }
         try {
             return
@@ -104,7 +104,7 @@ public class UserService {
     public UserEntity actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
 
         UserEntity usuarioBD = userRepository.findByUsername(username).orElseThrow(
-                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+                () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
         try {
 
             UserEntity usuarioModificado = UserEntity.builder()

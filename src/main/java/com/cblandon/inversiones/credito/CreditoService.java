@@ -8,10 +8,10 @@ import com.cblandon.inversiones.cuotacredito.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.estado_credito.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.request_exception.RequestException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
-import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,11 +39,11 @@ public class CreditoService {
         log.info("crearCredito peticion " + registrarCreditoRequestDTO);
 
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
-                .orElseThrow(() -> new RequestException(RequestExceptionMensajes.CLIENTE_NO_CREADO));
+                .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
 
         if (registrarCreditoRequestDTO.fechaCredito().isAfter(registrarCreditoRequestDTO.fechaCuota()) ||
                 registrarCreditoRequestDTO.fechaCredito().equals(registrarCreditoRequestDTO.fechaCuota())) {
-            throw new RequestException(RequestExceptionMensajes.ERROR_FECHAS_CREDITO);
+            throw new RequestException(MensajesErrorEnum.ERROR_FECHAS_CREDITO);
         }
 
         try {
@@ -120,7 +120,7 @@ public class CreditoService {
     public CreditoCuotasResponseDTO consultarCredito(Integer idCredito) throws NoDataException {
 
         Credito credito = creditoRepository.findById(idCredito)
-                .orElseThrow(() -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+                .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         log.info("consultarCredito ".concat(credito.toString()));
 
@@ -152,11 +152,11 @@ public class CreditoService {
 
         Credito creditoConsultado = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(
-                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+                        MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         EstadoCredito estadoCredito = estadoCreditoRepository.findById(idstadoCredito).orElseThrow(
                 () -> new NoDataException(
-                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+                        MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         try {
             creditoConsultado.setIdEstadoCredito(estadoCredito);

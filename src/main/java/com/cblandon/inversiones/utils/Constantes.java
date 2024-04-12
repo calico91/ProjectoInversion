@@ -2,9 +2,6 @@ package com.cblandon.inversiones.utils;
 
 public class Constantes {
 
-    public static final String DATOS_NO_ENCONTRADOS =
-            "No se encontraron resultados con los parametros de busqueda ingresados";
-
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
     public static final String ABONO_CAPITAL = "AC";

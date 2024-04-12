@@ -2363,3 +2363,1038 @@ Caused by: java.lang.ClassNotFoundException: com.cblandon.inversiones.user.UserS
     where
         r1_0.user_id=?
 2024-04-11T09:39:32.664-05:00  INFO 3544 --- [http-nio-8091-exec-1] c.c.i.s.filters.JwtAuthenticationFilter  : login correctoAuthResponseDTO[username=blandon, token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b2tlbmNvZGUiLCJSb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInN1YiI6ImJsYW5kb24iLCJpYXQiOjE3MTI4NDYzNzIsImV4cCI6MTcxMjg2Nzk3Mn0.mWFmQ0LtLVZv7tuJZuB7C6xl3oMlhS0jjBpUFrGlAFs, authorities=[ROLE_ADMIN, ROLE_USER]]
+2024-04-12T10:52:40.650-05:00  INFO 12940 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 12940 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T10:52:40.652-05:00  INFO 12940 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T10:52:40.685-05:00  INFO 12940 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-12T10:52:40.685-05:00  INFO 12940 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-12T10:52:41.270-05:00  INFO 12940 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T10:52:41.340-05:00  INFO 12940 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 6 JPA repository interfaces.
+2024-04-12T10:52:41.819-05:00  INFO 12940 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T10:52:41.827-05:00  INFO 12940 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T10:52:41.828-05:00  INFO 12940 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T10:52:41.881-05:00  INFO 12940 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T10:52:41.882-05:00  INFO 12940 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1196 ms
+2024-04-12T10:52:41.983-05:00  INFO 12940 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T10:52:42.035-05:00  INFO 12940 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-04-12T10:52:42.305-05:00  INFO 12940 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-12T10:52:42.604-05:00  INFO 12940 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7c9d05c1
+2024-04-12T10:52:42.606-05:00  INFO 12940 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-12T10:52:42.646-05:00  INFO 12940 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T10:52:43.493-05:00  INFO 12940 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T10:52:43.501-05:00  INFO 12940 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T10:52:44.180-05:00 DEBUG 12940 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T10:52:44.301-05:00  WARN 12940 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T10:52:44.568-05:00  INFO 12940 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6ce8903b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e25a29d, org.springframework.security.web.context.SecurityContextHolderFilter@5794d2ed, org.springframework.security.web.header.HeaderWriterFilter@f827a62, org.springframework.web.filter.CorsFilter@7ef4875f, org.springframework.security.web.authentication.logout.LogoutFilter@70b9527d, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@6a9cf7c0, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@51ea100f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@24c58a5d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1920f487, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@79ab3b41, org.springframework.security.web.session.SessionManagementFilter@72492bc0, org.springframework.security.web.access.ExceptionTranslationFilter@27e47839, org.springframework.security.web.access.intercept.AuthorizationFilter@394f680b]
+2024-04-12T10:52:44.779-05:00  INFO 12940 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T10:52:44.817-05:00  INFO 12940 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T10:52:44.825-05:00  INFO 12940 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.484 seconds (process running for 5.012)
+2024-04-12T10:55:04.768-05:00  INFO 12940 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T10:55:04.770-05:00  INFO 12940 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-12T10:55:04.777-05:00  INFO 12940 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-12T10:55:08.051-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 14956 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T10:55:08.052-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T10:55:08.085-05:00  INFO 14956 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-12T10:55:08.085-05:00  INFO 14956 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-12T10:55:08.666-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T10:55:08.728-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 6 JPA repository interfaces.
+2024-04-12T10:55:09.183-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T10:55:09.190-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T10:55:09.190-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T10:55:09.264-05:00  INFO 14956 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T10:55:09.264-05:00  INFO 14956 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1179 ms
+2024-04-12T10:55:09.353-05:00  INFO 14956 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T10:55:09.392-05:00  INFO 14956 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-04-12T10:55:09.603-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-12T10:55:09.814-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67835f8b
+2024-04-12T10:55:09.816-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-12T10:55:09.853-05:00  INFO 14956 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T10:55:10.673-05:00  INFO 14956 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T10:55:10.680-05:00  INFO 14956 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T10:55:11.319-05:00 DEBUG 14956 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T10:55:11.454-05:00  WARN 14956 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T10:55:11.720-05:00  INFO 14956 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4bbc81b7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ce8903b, org.springframework.security.web.context.SecurityContextHolderFilter@644b2260, org.springframework.security.web.header.HeaderWriterFilter@431ce97, org.springframework.web.filter.CorsFilter@2e25a29d, org.springframework.security.web.authentication.logout.LogoutFilter@4e50c043, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@49ebd1eb, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@7ef4875f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c38e4f4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24c58a5d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51ea100f, org.springframework.security.web.session.SessionManagementFilter@7668a084, org.springframework.security.web.access.ExceptionTranslationFilter@50d538de, org.springframework.security.web.access.intercept.AuthorizationFilter@582feb90]
+2024-04-12T10:55:11.941-05:00  INFO 14956 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T10:55:11.971-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T10:55:11.978-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.236 seconds (process running for 4.677)
+2024-04-12T10:55:19.923-05:00  INFO 14956 --- [http-nio-8091-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-12T10:55:19.924-05:00  INFO 14956 --- [http-nio-8091-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-12T10:55:19.925-05:00  INFO 14956 --- [http-nio-8091-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-04-12T10:55:20.095-05:00 DEBUG 14956 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T10:55:20.105-05:00 DEBUG 14956 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T10:55:20.184-05:00 DEBUG 14956 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T10:55:20.186-05:00 DEBUG 14956 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T10:55:20.215-05:00  INFO 14956 --- [http-nio-8091-exec-3] c.c.i.s.filters.JwtAuthenticationFilter  : login correctoAuthResponseDTO[username=blandon, token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b2tlbmNvZGUiLCJSb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInN1YiI6ImJsYW5kb24iLCJpYXQiOjE3MTI5MzczMjAsImV4cCI6MTcxMjkzNzMyNX0.1qHBy50NpvXkZIW7K7ukA2O4eiEDoKEd9WLq5y3CX4w, authorities=[ROLE_ADMIN, ROLE_USER]]
+2024-04-12T10:55:27.166-05:00 ERROR 14956 --- [http-nio-8091-exec-5] c.c.inversiones.security.jwt.JwtUtils    : invalid-token: JWT expired at 2024-04-12T15:55:25Z. Current time: 2024-04-12T15:55:27Z, a difference of 2166 milliseconds.  Allowed clock skew: 0 milliseconds.
+2024-04-12T11:04:47.411-05:00  INFO 14956 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2024-04-12T11:04:47.419-05:00  INFO 14956 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T11:04:47.420-05:00  INFO 14956 --- [Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-04-12T11:04:47.422-05:00  WARN 14956 --- [Thread-5] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T11:04:47.427-05:00  INFO 14956 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:04:47.429-05:00  INFO 14956 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-12T11:04:47.434-05:00  INFO 14956 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-12T11:04:47.493-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 14956 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:04:47.494-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:04:47.735-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:04:47.766-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 31 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:04:47.876-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T11:04:47.877-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T11:04:47.877-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T11:04:47.893-05:00  INFO 14956 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T11:04:47.893-05:00  INFO 14956 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 398 ms
+2024-04-12T11:04:47.934-05:00  INFO 14956 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T11:04:47.940-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-04-12T11:04:47.961-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56fd810a
+2024-04-12T11:04:47.962-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-04-12T11:04:47.963-05:00  INFO 14956 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T11:04:48.158-05:00  INFO 14956 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T11:04:48.159-05:00  INFO 14956 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:04:48.355-05:00 DEBUG 14956 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T11:04:48.420-05:00  WARN 14956 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T11:04:48.611-05:00  INFO 14956 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3351de82, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@516f263, org.springframework.security.web.context.SecurityContextHolderFilter@7fc3379e, org.springframework.security.web.header.HeaderWriterFilter@2af1fe60, org.springframework.web.filter.CorsFilter@666c407e, org.springframework.security.web.authentication.logout.LogoutFilter@329cf5b1, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@51140b17, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@720cf2d9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f327dbc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5a159ec4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4f9497d4, org.springframework.security.web.session.SessionManagementFilter@1abf0fcb, org.springframework.security.web.access.ExceptionTranslationFilter@1252547e, org.springframework.security.web.access.intercept.AuthorizationFilter@3a25da30]
+2024-04-12T11:04:48.750-05:00  INFO 14956 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T11:04:48.761-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T11:04:48.765-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 1.295 seconds (process running for 581.464)
+2024-04-12T11:04:48.767-05:00  INFO 14956 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T11:04:50.198-05:00  INFO 14956 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2024-04-12T11:04:50.205-05:00  INFO 14956 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T11:04:50.206-05:00  WARN 14956 --- [Thread-7] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T11:04:50.207-05:00  WARN 14956 --- [Thread-7] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1061)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T11:04:50.210-05:00  INFO 14956 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:04:50.210-05:00  INFO 14956 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-04-12T11:04:50.214-05:00  INFO 14956 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-04-12T11:04:50.267-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 14956 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:04:50.267-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:04:50.427-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:04:50.451-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:04:50.533-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T11:04:50.533-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T11:04:50.533-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T11:04:50.548-05:00  INFO 14956 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T11:04:50.548-05:00  INFO 14956 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 280 ms
+2024-04-12T11:04:50.583-05:00  INFO 14956 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T11:04:50.588-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-04-12T11:04:50.597-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1cacbf75
+2024-04-12T11:04:50.597-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-04-12T11:04:50.598-05:00  INFO 14956 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T11:04:50.712-05:00  INFO 14956 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T11:04:50.712-05:00  INFO 14956 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:04:50.882-05:00 DEBUG 14956 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T11:04:50.937-05:00  WARN 14956 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T11:04:51.042-05:00  INFO 14956 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@d38f9b1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@12c73d6, org.springframework.security.web.context.SecurityContextHolderFilter@689bf33, org.springframework.security.web.header.HeaderWriterFilter@449de0c1, org.springframework.web.filter.CorsFilter@3b3617d6, org.springframework.security.web.authentication.logout.LogoutFilter@38c68bd3, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@48173280, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@470b40b3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@a92c163, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@21a2b318, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@d34cc92, org.springframework.security.web.session.SessionManagementFilter@6ca98fc, org.springframework.security.web.access.ExceptionTranslationFilter@6d5c3978, org.springframework.security.web.access.intercept.AuthorizationFilter@104d9182]
+2024-04-12T11:04:51.125-05:00  INFO 14956 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T11:04:51.134-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T11:04:51.138-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.885 seconds (process running for 583.836)
+2024-04-12T11:04:51.139-05:00  INFO 14956 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T11:23:06.421-05:00  INFO 14956 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2024-04-12T11:23:06.426-05:00  INFO 14956 --- [Thread-11] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T11:23:06.428-05:00  WARN 14956 --- [Thread-11] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-3 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T11:23:06.430-05:00  INFO 14956 --- [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:23:06.430-05:00  INFO 14956 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-04-12T11:23:06.434-05:00  INFO 14956 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-04-12T11:23:06.488-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 14956 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:23:06.489-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:23:06.699-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:23:06.737-05:00  INFO 14956 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:23:06.854-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T11:23:06.855-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T11:23:06.855-05:00  INFO 14956 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T11:23:06.871-05:00  INFO 14956 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T11:23:06.871-05:00  INFO 14956 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 381 ms
+2024-04-12T11:23:06.916-05:00  INFO 14956 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T11:23:06.925-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-04-12T11:23:06.938-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e51ff06
+2024-04-12T11:23:06.938-05:00  INFO 14956 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-04-12T11:23:06.939-05:00  INFO 14956 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T11:23:07.047-05:00  INFO 14956 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T11:23:07.047-05:00  INFO 14956 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:23:07.243-05:00 DEBUG 14956 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T11:23:07.306-05:00  WARN 14956 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T11:23:07.418-05:00  INFO 14956 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2e5edc48, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4397524, org.springframework.security.web.context.SecurityContextHolderFilter@3687be82, org.springframework.security.web.header.HeaderWriterFilter@78988d53, org.springframework.web.filter.CorsFilter@5fbf35b3, org.springframework.security.web.authentication.logout.LogoutFilter@6f414adf, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@43e57a24, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@7440d000, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7d588248, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@41167aa5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2ca4fe5c, org.springframework.security.web.session.SessionManagementFilter@32e5d4bd, org.springframework.security.web.access.ExceptionTranslationFilter@47619ea4, org.springframework.security.web.access.intercept.AuthorizationFilter@3583daee]
+2024-04-12T11:23:07.517-05:00  INFO 14956 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T11:23:07.527-05:00  INFO 14956 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T11:23:07.530-05:00  INFO 14956 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 1.061 seconds (process running for 1680.229)
+2024-04-12T11:23:07.532-05:00  INFO 14956 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T11:27:18.441-05:00  INFO 14956 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:27:18.441-05:00  INFO 14956 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-04-12T11:27:18.451-05:00  INFO 14956 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2024-04-12T11:27:21.517-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:27:21.518-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:27:21.552-05:00  INFO 18736 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-12T11:27:21.552-05:00  INFO 18736 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-12T11:27:22.127-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:27:22.189-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:27:22.638-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T11:27:22.645-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T11:27:22.645-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T11:27:22.692-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T11:27:22.692-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1140 ms
+2024-04-12T11:27:22.781-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T11:27:22.817-05:00  INFO 18736 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-04-12T11:27:23.038-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-12T11:27:23.241-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2c3b54a6
+2024-04-12T11:27:23.242-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-12T11:27:23.276-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T11:27:24.067-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T11:27:24.073-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:27:24.702-05:00 DEBUG 18736 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T11:27:24.830-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T11:27:25.085-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@445d0b04, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5ea71ae3, org.springframework.security.web.context.SecurityContextHolderFilter@17a4ff8e, org.springframework.security.web.header.HeaderWriterFilter@322825cd, org.springframework.web.filter.CorsFilter@3427266, org.springframework.security.web.authentication.logout.LogoutFilter@5794d2ed, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@5775dfb9, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@2dfbc23f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3b2b5769, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@790efd0b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@152f9af, org.springframework.security.web.session.SessionManagementFilter@6ccb77cf, org.springframework.security.web.access.ExceptionTranslationFilter@432d91d6, org.springframework.security.web.access.intercept.AuthorizationFilter@5ce8d115]
+2024-04-12T11:27:25.290-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T11:27:25.326-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T11:27:25.335-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.121 seconds (process running for 4.563)
+2024-04-12T11:57:12.498-05:00  INFO 18736 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2024-04-12T11:57:12.506-05:00  INFO 18736 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T11:57:12.509-05:00  WARN 18736 --- [Thread-5] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T11:57:12.512-05:00  INFO 18736 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:57:12.514-05:00  INFO 18736 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-12T11:57:12.518-05:00  INFO 18736 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-12T11:57:12.575-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:57:12.576-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:57:12.761-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:57:12.783-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:57:12.835-05:00 ERROR 18736 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: Unable to load cache item
+	at org.springframework.cglib.core.internal.LoadingCache.createEntry(LoadingCache.java:75) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.internal.LoadingCache.get(LoadingCache.java:34) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:126) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:313) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:562) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:407) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer.createClass(ConfigurationClassEnhancer.java:138) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer.enhance(ConfigurationClassEnhancer.java:109) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.enhanceConfigurationClasses(ConfigurationClassPostProcessor.java:531) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanFactory(ConfigurationClassPostProcessor.java:308) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:358) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:150) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1304) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1293) ~[spring-boot-3.0.7.jar:3.0.7]
+	at com.cblandon.inversiones.InversionesApplication.main(InversionesApplication.java:19) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+Caused by: java.lang.NoClassDefFoundError: com/cblandon/inversiones/security/jwt/JwtUtils
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3373) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2555) ~[na:na]
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:655) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.transform.TransformingClassGenerator.generateClass(TransformingClassGenerator.java:35) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:26) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:362) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:575) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.lambda$new$1(AbstractClassGenerator.java:103) ~[spring-core-6.0.9.jar:6.0.9]
+	at org.springframework.cglib.core.internal.LoadingCache.lambda$createEntry$1(LoadingCache.java:52) ~[spring-core-6.0.9.jar:6.0.9]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at org.springframework.cglib.core.internal.LoadingCache.createEntry(LoadingCache.java:57) ~[spring-core-6.0.9.jar:6.0.9]
+	... 25 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.cblandon.inversiones.security.jwt.JwtUtils
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 38 common frames omitted
+
+2024-04-12T11:57:34.894-05:00  INFO 18736 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-12T11:57:34.895-05:00  INFO 18736 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-12T11:57:34.897-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T11:57:34.897-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T11:57:35.064-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T11:57:35.087-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 6 JPA repository interfaces.
+2024-04-12T11:57:35.166-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T11:57:35.167-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T11:57:35.167-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T11:57:35.183-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T11:57:35.183-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 284 ms
+2024-04-12T11:57:35.216-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T11:57:35.221-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-04-12T11:57:35.236-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@330751ef
+2024-04-12T11:57:35.236-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-04-12T11:57:35.237-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T11:57:35.364-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T11:57:35.364-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:57:35.475-05:00 DEBUG 18736 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T11:57:35.480-05:00  WARN 18736 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userController': Resolution of declared constructors on bean Class [com.cblandon.inversiones.user.UserController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4caf8b56] failed
+2024-04-12T11:57:35.480-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T11:57:35.480-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-04-12T11:57:35.508-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-04-12T11:57:35.508-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T11:57:35.512-05:00  INFO 18736 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-04-12T11:57:35.514-05:00 ERROR 18736 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userController': Resolution of declared constructors on bean Class [com.cblandon.inversiones.user.UserController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4caf8b56] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:357) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:941) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1304) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1293) ~[spring-boot-3.0.7.jar:3.0.7]
+	at com.cblandon.inversiones.InversionesApplication.main(InversionesApplication.java:19) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+Caused by: java.lang.NoClassDefFoundError: com/cblandon/inversiones/user/UserService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3373) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2555) ~[na:na]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 23 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.cblandon.inversiones.user.UserService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 27 common frames omitted
+
+2024-04-12T12:01:27.861-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:01:27.861-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:01:28.049-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:01:28.074-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:01:28.150-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:01:28.151-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:01:28.151-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:01:28.166-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:01:28.166-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 303 ms
+2024-04-12T12:01:28.199-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:01:28.206-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-04-12T12:01:28.218-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1be49467
+2024-04-12T12:01:28.218-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-04-12T12:01:28.219-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:01:28.382-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:01:28.382-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:01:28.386-05:00  WARN 18736 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'clienteController': Resolution of declared constructors on bean Class [com.cblandon.inversiones.cliente.ClienteController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@543de719] failed
+2024-04-12T12:01:28.386-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:01:28.386-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-04-12T12:01:28.389-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-04-12T12:01:28.389-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:01:28.393-05:00  INFO 18736 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-04-12T12:01:28.395-05:00 ERROR 18736 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'clienteController': Resolution of declared constructors on bean Class [com.cblandon.inversiones.cliente.ClienteController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@543de719] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:357) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1291) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1186) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:941) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1304) ~[spring-boot-3.0.7.jar:3.0.7]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1293) ~[spring-boot-3.0.7.jar:3.0.7]
+	at com.cblandon.inversiones.InversionesApplication.main(InversionesApplication.java:19) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+Caused by: java.lang.NoClassDefFoundError: com/cblandon/inversiones/cliente/ClienteService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3373) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2555) ~[na:na]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 23 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.cblandon.inversiones.cliente.ClienteService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.0.7.jar:3.0.7]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 27 common frames omitted
+
+2024-04-12T12:12:04.139-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:12:04.140-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:12:04.329-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:12:04.350-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:12:04.421-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:12:04.421-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:12:04.421-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:12:04.437-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:12:04.437-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 295 ms
+2024-04-12T12:12:04.468-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:12:04.473-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-04-12T12:12:04.484-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4e2aadfb
+2024-04-12T12:12:04.484-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-04-12T12:12:04.485-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:12:04.599-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:12:04.599-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:12:04.636-05:00 DEBUG 18736 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:12:04.684-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:12:04.887-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@374ea4ae, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e89cc6d, org.springframework.security.web.context.SecurityContextHolderFilter@14acc362, org.springframework.security.web.header.HeaderWriterFilter@2d675a27, org.springframework.security.web.csrf.CsrfFilter@26c30386, org.springframework.security.web.authentication.logout.LogoutFilter@2d137dfe, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@152d6775, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@621db61a, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@d13c68, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5f928e96, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2a4d3d42, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75bc7ce8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b7cf4da, org.springframework.security.web.access.ExceptionTranslationFilter@2e3e3219, org.springframework.security.web.access.intercept.AuthorizationFilter@4c9e0755]
+2024-04-12T12:12:04.896-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:12:04.908-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:12:04.911-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.789 seconds (process running for 2684.14)
+2024-04-12T12:12:04.915-05:00  INFO 18736 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration matched:
+      - AllNestedConditions 2 matched 0 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) did not find any beans; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2024-04-12T12:32:43.698-05:00  INFO 18736 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2024-04-12T12:32:43.705-05:00  INFO 18736 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:32:43.708-05:00  INFO 18736 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:32:43.708-05:00  INFO 18736 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-04-12T12:32:43.712-05:00  INFO 18736 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2024-04-12T12:32:43.775-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:32:43.775-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:32:43.965-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:32:43.992-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:32:44.090-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:32:44.091-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:32:44.091-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:32:44.111-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:32:44.111-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 334 ms
+2024-04-12T12:32:44.154-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:32:44.183-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2024-04-12T12:32:44.195-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56d2867c
+2024-04-12T12:32:44.196-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2024-04-12T12:32:44.197-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:32:44.329-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:32:44.329-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:32:44.372-05:00 DEBUG 18736 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:32:44.431-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:32:44.638-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@45467486, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@48960e52, org.springframework.security.web.context.SecurityContextHolderFilter@7c8cc20, org.springframework.security.web.header.HeaderWriterFilter@6b53158, org.springframework.security.web.csrf.CsrfFilter@3c0f2eb, org.springframework.security.web.authentication.logout.LogoutFilter@a77033, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6afbb474, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2c364a69, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@7f794b20, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@1d87ba95, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@39b2198, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@32694a4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f0a1548, org.springframework.security.web.access.ExceptionTranslationFilter@7dbfa057, org.springframework.security.web.access.intercept.AuthorizationFilter@146337d3]
+2024-04-12T12:32:44.647-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:32:44.667-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:32:44.672-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.917 seconds (process running for 3923.9)
+2024-04-12T12:32:44.674-05:00  INFO 18736 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T12:32:46.122-05:00  INFO 18736 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (3 additions, 0 deletions, 0 modifications)
+2024-04-12T12:32:46.127-05:00  INFO 18736 --- [Thread-20] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:32:46.130-05:00  INFO 18736 --- [Thread-20] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:32:46.130-05:00  INFO 18736 --- [Thread-20] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2024-04-12T12:32:46.132-05:00  INFO 18736 --- [Thread-20] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2024-04-12T12:32:46.182-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:32:46.182-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:32:46.320-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:32:46.337-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:32:46.396-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:32:46.396-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:32:46.396-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:32:46.411-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:32:46.411-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 228 ms
+2024-04-12T12:32:46.437-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:32:46.441-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2024-04-12T12:32:46.449-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@668e1d8b
+2024-04-12T12:32:46.449-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2024-04-12T12:32:46.450-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:32:46.556-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:32:46.557-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:32:46.588-05:00 DEBUG 18736 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:32:46.632-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:32:46.794-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@52aa305a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@716767e4, org.springframework.security.web.context.SecurityContextHolderFilter@3b852664, org.springframework.security.web.header.HeaderWriterFilter@3828130b, org.springframework.security.web.csrf.CsrfFilter@63365655, org.springframework.security.web.authentication.logout.LogoutFilter@1b44c694, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@589af73c, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@61855abe, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@7e4b4de3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@65d7fadd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a505bbf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@194db2d7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@241041e5, org.springframework.security.web.access.ExceptionTranslationFilter@9bf4a28, org.springframework.security.web.access.intercept.AuthorizationFilter@24f0f3d8]
+2024-04-12T12:32:46.798-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:32:46.808-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:32:46.811-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.643 seconds (process running for 3926.039)
+2024-04-12T12:32:46.813-05:00  INFO 18736 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T12:34:38.837-05:00  INFO 18736 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 8 deletions, 0 modifications)
+2024-04-12T12:34:38.843-05:00  INFO 18736 --- [Thread-24] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:34:38.846-05:00  INFO 18736 --- [Thread-24] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:34:38.846-05:00  INFO 18736 --- [Thread-24] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2024-04-12T12:34:38.849-05:00  INFO 18736 --- [Thread-24] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2024-04-12T12:34:38.903-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:34:38.903-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:34:39.093-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:34:39.114-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:34:39.202-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:34:39.202-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:34:39.202-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:34:39.219-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:34:39.219-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 315 ms
+2024-04-12T12:34:39.255-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:34:39.262-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2024-04-12T12:34:39.272-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@178cf572
+2024-04-12T12:34:39.272-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2024-04-12T12:34:39.273-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:34:39.413-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:34:39.413-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:34:39.490-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:34:39.718-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@667f707d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3de2a67d, org.springframework.security.web.context.SecurityContextHolderFilter@24ead380, org.springframework.security.web.header.HeaderWriterFilter@1da5b2e0, org.springframework.security.web.csrf.CsrfFilter@3a60a56a, org.springframework.security.web.authentication.logout.LogoutFilter@27297c4a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1b6d144b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@10c3334a, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4ede22c6, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6ebe3dee, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1b1e7982, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@20c1a700, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@511027be, org.springframework.security.web.access.ExceptionTranslationFilter@48ae7958, org.springframework.security.web.access.intercept.AuthorizationFilter@7fe49443]
+2024-04-12T12:34:39.728-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:34:39.745-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:34:39.748-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.865 seconds (process running for 4038.977)
+2024-04-12T12:34:39.750-05:00  INFO 18736 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T12:34:41.167-05:00  INFO 18736 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (3 additions, 0 deletions, 0 modifications)
+2024-04-12T12:34:41.172-05:00  INFO 18736 --- [Thread-28] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:34:41.174-05:00  INFO 18736 --- [Thread-28] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:34:41.175-05:00  INFO 18736 --- [Thread-28] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2024-04-12T12:34:41.178-05:00  INFO 18736 --- [Thread-28] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2024-04-12T12:34:41.228-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 18736 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:34:41.228-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:34:41.371-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:34:41.388-05:00  INFO 18736 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:34:41.451-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:34:41.451-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:34:41.451-05:00  INFO 18736 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:34:41.465-05:00  INFO 18736 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:34:41.465-05:00  INFO 18736 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 235 ms
+2024-04-12T12:34:41.494-05:00  INFO 18736 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:34:41.498-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2024-04-12T12:34:41.515-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6189df05
+2024-04-12T12:34:41.515-05:00  INFO 18736 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2024-04-12T12:34:41.516-05:00  INFO 18736 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:34:41.612-05:00  INFO 18736 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:34:41.612-05:00  INFO 18736 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:34:41.670-05:00  WARN 18736 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:34:41.833-05:00  INFO 18736 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6e28642f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@170d946f, org.springframework.security.web.context.SecurityContextHolderFilter@cae33c7, org.springframework.security.web.header.HeaderWriterFilter@2d609ba8, org.springframework.security.web.csrf.CsrfFilter@50f13125, org.springframework.security.web.authentication.logout.LogoutFilter@5bd84ab0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3ec20814, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@9ae4998, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@3921ac32, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@27d658b6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@558f536e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@203a2bec, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2ca75048, org.springframework.security.web.access.ExceptionTranslationFilter@5014ba81, org.springframework.security.web.access.intercept.AuthorizationFilter@51d51134]
+2024-04-12T12:34:41.838-05:00  INFO 18736 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:34:41.847-05:00  INFO 18736 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:34:41.850-05:00  INFO 18736 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.636 seconds (process running for 4041.079)
+2024-04-12T12:34:41.851-05:00  INFO 18736 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T12:38:16.653-05:00  INFO 18736 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:38:16.654-05:00  INFO 18736 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2024-04-12T12:38:16.657-05:00  INFO 18736 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2024-04-12T12:42:13.759-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 19812 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:42:13.760-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:42:13.793-05:00  INFO 19812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-12T12:42:13.793-05:00  INFO 19812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-12T12:42:14.387-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:42:14.449-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:42:14.911-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:42:14.918-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:42:14.918-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:42:14.967-05:00  INFO 19812 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:42:14.967-05:00  INFO 19812 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1174 ms
+2024-04-12T12:42:15.057-05:00  INFO 19812 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:42:15.097-05:00  INFO 19812 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-04-12T12:42:15.312-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-12T12:42:15.522-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@566b0394
+2024-04-12T12:42:15.523-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-12T12:42:15.559-05:00  INFO 19812 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:42:16.526-05:00  INFO 19812 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:42:16.533-05:00  INFO 19812 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:42:17.179-05:00 DEBUG 19812 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:42:17.305-05:00  WARN 19812 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:42:17.569-05:00  INFO 19812 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@32d25f07, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b24669e, org.springframework.security.web.context.SecurityContextHolderFilter@741fe4ef, org.springframework.security.web.header.HeaderWriterFilter@48c0670c, org.springframework.web.filter.CorsFilter@c0db197, org.springframework.security.web.authentication.logout.LogoutFilter@67c48b64, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@4e791269, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@60ad34e9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27e47839, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@431ce97, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4027659c, org.springframework.security.web.session.SessionManagementFilter@768a4c8e, org.springframework.security.web.access.ExceptionTranslationFilter@50feb468, org.springframework.security.web.access.intercept.AuthorizationFilter@773fd803]
+2024-04-12T12:42:17.793-05:00  INFO 19812 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:42:17.823-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:42:17.831-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.398 seconds (process running for 4.904)
+2024-04-12T12:42:28.701-05:00  INFO 19812 --- [http-nio-8091-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-12T12:42:28.701-05:00  INFO 19812 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-12T12:42:28.703-05:00  INFO 19812 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-04-12T12:42:28.760-05:00 ERROR 19812 --- [http-nio-8091-exec-1] c.c.inversiones.security.jwt.JwtUtils    : invalid-token: JWT expired at 2024-04-12T15:55:25Z. Current time: 2024-04-12T17:42:28Z, a difference of 6423759 milliseconds.  Allowed clock skew: 0 milliseconds.
+2024-04-12T12:42:32.732-05:00 ERROR 19812 --- [http-nio-8091-exec-3] c.c.inversiones.security.jwt.JwtUtils    : invalid-token: JWT expired at 2024-04-12T15:55:25Z. Current time: 2024-04-12T17:42:32Z, a difference of 6427732 milliseconds.  Allowed clock skew: 0 milliseconds.
+2024-04-12T12:42:43.466-05:00 DEBUG 19812 --- [http-nio-8091-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T12:42:43.477-05:00 DEBUG 19812 --- [http-nio-8091-exec-7] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T12:42:43.557-05:00 DEBUG 19812 --- [http-nio-8091-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T12:42:43.559-05:00 DEBUG 19812 --- [http-nio-8091-exec-7] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T12:42:43.571-05:00  INFO 19812 --- [http-nio-8091-exec-7] c.c.i.s.filters.JwtAuthenticationFilter  : login correctoAuthResponseDTO[username=blandon, token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b2tlbmNvZGUiLCJSb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInN1YiI6ImJsYW5kb24iLCJpYXQiOjE3MTI5NDM3NjMsImV4cCI6MTcxMjk2NTM2M30.F6bnInEz5gL5fC4h1mXq1UNbUJNRpLF_HyrIxRAEMRY, authorities=[ROLE_ADMIN, ROLE_USER]]
+2024-04-12T12:42:52.497-05:00 DEBUG 19812 --- [http-nio-8091-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T12:42:52.499-05:00 DEBUG 19812 --- [http-nio-8091-exec-9] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T12:42:52.525-05:00 DEBUG 19812 --- [http-nio-8091-exec-9] org.hibernate.SQL                        : 
+    select
+        c1_0.id_cliente,
+        c1_0.apellidos,
+        c1_0.cedula,
+        c1_0.celular,
+        c1_0.direccion,
+        c1_0.email,
+        c1_0.fecha_creacion,
+        c1_0.fecha_modificacion,
+        c1_0.nombres,
+        c1_0.observaciones,
+        c1_0.pais,
+        c1_0.usuario_creador,
+        c1_0.usuario_modificador 
+    from
+        cliente c1_0 
+    order by
+        c1_0.id_cliente desc
+2024-04-12T12:42:52.546-05:00  INFO 19812 --- [http-nio-8091-exec-9] c.c.inversiones.cliente.ClienteService   : allClientes [ClienteAllResponseDTO[id=76, nombres=Yo, apellidos=Yo, email=NN, celular=5464676767, pais=Colombia, cedula=1144523695, direccion=cali, observaciones=Nada], ClienteAllResponseDTO[id=75, nombres=Cali, apellidos=Cali, email=NN, celular=3373734337, pais=Colombia, cedula=6467667676767, direccion=cali, observaciones=], ClienteAllResponseDTO[id=74, nombres=angela, apellidos=carabali, email=dsfdsdsfdafdsafdsfdfadsafdsfdfd@e.de, celular=3222350036, pais=colombia, cedula=6685001658, direccion=cra 1e 59-163, observaciones=], ClienteAllResponseDTO[id=69, nombres=Zzz, apellidos=Zzz, email=NN, celular=6666666666, pais=Colombia, cedula=5555555555555555, direccion=zzzz, observaciones=], ClienteAllResponseDTO[id=68, nombres=Hhh, apellidos=Qqq, email=NN, celular=9797676767, pais=Colombia, cedula=3313464646, direccion=jsjsjsj, observaciones=], ClienteAllResponseDTO[id=67, nombres=Aois, apellidos=Jsjsj, email=NN, celular=3313151846, pais=Colombia, cedula=123, direccion=jsjsks, observaciones=Bdbdj], ClienteAllResponseDTO[id=66, nombres=Arledis, apellidos=Dagua, email=NN, celular=3175706085, pais=Colombia, cedula=1130601047, direccion=diagonal 51 10 96 canaveralejo, observaciones=Ruby amigo de viky], ClienteAllResponseDTO[id=65, nombres=Nathalia, apellidos=Guerrero, email=NN, celular=3202967081, pais=Colombia, cedula=1005893588, direccion=CALLE 30#32-17 SAN CARLOS, observaciones=Fiador vivíana dominguez - cc 1107086427 Cel 3127179885 dir calle 117 26 16 ivicali], ClienteAllResponseDTO[id=64, nombres=Hector, apellidos=Velasco, email=NN, celular=3167931800, pais=Colombia, cedula=10496488, direccion=Cr20# 99 C 123 Valle grande, observaciones=Fiadora claudia ortegon], ClienteAllResponseDTO[id=63, nombres=Diana maria, apellidos=Munoz rivas, email=null, celular=3016304354, pais=null, cedula=1144142307, direccion=chiminangos, observaciones=Mujer de juan David], ClienteAllResponseDTO[id=62, nombres=Maria cruz, apellidos=Solis, email=null, celular=3127695945, pais=null, cedula=29211574, direccion=Carrera 26 72f2 18, observaciones=Abuela karen Gonzales], ClienteAllResponseDTO[id=61, nombres=Juan David, apellidos=Idarraga, email=NN, celular=3148606798, pais=Colombia, cedula=1111540485, direccion=Dirección Cra 5C # 70 -65B, observaciones=Fiador jdb], ClienteAllResponseDTO[id=60, nombres=Adriana, apellidos=Escobar, email=NN, celular=3184442627, pais=Colombia, cedula=31959713, direccion=CARRERA 1D2 # 53-53 LOS ANDES, observaciones=OFIR ARRECHEA TEGUE CC 34607432 SANTANDER DE QUILICHAO DIRECCION CARRERA 20 # 4ª-21 Morales CELULAR 3024901557], ClienteAllResponseDTO[id=59, nombres=Stephanie, apellidos=Rendon, email=NN, celular=3167771367, pais=Colombia, cedula=1144185843, direccion=Cra 1a6 #72-47 San Luis, observaciones=Jakie osorio], ClienteAllResponseDTO[id=58, nombres=Luz Stella, apellidos=Salcedo, email=NN, celular=3238695459, pais=Colombia, cedula=67005799, direccion=av 2c norte 39-42 vipasa, observaciones=David salcedo], ClienteAllResponseDTO[id=57, nombres=David, apellidos=Marin Ortiz, email=NN, celular=3186926913, pais=Colombia, cedula=1143874050, direccion=DIRECCION/ CRA 4 ·1-02 SAN ANT, observaciones=FIADORJUAN PABLO ORDOÑEZ PADILLA10059338753165648739CALLE 15 OE ·3-25 BELLAVISTA], ClienteAllResponseDTO[id=56, nombres=Vicky yulieth, apellidos=Franco, email=NN, celular=3162987978, pais=Colombia, cedula=1107075284, direccion=Diagonal 51 oeste # 10 - 105 U, observaciones=Fiadora - ruby], ClienteAllResponseDTO[id=55, nombres=Milena, apellidos=Arismendi, email=NN, celular=3229714386, pais=Colombia, cedula=6673933, direccion=carrera 22  #36 -89 santa fe, observaciones=Ramón segura c.c 94523830 telefono 3155149479 carrera 22  #36 -89 santa fe esposo - senora del trabajo de maría del mar], ClienteAllResponseDTO[id=54, nombres=Claudia, apellidos=Ortegon, email=NN, celular=1316254905, pais=Colombia, cedula=1130667927, direccion=cra 45 # 18-32, observaciones=Daniela yarce], ClienteAllResponseDTO[id=53, nombres=Harold, apellidos=Vivas, email=null, celular=3122600524, pais=null, cedula=4640656, direccion=Cra 1 a 5E #73 a 52 calimio nt, observaciones=Papa de lorenzo - fiador lorenzo], ClienteAllResponseDTO[id=52, nombres=Diego estarlin, apellidos=Yarpaz, email=NN, celular=3145462609, pais=Colombia, cedula=1006011925, direccion=CARRERA 1A NORTE #81- 21, observaciones=Fiadora vanessa Gonzalez], ClienteAllResponseDTO[id=51, nombres=Ana milena, apellidos=Gonzales, email=NN, celular=3162925815, pais=Colombia, cedula=29784912, direccion=calle 7 28-39, observaciones=Sf], ClienteAllResponseDTO[id=50, nombres=Leidy, apellidos=Guerrero, email=NN, celular=3168672475, pais=Colombia, cedula=1144163255, direccion=yumbo, observaciones=Sf], ClienteAllResponseDTO[id=49, nombres=Fabian, apellidos=Medina, email=NN, celular=3166954761, pais=Colombia, cedula=1143945503, direccion=Kra 29 # 39 - 25, observaciones=Sf], ClienteAllResponseDTO[id=48, nombres=Juan manuel, apellidos=Enriquez, email=null, celular=3006722225, pais=null, cedula=1130669503, direccion=la isla, observaciones=Sf ], ClienteAllResponseDTO[id=47, nombres=Karen, apellidos=Gonzales, email=NN, celular=3164167175, pais=Colombia, cedula=1148445049, direccion=cra 27 56a 66, observaciones=Sf], ClienteAllResponseDTO[id=39, nombres=Brian, apellidos=Calero, email=NN, celular=7818347644, pais=Colombia, cedula=1143849576, direccion=inglaterra, observaciones=Sf], ClienteAllResponseDTO[id=38, nombres=Ruby, apellidos=Caicedo, email=NN, celular=3155150777, pais=Colombia, cedula=31915252, direccion=puerto tejada, observaciones=Sf], ClienteAllResponseDTO[id=37, nombres=Santiago, apellidos=Garcia, email=NN, celular=1317809610, pais=Colombia, cedula=1144188641, direccion=medellin, observaciones=Sf], ClienteAllResponseDTO[id=36, nombres=Maria del mar, apellidos=Calero, email=null, celular=3182362717, pais=null, cedula=1005706836, direccion=san Antonio, observaciones=Sf], ClienteAllResponseDTO[id=35, nombres=Fransua, apellidos=Luango, email=NN, celular=4611232921, pais=Colombia, cedula=1107051725, direccion=España, observaciones=Sf], ClienteAllResponseDTO[id=34, nombres=Aranza, apellidos=Calero, email=NN, celular=3177557782, pais=Colombia, cedula=1107528451, direccion=san Antonio, observaciones=Sf], ClienteAllResponseDTO[id=33, nombres=Diana, apellidos=Flor, email=NN, celular=3148321761, pais=Colombia, cedula=1107509524, direccion=cra 26d 124-10, observaciones=], ClienteAllResponseDTO[id=32, nombres=Hermes, apellidos=Taibel, email=NN, celular=3137045817, pais=Colombia, cedula=1130642885, direccion=calle 15 37 68 colibri, observaciones=Poblado campestre - Fiador -  es el papá datos en el correo], ClienteAllResponseDTO[id=31, nombres=Idia, apellidos=Castillo, email=NN, celular=3043919297, pais=Colombia, cedula=59675494, direccion=cra 27 5b-10, observaciones=SF], ClienteAllResponseDTO[id=30, nombres=Consuelo, apellidos=Vinasco, email=NN, celular=3172196114, pais=Colombia, cedula=31930954, direccion=calle 15a 74 30 brisas limonar, observaciones=], ClienteAllResponseDTO[id=29, nombres=Juan david, apellidos=Buitrago, email=NN, celular=3164903048, pais=Colombia, cedula=1144157641, direccion=cra 1d 62 04 chimi, observaciones=Sf], ClienteAllResponseDTO[id=28, nombres=David, apellidos=Salcedo, email=NN, celular=3205510345, pais=Colombia, cedula=6229155, direccion=calle 55 1 94 bloque 7 apt 404, observaciones=Sf], ClienteAllResponseDTO[id=27, nombres=Lorenzo, apellidos=Vivas, email=null, celular=3012915079, pais=null, cedula=1006055175, direccion=cra 1 a9 73a 65, observaciones=Fiador - milena arismendi  - cc 6673933- cel  3229714386 dir CRA 7h #70-35], ClienteAllResponseDTO[id=26, nombres=Hector, apellidos=Graterol, email=NN, celular=3128705319, pais=Colombia, cedula=3857677, direccion=cra 26 33f 71 santa fe, observaciones=Fiador - maría del mar], ClienteAllResponseDTO[id=25, nombres=Lessdy, apellidos=Hernandez, email=NN, celular=3158288824, pais=Colombia, cedula=1143936925, direccion=cra 26 g10 73b 45 marroquí 2, observaciones=Sf], ClienteAllResponseDTO[id=24, nombres=Marcel, apellidos=Hurtado, email=NN, celular=3108383025, pais=Colombia, cedula=6228420, direccion=calle 46 10 09, observaciones=Sf], ClienteAllResponseDTO[id=23, nombres=Daniela, apellidos=Yarce, email=NN, celular=3002083821, pais=Colombia, cedula=1144053206, direccion=calle 18 44a 10, observaciones=En la usa], ClienteAllResponseDTO[id=22, nombres=Wendy, apellidos=Gonzalez, email=null, celular=3117396187, pais=null, cedula=1111805885, direccion=cra 26 56a 66 n floresta, observaciones=Hermana de karen clinica colombia], ClienteAllResponseDTO[id=21, nombres=Natalia, apellidos=Moreno, email=NN, celular=3112652348, pais=Colombia, cedula=1143989341, direccion=cra 26g5 86-16 san marcos, observaciones=Fiador - jorge moreno - cc 1130625464 - cel 3152573349 - cra 7t bis 72 37], ClienteAllResponseDTO[id=20, nombres=Jessica, apellidos=Zambrano, email=NN, celular=3106341121, pais=Colombia, cedula=1107070727, direccion=cra 26g12 73b 59 marroco, observaciones=Esposa de David salcedo], ClienteAllResponseDTO[id=19, nombres=Lisbeth, apellidos=Gonzalez, email=NN, celular=3167564377, pais=Colombia, cedula=31305143, direccion=calle67n 1a 11-15, observaciones=Sf], ClienteAllResponseDTO[id=18, nombres=Vivian, apellidos=Vallecilla, email=NN, celular=3164280120, pais=Colombia, cedula=38644147, direccion=no registra, observaciones=No registra], ClienteAllResponseDTO[id=17, nombres=Junior, apellidos=Acosta, email=NN, celular=3225981503, pais=Colombia, cedula=1143987657, direccion=cra 26g 86 18, observaciones=], ClienteAllResponseDTO[id=16, nombres=Zully, apellidos=Vargas, email=NN, celular=3122070802, pais=Colombia, cedula=26386421, direccion=calle 15 22a 16, observaciones=Moroso reee], ClienteAllResponseDTO[id=15, nombres=Roselly, apellidos=Mosquera, email=NN, celular=3104530365, pais=Colombia, cedula=66960509, direccion=vive donde la suegra, observaciones=Se cambio de casa y no se sabe donde vive], ClienteAllResponseDTO[id=14, nombres=Ricardo, apellidos=Valencia, email=NN, celular=3206743423, pais=Colombia, cedula=94402551, direccion=calle 61b 1hbis 40, observaciones=Esposo roselly -], ClienteAllResponseDTO[id=13, nombres=Eynar camilo, apellidos=David, email=NN, celular=3162851808, pais=Colombia, cedula=1085276989, direccion=cra 22 12 95, observaciones=], ClienteAllResponseDTO[id=12, nombres=Katherine, apellidos=Viafara, email=null, celular=3117676893, pais=null, cedula=67028776, direccion=cra 93 42 93, observaciones=], ClienteAllResponseDTO[id=11, nombres=Jakelin, apellidos=Osorio, email=NN, celular=3187402940, pais=Colombia, cedula=29582969, direccion=cra 36 5b1 36 apto 204, observaciones=Edif america 80 barrio san Fernando - Fiadora - leidy tatiana cuadros - cc 1007694463 - celular 3168566915 - dir cra 65 13b-125 bosques del limonar], ClienteAllResponseDTO[id=10, nombres=Jaime, apellidos=Betancourt, email=NN, celular=3156164561, pais=Colombia, cedula=1144064081, direccion=calle 12b 40a 24, observaciones=Fiadora Andrea londono-cc 1115183040 - celular 3113793867 - dir calle 14 37a 49 torre d 301 condominio san diego cristobal colon], ClienteAllResponseDTO[id=9, nombres=Prueba, apellidos=Prueba, email=null, celular=3111111111, pais=null, cedula=1, direccion=compartir es vivir , observaciones=Prueba], ClienteAllResponseDTO[id=8, nombres=Ronaldo, apellidos=Valencia, email=NN, celular=3206876546, pais=Colombia, cedula=1107044344, direccion=cra 26p 54 29, observaciones=Cunado de karen gonzalez - SF], ClienteAllResponseDTO[id=7, nombres=Erika, apellidos=Nunez, email=NN, celular=3148460489, pais=Colombia, cedula=29113754, direccion=cra 1a9 73a 65, observaciones=Hermana lorenzo - Fiadora maría de los angeles - 1006050371 - cel 3103908434 - dir cra 1a9 73a 65], ClienteAllResponseDTO[id=6, nombres=Julieth, apellidos=Patino, email=null, celular=3164085216, pais=null, cedula=1144159377, direccion=calle 35 30 25 leon 13, observaciones=Fiadora karen gonzalez], ClienteAllResponseDTO[id=5, nombres=Gaby vanessa, apellidos=Gonzalez castro, email=NN, celular=3163760956, pais=Colombia, cedula=1010062500, direccion=calle 57 37 26 vallado, observaciones=Amiga karen y julieth - Fiadora julieth patino], ClienteAllResponseDTO[id=4, nombres=Luz dary, apellidos=Botero, email=null, celular=3172421575, pais=null, cedula=31528564, direccion=calle 67 5 37, observaciones=Barrio brisas del guabito - Fiadora julieth patino - mama julieth patino], ClienteAllResponseDTO[id=3, nombres=Jean, apellidos=Sepulveda, email=null, celular=3242782517, pais=null, cedula=1144197339, direccion=calle 35 30 27, observaciones=Hermano julieth patino - Fiadora - Julieth y mama de julieth], ClienteAllResponseDTO[id=2, nombres=Felipe , apellidos=Rojas, email=null, celular=3229162350, pais=null, cedula=1151949825, direccion=cra 1e #59-163, observaciones=SF], ClienteAllResponseDTO[id=1, nombres=Angela, apellidos=Carabali, email=null, celular=3126081880, pais=null, cedula=66850016, direccion=calle 54b 49d 05 piso 3, observaciones=Barrio cordoba reservado - SF]]
+2024-04-12T12:42:58.285-05:00 DEBUG 19812 --- [http-nio-8091-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T12:42:58.286-05:00 DEBUG 19812 --- [http-nio-8091-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T12:42:58.300-05:00 DEBUG 19812 --- [http-nio-8091-exec-10] org.hibernate.SQL                        : 
+    select
+        c1_0.id_cliente,
+        c1_0.apellidos,
+        c1_0.cedula,
+        c1_0.celular,
+        c1_0.direccion,
+        c1_0.email,
+        c1_0.fecha_creacion,
+        c1_0.fecha_modificacion,
+        c1_0.nombres,
+        c1_0.observaciones,
+        c1_0.pais,
+        c1_0.usuario_creador,
+        c1_0.usuario_modificador 
+    from
+        cliente c1_0 
+    where
+        c1_0.cedula=?
+2024-04-12T12:42:58.303-05:00 DEBUG 19812 --- [http-nio-8091-exec-10] org.hibernate.SQL                        : 
+    select
+        l1_0.id_cliente,
+        l1_0.id_credito,
+        l1_0.fecha_credito,
+        i1_0.id_estado_credito,
+        i1_0.descripcion,
+        m1_0.id_modalidad,
+        m1_0.description,
+        l1_0.saldo_credito,
+        l1_0.usuario_creador_credito,
+        l1_0.valor_credito 
+    from
+        credito l1_0 
+    left join
+        estado_credito i1_0 
+            on i1_0.id_estado_credito=l1_0.id_estado_credito 
+    left join
+        modalidad m1_0 
+            on m1_0.id_modalidad=l1_0.id_modalidad 
+    where
+        l1_0.id_cliente=?
+2024-04-12T12:42:58.312-05:00  INFO 19812 --- [http-nio-8091-exec-10] c.c.inversiones.cliente.ClienteService   : consultarCliente ClienteResponseDTO[id=9, nombres=Prueba, apellidos=Prueba, celular=3111111111, cedula=1, direccion=compartir es vivir , observaciones=Prueba, listaCreditos=[CreditoResponseDTO[id=104, fechaCredito=Sun Dec 31 19:00:00 GMT-05:00 2023], CreditoResponseDTO[id=126, fechaCredito=Tue Feb 27 19:00:00 GMT-05:00 2024]]]
+2024-04-12T12:43:02.347-05:00 DEBUG 19812 --- [http-nio-8091-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-04-12T12:43:02.350-05:00 DEBUG 19812 --- [http-nio-8091-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2024-04-12T12:43:02.354-05:00 DEBUG 19812 --- [http-nio-8091-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.id_cliente,
+        c1_0.apellidos,
+        c1_0.cedula,
+        c1_0.celular,
+        c1_0.direccion,
+        c1_0.email,
+        c1_0.fecha_creacion,
+        c1_0.fecha_modificacion,
+        c1_0.nombres,
+        c1_0.observaciones,
+        c1_0.pais,
+        c1_0.usuario_creador,
+        c1_0.usuario_modificador 
+    from
+        cliente c1_0 
+    where
+        c1_0.cedula=?
+2024-04-12T12:43:02.359-05:00  WARN 19812 --- [http-nio-8091-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.cblandon.inversiones.excepciones.NoDataException]
+2024-04-12T12:45:51.675-05:00  INFO 19812 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2024-04-12T12:45:51.683-05:00  INFO 19812 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:45:51.684-05:00  INFO 19812 --- [Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-04-12T12:45:51.686-05:00  WARN 19812 --- [Thread-5] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T12:45:51.691-05:00  INFO 19812 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:45:51.693-05:00  INFO 19812 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-12T12:45:51.698-05:00  INFO 19812 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-12T12:45:51.759-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 19812 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:45:51.759-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:45:51.960-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:45:51.988-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:45:52.097-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:45:52.097-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:45:52.098-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:45:52.113-05:00  INFO 19812 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:45:52.113-05:00  INFO 19812 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 352 ms
+2024-04-12T12:45:52.152-05:00  INFO 19812 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:45:52.157-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-04-12T12:45:52.169-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12f9602f
+2024-04-12T12:45:52.170-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-04-12T12:45:52.170-05:00  INFO 19812 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:45:52.301-05:00  INFO 19812 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:45:52.301-05:00  INFO 19812 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:45:52.502-05:00 DEBUG 19812 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:45:52.564-05:00  WARN 19812 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:45:52.674-05:00  INFO 19812 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a2ed3f3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@51020ca6, org.springframework.security.web.context.SecurityContextHolderFilter@d980d16, org.springframework.security.web.header.HeaderWriterFilter@623bc91c, org.springframework.web.filter.CorsFilter@fce850f, org.springframework.security.web.authentication.logout.LogoutFilter@30fb779f, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@5c5872b, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@3ee0b1b7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2bd27171, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@179d2e3e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@729d5cd3, org.springframework.security.web.session.SessionManagementFilter@79326069, org.springframework.security.web.access.ExceptionTranslationFilter@37a239c5, org.springframework.security.web.access.intercept.AuthorizationFilter@7608f2eb]
+2024-04-12T12:45:52.770-05:00  INFO 19812 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:45:52.780-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:45:52.784-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 1.042 seconds (process running for 219.857)
+2024-04-12T12:45:52.785-05:00  INFO 19812 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-04-12T12:45:54.227-05:00  INFO 19812 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2024-04-12T12:45:54.232-05:00  INFO 19812 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-04-12T12:45:54.233-05:00  WARN 19812 --- [Thread-7] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.9/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T12:45:54.234-05:00  WARN 19812 --- [Thread-7] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-2 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.9/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.9/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.9/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.9/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1061)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.9/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.9/java.lang.Thread.run(Thread.java:842)
+2024-04-12T12:45:54.237-05:00  INFO 19812 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:45:54.237-05:00  INFO 19812 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-04-12T12:45:54.239-05:00  INFO 19812 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-04-12T12:45:54.292-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17.0.9 with PID 19812 (D:\Spring\ProjectoInversion\target\classes started by Playtech in D:\Spring\ProjectoInversion)
+2024-04-12T12:45:54.292-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-12T12:45:54.454-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-12T12:45:54.480-05:00  INFO 19812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 6 JPA repository interfaces.
+2024-04-12T12:45:54.557-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-04-12T12:45:54.557-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-12T12:45:54.557-05:00  INFO 19812 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-04-12T12:45:54.571-05:00  INFO 19812 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-12T12:45:54.571-05:00  INFO 19812 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 278 ms
+2024-04-12T12:45:54.603-05:00  INFO 19812 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-12T12:45:54.608-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-04-12T12:45:54.617-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1e188dbf
+2024-04-12T12:45:54.617-05:00  INFO 19812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-04-12T12:45:54.618-05:00  INFO 19812 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-04-12T12:45:54.738-05:00  INFO 19812 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-12T12:45:54.738-05:00  INFO 19812 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-12T12:45:54.912-05:00 DEBUG 19812 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-04-12T12:45:54.968-05:00  WARN 19812 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-12T12:45:55.070-05:00  INFO 19812 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6abcda34, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@23fe2230, org.springframework.security.web.context.SecurityContextHolderFilter@56cb0ddc, org.springframework.security.web.header.HeaderWriterFilter@14ac771b, org.springframework.web.filter.CorsFilter@3723f93a, org.springframework.security.web.authentication.logout.LogoutFilter@1dba863d, com.cblandon.inversiones.security.filters.JwtAuthorizationFilter@6247b492, com.cblandon.inversiones.security.filters.JwtAuthenticationFilter@5c4f8238, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3d8c8abb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4a6f26be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@502e9eff, org.springframework.security.web.session.SessionManagementFilter@71c51c59, org.springframework.security.web.access.ExceptionTranslationFilter@4d64c90f, org.springframework.security.web.access.intercept.AuthorizationFilter@77d39a9c]
+2024-04-12T12:45:55.155-05:00  INFO 19812 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-12T12:45:55.169-05:00  INFO 19812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-04-12T12:45:55.172-05:00  INFO 19812 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 0.895 seconds (process running for 222.245)
+2024-04-12T12:45:55.173-05:00  INFO 19812 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

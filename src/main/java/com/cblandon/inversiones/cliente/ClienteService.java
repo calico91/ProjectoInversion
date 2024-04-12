@@ -5,10 +5,10 @@ import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.request_exception.RequestException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.utils.Constantes;
-import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import com.cblandon.inversiones.utils.UtilsMetodos;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class ClienteService {
 
         if (clienteRepository.findByCedula(registrarClienteDTO.cedula()).isPresent()) {
             throw new RequestException(
-                    RequestExceptionMensajes.DOCUMENTO_DUPLICADO);
+                    MensajesErrorEnum.DOCUMENTO_DUPLICADO);
         }
         try {
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
@@ -74,7 +74,7 @@ public class ClienteService {
     public ClienteResponseDTO consultarCliente(String cedula) {
 
         Cliente clienteBD = clienteRepository.findByCedula(cedula).orElseThrow(
-                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+                () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         try {
 
@@ -96,7 +96,7 @@ public class ClienteService {
 
         log.info("actualizarCliente ".concat(registrarClienteDTO.toString()));
         Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
-                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+                () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         try {
 
@@ -119,7 +119,7 @@ public class ClienteService {
     @Transactional
     public void deleteCliente(int idCliente) {
         if (clienteRepository.findById(idCliente).isEmpty()) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
+            throw new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS);
         }
         clienteRepository.deleteById(idCliente);
 
