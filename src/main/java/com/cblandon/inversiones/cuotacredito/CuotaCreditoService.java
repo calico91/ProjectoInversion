@@ -6,11 +6,11 @@ import com.cblandon.inversiones.credito.CreditoRepository;
 import com.cblandon.inversiones.cuotacredito.dto.*;
 import com.cblandon.inversiones.estado_credito.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.request_exception.RequestException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
-import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,8 +45,7 @@ public class CuotaCreditoService {
         log.info(pagarCuotaRequestDTO.toString());
 
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
-                .orElseThrow(() -> new NoDataException(
-                        Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+                .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         validarEstadoCuota(cuotaCreditoDB.getValorAbonado());
 
@@ -150,7 +149,7 @@ public class CuotaCreditoService {
                 log.info("entre a saldar credito");
                 Credito credito = creditoRepository.findById(cuotaCancelada.getCredito().getId())
                         .orElseThrow(() -> new NoDataException(
-                                Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.NOT_FOUND.value()));
+                                MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
                 credito.setIdEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_PAGADO, null));
                 creditoRepository.save(credito);
@@ -307,7 +306,7 @@ public class CuotaCreditoService {
                     Constantes.MODALIDAD_MENSUAL) ? 30 : 15;
 
             if (ultimaCuotaGenerada.getFechaCuota().isAfter(fechaNueva)) {
-                throw new RequestException(RequestExceptionMensajes.ERROR_FECHA_NUEVA);
+                throw new RequestException(MensajesErrorEnum.ERROR_FECHA_NUEVA);
             }
 
             double interesDias = (calcularInteresCredito(
@@ -507,7 +506,7 @@ public class CuotaCreditoService {
 
         if ((saldoCredito + interesActual) < (valorCredito / numeroCuotas)) {
 
-            throw new RequestException(RequestExceptionMensajes.NO_PUEDE_PAGAR_CUOTA_NORMAL);
+            throw new RequestException(MensajesErrorEnum.NO_PUEDE_PAGAR_CUOTA_NORMAL);
         }
     }
 
@@ -547,7 +546,7 @@ public class CuotaCreditoService {
 
     private void validarEstadoCuota(Double valorAbono) {
         if (valorAbono != null) {
-            throw new RequestException(RequestExceptionMensajes.CUOTA_YA_PAGADA);
+            throw new RequestException(MensajesErrorEnum.CUOTA_YA_PAGADA);
         }
     }
 

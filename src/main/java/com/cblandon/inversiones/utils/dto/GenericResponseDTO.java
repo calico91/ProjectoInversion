@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.utils.dto;
 
 import com.cblandon.inversiones.utils.Constantes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,13 @@ public class GenericResponseDTO {
         return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
     }
 
-    public static ResponseEntity<GenericResponseDTO> genericError(String mensajeError, HttpStatus httpStatus) {
+    public static ResponseEntity<GenericResponseDTO> genericError(
+            MensajesErrorEnum mensajeError, HttpStatus httpStatus) {
 
         GenericResponseDTO genericErrorDto = new GenericResponseDTO();
-        genericErrorDto.setData("error");
+        genericErrorDto.setData(mensajeError.getCodigo());
         genericErrorDto.setStatus(httpStatus.value());
-        genericErrorDto.setMessage(mensajeError);
+        genericErrorDto.setMessage(mensajeError.getMessage());
 
         return new ResponseEntity<>(genericErrorDto, httpStatus);
     }
@@ -39,6 +41,17 @@ public class GenericResponseDTO {
         genericResponseDto.setData(data);
 
         return genericResponseDto;
+    }
+
+    public static ResponseEntity<GenericResponseDTO> genericErrorString(
+            String mensajeError, HttpStatus httpStatus) {
+
+        GenericResponseDTO genericErrorDto = new GenericResponseDTO();
+        genericErrorDto.setData("E500");
+        genericErrorDto.setStatus(httpStatus.value());
+        genericErrorDto.setMessage(mensajeError);
+
+        return new ResponseEntity<>(genericErrorDto, httpStatus);
     }
 
 

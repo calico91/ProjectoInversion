@@ -16,7 +16,7 @@ import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClientesCuotaCreditoDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
-import com.cblandon.inversiones.excepciones.request_exception.RequestException;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.mapper.Mapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
