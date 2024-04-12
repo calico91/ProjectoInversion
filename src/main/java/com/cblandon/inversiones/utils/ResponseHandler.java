@@ -7,15 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseHandler {
-    public ResponseEntity<Object> generateResponse(final String message, final HttpStatus httpStatus,
-                                                   final Object response) {
-        final Map<String, Object> map = new HashMap<>();
-        map.put("message", message);
-        map.put("status", httpStatus.value());
-        map.put("data", response);
-        return new ResponseEntity<>(map, httpStatus);
-    }public ResponseEntity<Object> generateResponseError(final String message, final HttpStatus httpStatus,
-                                                   final Object response) {
+
+
+    public ResponseEntity<Object> generateResponseError(final String message, final HttpStatus httpStatus,
+                                                        final Object response) {
         final Map<String, Object> map = new HashMap<>();
         map.put("message", message);
         map.put("status", httpStatus.value());

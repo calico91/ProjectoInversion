@@ -6,17 +6,14 @@ import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.Roles;
 import com.cblandon.inversiones.roles.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
-import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
-import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
-import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
-import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
+import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.utils.Constantes;
-import com.cblandon.inversiones.utils.GenericMessageDTO;
 import com.cblandon.inversiones.excepciones.request_exception.RequestExceptionMensajes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +38,7 @@ public class UserService {
     final JwtUtils jwtUtils;
 
 
-    public GenericMessageDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
+    public UserEntity register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
 
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
 
@@ -49,7 +46,6 @@ public class UserService {
             throw new RequestException(RequestExceptionMensajes.USUARIO_REGISTRADO);
         }
 
-        Map<String, String> mensaje = new HashMap<>();
 
         try {
             UserEntity user = UserEntity.builder()
@@ -69,11 +65,8 @@ public class UserService {
 
             user.setRoles(authorities);
 
-            userRepository.save(user);
-            mensaje.put("message", Constantes.USUARIO_CREADO);
-            return GenericMessageDTO.builder()
-                    .message(mensaje)
-                    .build();
+            return userRepository.save(user);
+
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
         }
@@ -108,33 +101,33 @@ public class UserService {
 
     }
 
-    public GenericMessageDTO actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
+    public UserEntity actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
 
-        Optional<UserEntity> usuarioBD = userRepository.findByUsername(username);
-        Map<String, String> mensaje = new HashMap<>();
-        if (usuarioBD.isEmpty()) {
-            throw new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value());
+        UserEntity usuarioBD = userRepository.findByUsername(username).orElseThrow(
+                () -> new NoDataException(Constantes.DATOS_NO_ENCONTRADOS, HttpStatus.BAD_REQUEST.value()));
+        try {
+
+            UserEntity usuarioModificado = UserEntity.builder()
+                    .lastname(registrarClienteDTO.getLastname())
+                    .firstname(registrarClienteDTO.getFirstname())
+                    .username(registrarClienteDTO.getUsername())
+                    .country(registrarClienteDTO.getCountry())
+                    .email(registrarClienteDTO.getEmail())
+                    .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
+                    .roles(registrarClienteDTO.getRoles().stream()
+                            .map(role -> Roles.builder()
+                                    .name(Role.valueOf(role))
+                                    .build())
+                            .collect(Collectors.toSet()))
+                    .build();
+
+            usuarioModificado.setId(usuarioBD.getId());
+            return userRepository.save(usuarioModificado);
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
         }
-        UserEntity usuarioModificado = UserEntity.builder()
-                .lastname(registrarClienteDTO.getLastname())
-                .firstname(registrarClienteDTO.getFirstname())
-                .username(registrarClienteDTO.getUsername())
-                .country(registrarClienteDTO.getCountry())
-                .email(registrarClienteDTO.getEmail())
-                .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
-                .roles(registrarClienteDTO.getRoles().stream()
-                        .map(role -> Roles.builder()
-                                .name(Role.valueOf(role))
-                                .build())
-                        .collect(Collectors.toSet()))
-                .build();
 
-        usuarioModificado.setId(usuarioBD.get().getId());
-        userRepository.save(usuarioModificado);
-        mensaje.put("message", Constantes.USUARIO_MODIFICADO);
-        return GenericMessageDTO.builder()
-                .message(mensaje)
-                .build();
 
     }
 
@@ -149,25 +142,25 @@ public class UserService {
     }
 
 
-    public Map<String, Object> authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+    public AuthResponseDTO authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
 
         UserEntity user = userRepository.findByUsername(
                 authBiometriaRequestDTO.username()).orElseThrow(() ->
-                new UsernameNotFoundException("Autenticacion biometrica fallida"));
+                new UsernameNotFoundException(Constantes.AUTH_BIOMETRICA_FALLIDA));
 
         if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), user.getIdMovil())) {
-            throw new UsernameNotFoundException("Autenticacion biometrica fallida");
+            throw new UsernameNotFoundException(Constantes.AUTH_BIOMETRICA_FALLIDA);
         }
         String token = jwtUtils.generateAccesToken(user.getUsername());
+        User userDetail = (User) userDetailsService.loadUserByUsername(authBiometriaRequestDTO.username());
+        userDetail.eraseCredentials();
 
-        Map<String, Object> httpResponse = new HashMap<>();
-        httpResponse.put("token", token);
-        httpResponse.put("message", "Autenticacion Correcta");
-        httpResponse.put("userDetails", userDetailsService.loadUserByUsername(authBiometriaRequestDTO.username()));
-        httpResponse.put("status", HttpStatus.OK.value());
+        return AuthResponseDTO.builder()
+                .username(userDetail.getUsername())
+                .token(token)
+                .authorities(userDetail.getAuthorities())
+                .build();
 
-
-        return httpResponse;
     }
 
     /**

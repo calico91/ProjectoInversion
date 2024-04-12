@@ -3,17 +3,13 @@ package com.cblandon.inversiones.user;
 import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
 import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
-import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
-import com.cblandon.inversiones.utils.GenericMessageDTO;
-import com.cblandon.inversiones.utils.ResponseHandler;
+import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -25,8 +21,8 @@ public class UserController {
 
 
     @PostMapping(value = "register")
-    public ResponseEntity<GenericMessageDTO> register(@RequestBody RegisterUserRequestDTO request) {
-        return ResponseEntity.ok(userService.register(request));
+    public ResponseEntity<GenericResponseDTO> register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+        return GenericResponseDTO.genericResponse(userService.register(registerUserRequestDTO));
     }
 
     @GetMapping("pruebaConexion")
@@ -36,35 +32,35 @@ public class UserController {
 
     @GetMapping(value = "consultarUsuarios")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<List<UsuariosResponseDTO>> consultarUsuarios() {
+    public ResponseEntity<GenericResponseDTO> consultarUsuarios() {
 
-        return ResponseEntity.ok(userService.consultarUsuarios());
+        return GenericResponseDTO.genericResponse(userService.consultarUsuarios());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/actualizarUsuario/{username}")
-    public ResponseEntity<GenericMessageDTO> actualizarUsuario(@PathVariable String username,
-                                                               @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        return ResponseEntity.ok().body(userService.actualizarUsuario(username, registerUserRequestDTO));
+    public ResponseEntity<GenericResponseDTO> actualizarUsuario(
+            @PathVariable String username,
+            @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+        return GenericResponseDTO.genericResponse(userService.actualizarUsuario(username, registerUserRequestDTO));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("getUser")
-    public ResponseEntity<Object> getUser(@RequestHeader("Authorization") final String token) {
-        return new ResponseHandler().generateResponse("successful", HttpStatus.OK, userService.getUserDetails(token));
+    public ResponseEntity<GenericResponseDTO> getUser(@RequestHeader("Authorization") final String token) {
+        return GenericResponseDTO.genericResponse(userService.getUserDetails(token));
     }
 
     @PostMapping("auth-biometrica")
-    public ResponseEntity<Object> authBiometrica(@RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+    public ResponseEntity<GenericResponseDTO> authBiometrica(
+            @RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
 
-
-        return new ResponseEntity<>(userService.authBiometrica(authBiometriaRequestDTO), HttpStatus.OK);
+        return GenericResponseDTO.genericResponse(userService.authBiometrica(authBiometriaRequestDTO));
     }
 
     @PostMapping("vincular-dispositivo")
-    public ResponseEntity<Object> vincularDispositivo(@RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
-        return new ResponseHandler().generateResponse(
-                "successful", HttpStatus.OK, userService.vincularDispositivo(registrarDispositivoDTO));
+    public ResponseEntity<GenericResponseDTO> vincularDispositivo(
+            @RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
+        return GenericResponseDTO.genericResponse(userService.vincularDispositivo(registrarDispositivoDTO));
 
     }
 }

@@ -10,7 +10,7 @@ public class ValidDocumentValidator implements ConstraintValidator<ValidDocument
 
         if (!value.matches("^\\d+$")) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Numero de cedula incorrecto").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("incorrecto").addConstraintViolation();
             return false;
         }
 
