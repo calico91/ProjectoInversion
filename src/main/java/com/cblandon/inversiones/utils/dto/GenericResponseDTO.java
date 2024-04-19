@@ -54,5 +54,4 @@ public class GenericResponseDTO {
         return new ResponseEntity<>(genericErrorDto, httpStatus);
     }
 
-
 }

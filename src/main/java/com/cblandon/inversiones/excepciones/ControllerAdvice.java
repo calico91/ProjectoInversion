@@ -52,6 +52,7 @@ public class ControllerAdvice {
                 "Se require parametro ".concat(ex.getVariableName()), HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ResponseEntity<GenericResponseDTO> illegalArgumentException() {
 
