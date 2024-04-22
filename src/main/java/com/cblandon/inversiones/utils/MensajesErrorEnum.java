@@ -18,8 +18,11 @@ public enum MensajesErrorEnum {
     TIPO_DATO_INCORRECTO("El tipo de dato enviado es incorrecto", "E9"),
     ERROR_PETICION("Error con la informacion suministrada", "E10"),
     DATOS_NO_ENCONTRADOS("No se encontraron resultados con los parametros de busqueda ingresados", "E11"),
-    TOKEN_CADUCO("Token caduco, inicie sesion de nuevo", "E12");
-
+    TOKEN_CADUCO("Token caduco, inicie sesion de nuevo", "E12"),
+    TOKEN_INCORRECTO("Token invalido", "E13"),
+    ERROR_NO_CONTROLADO("Error no controlado", "E14"),
+    AUTENTICACION_BIOMETRICA_FALLIDA("Autenticacion biometrica fallida", "E15"),
+    ERROR_AUTENTICACION("Usuario o contraseña invalidos", "E15");
 
     private final String message;
     private final String codigo;

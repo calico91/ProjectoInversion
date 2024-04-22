@@ -33,25 +33,5 @@ public class GenericResponseDTO {
         return new ResponseEntity<>(genericErrorDto, httpStatus);
     }
 
-    public static GenericResponseDTO genericResponseLogin(Object data) {
-
-        GenericResponseDTO genericResponseDto = new GenericResponseDTO();
-        genericResponseDto.setStatus(HttpStatus.OK.value());
-        genericResponseDto.setMessage(Constantes.SUCCESSFUL);
-        genericResponseDto.setData(data);
-
-        return genericResponseDto;
-    }
-
-    public static ResponseEntity<GenericResponseDTO> genericErrorString(
-            String mensajeError, HttpStatus httpStatus) {
-
-        GenericResponseDTO genericErrorDto = new GenericResponseDTO();
-        genericErrorDto.setData("E500");
-        genericErrorDto.setStatus(httpStatus.value());
-        genericErrorDto.setMessage(mensajeError);
-
-        return new ResponseEntity<>(genericErrorDto, httpStatus);
-    }
 
 }

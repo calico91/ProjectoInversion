@@ -3,8 +3,8 @@ package com.cblandon.inversiones.cliente.Repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-import com.cblandon.inversiones.cliente.Cliente;
-import com.cblandon.inversiones.cliente.ClienteRepository;
+import com.cblandon.inversiones.cliente.entity.Cliente;
+import com.cblandon.inversiones.cliente.repository.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

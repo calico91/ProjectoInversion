@@ -1,7 +1,7 @@
 package com.cblandon.inversiones.security.filters;
 
 import com.cblandon.inversiones.security.jwt.JwtUtils;
-import com.cblandon.inversiones.user.UserEntity;
+import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.dto.AuthResponseDTO;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
+/*
     private final JwtUtils jwtUtils;
 
 
@@ -95,5 +95,5 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().flush();
-    }
+    }*/
 }

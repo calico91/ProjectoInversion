@@ -1,93 +1,75 @@
 package com.cblandon.inversiones.security.jwt;
 
-import com.cblandon.inversiones.user.UserDetailsServiceImpl;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import lombok.extern.slf4j.Slf4j;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
+
 import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.List;
-import java.util.function.Function;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
-@Slf4j
 public class JwtUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
     @Value("${security.jwt.user.generator}")
     private String usuarioGenerador;
-    final UserDetailsServiceImpl userDetailsService;
 
-    public JwtUtils(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    // Generar token de acceso
-    public String generateAccesToken(String username) {
-        UserDetails user = userDetailsService.loadUserByUsername(username);
+    public String createToken(Authentication authentication) {
+        Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
-        List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+        Instant expiration = issuedAt.plus(10, ChronoUnit.SECONDS);
 
-        return Jwts.builder()
-                .setIssuer(usuarioGenerador)
-                .claim("Roles", roles)
-                .setSubject(username)
-                .setIssuedAt(Date.from(issuedAt))
-                .setExpiration(Date.from(expiration))
-                .signWith(getSignatureKey(), SignatureAlgorithm.HS256)
-                .compact();
+        String username = authentication.getPrincipal().toString();
+        String authorities = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        return JWT.create()
+                .withSubject(username)
+                .withClaim("authorities", authorities)
+                .withIssuedAt(issuedAt)
+                .withExpiresAt(expiration)
+                .withJWTId(UUID.randomUUID().toString())
+                .withNotBefore(new Date(System.currentTimeMillis()))
+                .sign(algorithm);
+
     }
 
-    // Validar el token de acceso
-    public boolean isTokenValid(String token) {
+    public DecodedJWT validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(getSignatureKey())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-            return true;
-        } catch (Exception e) {
-            log.error("invalid-token: ".concat(e.getMessage()));
-            return false;
+            Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build();
+
+            return verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            throw new JWTVerificationException("Token invalid, not Authorized");
         }
     }
 
-    // Obtener el username del token
-    public String getUsernameFromToken(String token) {
-        return getClaim(token, Claims::getSubject);
+    public String extractUsername(DecodedJWT decodedJWT) {
+        return decodedJWT.getSubject();
     }
 
-    // Obtener un solo claim
-    public <T> T getClaim(String token, Function<Claims, T> claimsTFunction) {
-        Claims claims = extractAllClaims(token);
-        return claimsTFunction.apply(claims);
+    public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {
+        return decodedJWT.getClaim(claimName);
     }
 
-    // Obtener todos los claims del token
-    public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignatureKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    // Obtener firma del token
-    public Key getSignatureKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
 }

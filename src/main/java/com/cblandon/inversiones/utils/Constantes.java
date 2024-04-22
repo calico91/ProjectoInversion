@@ -22,6 +22,6 @@ public class Constantes {
     public static final String CREDITO_ANULADO_INSERT = "Anulado";
     public static final int ID_CREDITO_ACTIVO = 1;
     public static final int ID_CREDITO_PAGADO = 2;
-    public static final String AUTH_BIOMETRICA_FALLIDA = "Autenticacion biometrica fallida";
+
 
 }
