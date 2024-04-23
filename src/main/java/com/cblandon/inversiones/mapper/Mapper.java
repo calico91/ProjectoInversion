@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.mapper;
 
-import com.cblandon.inversiones.cliente.Cliente;
+import com.cblandon.inversiones.cliente.entity.Cliente;
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.RegistrarClienteDTO;

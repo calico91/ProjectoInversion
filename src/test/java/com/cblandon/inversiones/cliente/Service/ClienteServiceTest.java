@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
-import com.cblandon.inversiones.cliente.Cliente;
-import com.cblandon.inversiones.cliente.ClienteRepository;
-import com.cblandon.inversiones.cliente.ClienteService;
+import com.cblandon.inversiones.cliente.entity.Cliente;
+import com.cblandon.inversiones.cliente.repository.ClienteRepository;
+import com.cblandon.inversiones.cliente.servicio.ClienteService;
 import com.cblandon.inversiones.cliente.dto.ClienteAllResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClienteResponseDTO;
 import com.cblandon.inversiones.cliente.dto.ClientesCuotaCreditoDTO;

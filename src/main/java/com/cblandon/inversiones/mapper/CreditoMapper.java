@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.mapper;
 
-import com.cblandon.inversiones.credito.Credito;
+import com.cblandon.inversiones.credito.entity.Credito;
 import com.cblandon.inversiones.credito.dto.CreditoCuotasResponseDTO;
 import com.cblandon.inversiones.credito.dto.CreditoResponseDTO;
 import org.mapstruct.Mapper;

@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.cuotacredito.dto;
 
-import com.cblandon.inversiones.modalidad.Modalidad;
 import lombok.*;
 
 import java.time.LocalDate;

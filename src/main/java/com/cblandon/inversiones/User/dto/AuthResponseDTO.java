@@ -6,6 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 @Builder
-public record AuthResponseDTO(String username, String token, Collection<GrantedAuthority> authorities) {
+public record AuthResponseDTO(String username, String token, Collection<? extends GrantedAuthority> authorities) {
 
 }
