@@ -61,7 +61,6 @@ public class UserController {
     @PostMapping("auth-biometrica")
     public ResponseEntity<GenericResponseDTO> authBiometrica(
             @RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
-        System.out.println("print");
         return GenericResponseDTO.genericResponse(userService.authBiometrica(authBiometriaRequestDTO));
     }
 
