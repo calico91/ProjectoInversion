@@ -21,13 +21,14 @@ public class CuotaCreditoController {
 
 
     @PutMapping("/pagarCuota/{idCuotaCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> pagarCuota(
             @PathVariable Integer idCuotaCredito, @RequestBody @Valid PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.pagarCuota(idCuotaCredito, pagarCuotaRequestDTO));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}/{idCredito}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> infoCuotaCreditoCliente(
             @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(
@@ -35,13 +36,14 @@ public class CuotaCreditoController {
     }
 
     @GetMapping("/infoCreditoySaldo/{idCredito}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> infoCreditoySaldo(
             @PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.consultarInfoCreditoySaldo(idCredito));
     }
 
     @GetMapping("/reporteInteresyCapital")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> reporteInteresyCapital(
             @RequestParam String fechaInicial,
             @RequestParam String fechaFinal
@@ -50,19 +52,19 @@ public class CuotaCreditoController {
     }
 
     @PutMapping("/modificarFechaPago/{fechaNueva}/{idCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> modificarFechaPago(@PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.modificarFechaPago(fechaNueva, idCredito));
     }
 
     @GetMapping("/consultarAbonosRealizados/{idCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarAbonosRealizados(@PathVariable int idCredito) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.consultarAbonosRealizados(idCredito));
     }
 
     @GetMapping("/consultarUltimosAbonosRealizados/{cantidadAbonos}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarUltimosAbonosRealizados(@PathVariable int cantidadAbonos) {
 
         try {
@@ -75,7 +77,7 @@ public class CuotaCreditoController {
 
     }
     @GetMapping("/consultarAbonoPorId/{idCuotaCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarAbonoPorId(@PathVariable int idCuotaCredito) {
 
         try {

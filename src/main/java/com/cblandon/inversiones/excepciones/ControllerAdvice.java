@@ -5,7 +5,9 @@ import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -14,10 +16,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(value = RequestException.class)
-    public ResponseEntity<GenericResponseDTO> requestException(RequestException ex) {
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<GenericResponseDTO> requestException() {
         return GenericResponseDTO.genericError(
-                ex.getMensajesErrorEnum(), HttpStatus.BAD_REQUEST);
+                MensajesErrorEnum.ERROR_NO_CONTROLADO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = NoDataException.class)
@@ -44,6 +46,13 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = JWTVerificationException.class)
     public ResponseEntity<GenericResponseDTO> jWTVerificationException() {
         return GenericResponseDTO.genericError(MensajesErrorEnum.TOKEN_CADUCO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<GenericResponseDTO> accessDeniedException() {
+
+        return GenericResponseDTO.genericError(MensajesErrorEnum.PERMISO_DENEGADO, HttpStatus.UNAUTHORIZED);
     }
 
 }

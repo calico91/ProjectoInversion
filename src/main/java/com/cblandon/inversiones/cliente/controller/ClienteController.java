@@ -20,7 +20,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> createCliente(
             @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
@@ -29,12 +29,13 @@ public class ClienteController {
     }
 
     @GetMapping("/consultarClientes")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarClientes() {
         return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
 
     @GetMapping("/consultarClientePorCedula/{cedula}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarCliente(@PathVariable String cedula) {
         return GenericResponseDTO.genericResponse(clienteService.consultarCliente(cedula));
 
@@ -42,13 +43,14 @@ public class ClienteController {
     }
 
     @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
         return GenericResponseDTO.genericResponse(
                 clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
     }
 
     @PutMapping("/actualizarCliente/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> actualizarCliente(
             @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
 
@@ -56,6 +58,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<String> eliminarCliente(@PathVariable int idCliente) {
         clienteService.deleteCliente(idCliente);
         return new ResponseEntity<>("Empleado eliminado exitosamente", HttpStatus.OK);
