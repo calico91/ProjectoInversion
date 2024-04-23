@@ -14,13 +14,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<GenericResponseDTO> requestException() {
-
-        return GenericResponseDTO.genericError(
-                MensajesErrorEnum.ERROR_NO_CONTROLADO, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<GenericResponseDTO> requestException(RequestException ex) {
         return GenericResponseDTO.genericError(

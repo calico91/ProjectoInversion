@@ -1,7 +1,9 @@
 package com.cblandon.inversiones.security.filters;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.utils.Constantes;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,11 +34,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        response.setContentType("application/json");
-        try {
-            if (jwtToken!=null) {
+        jwtToken = jwtToken == null ? Constantes.NO_TOKEN : jwtToken;
+        if (!jwtToken.equals(Constantes.NO_TOKEN)) {
 
-                jwtToken = jwtToken.substring(7);
+            jwtToken = jwtToken.substring(7);
+            try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
                 String username = jwtUtils.extractUsername(decodedJWT);
                 String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
@@ -51,13 +53,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 context.setAuthentication(authenticationToken);
                 SecurityContextHolder.setContext(context);
 
-
+            } catch (JWTVerificationException ex) {
+                handlerExceptionResolver.resolveException(request, response, null, ex);
+                return;
             }
-        } catch (Exception ex) {
-            handlerExceptionResolver.resolveException(request, response, null, ex);
-            return;
         }
-
         filterChain.doFilter(request, response);
     }
 

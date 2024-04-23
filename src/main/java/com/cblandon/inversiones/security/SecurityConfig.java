@@ -49,7 +49,8 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/user/login").permitAll();
                     http.anyRequest().authenticated();
                 })
-                .addFilterBefore(new JwtTokenValidator(jwtUtils, handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenValidator(jwtUtils, handlerExceptionResolver),
+                        UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

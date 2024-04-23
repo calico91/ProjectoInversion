@@ -32,7 +32,7 @@ public class JwtUtils {
     public String createToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        Instant expiration = issuedAt.plus(10, ChronoUnit.SECONDS);
+        Instant expiration = issuedAt.plus(6, ChronoUnit.HOURS);
 
         String username = authentication.getPrincipal().toString();
         String authorities = authentication.getAuthorities()
