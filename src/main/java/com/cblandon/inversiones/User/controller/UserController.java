@@ -27,10 +27,9 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.register(registerUserRequestDTO));
     }
 
-    @PostMapping("login")
+    @PostMapping(value = "login", consumes = "application/json")
     public ResponseEntity<GenericResponseDTO> login(
             @RequestBody LoginRequestDTO loginRequestDTO) {
-        System.out.println("hola");
         return GenericResponseDTO.genericResponse(userService.login(loginRequestDTO));
     }
 

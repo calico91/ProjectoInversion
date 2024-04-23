@@ -1,7 +1,6 @@
 package com.cblandon.inversiones.excepciones;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<GenericResponseDTO> requestException(Exception ex) {
+    public ResponseEntity<GenericResponseDTO> requestException() {
 
         return GenericResponseDTO.genericError(
                 MensajesErrorEnum.ERROR_NO_CONTROLADO, HttpStatus.BAD_REQUEST);

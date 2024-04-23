@@ -7,6 +7,8 @@ import io.swagger.v3.oas.models.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import java.util.TimeZone;
 
@@ -31,6 +33,11 @@ public class InversionesApplication {
                 );
     }
 
-
+    @Bean
+    public HttpHeaders headerDefault() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
 
 }

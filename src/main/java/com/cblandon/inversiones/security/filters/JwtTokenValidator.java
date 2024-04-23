@@ -1,7 +1,5 @@
 package com.cblandon.inversiones.security.filters;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
@@ -33,17 +31,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String puta = request.getContentType();
-        System.out.println("puta"+puta);
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        System.out.println("jwtToken"+jwtToken);
-
-
+        response.setContentType("application/json");
         try {
-            if (jwtToken != null) {
+            if (jwtToken!=null) {
 
-                System.out.println("entre");
-                System.out.println(jwtToken);
                 jwtToken = jwtToken.substring(7);
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
                 String username = jwtUtils.extractUsername(decodedJWT);
