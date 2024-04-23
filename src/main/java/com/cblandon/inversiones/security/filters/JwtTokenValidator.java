@@ -33,10 +33,10 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         jwtToken = jwtToken == null ? Constantes.NO_TOKEN : jwtToken;
         if (!jwtToken.equals(Constantes.NO_TOKEN)) {
-
             jwtToken = jwtToken.substring(7);
             try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
