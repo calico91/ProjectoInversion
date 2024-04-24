@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: viaduct.proxy.rlwy.net    Database: apirest
+-- Host: localhost    Database: apirest
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -174,6 +174,30 @@ INSERT INTO `modalidad` VALUES (1,'mensual'),(2,'quincenal');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'ADMIN'),(2,'USUARIO'),(3,'COBRADOR');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -193,7 +217,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UKsb8bbouer5wak8vyiiy4pf2bx` (`username`),
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +226,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Locombia','maelito@gmail.com','Maelito','Blandon','$2a$10$jAehpayzhvQwqEPkdHxoIemq/tMujfiTYDTs1vLv42VaDn.mVHQKi','maelito',NULL),(3,'Locombia','blandon@gmail.com','Cristian','Blandon','$2a$10$tTX/ucKyLsQ72x.y.53mDec8TeULIemaUmuMI8KJ/dU2adaO0Iici','blandon','$2a$10$MtyCwL1XkGblC0skFzByMewrvxw.4ANz91OwHRLFoR3xYp/dHRGTa');
+INSERT INTO `user` VALUES (3,'Locombia','blandon@gmail.com','Cristian','Blandon','$2a$10$tTX/ucKyLsQ72x.y.53mDec8TeULIemaUmuMI8KJ/dU2adaO0Iici','blandon','$2a$10$MtyCwL1XkGblC0skFzByMewrvxw.4ANz91OwHRLFoR3xYp/dHRGTa'),(15,'Colombia','juandaa@gmail.com','juan david','buitrago','$2a$10$tbNOx3mByzeAQgaMafPcQ.nP8k.U3ve/9UR1c6tCe8D1UCH3J9OHi','juand',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,8 +253,35 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (1,1),(3,2),(3,3);
+INSERT INTO `user_roles` VALUES (3,1),(15,3);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario_creditos`
+--
+
+DROP TABLE IF EXISTS `usuario_creditos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `usuario_creditos` (
+  `credito_id` int NOT NULL,
+  `usuario_id` int NOT NULL,
+  PRIMARY KEY (`credito_id`,`usuario_id`),
+  KEY `FKjroo4av83evlfeaw04r5f3r1u` (`usuario_id`),
+  CONSTRAINT `FKjroo4av83evlfeaw04r5f3r1u` FOREIGN KEY (`usuario_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKk71gvv3b3kf2rcokb42kq92u5` FOREIGN KEY (`credito_id`) REFERENCES `credito` (`id_credito`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario_creditos`
+--
+
+LOCK TABLES `usuario_creditos` WRITE;
+/*!40000 ALTER TABLE `usuario_creditos` DISABLE KEYS */;
+INSERT INTO `usuario_creditos` VALUES (3,3),(4,3),(21,3),(23,3),(26,3),(27,3),(28,3),(36,3),(37,3),(38,3),(42,3),(47,3),(48,3),(51,3),(52,3),(87,3),(88,3),(89,3),(92,3),(94,3),(95,3),(96,3),(99,3),(102,3),(103,3),(104,3),(105,3),(107,3),(108,3),(109,3),(111,3),(112,3),(113,3),(118,3),(120,3),(121,3),(125,3),(127,3),(129,3),(130,3),(131,3),(132,3),(133,3),(134,3),(135,3),(136,3),(140,3),(141,3),(142,3),(143,3),(144,3),(146,3),(147,3),(148,3),(150,3),(151,3),(152,3),(152,15);
+/*!40000 ALTER TABLE `usuario_creditos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -242,4 +293,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-24  8:22:43
+-- Dump completed on 2024-04-24 12:58:42
