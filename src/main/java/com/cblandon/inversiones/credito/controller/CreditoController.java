@@ -20,7 +20,7 @@ public class CreditoController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> crearCredito(
             @RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         return GenericResponseDTO.genericResponse(creditoService.crearCredito(registrarCreditoRequestDTO));
@@ -28,20 +28,20 @@ public class CreditoController {
 
 
     @GetMapping("/consultarCredito/{idCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarCredito(@PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(creditoService.consultarCredito(idCredito));
 
     }
 
     @GetMapping("/infoCreditosActivos")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> infoCreditosActivos() {
         return GenericResponseDTO.genericResponse(creditoService.consultarCreditosActivos());
     }
 
     @PutMapping("/modificarEstadoCredito/{idCredito}/{idEstadoCredito}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> modificarEstadoCredito(
             @PathVariable int idCredito,
             @PathVariable int idEstadoCredito) {

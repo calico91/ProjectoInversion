@@ -2,6 +2,7 @@ package com.cblandon.inversiones.user.entity;
 
 import java.util.Set;
 
+import com.cblandon.inversiones.credito.entity.Credito;
 import com.cblandon.inversiones.roles.entity.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

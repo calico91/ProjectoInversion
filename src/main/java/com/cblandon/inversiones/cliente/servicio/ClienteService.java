@@ -127,13 +127,14 @@ public class ClienteService {
 
 
     /**
-     * lista de cuotas pendientes de la fecha actual para atras
+     * lista de cuotas pendientes de la fecha seleccionada para atras
      */
     @Transactional(readOnly = true)
-    public List<ClientesCuotaCreditoDTO> consultarClientesCuotasPendientes(LocalDate fechaFiltro) {
+    public List<ClientesCuotaCreditoDTO> consultarClientesCuotasPendientes(LocalDate fechaFiltro, int idUsuario) {
 
         try {
-            List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(fechaFiltro);
+            List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(
+                    fechaFiltro, idUsuario);
 
             log.info("infoClientesCuotasPendientes ".concat(listaCreditosdto.toString()));
             return listaCreditosdto;

@@ -28,26 +28,20 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.register(registerUserRequestDTO));
     }
 
-    @PostMapping(value = "login", consumes = "application/json")
+    @PostMapping(value = "login", consumes = {"*/*"})
     public ResponseEntity<GenericResponseDTO> login(
             @RequestBody LoginRequestDTO loginRequestDTO) {
         return GenericResponseDTO.genericResponse(userService.login(loginRequestDTO));
     }
 
-    @GetMapping("pruebaConexion")
-    public ResponseEntity<String> pruebaConexion() {
-        return ResponseEntity.ok("conexion establecida");
-    }
-
     @GetMapping(value = "consultarUsuarios")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarUsuarios() {
-
         return GenericResponseDTO.genericResponse(userService.consultarUsuarios());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/actualizarUsuario/{username}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> actualizarUsuario(
             @PathVariable String username,
             @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {

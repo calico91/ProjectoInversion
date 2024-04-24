@@ -1,7 +1,7 @@
-package com.cblandon.inversiones.cuotacredito.repository;
+package com.cblandon.inversiones.cuota_credito.repository;
 
-import com.cblandon.inversiones.cuotacredito.dto.AbonoPorIdDTO;
-import com.cblandon.inversiones.cuotacredito.entity.CuotaCredito;
+import com.cblandon.inversiones.cuota_credito.dto.AbonoPorIdDTO;
+import com.cblandon.inversiones.cuota_credito.entity.CuotaCredito;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -58,7 +58,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             "       ORDER BY fecha_abono DESC LIMIT :cantidadAbonos", nativeQuery = true)
     List<Tuple> consultarUltimosAbonosRealizados(@Param("cantidadAbonos") int cantidadAbonos);
 
-    @Query(value = "SELECT  new com.cblandon.inversiones.cuotacredito.dto.AbonoPorIdDTO(ccr.id,ccr.valorAbonado," +
+    @Query(value = "SELECT  new com.cblandon.inversiones.cuota_credito.dto.AbonoPorIdDTO(ccr.id,ccr.valorAbonado," +
             "ccr.fechaAbono,ccr.tipoAbono,ccr.numeroCuotas, ccr.cuotaNumero )" +
             "FROM CuotaCredito ccr " +
             "WHERE ccr.id = :idCuotaCredito")

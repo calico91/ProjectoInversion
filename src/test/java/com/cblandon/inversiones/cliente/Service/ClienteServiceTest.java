@@ -212,11 +212,12 @@ class ClienteServiceTest {
 
         LocalDate fechaFiltro = LocalDate.now();
 
-        given(clienteRepository.consultarClientesCuotasPendientes(fechaFiltro))
+        given(clienteRepository.consultarClientesCuotasPendientes(fechaFiltro, 1))
                 .willReturn(List.of(obj1, obj2));
 
         //when
-        List<ClientesCuotaCreditoDTO> resultado = clienteService.consultarClientesCuotasPendientes(fechaFiltro);
+        List<ClientesCuotaCreditoDTO> resultado = clienteService.consultarClientesCuotasPendientes(
+                fechaFiltro, 1);
 
         //then
         assertThat(resultado)

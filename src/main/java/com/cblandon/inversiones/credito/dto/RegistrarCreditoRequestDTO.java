@@ -26,7 +26,9 @@ public record RegistrarCreditoRequestDTO(@NotNull(message = Constantes.NOT_NULL)
 
                                          @NotNull(message = Constantes.NOT_NULL)
                                          Double valorCredito,
-                                         Modalidad modalidad) {
+                                         Modalidad modalidad,
+                                         String usuario
+) {
 
 
 }

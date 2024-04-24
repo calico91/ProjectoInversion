@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
+import com.cblandon.inversiones.mapper.UserMapper;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.roles.repository.RolesRepository;
@@ -11,7 +12,6 @@ import com.cblandon.inversiones.security.jwt.JwtUtils;
 import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.user.dto.*;
-import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,9 +60,9 @@ public class UserService implements UserDetailsService {
                 getAuthorities(userEntity.getRoles()));
     }
 
-    public UserEntity register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
+    public UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
 
-        Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.getUsername());
+        Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
 
         if (consultarUser.isPresent()) {
             throw new RequestException(MensajesErrorEnum.USUARIO_REGISTRADO);
@@ -70,29 +70,22 @@ public class UserService implements UserDetailsService {
 
 
         try {
-            UserEntity user = UserEntity.builder()
-                    .username(registerUserRequestDTO.getUsername())
-                    .firstname(registerUserRequestDTO.getFirstname())
-                    .lastname(registerUserRequestDTO.getLastname())
-                    .country(registerUserRequestDTO.getCountry())
-                    .email(registerUserRequestDTO.getEmail())
-                    .build();
 
-            user.setPassword(passwordEncoder.encode(registerUserRequestDTO.getPassword()));
+            UserEntity user = UserMapper.USER.toUserEntity(registerUserRequestDTO);
 
-            Set<Roles> authorities = registerUserRequestDTO.getRoles().stream()
+            user.setPassword(passwordEncoder.encode(registerUserRequestDTO.password()));
+
+            Set<Roles> authorities = registerUserRequestDTO.roles().stream()
                     .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
                             () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
-
             user.setRoles(authorities);
 
-            return userRepository.save(user);
+            return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
         }
-
 
     }
 
@@ -110,6 +103,7 @@ public class UserService implements UserDetailsService {
         userDetail.eraseCredentials();
 
         return AuthResponseDTO.builder()
+                .id(usuario.getId())
                 .username(userDetail.getUsername())
                 .token(generarToken(usuario))
                 .authorities(userDetail.getAuthorities())
@@ -131,8 +125,7 @@ public class UserService implements UserDetailsService {
                             .firstname(usuario.getFirstname())
                             .country(usuario.getCountry())
                             .email(usuario.getEmail())
-                            .roles(usuario.getRoles().stream().map(
-                                    roles -> roles.getName().toString()).collect(Collectors.toSet()))
+                            .roles(usuario.getRoles())
                             .build()
                     ).toList();
 
@@ -150,13 +143,13 @@ public class UserService implements UserDetailsService {
         try {
 
             UserEntity usuarioModificado = UserEntity.builder()
-                    .lastname(registrarClienteDTO.getLastname())
-                    .firstname(registrarClienteDTO.getFirstname())
-                    .username(registrarClienteDTO.getUsername())
-                    .country(registrarClienteDTO.getCountry())
-                    .email(registrarClienteDTO.getEmail())
-                    .password(passwordEncoder.encode(registrarClienteDTO.getPassword()))
-                    .roles(registrarClienteDTO.getRoles().stream()
+                    .lastname(registrarClienteDTO.lastname())
+                    .firstname(registrarClienteDTO.firstname())
+                    .username(registrarClienteDTO.username())
+                    .country(registrarClienteDTO.country())
+                    .email(registrarClienteDTO.email())
+                    .password(passwordEncoder.encode(registrarClienteDTO.password()))
+                    .roles(registrarClienteDTO.roles().stream()
                             .map(role -> Roles.builder()
                                     .name(Role.valueOf(role))
                                     .build())
@@ -193,6 +186,7 @@ public class UserService implements UserDetailsService {
         }
 
         return AuthResponseDTO.builder()
+                .id(usuario.getId())
                 .username(usuario.getUsername())
                 .token(generarToken(usuario))
                 .authorities(getAuthorities(usuario.getRoles()))

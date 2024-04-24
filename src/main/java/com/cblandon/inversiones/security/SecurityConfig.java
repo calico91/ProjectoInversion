@@ -41,7 +41,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers(
-                            "/user/pruebaConexion",
                             "/user/register",
                             "/user/auth-biometrica",
                             "/v3/api-docs/**",

@@ -1,9 +1,7 @@
-package com.cblandon.inversiones.cuotacredito.dto;
+package com.cblandon.inversiones.cuota_credito.dto;
 
 import com.cblandon.inversiones.utils.Constantes;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;

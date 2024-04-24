@@ -20,9 +20,11 @@ public enum MensajesErrorEnum {
     DATOS_NO_ENCONTRADOS("No se encontraron resultados con los parametros de busqueda ingresados", "E11"),
     TOKEN_CADUCO("Token caduco, inicie sesion de nuevo", "E12"),
     TOKEN_INCORRECTO("Token invalido", "E13"),
-    ERROR_NO_CONTROLADO("Error no controlado", "E14"),
+    ERROR_NO_CONTROLADO("Error desconocido, contacte su administrador", "E14"),
     AUTENTICACION_BIOMETRICA_FALLIDA("Autenticacion biometrica fallida", "E15"),
-    ERROR_AUTENTICACION("Usuario o contraseña invalidos", "E15");
+    ERROR_AUTENTICACION("Usuario o contraseña invalidos", "E16"),
+    PERMISO_DENEGADO("No tiene permisos para realizar esta accion", "E17"),
+    USUARIO_NO_ENCONTRADO("Nombre de usuario no existe, verifique la informacion", "E17");
 
     private final String message;
     private final String codigo;

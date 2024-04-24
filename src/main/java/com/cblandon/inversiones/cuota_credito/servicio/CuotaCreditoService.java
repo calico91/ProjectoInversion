@@ -1,11 +1,11 @@
-package com.cblandon.inversiones.cuotacredito.servicio;
+package com.cblandon.inversiones.cuota_credito.servicio;
 
 
 import com.cblandon.inversiones.credito.entity.Credito;
 import com.cblandon.inversiones.credito.repository.CreditoRepository;
-import com.cblandon.inversiones.cuotacredito.dto.*;
-import com.cblandon.inversiones.cuotacredito.entity.CuotaCredito;
-import com.cblandon.inversiones.cuotacredito.repository.CuotaCreditoRepository;
+import com.cblandon.inversiones.cuota_credito.dto.*;
+import com.cblandon.inversiones.cuota_credito.entity.CuotaCredito;
+import com.cblandon.inversiones.cuota_credito.repository.CuotaCreditoRepository;
 import com.cblandon.inversiones.estado_credito.entity.EstadoCredito;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
