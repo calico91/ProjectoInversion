@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.cblandon.inversiones.cliente.entity.Cliente;
-import com.cblandon.inversiones.cuotacredito.entity.CuotaCredito;
+import com.cblandon.inversiones.cuota_credito.entity.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.entity.EstadoCredito;
 import com.cblandon.inversiones.modalidad.entity.Modalidad;
 import com.cblandon.inversiones.user.entity.UserEntity;

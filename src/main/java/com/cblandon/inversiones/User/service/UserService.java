@@ -103,6 +103,7 @@ public class UserService implements UserDetailsService {
         userDetail.eraseCredentials();
 
         return AuthResponseDTO.builder()
+                .id(usuario.getId())
                 .username(userDetail.getUsername())
                 .token(generarToken(usuario))
                 .authorities(userDetail.getAuthorities())
@@ -185,6 +186,7 @@ public class UserService implements UserDetailsService {
         }
 
         return AuthResponseDTO.builder()
+                .id(usuario.getId())
                 .username(usuario.getUsername())
                 .token(generarToken(usuario))
                 .authorities(getAuthorities(usuario.getRoles()))

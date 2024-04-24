@@ -1,7 +1,7 @@
-package com.cblandon.inversiones.cuotacredito.controller;
+package com.cblandon.inversiones.cuota_credito.controller;
 
-import com.cblandon.inversiones.cuotacredito.servicio.CuotaCreditoService;
-import com.cblandon.inversiones.cuotacredito.dto.PagarCuotaRequestDTO;
+import com.cblandon.inversiones.cuota_credito.servicio.CuotaCreditoService;
+import com.cblandon.inversiones.cuota_credito.dto.PagarCuotaRequestDTO;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ public class CuotaCreditoController {
 
 
     @PutMapping("/pagarCuota/{idCuotaCredito}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'COBRADOR')")
     public ResponseEntity<GenericResponseDTO> pagarCuota(
             @PathVariable Integer idCuotaCredito, @RequestBody @Valid PagarCuotaRequestDTO pagarCuotaRequestDTO) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.pagarCuota(idCuotaCredito, pagarCuotaRequestDTO));
     }
 
     @GetMapping("/infoCuotaCreditoCliente/{idCliente}/{idCredito}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> infoCuotaCreditoCliente(
             @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(

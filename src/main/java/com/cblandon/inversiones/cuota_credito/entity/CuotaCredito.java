@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.cuotacredito.entity;
+package com.cblandon.inversiones.cuota_credito.entity;
 
 import com.cblandon.inversiones.credito.entity.Credito;
 import jakarta.persistence.*;

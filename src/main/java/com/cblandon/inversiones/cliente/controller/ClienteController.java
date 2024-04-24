@@ -20,7 +20,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> createCliente(
             @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
@@ -29,7 +29,7 @@ public class ClienteController {
     }
 
     @GetMapping("/consultarClientes")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> consultarClientes() {
         return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
@@ -42,11 +42,12 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(@PathVariable String fechaFiltro) {
+    @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}/{idUsuario}")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
+    public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(
+            @PathVariable String fechaFiltro, @PathVariable int idUsuario) {
         return GenericResponseDTO.genericResponse(
-                clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro)));
+                clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro), idUsuario));
     }
 
     @PutMapping("/actualizarCliente/{id}")

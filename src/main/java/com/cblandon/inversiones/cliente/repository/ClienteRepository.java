@@ -22,8 +22,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "FROM Cliente c " +
             "JOIN  c.listaCreditos cr " +
             "JOIN cr.listaCuotasCredito ccr " +
+            "JOIN cr.usuarios uc on uc.id = :idUsuario " +
             "WHERE cr.idEstadoCredito.id = 1 AND ccr.fechaAbono IS NULL " +
             "AND ccr.fechaCuota <= :fechaFiltro ORDER BY ccr.fechaCuota ASC")
-    List<ClientesCuotaCreditoDTO> consultarClientesCuotasPendientes(@Param("fechaFiltro") LocalDate fechaFiltro);
+    List<ClientesCuotaCreditoDTO> consultarClientesCuotasPendientes(
+            @Param("fechaFiltro") LocalDate fechaFiltro, @Param("idUsuario") int idUsuario);
 
 }

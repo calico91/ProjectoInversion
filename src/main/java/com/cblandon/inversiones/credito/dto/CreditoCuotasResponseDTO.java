@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.credito.dto;
 
-import com.cblandon.inversiones.cuotacredito.dto.CuotasCreditoResponseDTO;
+import com.cblandon.inversiones.cuota_credito.dto.CuotasCreditoResponseDTO;
 
 
 

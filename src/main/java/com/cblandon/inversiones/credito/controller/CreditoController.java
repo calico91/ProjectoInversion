@@ -20,7 +20,7 @@ public class CreditoController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> crearCredito(
             @RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         return GenericResponseDTO.genericResponse(creditoService.crearCredito(registrarCreditoRequestDTO));

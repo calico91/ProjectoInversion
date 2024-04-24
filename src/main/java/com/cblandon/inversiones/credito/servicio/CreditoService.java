@@ -5,18 +5,15 @@ import com.cblandon.inversiones.cliente.repository.ClienteRepository;
 import com.cblandon.inversiones.credito.dto.*;
 import com.cblandon.inversiones.credito.entity.Credito;
 import com.cblandon.inversiones.credito.repository.CreditoRepository;
-import com.cblandon.inversiones.cuotacredito.repository.CuotaCreditoRepository;
-import com.cblandon.inversiones.cuotacredito.entity.CuotaCredito;
+import com.cblandon.inversiones.cuota_credito.repository.CuotaCreditoRepository;
+import com.cblandon.inversiones.cuota_credito.entity.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.entity.EstadoCredito;
 import com.cblandon.inversiones.estado_credito.repository.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
-import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.mapper.CreditoMapper;
-import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.repository.UserRepository;
-import com.cblandon.inversiones.user.service.UserService;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.AllArgsConstructor;
@@ -50,11 +47,7 @@ public class CreditoService {
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
 
-        Set<UserEntity> usuarios = registrarCreditoRequestDTO.usuarios().stream()
-                .map(usuario -> userRepository.findByUsername(usuario).orElseThrow(
-                        () -> new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.USUARIO_NO_ENCONTRADO)))
-                .collect(Collectors.toSet());
-
+        Set<UserEntity> usuarios = userRepository.buscarUsuariosAdmin(registrarCreditoRequestDTO.usuario());
 
         if (registrarCreditoRequestDTO.fechaCredito().isAfter(registrarCreditoRequestDTO.fechaCuota()) ||
                 registrarCreditoRequestDTO.fechaCredito().equals(registrarCreditoRequestDTO.fechaCuota())) {
