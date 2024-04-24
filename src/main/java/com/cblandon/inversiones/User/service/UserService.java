@@ -60,8 +60,7 @@ public class UserService implements UserDetailsService {
                 getAuthorities(userEntity.getRoles()));
     }
 
-    public
-    UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
+    public UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
 
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
 
@@ -77,12 +76,12 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(registerUserRequestDTO.password()));
 
             Set<Roles> authorities = registerUserRequestDTO.roles().stream()
-                    .map(role -> rolesRepository.findByName(role.getName()).orElseThrow(
+                    .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
                             () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
             user.setRoles(authorities);
 
-            return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user) );
+            return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
@@ -151,7 +150,7 @@ public class UserService implements UserDetailsService {
                     .password(passwordEncoder.encode(registrarClienteDTO.password()))
                     .roles(registrarClienteDTO.roles().stream()
                             .map(role -> Roles.builder()
-                                    .name(Role.valueOf(role.getName().toString()))
+                                    .name(Role.valueOf(role))
                                     .build())
                             .collect(Collectors.toSet()))
                     .build();

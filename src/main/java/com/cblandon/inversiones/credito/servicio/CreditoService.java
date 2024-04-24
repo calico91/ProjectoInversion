@@ -11,7 +11,12 @@ import com.cblandon.inversiones.estado_credito.entity.EstadoCredito;
 import com.cblandon.inversiones.estado_credito.repository.EstadoCreditoRepository;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.mapper.CreditoMapper;
+import com.cblandon.inversiones.roles.entity.Roles;
+import com.cblandon.inversiones.user.entity.UserEntity;
+import com.cblandon.inversiones.user.repository.UserRepository;
+import com.cblandon.inversiones.user.service.UserService;
 import com.cblandon.inversiones.utils.Constantes;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import lombok.AllArgsConstructor;
@@ -22,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -30,10 +37,11 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Slf4j
 @AllArgsConstructor
 public class CreditoService {
-    final CreditoRepository creditoRepository;
-    final ClienteRepository clienteRepository;
-    final CuotaCreditoRepository cuotaCreditoRepository;
-    final EstadoCreditoRepository estadoCreditoRepository;
+    private final UserRepository userRepository;
+    private final CreditoRepository creditoRepository;
+    private final ClienteRepository clienteRepository;
+    private final CuotaCreditoRepository cuotaCreditoRepository;
+    private final EstadoCreditoRepository estadoCreditoRepository;
 
     @Transactional()
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
@@ -42,10 +50,17 @@ public class CreditoService {
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
 
+        Set<UserEntity> usuarios = registrarCreditoRequestDTO.usuarios().stream()
+                .map(usuario -> userRepository.findByUsername(usuario).orElseThrow(
+                        () -> new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.USUARIO_NO_ENCONTRADO)))
+                .collect(Collectors.toSet());
+
+
         if (registrarCreditoRequestDTO.fechaCredito().isAfter(registrarCreditoRequestDTO.fechaCuota()) ||
                 registrarCreditoRequestDTO.fechaCredito().equals(registrarCreditoRequestDTO.fechaCuota())) {
             throw new RequestException(MensajesErrorEnum.ERROR_FECHAS_CREDITO);
         }
+
 
         try {
 
@@ -57,8 +72,8 @@ public class CreditoService {
                     .cliente(clienteBD)
                     .modalidad(registrarCreditoRequestDTO.modalidad())
                     .idEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_ACTIVO, null))
+                    .usuarios(usuarios)
                     .build();
-
             credito = creditoRepository.save(credito);
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
                     registrarCreditoRequestDTO.valorCredito(),
@@ -109,6 +124,7 @@ public class CreditoService {
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             log.error("crearCredito ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
 

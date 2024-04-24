@@ -2,11 +2,13 @@ package com.cblandon.inversiones.credito.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import com.cblandon.inversiones.cliente.entity.Cliente;
 import com.cblandon.inversiones.cuotacredito.entity.CuotaCredito;
 import com.cblandon.inversiones.estado_credito.entity.EstadoCredito;
 import com.cblandon.inversiones.modalidad.entity.Modalidad;
+import com.cblandon.inversiones.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +30,7 @@ public class Credito {
     private String usuarioCreador;
 
 
-    @Column(nullable = false,length = 10)
+    @Column(nullable = false, length = 10)
     private Double valorCredito;
 
 
@@ -54,6 +56,12 @@ public class Credito {
     @ManyToOne
     @JoinColumn(name = "id_estado_credito")
     private EstadoCredito idEstadoCredito;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_creditos",
+            joinColumns = @JoinColumn(
+                    name = "credito_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    Set<UserEntity> usuarios;
 
     @PrePersist
     public void prePersit() {

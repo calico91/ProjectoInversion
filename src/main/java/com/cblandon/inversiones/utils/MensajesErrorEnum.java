@@ -23,7 +23,8 @@ public enum MensajesErrorEnum {
     ERROR_NO_CONTROLADO("Error desconocido, contacte su administrador", "E14"),
     AUTENTICACION_BIOMETRICA_FALLIDA("Autenticacion biometrica fallida", "E15"),
     ERROR_AUTENTICACION("Usuario o contraseña invalidos", "E16"),
-    PERMISO_DENEGADO("No tiene permisos para realizar esta accion", "E17");
+    PERMISO_DENEGADO("No tiene permisos para realizar esta accion", "E17"),
+    USUARIO_NO_ENCONTRADO("Nombre de usuario no existe, verifique la informacion", "E17");
 
     private final String message;
     private final String codigo;
