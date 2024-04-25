@@ -166,12 +166,16 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public UserDetails getUserDetails(String token) {
+    public AuthResponseDTO getUserDetails(String token) {
         DecodedJWT decodedJWT = jwtUtils.validateToken(token);
         String username = jwtUtils.extractUsername(decodedJWT);
-        UserDetails userDetails = loadUserByUsername(username);
-        log.info("getUserDetails:".concat(userDetails.toString()));
-        return userDetails;
+        UserEntity user = userRepository.findByUsername(username).orElseThrow();
+        log.info("getUserDetails:".concat(user.toString()));
+        return AuthResponseDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .authorities(getAuthorities(user.getRoles()))
+                .build();
     }
 
 
