@@ -51,6 +51,7 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
 
+
         return new User(userEntity.getUsername(),
                 userEntity.getPassword(),
                 true,
@@ -99,14 +100,12 @@ public class UserService implements UserDetailsService {
                     null, MensajesErrorEnum.ERROR_AUTENTICACION);
         }
 
-        User userDetail = (User) loadUserByUsername(loginRequestDTO.username());
-        userDetail.eraseCredentials();
 
         return AuthResponseDTO.builder()
                 .id(usuario.getId())
-                .username(userDetail.getUsername())
+                .username(usuario.getUsername())
                 .token(generarToken(usuario))
-                .authorities(userDetail.getAuthorities())
+                .authorities(getAuthoritiesString(usuario.getRoles()))
                 .build();
     }
 
@@ -174,7 +173,7 @@ public class UserService implements UserDetailsService {
         return AuthResponseDTO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
-                .authorities(getAuthorities(user.getRoles()))
+                .authorities(getAuthoritiesString(user.getRoles()))
                 .build();
     }
 
@@ -193,7 +192,7 @@ public class UserService implements UserDetailsService {
                 .id(usuario.getId())
                 .username(usuario.getUsername())
                 .token(generarToken(usuario))
-                .authorities(getAuthorities(usuario.getRoles()))
+                .authorities(getAuthoritiesString(usuario.getRoles()))
                 .build();
 
     }
@@ -221,6 +220,10 @@ public class UserService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Roles> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());
+    }
+
+    private Set<String> getAuthoritiesString(Set<Roles> roles) {
+        return roles.stream().map(role -> role.getName().name()).collect(Collectors.toSet());
     }
 
     private String generarToken(UserEntity usuario) {
