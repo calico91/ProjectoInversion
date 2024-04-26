@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.cuota_credito.dto;
 
 import lombok.*;
+
 import java.time.LocalDate;
 
 @Setter
@@ -38,6 +39,8 @@ public class CuotasCreditoResponseDTO {
     private Double interesMora;
 
     private Integer diasMora;
+
+    private String modalidad;
 
 }
 

@@ -32,7 +32,7 @@ public class CuotaCreditoController {
     public ResponseEntity<GenericResponseDTO> infoCuotaCreditoCliente(
             @PathVariable Integer idCliente, @PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(
-                cuotaCreditoService.consultarInfoCuotaCreditoCliente(idCliente, idCredito));
+                cuotaCreditoService.consultarCuotaCreditoCliente(idCliente, idCredito));
     }
 
     @GetMapping("/infoCreditoySaldo/{idCredito}")

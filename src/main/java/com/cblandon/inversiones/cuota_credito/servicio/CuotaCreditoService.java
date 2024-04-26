@@ -179,7 +179,7 @@ public class CuotaCreditoService {
     }
 
 
-    public CuotasCreditoResponseDTO consultarInfoCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
+    public CuotasCreditoResponseDTO consultarCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
             Tuple infoConsulta = cuotaCreditoRepository.consultarCuotaCreditoCliente(idCliente, idCredito);
 
@@ -193,10 +193,11 @@ public class CuotaCreditoService {
                     .interesPorcentaje(Double.parseDouble(infoConsulta.get("interes_porcentaje").toString()))
                     .cuotaNumero(Integer.parseInt(infoConsulta.get("couta_numero").toString()))
                     .valorCredito(Double.parseDouble(infoConsulta.get("valor_credito").toString()))
+                    .modalidad(infoConsulta.get("description").toString())
                     .build();
 
 
-            double interesMora = calcularInteresMora(infoCuotaPagar.getFechaCuota());
+            double interesMora = calcularInteresMora(infoCuotaPagar.getFechaCuota(), infoCuotaPagar.getModalidad());
 
             infoCuotaPagar.setInteresMora(interesMora);
             infoCuotaPagar.setValorInteres(infoCuotaPagar.getValorInteres() + interesMora);
@@ -209,7 +210,7 @@ public class CuotaCreditoService {
 
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
             infoCuotaPagar.setValorCredito(infoCuotaPagar.getValorCredito());
-            log.info("consultarInfoCuotaCreditoCliente " + infoCuotaPagar);
+            log.info("consultarCuotaCreditoCliente " + infoCuotaPagar);
 
             return infoCuotaPagar;
 
@@ -461,7 +462,7 @@ public class CuotaCreditoService {
                 listaCuotas.get(0).getInteresPorcentaje(),
                 listaCuotas.get(0).getModalidad());
 
-        Double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota());
+        Double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota(), listaCuotas.get(0).getModalidad());
         log.info(interesMora.toString());
 
         interesActual = Math.max(interesActual, 0.0);
@@ -515,13 +516,13 @@ public class CuotaCreditoService {
      * por cada tres dias se genera un interes de mas por 5 mil pesos,
      * despues de la primer mora, suma cada 4 dias 5k de mora, y maximo 25 de mora por cuota
      */
-    private Double calcularInteresMora(LocalDate fechaCuota) {
+    private Double calcularInteresMora(LocalDate fechaCuota, String modalidad) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
         log.info("dias de mora:" + diasDiferencia);
 
         int diasCobrar = 0;
 
-        if (diasDiferencia >= 3) {
+        if (diasDiferencia >= 4) {
             for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
                 if (i == 3) {
                     i = -1;
@@ -533,7 +534,9 @@ public class CuotaCreditoService {
         }
         log.info("dias a cobrar:" + diasCobrar);
         double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
-        valorMora =  valorMora >= 25000 ? 25000 : valorMora;
+        valorMora = Constantes.MODALIDAD_MENSUAL.equals(modalidad) ? valorMora : (valorMora / 2);
+        valorMora = valorMora >= 25000 ? 25000 : valorMora;
+        log.info("valorMora:" + valorMora);
         return valorMora;
     }
 

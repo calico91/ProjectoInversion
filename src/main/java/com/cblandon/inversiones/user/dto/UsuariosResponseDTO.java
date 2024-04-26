@@ -1,12 +1,10 @@
 package com.cblandon.inversiones.user.dto;
 
-import com.cblandon.inversiones.roles.entity.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -20,5 +18,5 @@ public class UsuariosResponseDTO {
     String lastname;
     String email;
     String country;
-    Set<Roles> roles;
+    Set<String> roles;
 }

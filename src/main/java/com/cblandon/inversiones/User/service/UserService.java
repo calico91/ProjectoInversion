@@ -82,7 +82,11 @@ public class UserService implements UserDetailsService {
                     .collect(Collectors.toSet());
             user.setRoles(authorities);
 
-            return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
+            UsuariosResponseDTO usuariosResponseDTO =
+                    UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
+            usuariosResponseDTO.setRoles(getAuthoritiesString(authorities));
+
+            return usuariosResponseDTO;
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
@@ -117,16 +121,17 @@ public class UserService implements UserDetailsService {
             throw new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS);
         }
         try {
-            return
-                    usuariosConsulta.stream().map(usuario -> UsuariosResponseDTO.builder().
-                            username(usuario.getUsername())
-                            .lastname(usuario.getLastname())
-                            .firstname(usuario.getFirstname())
-                            .country(usuario.getCountry())
-                            .email(usuario.getEmail())
-                            .roles(usuario.getRoles())
+
+            return usuariosConsulta.stream().map(
+                    user -> UsuariosResponseDTO.builder()
+                            .username(user.getUsername())
+                            .lastname(user.getLastname())
+                            .firstname(user.getFirstname())
+                            .email(user.getEmail())
+                            .country(user.getCountry())
+                            .roles(getAuthoritiesString(user.getRoles()))
                             .build()
-                    ).toList();
+            ).toList();
 
 
         } catch (RuntimeException ex) {
