@@ -423,7 +423,7 @@ public class CuotaCreditoService {
             if (diaPago >= 15 && diasMes == 31) {
                 /*cuota del 15-30 y mes 31*/
                 diasMes = 16;
-                System.out.println("cuota el 15-30 y mes 31:" + diasMes);
+                log.info("cuota el 15-30 y mes 31:" + diasMes);
 
             } else if (diaPago >= 15 && diasMes == 30) {
                 /*cuota del 15-30 y mes 30*/
