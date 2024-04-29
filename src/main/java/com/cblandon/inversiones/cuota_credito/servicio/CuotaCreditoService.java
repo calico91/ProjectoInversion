@@ -417,9 +417,29 @@ public class CuotaCreditoService {
         LocalDate fechaAnterior = LocalDate.parse(fechaCuotaAnterior, dtf);
         int diasMes = fechaAnterior.lengthOfMonth();
 
-
+        /* se realiza validacion para que los creditos quincenales siempre queden para las mismas fechas */
         if (modalidad.equals(Constantes.MODALIDAD_QUINCENAL)) {
-            diasMes = diasMes / 2;
+            int diaPago = Integer.parseInt(fechaAnterior.toString().substring(8));
+            if (diaPago >= 15 && diasMes == 31) {
+                /*cuota del 15-30 y mes 31*/
+                diasMes = 16;
+                System.out.println("cuota el 15-30 y mes 31:" + diasMes);
+
+            } else if (diaPago >= 15 && diasMes == 30) {
+                /*cuota del 15-30 y mes 30*/
+                diasMes = 15;
+                log.info("cuota el 15-30 y mes 30:" + diasMes);
+
+            } else if (diaPago >= 15 && diasMes < 30) {
+                /*cuota del 15-30 del mes de febrero y si es año bisiesto*/
+                diasMes = diasMes == 29 ? 14 : 13;
+                log.info("cuota el 15-30 del mes de febrero y si es año bisiesto:" + diasMes);
+
+            } else {
+                /*cuota del 1-15*/
+                diasMes = 15;
+                log.info("cuota el 1-15:" + diasMes);
+            }
             diasMes = (int) Math.ceil(Double.parseDouble(Integer.toString(diasMes)));
         }
         return fechaAnterior.plusDays(diasMes);
