@@ -24,7 +24,8 @@ public enum MensajesErrorEnum {
     AUTENTICACION_BIOMETRICA_FALLIDA("Autenticacion biometrica fallida", "E15"),
     ERROR_AUTENTICACION("Usuario o contraseña invalidos", "E16"),
     PERMISO_DENEGADO("No tiene permisos para realizar esta accion", "E17"),
-    USUARIO_NO_ENCONTRADO("Nombre de usuario no existe, verifique la informacion", "E17");
+    USUARIO_NO_ENCONTRADO("Nombre de usuario no existe, verifique la informacion", "E17"),
+    ESTADO_NO_ACTIVO("El credito no se encuentra activo, actualice la lista de creditos", "E18");
 
     private final String message;
     private final String codigo;

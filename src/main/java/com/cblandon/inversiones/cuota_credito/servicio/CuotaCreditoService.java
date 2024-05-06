@@ -48,7 +48,9 @@ public class CuotaCreditoService {
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
-        validarEstadoCuota(cuotaCreditoDB.getValorAbonado());
+        validarEstadoCuotaYCredito(cuotaCreditoDB.getValorAbonado(),
+                cuotaCreditoDB.getCredito().getIdEstadoCredito().getId());
+
 
         int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
 
@@ -568,10 +570,15 @@ public class CuotaCreditoService {
         return Integer.parseInt(Long.toString(diasDiferencia));
     }
 
-    private void validarEstadoCuota(Double valorAbono) {
+    private void validarEstadoCuotaYCredito(Double valorAbono, int codigoEstadoCredito) {
         if (valorAbono != null) {
             throw new RequestException(MensajesErrorEnum.CUOTA_YA_PAGADA);
         }
+
+        if (codigoEstadoCredito != 1) {
+            throw new RequestException(MensajesErrorEnum.ESTADO_NO_ACTIVO);
+        }
     }
+
 
 }
