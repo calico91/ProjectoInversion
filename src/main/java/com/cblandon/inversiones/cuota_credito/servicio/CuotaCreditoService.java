@@ -425,7 +425,7 @@ public class CuotaCreditoService {
             if (diaPago >= 15 && diasMes == 31) {
                 /*cuota del 15-30 y mes 31*/
                 diasMes = 16;
-                System.out.println("cuota el 15-30 y mes 31:" + diasMes);
+                log.info("cuota el 15-30 y mes 31:" + diasMes);
 
             } else if (diaPago >= 15 && diasMes == 30) {
                 /*cuota del 15-30 y mes 30*/
@@ -557,7 +557,6 @@ public class CuotaCreditoService {
         log.info("dias a cobrar:" + diasCobrar);
         double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
         valorMora = Constantes.MODALIDAD_MENSUAL.equals(modalidad) ? valorMora : (valorMora / 2);
-        valorMora = valorMora >= 25000 ? 25000 : valorMora;
         log.info("valorMora:" + valorMora);
         return valorMora;
     }
