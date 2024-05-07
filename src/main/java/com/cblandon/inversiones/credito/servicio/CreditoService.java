@@ -68,9 +68,15 @@ public class CreditoService {
                     .usuarios(usuarios)
                     .build();
             credito = creditoRepository.save(credito);
+
+            // si la modalidad es quincenal el interes se divide en 2
+            Double interesPorcentaje = registrarCreditoRequestDTO.modalidad().getId() == 1
+                    ? registrarCreditoRequestDTO.interesPorcentaje()
+                    : registrarCreditoRequestDTO.interesPorcentaje() / 2;
+
             Double interesPrimerCuota = calcularInteresPrimeraCuota(
                     registrarCreditoRequestDTO.valorCredito(),
-                    registrarCreditoRequestDTO.interesPorcentaje(),
+                    interesPorcentaje,
                     registrarCreditoRequestDTO.fechaCuota(),
                     registrarCreditoRequestDTO.fechaCredito(),
                     credito.getModalidad().getId()
@@ -81,7 +87,7 @@ public class CreditoService {
                     registrarCreditoRequestDTO.cantidadCuotas());
 
             double valorCuotas = cuotaCapital + (
-                    registrarCreditoRequestDTO.interesPorcentaje() / 100) *
+                    interesPorcentaje / 100) *
                     registrarCreditoRequestDTO.valorCredito();
 
             double valorPrimerCuota = cuotaCapital + interesPrimerCuota;
@@ -99,7 +105,7 @@ public class CreditoService {
                         .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(0.0)
                         .valorInteres(interesPrimerCuota)
-                        .interesPorcentaje(registrarCreditoRequestDTO.interesPorcentaje())
+                        .interesPorcentaje(interesPorcentaje)
                         .credito(credito)
                         .build();
 
@@ -117,7 +123,6 @@ public class CreditoService {
 
             return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
             log.error("crearCredito ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
 
