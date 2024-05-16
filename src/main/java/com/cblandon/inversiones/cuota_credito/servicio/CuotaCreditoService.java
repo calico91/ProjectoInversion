@@ -535,8 +535,8 @@ public class CuotaCreditoService {
     }
 
     /**
-     * por cada tres dias se genera un interes de mas por 5 mil pesos,
-     * despues de la primer mora, suma cada 4 dias 5k de mora, y maximo 25 de mora por cuota
+     * por cada tres dias de mora genera un interes de 5 mil pesos,
+     * despues de la primer mora, suma cada 4 dias 5k de mora
      */
     private Double calcularInteresMora(LocalDate fechaCuota, String modalidad) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
@@ -544,16 +544,13 @@ public class CuotaCreditoService {
 
         int diasCobrar = 0;
 
-        if (diasDiferencia >= 4) {
-            for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
-                if (i == 3) {
-                    i = -1;
-                    diasCobrar++;
-                }
-                i++;
+        for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
+            if (i % 4 == 0) {
+                diasCobrar++;
             }
-
+            i++;
         }
+
         log.info("dias a cobrar:" + diasCobrar);
         double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
         valorMora = Constantes.MODALIDAD_MENSUAL.equals(modalidad) ? valorMora : (valorMora / 2);
