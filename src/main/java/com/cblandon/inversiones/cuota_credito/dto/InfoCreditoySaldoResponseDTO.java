@@ -33,7 +33,7 @@ public class InfoCreditoySaldoResponseDTO {
 
     private Double saldoCredito;
     private Double capitalPagado;
-    private String ultimaCuotaPagada;
+    private LocalDate ultimaCuotaPagada;
     private String tipoAbono;
     private Boolean abonoExtra;
     private double abonoExtraPagado;
