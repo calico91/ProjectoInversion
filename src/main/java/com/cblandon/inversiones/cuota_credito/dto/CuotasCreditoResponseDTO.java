@@ -42,6 +42,8 @@ public class CuotasCreditoResponseDTO {
 
     private String modalidad;
 
+    private LocalDate fechaProximaMora;
+
 }
 
 

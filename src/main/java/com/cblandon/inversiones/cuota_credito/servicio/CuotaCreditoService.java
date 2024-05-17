@@ -37,6 +37,7 @@ public class CuotaCreditoService {
     }
 
     Map<String, Object> mapRespuesta = new HashMap<>();
+    LocalDate fechaProximaMora;
 
     /// pagar cuota normal,solo interes o solo capital,
     public Map<String, Object> pagarCuota(
@@ -212,6 +213,7 @@ public class CuotaCreditoService {
 
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
             infoCuotaPagar.setValorCredito(infoCuotaPagar.getValorCredito());
+            infoCuotaPagar.setFechaProximaMora(fechaProximaMora);
             log.info("consultarCuotaCreditoCliente " + infoCuotaPagar);
 
             return infoCuotaPagar;
@@ -541,20 +543,23 @@ public class CuotaCreditoService {
     private Double calcularInteresMora(LocalDate fechaCuota, String modalidad) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
         log.info("dias de mora:" + diasDiferencia);
+        fechaProximaMora = fechaCuota.plusDays(4);
 
         int diasCobrar = 0;
 
         for (int i = 1; diasDiferencia > 0; diasDiferencia--) {
             if (i % 4 == 0) {
+                fechaProximaMora = fechaProximaMora.plusDays(4);
                 diasCobrar++;
             }
             i++;
         }
-
+        log.info("fecha proxima mora".concat(fechaProximaMora.toString()));
         log.info("dias a cobrar:" + diasCobrar);
         double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
         valorMora = Constantes.MODALIDAD_MENSUAL.equals(modalidad) ? valorMora : (valorMora / 2);
         log.info("valorMora:" + valorMora);
+
         return valorMora;
     }
 
@@ -565,7 +570,8 @@ public class CuotaCreditoService {
 
         return Integer.parseInt(Long.toString(diasDiferencia));
     }
-//estado cuota credito
+
+    //estado cuota credito
     private void validarEstadoCuotaYCredito(Double valorAbono, int codigoEstadoCredito) {
         if (valorAbono != null) {
             throw new RequestException(MensajesErrorEnum.CUOTA_YA_PAGADA);
