@@ -34,8 +34,6 @@ public class SecurityConfig {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
 
-
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
