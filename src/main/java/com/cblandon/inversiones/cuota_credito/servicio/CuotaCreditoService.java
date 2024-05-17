@@ -565,7 +565,7 @@ public class CuotaCreditoService {
 
         return Integer.parseInt(Long.toString(diasDiferencia));
     }
-
+//estado cuota credito
     private void validarEstadoCuotaYCredito(Double valorAbono, int codigoEstadoCredito) {
         if (valorAbono != null) {
             throw new RequestException(MensajesErrorEnum.CUOTA_YA_PAGADA);
