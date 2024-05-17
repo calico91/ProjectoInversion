@@ -26,35 +26,35 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
 
     @Query(value = "    SELECT cr.saldo_credito,cr.valor_credito, cr.fecha_credito, m.description AS modalidad," +
             "           ccr.id_cuota_credito,ccr.couta_numero, ccr.fecha_cuota,ccr.interes_porcentaje,ccr.numero_cuotas," +
-            "           ccr.valor_cuota,ccr.valor_interes,ccr.tipo_abono,ccr.abono_extra, ccr.fecha_abono" +
-            "           FROM cuota_credito ccr " +
-            "           INNER JOIN credito cr ON cr.id_credito = ccr.id_credito " +
-            "           INNER JOIN modalidad m ON m.id_modalidad = cr.id_modalidad" +
+            "           ccr.valor_cuota,ccr.valor_interes,ccr.tipo_abono,ccr.abono_extra" +
+            "           FROM apirest.cuota_credito ccr " +
+            "           INNER JOIN apirest.credito cr ON cr.id_credito = ccr.id_credito " +
+            "           INNER JOIN apirest.modalidad m ON m.id_modalidad = cr.id_modalidad" +
             "           WHERE ccr.id_credito=:idCredito ORDER BY id_cuota_credito DESC",
             nativeQuery = true)
     List<Tuple> consultarInfoCreditoySaldo(@Param("idCredito") Integer idCredito);
 
     @Query(value = "SELECT  sum(valor_capital) as valorCapital, sum(valor_interes) as valorInteres " +
-            "    FROM cuota_credito ccr" +
+            "    FROM apirest.cuota_credito ccr" +
             "    where ccr.fecha_abono IS NOT NULL" +
             "    AND ccr.fecha_abono BETWEEN :fechaInicial AND :fechaFinal",
             nativeQuery = true)
     Tuple generarReporteInteresyCapital(@Param("fechaInicial") String fechaInicial, @Param("fechaFinal") String fechaFinal);
 
-    @Query(value = "SELECT * FROM cuota_credito " +
+    @Query(value = "SELECT * FROM apirest.cuota_credito " +
             "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",
             nativeQuery = true)
     CuotaCredito consultarUltimaCuotaGenerada(@Param("idCredito") int idCredito);
 
     @Query(value = "SELECT ccr.valor_abonado, ccr.fecha_abono, ccr.tipo_abono, ccr.couta_numero, ccr.id_cuota_credito" +
-            "       FROM cuota_credito as ccr WHERE id_credito = :idCredito ORDER BY fecha_abono DESC",
+            "       FROM apirest.cuota_credito as ccr WHERE id_credito = :idCredito ORDER BY fecha_abono DESC",
             nativeQuery = true)
     List<Tuple> consultarAbonosRealizadosPorCredito(@Param("idCredito") int idCredito);
 
     @Query(value = "SELECT cl.nombres, cl.apellidos, ccr.valor_abonado, ccr.fecha_abono" +
-            "       FROM cuota_credito ccr" +
-            "       INNER JOIN credito cr using(id_credito) " +
-            "       INNER JOIN cliente cl using(id_cliente)" +
+            "       FROM apirest.cuota_credito ccr" +
+            "       INNER JOIN apirest.credito cr using(id_credito) " +
+            "       INNER JOIN apirest.cliente cl using(id_cliente)" +
             "       WHERE valor_abonado IS NOT NULL " +
             "       ORDER BY fecha_abono DESC LIMIT :cantidadAbonos", nativeQuery = true)
     List<Tuple> consultarUltimosAbonosRealizados(@Param("cantidadAbonos") int cantidadAbonos);
