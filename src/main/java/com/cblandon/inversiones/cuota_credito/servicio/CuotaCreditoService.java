@@ -247,7 +247,6 @@ public class CuotaCreditoService {
                             .abonoExtra(Optional.ofNullable((Boolean) cuota.get("abono_extra")).orElse(false))
                             .modalidad(cuota.get("modalidad").toString())
                             .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
-                            .ultimaCuotaPagada(eliminarHoraFechaAbono(validarTimeStamp(cuota.get("fecha_abono"))))
                             .build()).toList();
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
@@ -265,8 +264,7 @@ public class CuotaCreditoService {
                     (Double) datosCredito.get("interesMora") + infoCreditoySaldo.get(0).getValorCuota());
             infoCreditoySaldo.get(0).setInteresHoy((Double) datosCredito.get("interesActual"));
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
-            infoCreditoySaldo.get(0).setUltimaCuotaPagada(eliminarHoraFechaAbono(
-                    datosCredito.get("ultimaCuotaPagada").toString()));
+            infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
 
             log.info("consultarInfoCreditoySaldo " + infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
@@ -358,7 +356,7 @@ public class CuotaCreditoService {
                     cuota -> AbonosRealizadosResponseDTO.builder()
                             .id(Integer.parseInt(cuota.get("id_cuota_credito").toString()))
                             .valorAbonado(Double.parseDouble(cuota.get("valor_abonado").toString()))
-                            .fechaAbono(eliminarHoraFechaAbono(cuota.get("fecha_abono").toString()))
+                            .fechaAbono(LocalDate.parse(cuota.get("fecha_abono").toString().substring(0, 10)))
                             .tipoAbono((String) cuota.get("tipo_abono"))
                             .cuotaNumero(Integer.parseInt(cuota.get("couta_numero").toString()))
                             .build()).toList();
@@ -383,7 +381,7 @@ public class CuotaCreditoService {
                             .nombres(abonos.get("nombres").toString())
                             .apellidos(abonos.get("apellidos").toString())
                             .valorAbonado(Double.parseDouble(abonos.get("valor_abonado").toString()))
-                            .fechaAbono(eliminarHoraFechaAbono(abonos.get("fecha_abono").toString()))
+                            .fechaAbono(LocalDate.parse(abonos.get("fecha_abono").toString().substring(0, 10)))
                             .build()).toList();
 
             log.info("consultarUltimosAbonosRealizados: ".concat(ultimosAbonosRealizadosDTO.toString()));
@@ -478,7 +476,7 @@ public class CuotaCreditoService {
 
         LocalDate diaCalcularInteres = index == 0
                 ? listaCuotas.get(index).getFechaCredito()
-                : listaCuotas.get(index).getUltimaCuotaPagada();
+                : listaCuotas.get(index).getFechaCuota();
 
         double interesActual = calcularInteresActual(
                 diaCalcularInteres,
@@ -576,31 +574,6 @@ public class CuotaCreditoService {
         if (codigoEstadoCredito != 1) {
             throw new RequestException(MensajesErrorEnum.ESTADO_NO_ACTIVO);
         }
-    }
-
-    /**
-     * elimina las horas del campo timeStamp y solo deja la fecha
-     */
-    private LocalDate eliminarHoraFechaAbono(String fechaAbono) {
-        if (fechaAbono != null) {
-            return LocalDate.parse(fechaAbono.substring(0, 10));
-
-        } else {
-            return LocalDate.now();
-        }
-    }
-
-    /**
-     * valida que el campo de fecha abono no venga nulo
-     */
-    private String validarTimeStamp(Object fechaAbono) {
-
-        if (fechaAbono == null) {
-            return "2025-10-10:00000000000000";
-        } else {
-            return fechaAbono.toString();
-        }
-
     }
 
 
