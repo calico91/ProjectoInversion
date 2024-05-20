@@ -26,9 +26,6 @@ public class JwtUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    @Value("${jwt.user.generator}")
-    private String usuarioGenerador;
-
     public String createToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
