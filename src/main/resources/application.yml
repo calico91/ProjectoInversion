@@ -1,0 +1,25 @@
+jwt:
+    secret:
+        key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
+security:
+    jwt:
+        user:
+            generator: tokencode
+spring:
+    datasource:
+        password: BBghC2h2e4-66hH1BEGGghgC25Gg5BEA
+        url: jdbc:mysql://inversiones.railway.internal:3306/apirest
+        username: root
+    jackson:
+        time-zone: America/Bogota
+    jpa:
+        database-platform: org.hibernate.dialect.MySQLDialect
+        hibernate:
+            ddl-auto: update
+springdoc:
+    api-docs:
+        enabled: true
+    pathsToMatch: /cliente/**,/credito/**
+    swagger-ui:
+        path: /doc/swagger-ui.html
+        enabled: true
