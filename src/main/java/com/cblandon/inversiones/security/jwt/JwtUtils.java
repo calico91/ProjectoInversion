@@ -26,7 +26,7 @@ public class JwtUtils {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    @Value("${security.jwt.user.generator}")
+    @Value("${jwt.user.generator}")
     private String usuarioGenerador;
 
     public String createToken(Authentication authentication) {
