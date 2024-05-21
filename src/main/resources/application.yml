@@ -7,7 +7,7 @@ security:
             generator: tokencode
 spring:
     datasource:
-        password: BBghC2h2e4-66hH1BEGGghgC25Gg5BEA
+        password: ENC(uUF04pj6KEBkd5HbsaEyEVs46WTWlstKFEsjN55Y6MD+52D5z9AR22SqaAR7vhvnZbv4RAmsx5sUbefHs8Mb1p2E+VqyOb9eVDRTWlHDB7w=)
         url: jdbc:mysql://inversiones.railway.internal:3306/apirest
         username: root
     jackson:
@@ -23,3 +23,9 @@ springdoc:
     swagger-ui:
         path: /doc/swagger-ui.html
         enabled: true
+    #seleccionar paquetes, clases a escanear
+    packagesToscan: com.cblandon.inversiones.credito
+
+jasypt:
+    encryptor:
+        password: maelito
