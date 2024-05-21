@@ -36,8 +36,8 @@ public class CuotaCreditoService {
         this.creditoRepository = creditoRepository;
     }
 
-    Map<String, Object> mapRespuesta = new HashMap<>();
-    LocalDate fechaProximaMora;
+    private final Map<String, Object> mapRespuesta = new HashMap<>();
+    private LocalDate fechaProximaMora;
 
     /// pagar cuota normal,solo interes o solo capital,
     public Map<String, Object> pagarCuota(
