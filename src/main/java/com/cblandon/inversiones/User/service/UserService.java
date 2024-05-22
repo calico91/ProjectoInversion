@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.user.service;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
@@ -62,7 +61,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
-
+        log.info("registrarUsuario: {}", registerUserRequestDTO);
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
 
         if (consultarUser.isPresent()) {
@@ -89,33 +88,41 @@ public class UserService implements UserDetailsService {
             return usuariosResponseDTO;
 
         } catch (RuntimeException ex) {
+            log.error("registrarUsuario: {}", ex.getMessage());
             throw new RuntimeException(ex);
         }
 
     }
 
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
-                .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
-                        null, MensajesErrorEnum.ERROR_AUTENTICACION));
+        log.info("login: {}", loginRequestDTO);
 
-        if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
-            throw new UsernameNotFoundExceptionCustom(
-                    null, MensajesErrorEnum.ERROR_AUTENTICACION);
+        try {
+            UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
+                    .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
+                            null, MensajesErrorEnum.ERROR_AUTENTICACION));
+
+            if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
+                throw new UsernameNotFoundExceptionCustom(
+                        null, MensajesErrorEnum.ERROR_AUTENTICACION);
+            }
+
+
+            return AuthResponseDTO.builder()
+                    .id(usuario.getId())
+                    .username(usuario.getUsername())
+                    .token(generarToken(usuario))
+                    .authorities(getAuthoritiesString(usuario.getRoles()))
+                    .build();
+        } catch (RuntimeException ex) {
+            log.error("login: {}", ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
 
-
-        return AuthResponseDTO.builder()
-                .id(usuario.getId())
-                .username(usuario.getUsername())
-                .token(generarToken(usuario))
-                .authorities(getAuthoritiesString(usuario.getRoles()))
-                .build();
     }
 
     public List<UsuariosResponseDTO> consultarUsuarios() {
-
-
+        log.info("consultarUsuarios: ");
         List<UserEntity> usuariosConsulta = userRepository.findAll();
         if (usuariosConsulta.isEmpty()) {
             throw new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS);
@@ -135,13 +142,15 @@ public class UserService implements UserDetailsService {
 
 
         } catch (RuntimeException ex) {
+            log.error("consultarUsuarios: {}", ex.getMessage());
+
             throw new RuntimeException(ex.getMessage());
         }
 
     }
 
     public UserEntity actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
-
+        log.info("actualizarUsuario: {}", registrarClienteDTO);
         UserEntity usuarioBD = userRepository.findByUsername(username).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
         try {
@@ -164,48 +173,45 @@ public class UserService implements UserDetailsService {
             return userRepository.save(usuarioModificado);
 
         } catch (RuntimeException ex) {
+            log.error("actualizarUsuario: {}", ex.getMessage());
+
             throw new RuntimeException(ex.getMessage());
         }
 
 
     }
 
-    public AuthResponseDTO getUserDetails(String token) {
-        DecodedJWT decodedJWT = jwtUtils.validateToken(token);
-        String username = jwtUtils.extractUsername(decodedJWT);
-        UserEntity user = userRepository.findByUsername(username).orElseThrow();
-        log.info("getUserDetails:".concat(user.toString()));
-        return AuthResponseDTO.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .authorities(getAuthoritiesString(user.getRoles()))
-                .build();
-    }
-
 
     public AuthResponseDTO authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
+        log.info("authBiometrica: {}", authBiometriaRequestDTO);
+        try {
+            UserEntity usuario = userRepository.findByUsername(
+                    authBiometriaRequestDTO.username()).orElseThrow(() ->
+                    new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
 
-        UserEntity usuario = userRepository.findByUsername(
-                authBiometriaRequestDTO.username()).orElseThrow(() ->
-                new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
+            if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
+                throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
+            }
 
-        if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
-            throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
+            return AuthResponseDTO.builder()
+                    .id(usuario.getId())
+                    .username(usuario.getUsername())
+                    .token(generarToken(usuario))
+                    .authorities(getAuthoritiesString(usuario.getRoles()))
+                    .build();
+
+        } catch (RuntimeException ex) {
+            log.error("authBiometrica: {}", ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
-
-        return AuthResponseDTO.builder()
-                .id(usuario.getId())
-                .username(usuario.getUsername())
-                .token(generarToken(usuario))
-                .authorities(getAuthoritiesString(usuario.getRoles()))
-                .build();
-
     }
+
 
     /**
      * se registra el id del dispositivo con el cual se desea hacer auth biometrica
      */
     public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
+        log.info("vincularDispositivo: {}", registrarDispositivoDTO);
         try {
 
             UserEntity user = userRepository.findByUsername(
@@ -217,6 +223,7 @@ public class UserService implements UserDetailsService {
 
             return "Dispositivo vinculado correctamente";
         } catch (RuntimeException ex) {
+            log.error("vincularDispositivo: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 

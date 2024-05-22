@@ -42,6 +42,3 @@ springdoc:
     #seleccionar paquetes, clases a escanear
     packagesToscan: com.cblandon.inversiones.credito
 
-jasypt:
-    encryptor:
-        password: maelito

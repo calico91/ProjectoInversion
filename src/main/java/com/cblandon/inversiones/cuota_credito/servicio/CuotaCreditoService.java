@@ -44,7 +44,7 @@ public class CuotaCreditoService {
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
 
-        log.info(pagarCuotaRequestDTO.toString());
+        log.info("pagarCuota: {}", pagarCuotaRequestDTO.toString());
 
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
@@ -172,10 +172,10 @@ public class CuotaCreditoService {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
             }
 
-            log.info("pagarCuota " + mapRespuesta);
+            log.info("pagarCuota: {}", mapRespuesta);
             return mapRespuesta;
         } catch (RuntimeException ex) {
-            log.error("pagarCuota " + ex.getMessage());
+            log.error("pagarCuota: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -214,13 +214,13 @@ public class CuotaCreditoService {
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
             infoCuotaPagar.setValorCredito(infoCuotaPagar.getValorCredito());
             infoCuotaPagar.setFechaProximaMora(fechaProximaMora);
-            log.info("consultarCuotaCreditoCliente " + infoCuotaPagar);
+            log.info("consultarCuotaCreditoCliente: {}", infoCuotaPagar);
 
             return infoCuotaPagar;
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCuotaCreditoCliente " + ex.getMessage());
+            log.error("consultarInfoCuotaCreditoCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -268,10 +268,10 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
 
-            log.info("consultarInfoCreditoySaldo " + infoCreditoySaldo.get(0).toString());
+            log.info("consultarInfoCreditoySaldo: {}", infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCreditoySaldo " + ex.getMessage());
+            log.error("consultarInfoCreditoySaldo: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -293,12 +293,12 @@ public class CuotaCreditoService {
             mapRespuesta.put("capitalMes", Math.rint(valorCapital));
             mapRespuesta.put("interesMes", Math.rint(valorInteres));
 
-            log.info("informacion capital e interes " + mapRespuesta);
+            log.info("informacion capital e interes: {}", mapRespuesta);
 
             return mapRespuesta;
 
         } catch (RuntimeException ex) {
-            log.error("informacion capital e interes " + ex.getMessage());
+            log.error("informacion capital e interes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -330,13 +330,13 @@ public class CuotaCreditoService {
                     mapperCuotaCredito.
                     cuotaCreditoToCuotasCreditoResponseDTO(cuotaGenerada);
 
-            log.info("modificarFechaPago " + cuotasCreditoResponseDTO.toString());
+            log.info("modificarFechaPago: {}", cuotasCreditoResponseDTO.toString());
 
             return cuotasCreditoResponseDTO;
 
         } catch (RuntimeException ex) {
 
-            log.error("modificarFechaPago " + ex.getMessage());
+            log.error("modificarFechaPago: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -352,7 +352,7 @@ public class CuotaCreditoService {
 
             cuotasPagas.remove(cuotasPagas.size() - 1);
 
-            log.info("consultarAbonosRealizados " + cuotasPagas.size());
+            log.info("consultarAbonosRealizados: {}", cuotasPagas.size());
 
             return cuotasPagas.stream().map(
                     cuota -> AbonosRealizadosResponseDTO.builder()
@@ -364,7 +364,7 @@ public class CuotaCreditoService {
                             .build()).toList();
 
         } catch (RuntimeException ex) {
-            log.error("consultarAbonosRealizados " + ex.getMessage());
+            log.error("consultarAbonosRealizados: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -386,12 +386,12 @@ public class CuotaCreditoService {
                             .fechaAbono(LocalDate.parse(abonos.get("fecha_abono").toString().substring(0, 10)))
                             .build()).toList();
 
-            log.info("consultarUltimosAbonosRealizados: ".concat(ultimosAbonosRealizadosDTO.toString()));
+            log.info("consultarUltimosAbonosRealizados: {}", ultimosAbonosRealizadosDTO);
             return ultimosAbonosRealizadosDTO;
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarUltimosAbonosRealizados " + ex.getMessage());
+            log.error("consultarUltimosAbonosRealizados: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -405,12 +405,12 @@ public class CuotaCreditoService {
 
             AbonoPorIdDTO abonoPorId = cuotaCreditoRepository.consultarAbonoPorId(idCuotaCredito);
 
-            log.info("consultarAbonoPorId: ".concat(abonoPorId.toString()));
+            log.info("consultarAbonoPorId: {}", abonoPorId.toString());
             return abonoPorId;
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarAbonoPorId " + ex.getMessage());
+            log.error("consultarAbonoPorId: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -427,22 +427,18 @@ public class CuotaCreditoService {
             if (diaPago >= 15 && diasMes == 31) {
                 /*cuota del 15-30 y mes 31*/
                 diasMes = 16;
-                log.info("cuota el 15-30 y mes 31:" + diasMes);
 
             } else if (diaPago >= 15 && diasMes == 30) {
                 /*cuota del 15-30 y mes 30*/
                 diasMes = 15;
-                log.info("cuota el 15-30 y mes 30:" + diasMes);
 
             } else if (diaPago >= 15 && diasMes < 30) {
                 /*cuota del 15-30 del mes de febrero y si es año bisiesto*/
                 diasMes = diasMes == 29 ? 14 : 13;
-                log.info("cuota el 15-30 del mes de febrero y si es año bisiesto:" + diasMes);
 
             } else {
                 /*cuota del 1-15*/
                 diasMes = 15;
-                log.info("cuota el 1-15:" + diasMes);
             }
             diasMes = (int) Math.ceil(Double.parseDouble(Integer.toString(diasMes)));
         }

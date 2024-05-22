@@ -48,11 +48,6 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.actualizarUsuario(username, registerUserRequestDTO));
     }
 
-    @GetMapping("getUser")
-    public ResponseEntity<GenericResponseDTO> getUser(@RequestHeader(HttpHeaders.AUTHORIZATION) final String token) {
-        return GenericResponseDTO.genericResponse(userService.getUserDetails(token));
-    }
-
     @PostMapping("auth-biometrica")
     public ResponseEntity<GenericResponseDTO> authBiometrica(
             @RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
