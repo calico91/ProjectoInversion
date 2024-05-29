@@ -8,7 +8,7 @@ security:
 spring:
     datasource:
         password: ENC(uUF04pj6KEBkd5HbsaEyEVs46WTWlstKFEsjN55Y6MD+52D5z9AR22SqaAR7vhvnZbv4RAmsx5sUbefHs8Mb1p2E+VqyOb9eVDRTWlHDB7w=)
-        url: jdbc:mysql://inversiones.railway.internal:3306/apirest
+        url: ${DATABASE_URL}
         username: root
     jackson:
         time-zone: America/Bogota
