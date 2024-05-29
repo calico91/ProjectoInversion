@@ -1,31 +1,31 @@
 jwt:
-    secret:
-        key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
+  secret:
+    key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
 security:
-    jwt:
-        user:
-            generator: tokencode
+  jwt:
+    user:
+      generator: tokencode
 spring:
-    datasource:
-        password: ENC(uUF04pj6KEBkd5HbsaEyEVs46WTWlstKFEsjN55Y6MD+52D5z9AR22SqaAR7vhvnZbv4RAmsx5sUbefHs8Mb1p2E+VqyOb9eVDRTWlHDB7w=)
-        url: ${DATABASE_URL}
-        username: root
-    jackson:
-        time-zone: America/Bogota
-    jpa:
-        database-platform: org.hibernate.dialect.MySQLDialect
-        hibernate:
-            ddl-auto: update
+  datasource:
+    password: ${DATABASE_PASSWORD}
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+  jackson:
+    time-zone: America/Bogota
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
 springdoc:
-    api-docs:
-        enabled: true
-    pathsToMatch: /cliente/**,/credito/**
-    swagger-ui:
-        path: /doc/swagger-ui.html
-        enabled: true
-    #seleccionar paquetes, clases a escanear
-    packagesToscan: com.cblandon.inversiones.credito
+  api-docs:
+    enabled: true
+  pathsToMatch: /cliente/**,/credito/**
+  swagger-ui:
+    path: /doc/swagger-ui.html
+    enabled: true
+  #seleccionar paquetes, clases a escanear
+  packagesToscan: com.cblandon.inversiones.credito
 
 jasypt:
-    encryptor:
-        password: maelito
+  encryptor:
+    password: maelito
