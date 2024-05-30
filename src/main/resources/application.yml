@@ -16,7 +16,7 @@ logging:
                 SQL: DEBUG
 spring:
     datasource:
-        password: ENC(qR0tWIke7ESiL++MKUbIx9ZiwB+BWIgF1j6zLyEOReTfJiQPXz3YEqlGMXEW6aFK)
+        password: sasa
         url: jdbc:mysql://localhost:3306/apirest
         username: root
     #zona horaria

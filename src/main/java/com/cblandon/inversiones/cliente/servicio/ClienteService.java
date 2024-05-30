@@ -27,7 +27,6 @@ public class ClienteService {
 
     final ClienteRepository clienteRepository;
 
-    final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
     @Transactional
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
@@ -39,7 +38,7 @@ public class ClienteService {
         }
         try {
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-            cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
+            cliente.setUsuariocreador(UtilsMetodos.obtenerUsuarioLogueado());
 
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
@@ -102,7 +101,7 @@ public class ClienteService {
 
             Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
             clienteModificado.setId(clienteBD.getId());
-            clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
+            clienteModificado.setUsuariomodificador(UtilsMetodos.obtenerUsuarioLogueado());
             clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
             clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
 
