@@ -27,11 +27,10 @@ public class ClienteService {
 
     final ClienteRepository clienteRepository;
 
-    final UtilsMetodos utilsMetodos = new UtilsMetodos();
 
     @Transactional
     public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
-        log.info("createCliente registrarClienteDTO: ".concat(registrarClienteDTO.toString()));
+        log.info("createCliente registrarClienteDTO: {}", registrarClienteDTO.toString());
 
         if (clienteRepository.findByCedula(registrarClienteDTO.cedula()).isPresent()) {
             throw new RequestException(
@@ -39,12 +38,12 @@ public class ClienteService {
         }
         try {
             Cliente cliente = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
-            cliente.setUsuariocreador(utilsMetodos.obtenerUsuarioLogueado());
+            cliente.setUsuariocreador(UtilsMetodos.obtenerUsuarioLogueado());
 
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
         } catch (RuntimeException ex) {
-            log.error("createCliente ".concat(ex.getMessage()));
+            log.error("createCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -59,12 +58,12 @@ public class ClienteService {
             List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
                     Mapper.mapper::clienteToClienteAllResponseDto).toList();
 
-            log.info("allClientes ".concat(clienteResponseDTO.toString()));
+            log.info("allClientes: {}", clienteResponseDTO);
 
             return clienteResponseDTO;
 
         } catch (RuntimeException ex) {
-            log.error("allClientes ".concat(ex.getMessage()));
+            log.error("allClientes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -79,12 +78,12 @@ public class ClienteService {
         try {
 
             ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
-            log.info("consultarCliente ".concat(clienteResponseDTO.toString()));
+            log.info("consultarCliente: {}", clienteResponseDTO.toString());
             return clienteResponseDTO;
 
         } catch (RuntimeException ex) {
 
-            log.error("consultarCliente ".concat(ex.getMessage()));
+            log.error("consultarCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -94,7 +93,7 @@ public class ClienteService {
     @Transactional
     public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
 
-        log.info("actualizarCliente ".concat(registrarClienteDTO.toString()));
+        log.info("actualizarCliente: {}", registrarClienteDTO.toString());
         Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
@@ -102,14 +101,14 @@ public class ClienteService {
 
             Cliente clienteModificado = Mapper.mapper.registrarClienteDTOToCliente(registrarClienteDTO);
             clienteModificado.setId(clienteBD.getId());
-            clienteModificado.setUsuariomodificador(utilsMetodos.obtenerUsuarioLogueado());
+            clienteModificado.setUsuariomodificador(UtilsMetodos.obtenerUsuarioLogueado());
             clienteModificado.setUsuariocreador(clienteBD.getUsuariocreador());
             clienteModificado.setFechacreacion(clienteBD.getFechacreacion());
 
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
         } catch (RuntimeException ex) {
-            log.error("actualizarCliente " + ex.getMessage());
+            log.error("actualizarCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -136,11 +135,11 @@ public class ClienteService {
             List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(
                     fechaFiltro, idUsuario);
 
-            log.info("infoClientesCuotasPendientes ".concat(listaCreditosdto.toString()));
+            log.info("infoClientesCuotasPendientes: {} ", listaCreditosdto.toString());
             return listaCreditosdto;
 
         } catch (RuntimeException ex) {
-            log.error("infoClientesCuotasPendientes ".concat(ex.getMessage()));
+            log.error("infoClientesCuotasPendientes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 

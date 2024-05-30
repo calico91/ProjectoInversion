@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -42,7 +41,7 @@ public class CreditoService {
 
     @Transactional()
     public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        log.info("crearCredito peticion " + registrarCreditoRequestDTO);
+        log.info("crearCredito: {}", registrarCreditoRequestDTO);
 
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
@@ -111,7 +110,7 @@ public class CreditoService {
 
                 cuotaCreditoRepository.save(cuotaCredito);
             }
-            RegistrarCreditoResponseDTO registrarCreditoResponseDTO = RegistrarCreditoResponseDTO.builder()
+            return RegistrarCreditoResponseDTO.builder()
                     .cantidadCuotas(registrarCreditoRequestDTO.cantidadCuotas().toString())
                     .fechaPago(registrarCreditoRequestDTO.fechaCuota().toString())
                     .valorPrimerCuota(Double.toString(valorPrimerCuota))
@@ -119,11 +118,8 @@ public class CreditoService {
                     .valorCuotas(Double.toString(valorCuotas))
                     .build();
 
-            log.info("crearCredito ".concat(registrarCreditoResponseDTO.toString()));
-
-            return registrarCreditoResponseDTO;
         } catch (RuntimeException ex) {
-            log.error("crearCredito ".concat(ex.getMessage()));
+            log.error("crearCredito: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
         }
@@ -133,13 +129,18 @@ public class CreditoService {
 
     @Transactional(readOnly = true)
     public CreditoCuotasResponseDTO consultarCredito(Integer idCredito) throws NoDataException {
+        try {
+            Credito credito = creditoRepository.findById(idCredito)
+                    .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
-        Credito credito = creditoRepository.findById(idCredito)
-                .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
+            log.info("consultarCredito: {}", credito.toString());
 
-        log.info("consultarCredito ".concat(credito.toString()));
+            return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
+        } catch (RuntimeException ex) {
+            log.error("consultarCredito: {}", ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
 
-        return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
     }
 
     /**
@@ -151,12 +152,12 @@ public class CreditoService {
 
             List<CreditosActivosDTO> listaClientes = creditoRepository.consultarClientesConCreditosActivos();
 
-            log.info("consultarInfoCreditosActivos ".concat(listaClientes.toString()));
+            log.info("consultarInfoCreditosActivos: {}", listaClientes.toString());
 
             return listaClientes;
 
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCreditosActivos ".concat(ex.getMessage()));
+            log.error("consultarInfoCreditosActivos: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -164,7 +165,7 @@ public class CreditoService {
 
     @Transactional()
     public String modificarEstadoCredito(int idCredito, int idstadoCredito) throws NoDataException {
-
+        log.error("modificarEstadoCredito: {}", idCredito);
         Credito creditoConsultado = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(
                         MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
@@ -180,7 +181,7 @@ public class CreditoService {
             return "Estado de credito ".concat(estadoCredito.getDescripcion());
 
         } catch (RuntimeException ex) {
-            log.error("modificarEstadoCredito");
+            log.error("modificarEstadoCredito: {}", ex.getMessage());
             throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
     }
