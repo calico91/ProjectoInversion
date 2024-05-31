@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: apirest
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -217,7 +217,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'ADMIN'),(2,'USUARIO'),(3,'COBRADOR');
+INSERT INTO `roles` VALUES (1,'ADMIN'),(2,'USUARIO'),(3,'COBRADOR'), (4,'GENERICO');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
