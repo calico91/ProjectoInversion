@@ -40,7 +40,7 @@ public class CreditoService {
     private final EstadoCreditoRepository estadoCreditoRepository;
 
     @Transactional()
-    public RegistrarCreditoResponseDTO crearCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
+    public RegistrarCreditoResponseDTO registrarCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         log.info("crearCredito: {}", registrarCreditoRequestDTO);
 
         Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())

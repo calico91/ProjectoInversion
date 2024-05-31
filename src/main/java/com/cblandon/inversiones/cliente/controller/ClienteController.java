@@ -19,39 +19,39 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
-    public ResponseEntity<GenericResponseDTO> createCliente(
+    @PostMapping("/registrar-cliente")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(1))")
+    public ResponseEntity<GenericResponseDTO> registrarCliente(
             @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
-        return GenericResponseDTO.genericResponse(clienteService.createCliente(registrarClienteDTO));
+        return GenericResponseDTO.genericResponse(clienteService.registrarCliente(registrarClienteDTO));
 
     }
 
-    @GetMapping("/consultarClientes")
-    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
+    @GetMapping("/consultar-clientes")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(2))")
     public ResponseEntity<GenericResponseDTO> consultarClientes() {
         return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
 
-    @GetMapping("/consultarClientePorCedula/{cedula}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/consultar-cliente-por-cedula/{cedula}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(3))")
     public ResponseEntity<GenericResponseDTO> consultarCliente(@PathVariable String cedula) {
         return GenericResponseDTO.genericResponse(clienteService.consultarCliente(cedula));
 
 
     }
 
-    @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}/{idUsuario}")
-    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
-    public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(
+    @GetMapping("/consultar-cuotas-por-fecha/{fechaFiltro}/{idUsuario}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(4))")
+    public ResponseEntity<GenericResponseDTO> consultarCuotasPorFechas(
             @PathVariable String fechaFiltro, @PathVariable int idUsuario) {
         return GenericResponseDTO.genericResponse(
                 clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro), idUsuario));
     }
 
-    @PutMapping("/actualizarCliente/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/actualizar-cliente/{id}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(5))")
     public ResponseEntity<GenericResponseDTO> actualizarCliente(
             @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
 

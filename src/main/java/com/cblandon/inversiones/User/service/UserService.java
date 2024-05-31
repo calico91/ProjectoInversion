@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,6 +61,7 @@ public class UserService implements UserDetailsService {
                 getAuthorities(userEntity.getRoles()));
     }
 
+    @Transactional
     public UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
         log.info("registrarUsuario: {}", registerUserRequestDTO);
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
@@ -94,26 +96,27 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @Transactional(readOnly = true)
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
         log.info("login: {}", loginRequestDTO);
 
+        UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
+                .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
+                        null, MensajesErrorEnum.ERROR_AUTENTICACION));
+
+        if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
+            throw new UsernameNotFoundExceptionCustom(
+                    null, MensajesErrorEnum.ERROR_AUTENTICACION);
+        }
         try {
-            UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
-                    .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
-                            null, MensajesErrorEnum.ERROR_AUTENTICACION));
-
-            if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
-                throw new UsernameNotFoundExceptionCustom(
-                        null, MensajesErrorEnum.ERROR_AUTENTICACION);
-            }
-
-
             return AuthResponseDTO.builder()
                     .id(usuario.getId())
                     .username(usuario.getUsername())
                     .token(generarToken(usuario))
                     .authorities(getAuthoritiesString(usuario.getRoles()))
                     .build();
+
+
         } catch (RuntimeException ex) {
             log.error("login: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
@@ -121,6 +124,7 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<UsuariosResponseDTO> consultarUsuarios() {
         log.info("consultarUsuarios: ");
         List<UserEntity> usuariosConsulta = userRepository.findAll();
@@ -149,6 +153,7 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @Transactional
     public UserEntity actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
         log.info("actualizarUsuario: {}", registrarClienteDTO);
         UserEntity usuarioBD = userRepository.findByUsername(username).orElseThrow(
@@ -181,17 +186,18 @@ public class UserService implements UserDetailsService {
 
     }
 
-
+    @Transactional(readOnly = true)
     public AuthResponseDTO authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
         log.info("authBiometrica: {}", authBiometriaRequestDTO);
-        try {
-            UserEntity usuario = userRepository.findByUsername(
-                    authBiometriaRequestDTO.username()).orElseThrow(() ->
-                    new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
+        UserEntity usuario = userRepository.findByUsername(
+                authBiometriaRequestDTO.username()).orElseThrow(() ->
+                new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
 
-            if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
-                throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
-            }
+        if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
+            throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
+        }
+
+        try {
 
             return AuthResponseDTO.builder()
                     .id(usuario.getId())
@@ -210,13 +216,13 @@ public class UserService implements UserDetailsService {
     /**
      * se registra el id del dispositivo con el cual se desea hacer auth biometrica
      */
+    @Transactional
     public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
         log.info("vincularDispositivo: {}", registrarDispositivoDTO);
+        UserEntity user = userRepository.findByUsername(
+                registrarDispositivoDTO.username()).orElseThrow(() ->
+                new UsernameNotFoundException("No se encontro usuario"));
         try {
-
-            UserEntity user = userRepository.findByUsername(
-                    registrarDispositivoDTO.username()).orElseThrow(() ->
-                    new UsernameNotFoundException("No se encontro usuario"));
 
             user.setIdMovil(passwordEncoder.encode(registrarDispositivoDTO.idDispositivo()));
             userRepository.save(user);
@@ -227,6 +233,25 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException(ex.getMessage());
         }
 
+    }
+
+    @Transactional
+    public String cambiarContrasena(CambiarContrasenaDTO cambiarContrasenaDTO) {
+        log.info("cambiarContrasena: {}", cambiarContrasenaDTO.toString());
+        UserEntity usuarioBD = userRepository.findById(cambiarContrasenaDTO.idUsuario()).orElseThrow(
+                () -> new UsernameNotFoundException("No se encontro usuario"));
+
+        if (!passwordEncoder.matches(cambiarContrasenaDTO.contrasenaAntigua(), usuarioBD.getPassword())) {
+            throw new RequestException(MensajesErrorEnum.CONTRASENA_ANTIGUA_INCORRECTA);
+        }
+        try {
+            usuarioBD.setPassword(passwordEncoder.encode(cambiarContrasenaDTO.contrasenaNueva()));
+            userRepository.save(usuarioBD);
+            return "Contrasena modificada correctamente";
+        } catch (RuntimeException ex) {
+            log.error("cambiarContrasena: ".concat(ex.getMessage()));
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Roles> roles) {

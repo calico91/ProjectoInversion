@@ -51,6 +51,7 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     List<Tuple> consultarAbonosRealizadosPorCredito(@Param("idCredito") int idCredito);
 
+
     @Query(value = "SELECT cl.nombres, cl.apellidos, ccr.valor_abonado, ccr.fecha_abono" +
             "       FROM apirest.cuota_credito ccr" +
             "       INNER JOIN apirest.credito cr using(id_credito) " +

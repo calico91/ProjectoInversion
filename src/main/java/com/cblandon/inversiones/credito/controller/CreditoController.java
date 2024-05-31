@@ -19,35 +19,37 @@ public class CreditoController {
         this.creditoService = creditoService;
     }
 
-    @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
-    public ResponseEntity<GenericResponseDTO> crearCredito(
+    @PostMapping("/registrar-credito")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(6))")
+    public ResponseEntity<GenericResponseDTO> registrarCredito(
             @RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        return GenericResponseDTO.genericResponse(creditoService.crearCredito(registrarCreditoRequestDTO));
+        return GenericResponseDTO.genericResponse(creditoService.registrarCredito(registrarCreditoRequestDTO));
     }
 
 
-    @GetMapping("/consultarCredito/{idCredito}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/consultar-credito/{idCredito}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(7))")
     public ResponseEntity<GenericResponseDTO> consultarCredito(@PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(creditoService.consultarCredito(idCredito));
 
     }
 
-    @GetMapping("/infoCreditosActivos")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<GenericResponseDTO> infoCreditosActivos() {
+    @GetMapping("/consultar-creditos-activos")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(8))")
+    public ResponseEntity<GenericResponseDTO> consultarCreditosActivos() {
         return GenericResponseDTO.genericResponse(creditoService.consultarCreditosActivos());
     }
 
-    @PutMapping("/modificarEstadoCredito/{idCredito}/{idEstadoCredito}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/modificar-estado-credito/{idCredito}/{idEstadoCredito}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(9))")
     public ResponseEntity<GenericResponseDTO> modificarEstadoCredito(
             @PathVariable int idCredito,
             @PathVariable int idEstadoCredito) {
 
         return GenericResponseDTO.genericResponse(creditoService.modificarEstadoCredito(idCredito, idEstadoCredito));
     }
+
+
 
 
 }
