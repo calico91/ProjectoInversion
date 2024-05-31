@@ -184,7 +184,7 @@ public class CuotaCreditoService {
     }
 
     @Transactional(readOnly = true)
-    public CuotasCreditoResponseDTO consultarCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
+    public CuotasCreditoResponseDTO consultarCuotaCliente(Integer idCliente, Integer idCredito) {
         try {
             Tuple infoConsulta = cuotaCreditoRepository.consultarCuotaCreditoCliente(idCliente, idCredito);
 
@@ -233,7 +233,7 @@ public class CuotaCreditoService {
      * saldo del credito hasta la fecha y otros datos del credito
      */
     @Transactional(readOnly = true)
-    public InfoCreditoySaldoResponseDTO consultarInfoCreditoySaldo(Integer idCredito) {
+    public InfoCreditoySaldoResponseDTO consultarCreditoSaldo(Integer idCredito) {
         try {
             List<Tuple> cuotas = cuotaCreditoRepository.consultarInfoCreditoySaldo(idCredito);
 
@@ -281,7 +281,7 @@ public class CuotaCreditoService {
 
     /// informacion del capital e interes generado segun el mes seleccionado
     @Transactional(readOnly = true)
-    public Map<String, Object> generarReporteInteresyCapital(String fechaInicial, String fechaFinal) {
+    public Map<String, Object> generarReporteInteresCapital(String fechaInicial, String fechaFinal) {
         try {
 
             Tuple interesYcapital = cuotaCreditoRepository.generarReporteInteresyCapital(fechaInicial, fechaFinal);

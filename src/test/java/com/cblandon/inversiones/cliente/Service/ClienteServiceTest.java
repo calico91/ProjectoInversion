@@ -87,7 +87,7 @@ class ClienteServiceTest {
         given(clienteRepository.save(any())).willReturn(cliente);
 
         //when
-        ClienteResponseDTO clienteGuardado = clienteService.createCliente(clienteDTO);
+        ClienteResponseDTO clienteGuardado = clienteService.registrarCliente(clienteDTO);
 
         //then
         assertThat(clienteGuardado).isNotNull();
@@ -105,7 +105,7 @@ class ClienteServiceTest {
 
         //when
         assertThrows(RequestException.class, () ->
-                clienteService.createCliente(registrarClienteDto));
+                clienteService.registrarCliente(registrarClienteDto));
 
 
         //then

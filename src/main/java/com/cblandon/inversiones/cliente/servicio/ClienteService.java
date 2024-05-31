@@ -29,7 +29,7 @@ public class ClienteService {
 
 
     @Transactional
-    public ClienteResponseDTO createCliente(RegistrarClienteDTO registrarClienteDTO) {
+    public ClienteResponseDTO registrarCliente(RegistrarClienteDTO registrarClienteDTO) {
         log.info("createCliente registrarClienteDTO: {}", registrarClienteDTO.toString());
 
         if (clienteRepository.findByCedula(registrarClienteDTO.cedula()).isPresent()) {

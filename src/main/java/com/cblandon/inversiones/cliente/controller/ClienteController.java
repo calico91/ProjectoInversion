@@ -19,22 +19,22 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @PostMapping
+    @PostMapping("/registrar-cliente")
     @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
-    public ResponseEntity<GenericResponseDTO> createCliente(
+    public ResponseEntity<GenericResponseDTO> registrarCliente(
             @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
-        return GenericResponseDTO.genericResponse(clienteService.createCliente(registrarClienteDTO));
+        return GenericResponseDTO.genericResponse(clienteService.registrarCliente(registrarClienteDTO));
 
     }
 
-    @GetMapping("/consultarClientes")
+    @GetMapping("/consultar-clientes")
     @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
     public ResponseEntity<GenericResponseDTO> consultarClientes() {
         return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
 
-    @GetMapping("/consultarClientePorCedula/{cedula}")
+    @GetMapping("/consultar-cliente-por-cedula/{cedula}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> consultarCliente(@PathVariable String cedula) {
         return GenericResponseDTO.genericResponse(clienteService.consultarCliente(cedula));
@@ -42,15 +42,15 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/infoClientesCuotaCredito/{fechaFiltro}/{idUsuario}")
+    @GetMapping("/consultar-cuotas-por-fecha/{fechaFiltro}/{idUsuario}")
     @PreAuthorize("hasAnyRole('ADMIN','COBRADOR')")
-    public ResponseEntity<GenericResponseDTO> infoClientesCuotaCredito(
+    public ResponseEntity<GenericResponseDTO> consultarCuotasPorFechas(
             @PathVariable String fechaFiltro, @PathVariable int idUsuario) {
         return GenericResponseDTO.genericResponse(
                 clienteService.consultarClientesCuotasPendientes(LocalDate.parse(fechaFiltro), idUsuario));
     }
 
-    @PutMapping("/actualizarCliente/{id}")
+    @PutMapping("/actualizar-cliente/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<GenericResponseDTO> actualizarCliente(
             @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
