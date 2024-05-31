@@ -1,9 +1,6 @@
 package com.cblandon.inversiones.user.controller;
 
-import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
-import com.cblandon.inversiones.user.dto.LoginRequestDTO;
-import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
-import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
+import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.user.service.UserService;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import lombok.AllArgsConstructor;
@@ -27,7 +24,7 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.register(registerUserRequestDTO));
     }
 
-    @PostMapping(value = "login", consumes = {"*/*"})
+    @PostMapping(value = "login")
     public ResponseEntity<GenericResponseDTO> login(
             @RequestBody LoginRequestDTO loginRequestDTO) {
         return GenericResponseDTO.genericResponse(userService.login(loginRequestDTO));
@@ -58,5 +55,10 @@ public class UserController {
             @RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
         return GenericResponseDTO.genericResponse(userService.vincularDispositivo(registrarDispositivoDTO));
 
+    }
+
+    @PutMapping(value = "cambiar-contrasena")
+    public ResponseEntity<GenericResponseDTO> cambiarContrasena(@RequestBody CambiarContrasenaDTO cambiarContrasenaDTO) {
+        return GenericResponseDTO.genericResponse(userService.cambiarContrasena(cambiarContrasenaDTO));
     }
 }

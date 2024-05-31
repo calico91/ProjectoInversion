@@ -13,7 +13,6 @@ import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
-import com.cblandon.inversiones.utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -40,7 +40,8 @@ public class CuotaCreditoService {
     private final Map<String, Object> mapRespuesta = new HashMap<>();
     private LocalDate fechaProximaMora;
 
-    /// pagar cuota normal,solo interes o solo capital,
+    /// pagar cuota normal,solo interes o solo capital
+    @Transactional
     public Map<String, Object> pagarCuota(
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
@@ -182,7 +183,7 @@ public class CuotaCreditoService {
 
     }
 
-
+    @Transactional(readOnly = true)
     public CuotasCreditoResponseDTO consultarCuotaCreditoCliente(Integer idCliente, Integer idCredito) {
         try {
             Tuple infoConsulta = cuotaCreditoRepository.consultarCuotaCreditoCliente(idCliente, idCredito);
@@ -231,6 +232,7 @@ public class CuotaCreditoService {
     /**
      * saldo del credito hasta la fecha y otros datos del credito
      */
+    @Transactional(readOnly = true)
     public InfoCreditoySaldoResponseDTO consultarInfoCreditoySaldo(Integer idCredito) {
         try {
             List<Tuple> cuotas = cuotaCreditoRepository.consultarInfoCreditoySaldo(idCredito);
@@ -259,11 +261,6 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setCapitalPagado(
                     infoCreditoySaldo.get(0).getValorCredito() - infoCreditoySaldo.get(0).getSaldoCredito());
 
-            infoCreditoySaldo.get(0).setCuotaNumero(UtilsMetodos.calcularCuotasPagadas(
-                    infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getSaldoCredito(),
-                    infoCreditoySaldo.get(0).getNumeroCuotas()));
-
-
             Map<String, Object> datosCredito = calcularInteresActualySaldo(infoCreditoySaldo);
 
             infoCreditoySaldo.get(0).setInteresMora((Double) datosCredito.get(Constantes.INTERES_MORA));
@@ -283,6 +280,7 @@ public class CuotaCreditoService {
     }
 
     /// informacion del capital e interes generado segun el mes seleccionado
+    @Transactional(readOnly = true)
     public Map<String, Object> generarReporteInteresyCapital(String fechaInicial, String fechaFinal) {
         try {
 
@@ -307,7 +305,7 @@ public class CuotaCreditoService {
             throw new RuntimeException(ex.getMessage());
         }
     }
-
+    @Transactional
     public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
 
         try {
@@ -349,6 +347,7 @@ public class CuotaCreditoService {
     /**
      * abonos que se han realizado a un credito
      */
+    @Transactional(readOnly = true)
     public List<AbonosRealizadosResponseDTO> consultarAbonosRealizados(int idCredito) {
 
         try {
@@ -377,6 +376,7 @@ public class CuotaCreditoService {
     /**
      * ultimos x abonos que se han realizado en general, esto para comparar con presupuesto
      */
+    @Transactional(readOnly = true)
     public List<AbonosRealizadosResponseDTO> consultarUltimosAbonosRealizados(int cantidadAbonos) {
 
         try {
@@ -404,6 +404,7 @@ public class CuotaCreditoService {
     /**
      * consulta informacion de un abono, por si se necesita compartir nuevamente el comprobante
      */
+    @Transactional(readOnly = true)
     public AbonoPorIdDTO consultarAbonoPorId(int idCuotaCredito) {
 
         try {
