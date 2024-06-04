@@ -35,12 +35,8 @@ public class RolesService {
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findByName(Role.ADMIN).orElse(new Roles());
 
-
-        if (rolAdmin.getPermisos().isEmpty()) {
-
-            rolAdmin.setPermisos(permisos);
-            rolesRepository.save(rolAdmin);
-        }
+        rolAdmin.setPermisos(permisos);
+        rolesRepository.save(rolAdmin);
     }
 
     @Transactional(readOnly = true)
