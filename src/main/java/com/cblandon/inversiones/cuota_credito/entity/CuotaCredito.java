@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(indexes = @Index(name = "multi_index", columnList = "fecha_cuota,fecha_abono" ))
+@Table(indexes = @Index(name = "multi_index", columnList = "fecha_cuota,fecha_abono"))
 public class CuotaCredito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,4 +56,7 @@ public class CuotaCredito {
     private Credito credito;
 
 
+    public CuotaCredito(Integer id) {
+        this.id = id;
+    }
 }

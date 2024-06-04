@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -202,7 +203,7 @@ public class CuotaCreditoService {
                     .build();
 
 
-            double interesMora = calcularInteresMora(infoCuotaPagar.getFechaCuota(), infoCuotaPagar.getModalidad());
+            double interesMora = calcularInteresMora(infoCuotaPagar.getFechaCuota());
 
             infoCuotaPagar.setInteresMora(interesMora);
             infoCuotaPagar.setValorInteres(infoCuotaPagar.getValorInteres() + interesMora);
@@ -305,6 +306,7 @@ public class CuotaCreditoService {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
     @Transactional
     public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
 
@@ -421,6 +423,44 @@ public class CuotaCreditoService {
         }
     }
 
+    public String anularUltimoAbono(Integer idAbono, Integer idCredito) {
+        log.info("anularAbono: {}", idAbono);
+        List<IdAbonosRealizadosDTO> abonosRealizados = cuotaCreditoRepository.consultarIdAbonosRealizadosPorCredito(
+                idCredito);
+        int ultimaCuotaGenerada = abonosRealizados.get(0).idAbono();
+        System.out.println("antes" + abonosRealizados.toString());
+
+        abonosRealizados.remove(0);
+
+        System.out.println("despues" + abonosRealizados.toString());
+
+        ///valida si el abono a realizar es el ultimo
+        if (abonosRealizados.stream().anyMatch(idAbonos -> idAbonos.idAbono() > idAbono)) {
+            throw new RequestException(MensajesErrorEnum.ERROR_ANULAR_ABONO);
+        }
+
+        CuotaCredito abono = cuotaCreditoRepository.findById(idAbono).orElseThrow(
+                () -> new RequestException(MensajesErrorEnum.ID_ABONO_NO_EXISTE));
+        try {
+
+            abono.setFechaAbono(null);
+            abono.setValorAbonado(null);
+            abono.setTipoAbono(null);
+            abono.setAbonoExtra(null);
+            abono.setValorCapital(0.0);
+            abono.setValorInteres((abono.getCredito().getValorCredito() * abono.getInteresPorcentaje()) / 100);
+
+            cuotaCreditoRepository.save(abono);
+            cuotaCreditoRepository.delete(new CuotaCredito(ultimaCuotaGenerada));
+
+            return "Abono anulado correctamente.";
+
+        } catch (RuntimeException e) {
+            log.error("anularAbono: {}", e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 
     private LocalDate calcularFechaProximaCuota(String fechaCuotaAnterior, String modalidad) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -488,7 +528,7 @@ public class CuotaCreditoService {
                 listaCuotas.get(0).getInteresPorcentaje(),
                 listaCuotas.get(0).getModalidad());
 
-        Double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota(), listaCuotas.get(0).getModalidad());
+        Double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota());
         log.info(interesMora.toString());
 
         interesActual = Math.max(interesActual, 0.0);
@@ -542,7 +582,7 @@ public class CuotaCreditoService {
      * por cada tres dias de mora genera un interes de 5 mil pesos,
      * despues de la primer mora, suma cada 4 dias 5k de mora
      */
-    private Double calcularInteresMora(LocalDate fechaCuota, String modalidad) {
+    private Double calcularInteresMora(LocalDate fechaCuota) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
         log.info("dias de mora:" + diasDiferencia);
         fechaProximaMora = fechaCuota.plusDays(4);
@@ -559,7 +599,6 @@ public class CuotaCreditoService {
         log.info("fecha proxima mora".concat(fechaProximaMora.toString()));
         log.info("dias a cobrar:" + diasCobrar);
         double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
-        valorMora = Constantes.MODALIDAD_MENSUAL.equals(modalidad) ? valorMora : (valorMora / 2);
         log.info("valorMora:" + valorMora);
 
         return valorMora;
