@@ -428,11 +428,9 @@ public class CuotaCreditoService {
         List<IdAbonosRealizadosDTO> abonosRealizados = cuotaCreditoRepository.consultarIdAbonosRealizadosPorCredito(
                 idCredito);
         int ultimaCuotaGenerada = abonosRealizados.get(0).idAbono();
-        System.out.println("antes" + abonosRealizados.toString());
 
         abonosRealizados.remove(0);
 
-        System.out.println("despues" + abonosRealizados.toString());
 
         ///valida si el abono a realizar es el ultimo
         if (abonosRealizados.stream().anyMatch(idAbonos -> idAbonos.idAbono() > idAbono)) {
