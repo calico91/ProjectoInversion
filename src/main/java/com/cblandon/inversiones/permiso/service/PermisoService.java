@@ -50,6 +50,7 @@ public class PermisoService {
         List<Permiso> permisosActuales = permisoRepository.findAll();
 
         if (permisosActuales.size() != permisos.size()) {
+            permisoRepository.deleteAll();
             permisoRepository.saveAll(permisos);
 
         }
