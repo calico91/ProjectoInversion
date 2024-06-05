@@ -99,7 +99,7 @@ public class CreditoService {
 
                 CuotaCredito cuotaCredito = CuotaCredito.builder()
                         .fechaCuota(registrarCreditoRequestDTO.fechaCuota())
-                        .cuotaNumero(0)
+                        .cuotaNumero(1)
                         .numeroCuotas(registrarCreditoRequestDTO.cantidadCuotas())
                         .valorCuota(cuotaCapital + interesPrimerCuota)
                         .valorCapital(0.0)
@@ -116,7 +116,6 @@ public class CreditoService {
                     .valorPrimerCuota(Double.toString(valorPrimerCuota))
                     .valorCredito(registrarCreditoRequestDTO.valorCredito().toString())
                     .valorCuotas(Double.toString(valorCuotas))
-                    .modalidad(registrarCreditoRequestDTO.modalidad().getDescription())
                     .build();
 
         } catch (RuntimeException ex) {

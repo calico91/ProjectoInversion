@@ -13,7 +13,6 @@ import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
-import com.cblandon.inversiones.utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,8 +55,8 @@ public class CuotaCreditoService {
         validarEstadoCuotaYCredito(cuotaCreditoDB.getValorAbonado(),
                 cuotaCreditoDB.getCredito().getIdEstadoCredito().getId());
 
-        int cuotasPagadas = UtilsMetodos.calcularCuotasPagadas(cuotaCreditoDB.getCredito().getValorCredito(),
-                cuotaCreditoDB.getCredito().getSaldoCredito(), cuotaCreditoDB.getNumeroCuotas());
+
+        int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
 
         double capitalCuotaNormal = Math.rint(
                 cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
@@ -103,6 +102,7 @@ public class CuotaCreditoService {
 
             }
 
+
             cuotaCreditoDB.setAbonoExtra(pagarCuotaRequestDTO.isAbonoExtra());
             cuotaCreditoDB.setValorAbonado(pagarCuotaRequestDTO.getValorAbonado());
             cuotaCreditoDB.setFechaAbono(LocalDateTime.now());
@@ -136,8 +136,12 @@ public class CuotaCreditoService {
                             cuotaCreditoDB.getCredito().getModalidad().getDescription()));
                 }
 
-                nuevaCuota.setCuotaNumero(cuotasPagadas);
-
+                if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
+                        pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
+                    nuevaCuota.setCuotaNumero(cuotaCreditoDB.getCuotaNumero());
+                } else {
+                    nuevaCuota.setCuotaNumero(cuotaCancelada.getCuotaNumero() + 1);
+                }
                 nuevaCuota.setValorCuota(Math.rint(interesCredito + (
                         cuotaCancelada.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas())));
                 nuevaCuota.setCredito(cuotaCancelada.getCredito());
@@ -163,7 +167,13 @@ public class CuotaCreditoService {
             mapRespuesta.put("cantidadCuotas", cuotaCreditoDB.getNumeroCuotas());
             mapRespuesta.put("valorAbonado", pagarCuotaRequestDTO.getValorAbonado());
             mapRespuesta.put("tipoAbono", pagarCuotaRequestDTO.getTipoAbono());
-            mapRespuesta.put("cuotasPagadas", cuotasPagadas);
+
+            if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
+                    pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
+                mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres);
+            } else {
+                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
+            }
 
             log.info("pagarCuota: {}", mapRespuesta);
             return mapRespuesta;
@@ -244,10 +254,6 @@ public class CuotaCreditoService {
                             .modalidad(cuota.get("modalidad").toString())
                             .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
                             .build()).toList();
-
-            infoCreditoySaldo.get(0).setCuotaNumero(UtilsMetodos.calcularCuotasPagadas(
-                    infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getSaldoCredito(),
-                    infoCreditoySaldo.get(0).getNumeroCuotas()));
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
