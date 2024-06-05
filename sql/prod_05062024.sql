@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: viaduct.proxy.rlwy.net    Database: apirest
+-- Host: localhost    Database: apirest
 -- ------------------------------------------------------
--- Server version	8.4.0
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -193,7 +193,7 @@ CREATE TABLE `permisos` (
 
 LOCK TABLES `permisos` WRITE;
 /*!40000 ALTER TABLE `permisos` DISABLE KEYS */;
-INSERT INTO `permisos` VALUES (1,'registrar-cliente'),(2,'consultar-clientes'),(3,'consultar-cliente-por-cedula'),(4,'consultar-cuotas-por-fecha'),(5,'actualizar-cliente'),(6,'registrar-credito'),(7,'consultar-credito'),(8,'consultar-creditos-activos'),(9,'modificar-estado-credito'),(10,'pagar-cuota'),(11,'consultar-cuota-cliente'),(12,'consultar-credito-saldo'),(13,'modificar-fecha-pago'),(14,'generar-reporte-interes-capital'),(15,'consultar-abonos-realizados'),(16,'consultar-ultimos-abonos-realizados'),(17,'consultar-abono-por-id'),(18,'anular-ultimo-abono');
+INSERT INTO `permisos` VALUES (1,'registrar-cliente'),(2,'consultar-clientes'),(3,'consultar-cliente-por-cedula'),(4,'consultar-cuotas-por-fecha'),(5,'actualizar-cliente'),(6,'registrar-credito'),(7,'consultar-credito'),(8,'consultar-creditos-activos'),(9,'modificar-estado-credito'),(10,'pagar-cuota'),(11,'consultar-cuota-cliente'),(12,'consultar-credito-saldo'),(13,'modificar-fecha-pago'),(14,'generar-reporte-interes-capital'),(15,'consultar-abonos-realizados'),(16,'consultar-ultimos-abonos-realizados'),(17,'consultar-abono-por-id'),(18,'anular-ultimo-abono'),(19,'asignar-permisos');
 /*!40000 ALTER TABLE `permisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'ADMIN'),(2,'USUARIO'),(3,'COBRADOR'),(4,'GENERICO');
+INSERT INTO `roles` VALUES (1,'SUPER'),(2,'ADMIN'),(3,'COBRADOR'),(4,'GENERICO');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +244,7 @@ CREATE TABLE `roles_permisos` (
 
 LOCK TABLES `roles_permisos` WRITE;
 /*!40000 ALTER TABLE `roles_permisos` DISABLE KEYS */;
-INSERT INTO `roles_permisos` VALUES (1,1),(3,1),(1,2),(3,2),(1,3),(1,4),(3,4),(1,5),(1,6),(3,6),(1,7),(1,8),(1,9),(1,10),(3,10),(1,11),(3,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18);
+INSERT INTO `roles_permisos` VALUES (1,1),(2,1),(3,1),(1,2),(2,2),(3,2),(1,3),(1,4),(3,4),(1,5),(1,6),(3,6),(1,7),(1,8),(1,9),(1,10),(3,10),(1,11),(3,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19);
 /*!40000 ALTER TABLE `roles_permisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,4 +344,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-05 10:09:22
+-- Dump completed on 2024-06-05 11:49:19
