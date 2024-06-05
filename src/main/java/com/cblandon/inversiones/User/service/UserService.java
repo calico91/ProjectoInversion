@@ -4,6 +4,8 @@ import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.mapper.UserMapper;
+import com.cblandon.inversiones.permiso.entity.Permiso;
+import com.cblandon.inversiones.permiso.repository.PermisoRepository;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.roles.repository.RolesRepository;
@@ -37,10 +39,7 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
-
     private final RolesRepository rolesRepository;
 
     final JwtUtils jwtUtils;
@@ -254,10 +253,14 @@ public class UserService implements UserDetailsService {
         }
     }
 
+
+
+
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Roles> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());
     }
+
 
     private Set<String> getAuthoritiesString(Set<Roles> roles) {
         return roles.stream().map(role -> role.getName().name()).collect(Collectors.toSet());

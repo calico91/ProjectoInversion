@@ -44,13 +44,14 @@ public class PermisoService {
                 new Permiso(15, "consultar-abonos-realizados"),
                 new Permiso(16, "consultar-ultimos-abonos-realizados"),
                 new Permiso(17, "consultar-abono-por-id"),
-                new Permiso(18, "anular-ultimo-abono")
+                new Permiso(18, "anular-ultimo-abono"),
+                new Permiso(19, "asignar-permisos")
+
         ));
 
         List<Permiso> permisosActuales = permisoRepository.findAll();
 
         if (permisosActuales.size() != permisos.size()) {
-            permisoRepository.deleteAll();
             permisoRepository.saveAll(permisos);
 
         }
