@@ -29,7 +29,8 @@ public enum MensajesErrorEnum {
     CONTRASENA_ANTIGUA_INCORRECTA("la contrasena antigua no es igual a la actual.", "E19"),
     ERROR_ANULAR_ABONO("No es posible anular este abono, solo puede anular el ultimo abono realizado.",
             "E20"),
-    ID_ABONO_NO_EXISTE("Abono no existe.", "E21");
+    ID_ABONO_NO_EXISTE("Abono no existe.", "E21"),
+    PERMISO_NO_EXISTE("El permiso solicitado no existe", "E22");
 
     private final String message;
     private final String codigo;

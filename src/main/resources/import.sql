@@ -1,2 +1,2 @@
-INSERT INTO roles (name) VALUES ('ADMIN'),('USUARIO'),('COBRADOR'),('GENERICO');
+INSERT INTO roles (name) VALUES ('SUPER'),('ADMIN'),('COBRADOR'),('GENERICO');
 -- permisos  cliente
