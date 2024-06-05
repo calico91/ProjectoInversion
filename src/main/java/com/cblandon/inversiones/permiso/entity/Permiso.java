@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Permiso {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(length = 50)
