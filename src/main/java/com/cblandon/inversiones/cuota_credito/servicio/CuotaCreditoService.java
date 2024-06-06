@@ -57,8 +57,6 @@ public class CuotaCreditoService {
                 cuotaCreditoDB.getCredito().getIdEstadoCredito().getId());
 
 
-        int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
-
         double capitalCuotaNormal = Math.rint(
                 cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
 
@@ -171,7 +169,7 @@ public class CuotaCreditoService {
 
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                     pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-                mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres);
+                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero() - 1);
             } else {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
             }
