@@ -13,6 +13,7 @@ import com.cblandon.inversiones.mapper.CuotaCreditoMapper;
 import com.cblandon.inversiones.utils.Constantes;
 
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
+import com.cblandon.inversiones.utils.UtilsMetodos;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -258,6 +259,8 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
 
+            infoCreditoySaldo.get(0).setCuotaNumero(UtilsMetodos.calcularCuotasPagadas(infoCreditoySaldo.get(0).getValorCredito(),
+                    infoCreditoySaldo.get(0).getSaldoCredito(), infoCreditoySaldo.get(0).getNumeroCuotas()));
 
             infoCreditoySaldo.get(0).setCapitalPagado(
                     infoCreditoySaldo.get(0).getValorCredito() - infoCreditoySaldo.get(0).getSaldoCredito());
