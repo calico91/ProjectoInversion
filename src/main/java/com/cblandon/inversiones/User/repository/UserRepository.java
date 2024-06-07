@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     /**
      * buscar los usuarios admin y el usuario que se paso por parametro
      */
-    @Query(value = "SELECT * FROM apirest.user u" +
+    @Query(value = "SELECT * FROM user u" +
             "   INNER JOIN user_roles ur ON ur.user_id = u.id" +
             "   WHERE u.username = :username OR ur.role_id = 1", nativeQuery = true)
     Set<UserEntity> buscarUsuariosAdmin(@Param("username") String username);

@@ -42,6 +42,9 @@ public class Credito {
     @Column(name = "saldo_credito", nullable = false, length = 10)
     private Double saldoCredito;
 
+    @Column(length = 10)
+    private Double valorRenovacion;
+
     @ManyToOne(targetEntity = Cliente.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;

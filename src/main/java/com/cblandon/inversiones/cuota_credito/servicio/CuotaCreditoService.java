@@ -237,6 +237,7 @@ public class CuotaCreditoService {
         try {
             List<Tuple> cuotas = cuotaCreditoRepository.consultarInfoCreditoySaldo(idCredito);
 
+
             List<InfoCreditoySaldoResponseDTO> infoCreditoySaldo = cuotas.stream().map(
                     cuota -> InfoCreditoySaldoResponseDTO.builder()
                             .fechaCredito(LocalDate.parse(cuota.get("fecha_credito").toString()))
@@ -253,6 +254,7 @@ public class CuotaCreditoService {
                             .modalidad(cuota.get("modalidad").toString())
                             .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
                             .build()).toList();
+
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));

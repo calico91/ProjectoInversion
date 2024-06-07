@@ -30,7 +30,8 @@ public enum MensajesErrorEnum {
     ERROR_ANULAR_ABONO("No es posible anular este abono, solo puede anular el ultimo abono realizado.",
             "E20"),
     ID_ABONO_NO_EXISTE("Abono no existe.", "E21"),
-    PERMISO_NO_EXISTE("El permiso solicitado no existe", "E22");
+    PERMISO_NO_EXISTE("El permiso solicitado no existe", "E22"),
+    ERROR_RENOVAR_CREDITO("El credito que desea renovar no existe", "E23");
 
     private final String message;
     private final String codigo;
