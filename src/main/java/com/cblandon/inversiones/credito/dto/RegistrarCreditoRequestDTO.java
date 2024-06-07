@@ -4,7 +4,6 @@ package com.cblandon.inversiones.credito.dto;
 import com.cblandon.inversiones.excepciones.validation.anotation.ValidNullBlank;
 import com.cblandon.inversiones.modalidad.entity.Modalidad;
 import com.cblandon.inversiones.utils.Constantes;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -32,6 +31,6 @@ public record RegistrarCreditoRequestDTO(@NotNull(message = Constantes.NOT_NULL)
          * estos parametros solo se envian si se va a realizar una renovacion de credito
          */
                                          boolean renovacion, Double valorRenovacion,
-                                         Integer codigoCreditoActual, Integer idCliente
+                                         Integer idCreditoActual, Integer idCliente
 ) {
 }

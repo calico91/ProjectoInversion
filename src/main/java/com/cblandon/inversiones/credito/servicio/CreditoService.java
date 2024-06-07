@@ -62,7 +62,7 @@ public class CreditoService {
 
         if (registrarCreditoRequestDTO.renovacion()) {
 
-            Credito pagarCredito = creditoRepository.findById(registrarCreditoRequestDTO.codigoCreditoActual())
+            Credito pagarCredito = creditoRepository.findById(registrarCreditoRequestDTO.idCreditoActual())
                     .orElseThrow(() -> new RequestException(MensajesErrorEnum.ERROR_RENOVAR_CREDITO));
 
             pagarCredito.setIdEstadoCredito(new EstadoCredito(2, null));
