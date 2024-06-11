@@ -19,11 +19,11 @@ public class CreditoController {
         this.creditoService = creditoService;
     }
 
-    @PostMapping("/registrar-credito")
+    @PostMapping("/registrar-renovar-credito")
     @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(6))")
-    public ResponseEntity<GenericResponseDTO> registrarCredito(
+    public ResponseEntity<GenericResponseDTO> registrarRenovarCredito(
             @RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        return GenericResponseDTO.genericResponse(creditoService.registrarCredito(registrarCreditoRequestDTO));
+        return GenericResponseDTO.genericResponse(creditoService.registrarRenovarCredito(registrarCreditoRequestDTO));
     }
 
 
@@ -48,8 +48,6 @@ public class CreditoController {
 
         return GenericResponseDTO.genericResponse(creditoService.modificarEstadoCredito(idCredito, idEstadoCredito));
     }
-
-
 
 
 }

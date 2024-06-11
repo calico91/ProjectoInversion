@@ -39,11 +39,18 @@ public class CreditoService {
     private final CuotaCreditoRepository cuotaCreditoRepository;
     private final EstadoCreditoRepository estadoCreditoRepository;
 
+    /**
+     * metodo para crear y renovar creditos
+     */
     @Transactional()
-    public RegistrarCreditoResponseDTO registrarCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
+    public RegistrarCreditoResponseDTO registrarRenovarCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         log.info("crearCredito: {}", registrarCreditoRequestDTO);
 
-        Cliente clienteBD = clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
+        Cliente clienteBD = registrarCreditoRequestDTO.renovacion()
+                ? clienteRepository.findById(registrarCreditoRequestDTO.idCliente())
+                .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO))
+
+                : clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
 
         Set<UserEntity> usuarios = userRepository.buscarUsuariosAdmin(registrarCreditoRequestDTO.usuario());
@@ -53,6 +60,19 @@ public class CreditoService {
             throw new RequestException(MensajesErrorEnum.ERROR_FECHAS_CREDITO);
         }
 
+        if (registrarCreditoRequestDTO.renovacion()) {
+
+            if (registrarCreditoRequestDTO.valorRenovacion() <= 0) {
+                throw new RequestException(MensajesErrorEnum.ERROR_RENOVAR_CREDITO_POR_MONTO);
+            }
+
+            Credito pagarCredito = creditoRepository.findById(registrarCreditoRequestDTO.idCreditoActual())
+                    .orElseThrow(() -> new RequestException(MensajesErrorEnum.ERROR_RENOVAR_CREDITO));
+
+            pagarCredito.setIdEstadoCredito(new EstadoCredito(2, null));
+            pagarCredito.setSaldoCredito(0.0);
+            creditoRepository.save(pagarCredito);
+        }
 
         try {
 
@@ -65,6 +85,7 @@ public class CreditoService {
                     .modalidad(registrarCreditoRequestDTO.modalidad())
                     .idEstadoCredito(new EstadoCredito(Constantes.ID_CREDITO_ACTIVO, null))
                     .usuarios(usuarios)
+                    .valorRenovacion(registrarCreditoRequestDTO.valorRenovacion())
                     .build();
             credito = creditoRepository.save(credito);
 

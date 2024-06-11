@@ -57,8 +57,6 @@ public class CuotaCreditoService {
                 cuotaCreditoDB.getCredito().getIdEstadoCredito().getId());
 
 
-        int cuotasPagadasSoloInteres = cuotaCreditoDB.getCuotaNumero() - 1;
-
         double capitalCuotaNormal = Math.rint(
                 cuotaCreditoDB.getCredito().getValorCredito() / cuotaCreditoDB.getNumeroCuotas());
 
@@ -171,7 +169,7 @@ public class CuotaCreditoService {
 
             if (pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.SOLO_INTERES) ||
                     pagarCuotaRequestDTO.getTipoAbono().equals(Constantes.ABONO_CAPITAL)) {
-                mapRespuesta.put("cuotasPagadas", cuotasPagadasSoloInteres);
+                mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero() - 1);
             } else {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
             }
@@ -239,6 +237,7 @@ public class CuotaCreditoService {
         try {
             List<Tuple> cuotas = cuotaCreditoRepository.consultarInfoCreditoySaldo(idCredito);
 
+
             List<InfoCreditoySaldoResponseDTO> infoCreditoySaldo = cuotas.stream().map(
                     cuota -> InfoCreditoySaldoResponseDTO.builder()
                             .fechaCredito(LocalDate.parse(cuota.get("fecha_credito").toString()))
@@ -255,6 +254,7 @@ public class CuotaCreditoService {
                             .modalidad(cuota.get("modalidad").toString())
                             .saldoCredito(Double.parseDouble(cuota.get("saldo_credito").toString()))
                             .build()).toList();
+
 
             infoCreditoySaldo.get(0).setValorInteres(calcularInteresCredito(
                     infoCreditoySaldo.get(0).getValorCredito(), infoCreditoySaldo.get(0).getInteresPorcentaje()));
