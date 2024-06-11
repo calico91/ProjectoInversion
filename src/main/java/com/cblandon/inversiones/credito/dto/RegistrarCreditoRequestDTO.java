@@ -15,7 +15,6 @@ public record RegistrarCreditoRequestDTO(@NotNull(message = Constantes.NOT_NULL)
                                          @NotNull(message = Constantes.NOT_NULL)
                                          Integer cantidadCuotas,
 
-                                         @ValidNullBlank
                                          String cedulaTitularCredito,
 
                                          //@JsonFormat(pattern = "dd/MM/yyyy")

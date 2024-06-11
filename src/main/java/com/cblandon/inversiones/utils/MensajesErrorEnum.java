@@ -31,7 +31,9 @@ public enum MensajesErrorEnum {
             "E20"),
     ID_ABONO_NO_EXISTE("Abono no existe.", "E21"),
     PERMISO_NO_EXISTE("El permiso solicitado no existe", "E22"),
-    ERROR_RENOVAR_CREDITO("El credito que desea renovar no existe", "E23");
+    ERROR_RENOVAR_CREDITO("El credito que desea renovar no existe", "E23"),
+    ERROR_RENOVAR_CREDITO_POR_MONTO("El valor de la renovacion debe ser mayor a 0",
+            "E24");
 
     private final String message;
     private final String codigo;

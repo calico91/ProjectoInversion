@@ -62,6 +62,10 @@ public class CreditoService {
 
         if (registrarCreditoRequestDTO.renovacion()) {
 
+            if (registrarCreditoRequestDTO.valorRenovacion() <= 0) {
+                throw new RequestException(MensajesErrorEnum.ERROR_RENOVAR_CREDITO_POR_MONTO);
+            }
+
             Credito pagarCredito = creditoRepository.findById(registrarCreditoRequestDTO.idCreditoActual())
                     .orElseThrow(() -> new RequestException(MensajesErrorEnum.ERROR_RENOVAR_CREDITO));
 
