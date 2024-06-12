@@ -3,11 +3,13 @@ package com.cblandon.inversiones.cuota_credito.repository;
 import com.cblandon.inversiones.cuota_credito.dto.AbonoPorIdDTO;
 import com.cblandon.inversiones.cuota_credito.dto.IdAbonosRealizadosDTO;
 import com.cblandon.inversiones.cuota_credito.entity.CuotaCredito;
+import com.cblandon.inversiones.reporte.dto.ReporteInteresCapital;
 import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Integer> {
@@ -35,12 +37,13 @@ public interface CuotaCreditoRepository extends JpaRepository<CuotaCredito, Inte
             nativeQuery = true)
     List<Tuple> consultarInfoCreditoySaldo(@Param("idCredito") Integer idCredito);
 
-    @Query(value = "SELECT  sum(valor_capital) as valorCapital, sum(valor_interes) as valorInteres " +
-            "    FROM cuota_credito ccr" +
-            "    where ccr.fecha_abono IS NOT NULL" +
-            "    AND ccr.fecha_abono BETWEEN :fechaInicial AND :fechaFinal",
-            nativeQuery = true)
-    Tuple generarReporteInteresyCapital(@Param("fechaInicial") String fechaInicial, @Param("fechaFinal") String fechaFinal);
+    @Query(value = "SELECT  new com.cblandon.inversiones.reporte.dto.ReporteInteresCapital(" +
+            "sum(ccr.valorCapital),sum(ccr.valorInteres)) " +
+            "    FROM CuotaCredito ccr" +
+            "    where ccr.fechaAbono IS NOT NULL" +
+            "    AND ccr.fechaAbono BETWEEN :fechaInicial AND :fechaFinal")
+    ReporteInteresCapital generarReporteInteresyCapital(
+            @Param("fechaInicial") LocalDateTime fechaInicial, @Param("fechaFinal") LocalDateTime fechaFinal);
 
     @Query(value = "SELECT * FROM cuota_credito " +
             "WHERE id_credito=:idCredito ORDER BY id_cuota_credito DESC LIMIT 1",

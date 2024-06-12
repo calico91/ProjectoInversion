@@ -1,7 +1,6 @@
 package com.cblandon.inversiones.credito.dto;
 
 
-import com.cblandon.inversiones.excepciones.validation.anotation.ValidNullBlank;
 import com.cblandon.inversiones.modalidad.entity.Modalidad;
 import com.cblandon.inversiones.utils.Constantes;
 import jakarta.validation.constraints.NotNull;

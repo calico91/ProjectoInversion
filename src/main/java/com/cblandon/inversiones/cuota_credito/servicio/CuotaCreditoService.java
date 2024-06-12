@@ -283,33 +283,6 @@ public class CuotaCreditoService {
 
     }
 
-    /// informacion del capital e interes generado segun el mes seleccionado
-    @Transactional(readOnly = true)
-    public Map<String, Object> generarReporteInteresCapital(String fechaInicial, String fechaFinal) {
-        try {
-
-            Tuple interesYcapital = cuotaCreditoRepository.generarReporteInteresyCapital(fechaInicial, fechaFinal);
-
-
-            double valorCapital = interesYcapital.get("valorCapital") == null
-                    ? 0.0 : Double.parseDouble(interesYcapital.get("valorCapital").toString());
-
-            double valorInteres = interesYcapital.get("valorInteres") == null
-                    ? 0.0 : Double.parseDouble(interesYcapital.get("valorInteres").toString());
-
-            mapRespuesta.put("capitalMes", Math.rint(valorCapital));
-            mapRespuesta.put("interesMes", Math.rint(valorInteres));
-
-            log.info("informacion capital e interes: {}", mapRespuesta);
-
-            return mapRespuesta;
-
-        } catch (RuntimeException ex) {
-            log.error("informacion capital e interes: {}", ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-    }
-
     @Transactional
     public CuotasCreditoResponseDTO modificarFechaPago(LocalDate fechaNueva, int idCredito) {
 
