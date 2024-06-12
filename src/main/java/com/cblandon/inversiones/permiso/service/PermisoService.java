@@ -42,7 +42,7 @@ public class PermisoService {
                 new Permiso(13, "modificar-fecha-pago"),
                 new Permiso(14, "generar-reporte-interes-capital"),
                 new Permiso(15, "consultar-abonos-realizados"),
-                new Permiso(16, "consultar-ultimos-abonos-realizados"),
+                new Permiso(16, "generar-reporte-ultimos-abonos-realizados"),
                 new Permiso(17, "consultar-abono-por-id"),
                 new Permiso(18, "anular-ultimo-abono"),
                 new Permiso(19, "asignar-permisos")

@@ -2,7 +2,7 @@ package com.cblandon.inversiones.reporte.service;
 
 import com.cblandon.inversiones.cuota_credito.dto.AbonosRealizadosResponseDTO;
 import com.cblandon.inversiones.cuota_credito.repository.CuotaCreditoRepository;
-import com.cblandon.inversiones.reporte.dto.ReporteInteresCapital;
+import com.cblandon.inversiones.reporte.dto.ReporteInteresCapitalDTO;
 import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +26,10 @@ public class ReporteService {
      * informacion del capital e interes generado segun el rengo de fechas seleccionado
      */
     @Transactional(readOnly = true)
-    public ReporteInteresCapital generarReporteInteresCapital(String fechaInicial, String fechaFinal) {
+    public ReporteInteresCapitalDTO generarReporteInteresCapital(String fechaInicial, String fechaFinal) {
         try {
 
-            ReporteInteresCapital interesYcapital = cuotaCreditoRepository
+            ReporteInteresCapitalDTO interesYcapital = cuotaCreditoRepository
                     .generarReporteInteresyCapital(convertirFechas(fechaInicial), convertirFechas(fechaFinal));
 
             log.info("reporte capital e interes: {}", interesYcapital);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
@@ -20,7 +21,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "c.id, c.nombres, c.apellidos, c.cedula, cr.fechaCredito, cr.valorCredito, ccr.fechaAbono, " +
             "ccr.fechaCuota, ccr.valorCuota, ccr.valorInteres,cr.id) " +
             "FROM Cliente c " +
-            "JOIN  c.listaCreditos cr " +
+            "JOIN c.listaCreditos cr " +
             "JOIN cr.listaCuotasCredito ccr " +
             "JOIN cr.usuarios uc on uc.id = :idUsuario " +
             "WHERE cr.idEstadoCredito.id = 1 AND ccr.fechaAbono IS NULL " +
