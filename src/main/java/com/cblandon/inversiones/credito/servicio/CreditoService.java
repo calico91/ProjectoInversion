@@ -46,12 +46,9 @@ public class CreditoService {
     public RegistrarCreditoResponseDTO registrarRenovarCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         log.info("crearCredito: {}", registrarCreditoRequestDTO);
 
-        Cliente clienteBD = registrarCreditoRequestDTO.renovacion()
-                ? clienteRepository.findById(registrarCreditoRequestDTO.idCliente())
-                .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO))
-
-                : clienteRepository.findByCedula(registrarCreditoRequestDTO.cedulaTitularCredito())
+        Cliente clienteBD = clienteRepository.findById(registrarCreditoRequestDTO.idCliente())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
+
 
         Set<UserEntity> usuarios = userRepository.buscarUsuariosAdmin(registrarCreditoRequestDTO.usuario());
 

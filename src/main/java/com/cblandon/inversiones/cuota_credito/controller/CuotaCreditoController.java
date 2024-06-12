@@ -42,17 +42,8 @@ public class CuotaCreditoController {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.consultarCreditoSaldo(idCredito));
     }
 
-    @GetMapping("/generar-reporte-interes-capital")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(13))")
-    public ResponseEntity<GenericResponseDTO> generarReporteInteresCapital(
-            @RequestParam String fechaInicial,
-            @RequestParam String fechaFinal
-    ) {
-        return GenericResponseDTO.genericResponse(cuotaCreditoService.generarReporteInteresCapital(fechaInicial, fechaFinal));
-    }
-
     @PutMapping("/modificar-fecha-pago/{fechaNueva}/{idCredito}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(14))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(13))")
     public ResponseEntity<GenericResponseDTO> modificarFechaPago(@PathVariable LocalDate fechaNueva, @PathVariable int idCredito) {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.modificarFechaPago(fechaNueva, idCredito));
     }
