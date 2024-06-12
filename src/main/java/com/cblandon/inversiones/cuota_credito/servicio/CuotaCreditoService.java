@@ -352,34 +352,6 @@ public class CuotaCreditoService {
     }
 
     /**
-     * ultimos x abonos que se han realizado en general, esto para comparar con presupuesto
-     */
-    @Transactional(readOnly = true)
-    public List<AbonosRealizadosResponseDTO> consultarUltimosAbonosRealizados(int cantidadAbonos) {
-
-        try {
-
-            List<Tuple> ultimosAbonosRealizados = cuotaCreditoRepository.consultarUltimosAbonosRealizados(cantidadAbonos);
-
-            List<AbonosRealizadosResponseDTO> ultimosAbonosRealizadosDTO = ultimosAbonosRealizados.stream().map(
-                    abonos -> AbonosRealizadosResponseDTO.builder()
-                            .nombres(abonos.get("nombres").toString())
-                            .apellidos(abonos.get("apellidos").toString())
-                            .valorAbonado(Double.parseDouble(abonos.get("valor_abonado").toString()))
-                            .fechaAbono(LocalDate.parse(abonos.get("fecha_abono").toString().substring(0, 10)))
-                            .build()).toList();
-
-            log.info("consultarUltimosAbonosRealizados: {}", ultimosAbonosRealizadosDTO);
-            return ultimosAbonosRealizadosDTO;
-
-
-        } catch (RuntimeException ex) {
-            log.error("consultarUltimosAbonosRealizados: {}", ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-    }
-
-    /**
      * consulta informacion de un abono, por si se necesita compartir nuevamente el comprobante
      */
     @Transactional(readOnly = true)

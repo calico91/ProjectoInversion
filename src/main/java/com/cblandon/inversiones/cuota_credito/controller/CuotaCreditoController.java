@@ -54,13 +54,6 @@ public class CuotaCreditoController {
         return GenericResponseDTO.genericResponse(cuotaCreditoService.consultarAbonosRealizados(idCredito));
     }
 
-    @GetMapping("/consultar-ultimos-abonos-realizados/{cantidadAbonos}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(16))")
-    public ResponseEntity<GenericResponseDTO> consultarUltimosAbonosRealizados(@PathVariable int cantidadAbonos) {
-        return GenericResponseDTO.genericResponse(
-                cuotaCreditoService.consultarUltimosAbonosRealizados(cantidadAbonos));
-    }
-
     @GetMapping("/consultar-abono-por-id/{idCuotaCredito}")
     @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(17))")
     public ResponseEntity<GenericResponseDTO> consultarAbonoPorId(@PathVariable int idCuotaCredito) {

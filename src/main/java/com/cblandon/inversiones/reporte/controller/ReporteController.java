@@ -4,10 +4,7 @@ import com.cblandon.inversiones.reporte.service.ReporteService;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reporte")
@@ -26,5 +23,12 @@ public class ReporteController {
             @RequestParam String fechaFinal
     ) {
         return GenericResponseDTO.genericResponse(reporteService.generarReporteInteresCapital(fechaInicial, fechaFinal));
+    }
+
+    @GetMapping("/generar-reporte-ultimos-abonos-realizados/{cantidadAbonos}")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(16))")
+    public ResponseEntity<GenericResponseDTO> consultarUltimosAbonosRealizados(@PathVariable int cantidadAbonos) {
+        return GenericResponseDTO.genericResponse(
+                reporteService.consultarUltimosAbonosRealizados(cantidadAbonos));
     }
 }
