@@ -4,8 +4,6 @@ import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.mapper.UserMapper;
-import com.cblandon.inversiones.permiso.entity.Permiso;
-import com.cblandon.inversiones.permiso.repository.PermisoRepository;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.roles.repository.RolesRepository;
@@ -240,7 +238,7 @@ public class UserService implements UserDetailsService {
         UserEntity usuarioBD = userRepository.findById(cambiarContrasenaDTO.idUsuario()).orElseThrow(
                 () -> new UsernameNotFoundException("No se encontro usuario"));
 
-        if (!passwordEncoder.matches(cambiarContrasenaDTO.contrasenaAntigua(), usuarioBD.getPassword())) {
+        if (!passwordEncoder.matches(cambiarContrasenaDTO.contrasenaActual(), usuarioBD.getPassword())) {
             throw new RequestException(MensajesErrorEnum.CONTRASENA_ANTIGUA_INCORRECTA);
         }
         try {

@@ -26,7 +26,7 @@ public enum MensajesErrorEnum {
     PERMISO_DENEGADO("No tiene permisos para realizar esta accion", "E17"),
     USUARIO_NO_ENCONTRADO("Nombre de usuario no existe, verifique la informacion", "E17"),
     ESTADO_NO_ACTIVO("El credito no se encuentra activo, actualice la lista de creditos", "E18"),
-    CONTRASENA_ANTIGUA_INCORRECTA("la contrasena antigua no es igual a la actual.", "E19"),
+    CONTRASENA_ANTIGUA_INCORRECTA("la contrasena actual es incorrecta", "E19"),
     ERROR_ANULAR_ABONO("No es posible anular este abono, solo puede anular el ultimo abono realizado.",
             "E20"),
     ID_ABONO_NO_EXISTE("Abono no existe.", "E21"),
