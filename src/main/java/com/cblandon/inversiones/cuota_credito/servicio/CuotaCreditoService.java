@@ -389,7 +389,7 @@ public class CuotaCreditoService {
                 () -> new RequestException(MensajesErrorEnum.ID_ABONO_NO_EXISTE));
         try {
 
-            abono.getCredito().setSaldoCredito(abono.getCredito().getSaldoCredito() - abono.getValorCapital());
+            abono.getCredito().setSaldoCredito(abono.getValorCapital() - abono.getCredito().getSaldoCredito());
             abono.setFechaAbono(null);
             abono.setValorAbonado(null);
             abono.setTipoAbono(null);
