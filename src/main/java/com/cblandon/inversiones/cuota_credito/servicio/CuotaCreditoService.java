@@ -378,7 +378,7 @@ public class CuotaCreditoService {
         int ultimaCuotaGenerada = abonosRealizados.get(0).idAbono();
 
         abonosRealizados.remove(0);
-
+        
 
         ///valida si el abono a realizar es el ultimo
         if (abonosRealizados.stream().anyMatch(idAbonos -> idAbonos.idAbono() > idAbono)) {
@@ -388,8 +388,7 @@ public class CuotaCreditoService {
         CuotaCredito abono = cuotaCreditoRepository.findById(idAbono).orElseThrow(
                 () -> new RequestException(MensajesErrorEnum.ID_ABONO_NO_EXISTE));
         try {
-
-            abono.getCredito().setSaldoCredito(abono.getValorCapital() - abono.getCredito().getSaldoCredito());
+            abono.getCredito().setSaldoCredito(abono.getCredito().getSaldoCredito() + abono.getValorCapital());
             abono.setFechaAbono(null);
             abono.setValorAbonado(null);
             abono.setTipoAbono(null);
