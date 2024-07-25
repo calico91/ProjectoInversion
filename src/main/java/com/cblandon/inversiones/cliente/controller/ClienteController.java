@@ -59,7 +59,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/eliminarCliente/{idCliente}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<String> eliminarCliente(@PathVariable int idCliente) {
         clienteService.deleteCliente(idCliente);
         return new ResponseEntity<>("Empleado eliminado exitosamente", HttpStatus.OK);

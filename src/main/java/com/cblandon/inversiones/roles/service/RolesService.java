@@ -31,10 +31,10 @@ public class RolesService {
 
     @PostConstruct
     public void init() {
-        asignarPermisosUsuarioAdmin();
+        asignarPermisosSuperUsuario();
     }
 
-    private void asignarPermisosUsuarioAdmin() {
+    private void asignarPermisosSuperUsuario() {
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findById(1).orElse(new Roles());
 
@@ -46,8 +46,7 @@ public class RolesService {
     public Set<String> consultarPermisoRoles(int id) {
         try {
             Set<String> roles = rolesRepository.consultarPermisos(id).
-                    stream().map(
-                            rol -> rol.getName().toString()).collect(Collectors.toSet());
+                    stream().map(rol -> rol.getName().toString()).collect(Collectors.toSet());
 
             log.info("consultarPermisoRoles: {}", roles);
             return roles;
