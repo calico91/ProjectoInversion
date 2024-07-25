@@ -1,5 +1,7 @@
 package com.cblandon.inversiones.user.service;
 
+import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
@@ -59,7 +61,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UsuariosResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
+    public UsuariosResponseDTO registrar(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
         log.info("registrarUsuario: {}", registerUserRequestDTO);
         Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
 

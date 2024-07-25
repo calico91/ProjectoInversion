@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.user.controller;
 
+import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
 import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.user.service.UserService;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
@@ -19,9 +20,9 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping(value = "register")
-    public ResponseEntity<GenericResponseDTO> register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        return GenericResponseDTO.genericResponse(userService.register(registerUserRequestDTO));
+    @PostMapping(value = "registrar")
+    public ResponseEntity<GenericResponseDTO> registrar(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+        return GenericResponseDTO.genericResponse(userService.registrar(registerUserRequestDTO));
     }
 
     @PostMapping(value = "login")
@@ -31,13 +32,13 @@ public class UserController {
     }
 
     @GetMapping(value = "consultarUsuarios")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> consultarUsuarios() {
         return GenericResponseDTO.genericResponse(userService.consultarUsuarios());
     }
 
     @PutMapping("/actualizarUsuario/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> actualizarUsuario(
             @PathVariable String username,
             @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
