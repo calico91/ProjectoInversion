@@ -14,6 +14,7 @@ import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +44,6 @@ public class UserService implements UserDetailsService {
     private final RolesRepository rolesRepository;
 
     final JwtUtils jwtUtils;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -252,8 +252,6 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException(ex.getMessage());
         }
     }
-
-
 
 
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Roles> roles) {
