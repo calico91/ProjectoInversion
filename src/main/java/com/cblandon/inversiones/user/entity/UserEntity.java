@@ -9,7 +9,8 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,8 +33,8 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     @Email(message = "correo invalido")
     String email;
-    @Enumerated(EnumType.STRING)
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH})
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(
                     name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -41,4 +42,8 @@ public class UserEntity {
     @Column(length = 100)
     String idMovil;
 
+    @PostPersist
+    public void postPersist() {
+        this.country = "Colombia";
+    }
 }
