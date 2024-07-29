@@ -2,6 +2,10 @@ package com.cblandon.inversiones.utils;
 
 public class Constantes {
 
+    private Constantes() {
+        throw new IllegalStateException("clase de utilidad");
+    }
+
     public static final String CUOTA_NORMAL = "CN";
     public static final String SOLO_INTERES = "SI";
     public static final String ABONO_CAPITAL = "AC";

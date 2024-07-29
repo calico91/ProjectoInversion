@@ -41,9 +41,12 @@ public class UserEntity {
     Set<Roles> roles;
     @Column(length = 100)
     String idMovil;
+    @Column(length = 1)
+    boolean isActive;
 
     @PostPersist
     public void postPersist() {
+        this.isActive = true;
         this.country = "Colombia";
     }
 }

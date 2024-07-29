@@ -25,12 +25,6 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.registrar(registerUserRequestDTO));
     }
 
-    @PostMapping(value = "login")
-    public ResponseEntity<GenericResponseDTO> login(
-            @RequestBody LoginRequestDTO loginRequestDTO) {
-        return GenericResponseDTO.genericResponse(userService.login(loginRequestDTO));
-    }
-
     @GetMapping(value = "consultarUsuarios")
     @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> consultarUsuarios() {
@@ -43,19 +37,6 @@ public class UserController {
             @PathVariable String username,
             @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         return GenericResponseDTO.genericResponse(userService.actualizarUsuario(username, registerUserRequestDTO));
-    }
-
-    @PostMapping("auth-biometrica")
-    public ResponseEntity<GenericResponseDTO> authBiometrica(
-            @RequestBody AuthBiometriaRequestDTO authBiometriaRequestDTO) {
-        return GenericResponseDTO.genericResponse(userService.authBiometrica(authBiometriaRequestDTO));
-    }
-
-    @PostMapping("vincular-dispositivo")
-    public ResponseEntity<GenericResponseDTO> vincularDispositivo(
-            @RequestBody RegistrarDispositivoDTO registrarDispositivoDTO) {
-        return GenericResponseDTO.genericResponse(userService.vincularDispositivo(registrarDispositivoDTO));
-
     }
 
     @PutMapping(value = "cambiar-contrasena")

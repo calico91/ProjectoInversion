@@ -42,10 +42,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http -> {
                     http.requestMatchers(
                             "/user/register",
-                            "/user/auth-biometrica",
+                            "/autenticacion/auth-biometrica",
                             "/v3/api-docs/**",
                             "/doc/**").permitAll();
-                    http.requestMatchers(HttpMethod.POST, "/user/login").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/autenticacion/login").permitAll();
                     http.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils, handlerExceptionResolver),
