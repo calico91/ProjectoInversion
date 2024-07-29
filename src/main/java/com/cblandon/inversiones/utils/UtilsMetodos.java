@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 
 public class UtilsMetodos {
 
+    private UtilsMetodos() {
+        throw new IllegalStateException("clase de utilidad");
+    }
+
     public static String obtenerUsuarioLogueado() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication().getName()).orElse("test");
     }
@@ -21,7 +25,7 @@ public class UtilsMetodos {
         return (int) Math.floor(cuotasPagadas);
     }
 
-    public static Collection<? extends GrantedAuthority> getAuthorities(Set<Roles> roles) {
+    public static Collection<GrantedAuthority> getAuthorities(Set<Roles> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());
     }
