@@ -95,33 +95,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    @Transactional(readOnly = true)
-    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        log.info("login: {}", loginRequestDTO);
-
-        UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
-                .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
-                        null, MensajesErrorEnum.ERROR_AUTENTICACION));
-
-        if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
-            throw new UsernameNotFoundExceptionCustom(
-                    null, MensajesErrorEnum.ERROR_AUTENTICACION);
-        }
-        try {
-            return AuthResponseDTO.builder()
-                    .id(usuario.getId())
-                    .username(usuario.getUsername())
-                    .token(generarToken(usuario))
-                    .authorities(getAuthoritiesString(usuario.getRoles()))
-                    .build();
-
-
-        } catch (RuntimeException ex) {
-            log.error("login: {}", ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-
-    }
 
     @Transactional(readOnly = true)
     public List<UsuariosResponseDTO> consultarUsuarios() {
@@ -185,55 +158,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    @Transactional(readOnly = true)
-    public AuthResponseDTO authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
-        log.info("authBiometrica: {}", authBiometriaRequestDTO);
-        UserEntity usuario = userRepository.findByUsername(
-                authBiometriaRequestDTO.username()).orElseThrow(() ->
-                new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
-
-        if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
-            throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
-        }
-
-        try {
-
-            return AuthResponseDTO.builder()
-                    .id(usuario.getId())
-                    .username(usuario.getUsername())
-                    .token(generarToken(usuario))
-                    .authorities(getAuthoritiesString(usuario.getRoles()))
-                    .build();
-
-        } catch (RuntimeException ex) {
-            log.error("authBiometrica: {}", ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-    }
-
-
-    /**
-     * se registra el id del dispositivo con el cual se desea hacer auth biometrica
-     */
-    @Transactional
-    public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
-        log.info("vincularDispositivo: {}", registrarDispositivoDTO);
-        UserEntity user = userRepository.findByUsername(
-                registrarDispositivoDTO.username()).orElseThrow(() ->
-                new UsernameNotFoundException("No se encontro usuario"));
-        try {
-
-            user.setIdMovil(passwordEncoder.encode(registrarDispositivoDTO.idDispositivo()));
-            userRepository.save(user);
-
-            return "Dispositivo vinculado correctamente";
-        } catch (RuntimeException ex) {
-            log.error("vincularDispositivo: {}", ex.getMessage());
-            throw new RuntimeException(ex.getMessage());
-        }
-
-    }
-
     @Transactional
     public String cambiarContrasena(CambiarContrasenaDTO cambiarContrasenaDTO) {
         log.info("cambiarContrasena: {}", cambiarContrasenaDTO.toString());
@@ -264,12 +188,4 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> role.getName().name()).collect(Collectors.toSet());
     }
 
-    private String generarToken(UserEntity usuario) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                usuario.getUsername(), null, getAuthorities(usuario.getRoles()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return jwtUtils.createToken(authentication);
-    }
 }

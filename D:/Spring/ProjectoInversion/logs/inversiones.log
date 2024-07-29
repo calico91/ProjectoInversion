@@ -1,0 +1,523 @@
+2024-07-29T10:38:42.942-05:00  INFO 11245 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17 with PID 11245 (/home/playtech/personal/ProjectoInversion/target/classes started by playtech in /home/playtech/personal/ProjectoInversion)
+2024-07-29T10:38:42.949-05:00  INFO 11245 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-29T10:38:42.995-05:00  INFO 11245 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-29T10:38:42.996-05:00  INFO 11245 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-29T10:38:43.847-05:00  INFO 11245 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-29T10:38:43.924-05:00  INFO 11245 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 7 JPA repository interfaces.
+2024-07-29T10:38:44.176-05:00  INFO 11245 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-07-29T10:38:44.177-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:38:44.178-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:38:44.178-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:38:44.179-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:38:44.179-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2024-07-29T10:38:44.179-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-07-29T10:38:44.179-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:38:44.179-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:38:44.308-05:00  INFO 11245 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'inversionesApplication' of type [com.cblandon.inversiones.InversionesApplication$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:38:44.319-05:00  INFO 11245 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:38:44.414-05:00  INFO 11245 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-07-29T10:38:44.423-05:00  INFO 11245 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-07-29T10:38:44.425-05:00  INFO 11245 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-07-29T10:38:44.647-05:00  INFO 11245 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-07-29T10:38:44.656-05:00  INFO 11245 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-29T10:38:44.656-05:00  INFO 11245 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-07-29T10:38:44.710-05:00  INFO 11245 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-29T10:38:44.710-05:00  INFO 11245 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1714 ms
+2024-07-29T10:38:44.882-05:00  INFO 11245 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-29T10:38:44.930-05:00  INFO 11245 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-07-29T10:38:45.155-05:00  INFO 11245 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-29T10:38:45.475-05:00  INFO 11245 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45dc9912
+2024-07-29T10:38:45.477-05:00  INFO 11245 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-29T10:38:45.522-05:00  INFO 11245 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-07-29T10:38:46.501-05:00  INFO 11245 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-29T10:38:46.507-05:00  INFO 11245 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-29T10:38:46.939-05:00  WARN 11245 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-29T10:38:47.523-05:00 DEBUG 11245 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-07-29T10:38:47.552-05:00 DEBUG 11245 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:38:47.585-05:00 DEBUG 11245 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:38:47.597-05:00 DEBUG 11245 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:38:47.613-05:00 DEBUG 11245 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:38:47.831-05:00  INFO 11245 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3541117, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@114a992a, org.springframework.security.web.context.SecurityContextHolderFilter@54aa1e3d, org.springframework.security.web.header.HeaderWriterFilter@721758a, org.springframework.security.web.authentication.logout.LogoutFilter@2f17ff2, com.cblandon.inversiones.security.filters.JwtTokenValidator@55c316d4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@780b82a7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7fc71d3d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@97e97b4, org.springframework.security.web.session.SessionManagementFilter@5a10d71, org.springframework.security.web.access.ExceptionTranslationFilter@739272be, org.springframework.security.web.access.intercept.AuthorizationFilter@42ea1cd3]
+2024-07-29T10:38:47.986-05:00  INFO 11245 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-29T10:38:48.005-05:00  INFO 11245 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] u.j.c.RefreshScopeRefreshedEventListener : Refreshing cached encryptable property sources on ServletWebServerInitializedEvent
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemProperties refreshed
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemEnvironment refreshed
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source random refreshed
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' refreshed
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source devtools refreshed
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:38:48.006-05:00  INFO 11245 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2024-07-29T10:38:48.013-05:00  INFO 11245 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 5.519 seconds (process running for 6.106)
+2024-07-29T10:39:52.276-05:00  INFO 11245 --- [http-nio-8091-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-29T10:39:52.276-05:00  INFO 11245 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-29T10:39:52.277-05:00  INFO 11245 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-07-29T10:39:52.342-05:00  WARN 11245 --- [http-nio-8091-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.auth0.jwt.exceptions.JWTVerificationException: Token invalid, not Authorized]
+2024-07-29T10:42:55.471-05:00  INFO 11245 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-29T10:42:55.473-05:00  INFO 11245 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-29T10:42:55.477-05:00  INFO 11245 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-29T10:42:57.789-05:00  INFO 11981 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17 with PID 11981 (/home/playtech/personal/ProjectoInversion/target/classes started by playtech in /home/playtech/personal/ProjectoInversion)
+2024-07-29T10:42:57.791-05:00  INFO 11981 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-29T10:42:57.827-05:00  INFO 11981 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-29T10:42:57.827-05:00  INFO 11981 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-29T10:42:58.412-05:00  INFO 11981 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-29T10:42:58.475-05:00  INFO 11981 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 7 JPA repository interfaces.
+2024-07-29T10:42:58.669-05:00  INFO 11981 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-07-29T10:42:58.670-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:42:58.671-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:42:58.671-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:42:58.671-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:42:58.671-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2024-07-29T10:42:58.672-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-07-29T10:42:58.672-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:42:58.672-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:42:58.781-05:00  INFO 11981 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'inversionesApplication' of type [com.cblandon.inversiones.InversionesApplication$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:42:58.792-05:00  INFO 11981 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:42:58.861-05:00  INFO 11981 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-07-29T10:42:58.868-05:00  INFO 11981 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-07-29T10:42:58.870-05:00  INFO 11981 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-07-29T10:42:59.049-05:00  INFO 11981 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-07-29T10:42:59.056-05:00  INFO 11981 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-29T10:42:59.056-05:00  INFO 11981 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-07-29T10:42:59.097-05:00  INFO 11981 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-29T10:42:59.097-05:00  INFO 11981 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1269 ms
+2024-07-29T10:42:59.217-05:00  INFO 11981 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-29T10:42:59.241-05:00  INFO 11981 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-07-29T10:42:59.400-05:00  INFO 11981 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-29T10:42:59.593-05:00  INFO 11981 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@106420c1
+2024-07-29T10:42:59.594-05:00  INFO 11981 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-29T10:42:59.623-05:00  INFO 11981 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-07-29T10:43:00.279-05:00  INFO 11981 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-29T10:43:00.284-05:00  INFO 11981 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-29T10:43:00.581-05:00  WARN 11981 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-29T10:43:01.101-05:00 DEBUG 11981 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-07-29T10:43:01.128-05:00 DEBUG 11981 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:43:01.159-05:00 DEBUG 11981 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:43:01.168-05:00 DEBUG 11981 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:43:01.184-05:00 DEBUG 11981 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:43:01.371-05:00  INFO 11981 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4bf06d34, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3cf96c95, org.springframework.security.web.context.SecurityContextHolderFilter@442d4418, org.springframework.security.web.header.HeaderWriterFilter@3c681cb7, org.springframework.security.web.authentication.logout.LogoutFilter@612db23b, com.cblandon.inversiones.security.filters.JwtTokenValidator@12044d7c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f84681a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1e208f60, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5d4d9a76, org.springframework.security.web.session.SessionManagementFilter@52280cc9, org.springframework.security.web.access.ExceptionTranslationFilter@6ff7123b, org.springframework.security.web.access.intercept.AuthorizationFilter@2e8b3ea9]
+2024-07-29T10:43:01.521-05:00  INFO 11981 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-29T10:43:01.539-05:00  INFO 11981 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-07-29T10:43:01.540-05:00  INFO 11981 --- [restartedMain] u.j.c.RefreshScopeRefreshedEventListener : Refreshing cached encryptable property sources on ServletWebServerInitializedEvent
+2024-07-29T10:43:01.540-05:00  INFO 11981 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemProperties refreshed
+2024-07-29T10:43:01.540-05:00  INFO 11981 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemEnvironment refreshed
+2024-07-29T10:43:01.540-05:00  INFO 11981 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source random refreshed
+2024-07-29T10:43:01.540-05:00  INFO 11981 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' refreshed
+2024-07-29T10:43:01.541-05:00  INFO 11981 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source devtools refreshed
+2024-07-29T10:43:01.541-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:43:01.541-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:43:01.541-05:00  INFO 11981 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2024-07-29T10:43:01.547-05:00  INFO 11981 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.089 seconds (process running for 4.4)
+2024-07-29T10:43:06.882-05:00  INFO 11981 --- [http-nio-8091-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-29T10:43:06.883-05:00  INFO 11981 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-29T10:43:06.884-05:00  INFO 11981 --- [http-nio-8091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-07-29T10:43:06.946-05:00  INFO 11981 --- [http-nio-8091-exec-1] c.c.i.a.service.AutenticacionService     : authBiometrica: AuthBiometriaRequestDTO[username=blandon, idMovil=RON31.267-102]
+2024-07-29T10:43:06.958-05:00 DEBUG 11981 --- [http-nio-8091-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.is_active,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-07-29T10:43:06.961-05:00 DEBUG 11981 --- [http-nio-8091-exec-1] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_1.id=p1_0.rol_id 
+        where
+            r1_0.user_id=?
+2024-07-29T10:43:06.964-05:00 DEBUG 11981 --- [http-nio-8091-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id 
+    where
+        p1_0.rol_id=?
+2024-07-29T10:43:17.844-05:00  INFO 11981 --- [http-nio-8091-exec-3] c.c.i.a.service.AutenticacionService     : vincularDispositivo: RegistrarDispositivoDTO[username=blandon, idDispositivo=RON31.267-102]
+2024-07-29T10:43:17.845-05:00 DEBUG 11981 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.is_active,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-07-29T10:43:17.847-05:00 DEBUG 11981 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_1.id=p1_0.rol_id 
+        where
+            r1_0.user_id=?
+2024-07-29T10:43:17.849-05:00 DEBUG 11981 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    select
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id 
+    where
+        p1_0.rol_id=?
+2024-07-29T10:43:17.932-05:00 DEBUG 11981 --- [http-nio-8091-exec-3] org.hibernate.SQL                        : 
+    update
+        user 
+    set
+        country=?,
+        email=?,
+        firstname=?,
+        id_movil=?,
+        is_active=?,
+        lastname=?,
+        password=?,
+        username=? 
+    where
+        id=?
+2024-07-29T10:43:29.046-05:00  INFO 11981 --- [http-nio-8091-exec-5] c.c.i.a.service.AutenticacionService     : login: LoginRequestDTO[username=blandón, password=maelito]
+2024-07-29T10:43:29.047-05:00 DEBUG 11981 --- [http-nio-8091-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.is_active,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-07-29T10:43:29.049-05:00 DEBUG 11981 --- [http-nio-8091-exec-5] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_1.id=p1_0.rol_id 
+        where
+            r1_0.user_id=?
+2024-07-29T10:43:29.052-05:00 DEBUG 11981 --- [http-nio-8091-exec-5] org.hibernate.SQL                        : 
+    select
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id 
+    where
+        p1_0.rol_id=?
+2024-07-29T10:48:22.708-05:00  INFO 11981 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-29T10:48:22.710-05:00  INFO 11981 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-29T10:48:22.715-05:00  INFO 11981 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-29T10:48:26.013-05:00  INFO 12754 --- [restartedMain] c.c.inversiones.InversionesApplication   : Starting InversionesApplication using Java 17 with PID 12754 (/home/playtech/personal/ProjectoInversion/target/classes started by playtech in /home/playtech/personal/ProjectoInversion)
+2024-07-29T10:48:26.018-05:00  INFO 12754 --- [restartedMain] c.c.inversiones.InversionesApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-29T10:48:26.083-05:00  INFO 12754 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-29T10:48:26.083-05:00  INFO 12754 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-29T10:48:26.736-05:00  INFO 12754 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-29T10:48:26.803-05:00  INFO 12754 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 7 JPA repository interfaces.
+2024-07-29T10:48:26.997-05:00  INFO 12754 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-07-29T10:48:26.997-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:48:26.998-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:48:26.998-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:48:26.999-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:48:26.999-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2024-07-29T10:48:26.999-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-07-29T10:48:26.999-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:48:26.999-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-07-29T10:48:27.101-05:00  INFO 12754 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'inversionesApplication' of type [com.cblandon.inversiones.InversionesApplication$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:48:27.110-05:00  INFO 12754 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-07-29T10:48:27.183-05:00  INFO 12754 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-07-29T10:48:27.191-05:00  INFO 12754 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-07-29T10:48:27.193-05:00  INFO 12754 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-07-29T10:48:27.377-05:00  INFO 12754 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2024-07-29T10:48:27.385-05:00  INFO 12754 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-29T10:48:27.385-05:00  INFO 12754 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2024-07-29T10:48:27.425-05:00  INFO 12754 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-29T10:48:27.425-05:00  INFO 12754 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1341 ms
+2024-07-29T10:48:27.561-05:00  INFO 12754 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-29T10:48:27.586-05:00  INFO 12754 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2024-07-29T10:48:27.757-05:00  INFO 12754 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-29T10:48:27.956-05:00  INFO 12754 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@76831282
+2024-07-29T10:48:27.957-05:00  INFO 12754 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-29T10:48:27.985-05:00  INFO 12754 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-07-29T10:48:28.698-05:00  INFO 12754 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-07-29T10:48:28.703-05:00  INFO 12754 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-29T10:48:28.989-05:00  WARN 12754 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-29T10:48:29.473-05:00 DEBUG 12754 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        e1_0.id_estado_credito,
+        e1_0.descripcion 
+    from
+        estado_credito e1_0
+2024-07-29T10:48:29.498-05:00 DEBUG 12754 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:48:29.526-05:00 DEBUG 12754 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        p1_0.id,
+        p1_0.descripcion 
+    from
+        permisos p1_0
+2024-07-29T10:48:29.535-05:00 DEBUG 12754 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:48:29.551-05:00 DEBUG 12754 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles r1_0 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_0.id=p1_0.rol_id 
+        where
+            r1_0.id=?
+2024-07-29T10:48:29.739-05:00  INFO 12754 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5ceba3bf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69b5c4dc, org.springframework.security.web.context.SecurityContextHolderFilter@6ff3e898, org.springframework.security.web.header.HeaderWriterFilter@31aa2080, org.springframework.security.web.authentication.logout.LogoutFilter@270b624d, com.cblandon.inversiones.security.filters.JwtTokenValidator@f1f8de1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@42327bd6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@348945aa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5a257237, org.springframework.security.web.session.SessionManagementFilter@1164dcd6, org.springframework.security.web.access.ExceptionTranslationFilter@24fd9dc8, org.springframework.security.web.access.intercept.AuthorizationFilter@1314cff9]
+2024-07-29T10:48:29.888-05:00  INFO 12754 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-29T10:48:29.907-05:00  INFO 12754 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] u.j.c.RefreshScopeRefreshedEventListener : Refreshing cached encryptable property sources on ServletWebServerInitializedEvent
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemProperties refreshed
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source systemEnvironment refreshed
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source random refreshed
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' refreshed
+2024-07-29T10:48:29.908-05:00  INFO 12754 --- [restartedMain] CachingDelegateEncryptablePropertySource : Property Source devtools refreshed
+2024-07-29T10:48:29.909-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2024-07-29T10:48:29.909-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2024-07-29T10:48:29.909-05:00  INFO 12754 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2024-07-29T10:48:29.916-05:00  INFO 12754 --- [restartedMain] c.c.inversiones.InversionesApplication   : Started InversionesApplication in 4.338 seconds (process running for 4.78)
+2024-07-29T10:48:41.765-05:00  INFO 12754 --- [http-nio-8091-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-29T10:48:41.765-05:00  INFO 12754 --- [http-nio-8091-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-29T10:48:41.766-05:00  INFO 12754 --- [http-nio-8091-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-07-29T10:48:41.831-05:00  INFO 12754 --- [http-nio-8091-exec-2] c.c.i.a.service.AutenticacionService     : login: LoginRequestDTO[username=blandon, password=maelito]
+2024-07-29T10:48:41.843-05:00 DEBUG 12754 --- [http-nio-8091-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.country,
+        u1_0.email,
+        u1_0.firstname,
+        u1_0.id_movil,
+        u1_0.is_active,
+        u1_0.lastname,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-07-29T10:48:41.847-05:00 DEBUG 12754 --- [http-nio-8091-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name,
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    left join
+        (roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id) 
+                on r1_1.id=p1_0.rol_id 
+        where
+            r1_0.user_id=?
+2024-07-29T10:48:41.850-05:00 DEBUG 12754 --- [http-nio-8091-exec-2] org.hibernate.SQL                        : 
+    select
+        p1_0.rol_id,
+        p1_1.id,
+        p1_1.descripcion 
+    from
+        roles_permisos p1_0 
+    join
+        permisos p1_1 
+            on p1_1.id=p1_0.permiso_id 
+    where
+        p1_0.rol_id=?
