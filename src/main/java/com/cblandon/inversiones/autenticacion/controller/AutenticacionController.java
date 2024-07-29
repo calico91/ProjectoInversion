@@ -1,9 +1,9 @@
 package com.cblandon.inversiones.autenticacion.controller;
 
 import com.cblandon.inversiones.autenticacion.service.AutenticacionService;
-import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
-import com.cblandon.inversiones.user.dto.LoginRequestDTO;
-import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
+import com.cblandon.inversiones.autenticacion.dto.AuthBiometriaRequestDTO;
+import com.cblandon.inversiones.autenticacion.dto.LoginRequestDTO;
+import com.cblandon.inversiones.autenticacion.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

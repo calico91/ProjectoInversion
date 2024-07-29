@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.user.dto;
+package com.cblandon.inversiones.autenticacion.dto;
 
 public record RegistrarDispositivoDTO(String username, String idDispositivo) {
 }

@@ -1,4 +1,4 @@
-package com.cblandon.inversiones.user.dto;
+package com.cblandon.inversiones.autenticacion.dto;
 
 import lombok.Builder;
 
