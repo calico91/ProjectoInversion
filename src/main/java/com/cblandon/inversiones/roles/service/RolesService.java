@@ -34,6 +34,7 @@ public class RolesService {
         asignarPermisosSuperUsuario();
     }
 
+    @Transactional
     private void asignarPermisosSuperUsuario() {
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findById(1).orElse(new Roles());
@@ -76,4 +77,18 @@ public class RolesService {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Transactional(readOnly = true)
+    public Set<Roles> consultarRoles() {
+        log.info("consultarRoles");
+
+        try {
+            return rolesRepository.consultarRoles();
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+
 }

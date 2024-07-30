@@ -15,4 +15,7 @@ public interface RolesRepository extends JpaRepository<Roles, Integer> {
     @Query(value = "SELECT r FROM Roles r JOIN r.permisos m ON m.id = :id ")
     Set<Roles> consultarPermisos(Integer id);
 
+    @Query(value = "SELECT r FROM Roles r WHERE r.name <> 'SUPER'")
+    Set<Roles> consultarRoles();
+
 }
