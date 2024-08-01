@@ -76,15 +76,15 @@ public class UserService implements UserDetailsService {
 
             user.setPassword(passwordEncoder.encode(registerUserRequestDTO.password()));
 
-            Set<Roles> authorities = registerUserRequestDTO.roles().stream()
-                    .map(role -> rolesRepository.findByName(Role.valueOf(role)).orElseThrow(
+            Set<Roles> roles = registerUserRequestDTO.roles().stream()
+                    .map(role -> rolesRepository.findById(role.getId()).orElseThrow(
                             () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
-            user.setRoles(authorities);
+            user.setRoles(roles);
 
             UsuariosResponseDTO usuariosResponseDTO =
                     UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
-            usuariosResponseDTO.setRoles(getAuthoritiesString(authorities));
+            usuariosResponseDTO.setRoles(roles);
 
             return usuariosResponseDTO;
 
@@ -112,7 +112,7 @@ public class UserService implements UserDetailsService {
                             .firstname(user.getFirstname())
                             .email(user.getEmail())
                             .country(user.getCountry())
-                            .roles(getAuthoritiesString(user.getRoles()))
+                            .roles(user.getRoles())
                             .build()
             ).toList();
 
@@ -141,9 +141,10 @@ public class UserService implements UserDetailsService {
                     .password(passwordEncoder.encode(registrarClienteDTO.password()))
                     .roles(registrarClienteDTO.roles().stream()
                             .map(role -> Roles.builder()
-                                    .name(Role.valueOf(role))
+                                    .id(role.getId())
                                     .build())
                             .collect(Collectors.toSet()))
+                    .isActive(true)
                     .build();
 
             usuarioModificado.setId(usuarioBD.getId());

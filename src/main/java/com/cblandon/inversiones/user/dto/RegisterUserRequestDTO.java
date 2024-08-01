@@ -1,5 +1,6 @@
 package com.cblandon.inversiones.user.dto;
 
+import com.cblandon.inversiones.roles.entity.Roles;
 import lombok.Builder;
 
 import java.util.Set;
@@ -11,6 +12,6 @@ public record RegisterUserRequestDTO(String username,
                                      String lastname,
                                      String country,
                                      String email,
-                                     Set<String> roles) {
+                                     Set<Roles> roles) {
 
 }

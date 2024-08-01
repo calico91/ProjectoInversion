@@ -34,7 +34,6 @@ public class RolesService {
         asignarPermisosSuperUsuario();
     }
 
-    @Transactional
     private void asignarPermisosSuperUsuario() {
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findById(1).orElse(new Roles());
