@@ -63,18 +63,21 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UsuariosResponseDTO registrar(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
         log.info("registrarUsuario: {}", registerUserRequestDTO);
-        Optional<UserEntity> consultarUser = userRepository.findByUsername(registerUserRequestDTO.username());
 
-        if (consultarUser.isPresent()) {
+
+        String password = registerUserRequestDTO.password() == null ? "cambio" : registerUserRequestDTO.password();
+        if (userRepository.findByUsername(registerUserRequestDTO.username()).isPresent()) {
             throw new RequestException(MensajesErrorEnum.USUARIO_REGISTRADO);
         }
 
-
+        if (userRepository.findByEmail(registerUserRequestDTO.email()).isPresent()) {
+            throw new RequestException(MensajesErrorEnum.CORREO_REGISTRADO);
+        }
         try {
 
             UserEntity user = UserMapper.USER.toUserEntity(registerUserRequestDTO);
 
-            user.setPassword(passwordEncoder.encode(registerUserRequestDTO.password()));
+            user.setPassword(passwordEncoder.encode(password));
 
             Set<Roles> roles = registerUserRequestDTO.roles().stream()
                     .map(role -> rolesRepository.findById(role.getId()).orElseThrow(
