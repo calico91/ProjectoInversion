@@ -25,10 +25,16 @@ public class UserController {
         return GenericResponseDTO.genericResponse(userService.registrar(registerUserRequestDTO));
     }
 
-    @GetMapping(value = "consultarUsuarios")
+    @GetMapping(value = "consultar-usuarios")
     @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> consultarUsuarios() {
-        return GenericResponseDTO.genericResponse(userService.consultarUsuarios());
+        try {
+            return GenericResponseDTO.genericResponse(userService.consultarUsuarios());
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("");
+        }
     }
 
     @PutMapping("/actualizarUsuario/{username}")

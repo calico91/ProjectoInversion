@@ -89,6 +89,7 @@ public class UserService implements UserDetailsService {
                     UserMapper.USER.toUsuariosResponseDTO(userRepository.save(user));
             usuariosResponseDTO.setRoles(roles);
 
+
             return usuariosResponseDTO;
 
         } catch (RuntimeException ex) {
@@ -102,22 +103,18 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public List<UsuariosResponseDTO> consultarUsuarios() {
         log.info("consultarUsuarios: ");
-        List<UserEntity> usuariosConsulta = userRepository.findAll();
-        if (usuariosConsulta.isEmpty()) {
-            throw new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS);
-        }
+        Set<UserEntity> usuariosConsulta = userRepository.consultarUsuarios();
+
         try {
 
             return usuariosConsulta.stream().map(
                     user -> UsuariosResponseDTO.builder()
+                            .id(user.getId())
                             .username(user.getUsername())
                             .lastname(user.getLastname())
                             .firstname(user.getFirstname())
                             .email(user.getEmail())
-                            .country(user.getCountry())
-                            .roles(user.getRoles())
-                            .build()
-            ).toList();
+                            .build()).toList();
 
 
         } catch (RuntimeException ex) {

@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     Optional<UserEntity> findByEmail(String email);
 
+    @Query(value = "SELECT u FROM UserEntity u JOIN u.roles r WHERE r.id != 1")
+    Set<UserEntity> consultarUsuarios();
+
 }

@@ -17,8 +17,8 @@ logging:
 spring:
   datasource:
     password: sasa
-    url: jdbc:mysql://localhost:3306/blandon
-    username: root
+    url: jdbc:mysql://10.102.1.51:3306/blandon
+    username: local
   #zona horaria
   jackson:
     time-zone: America/Bogota

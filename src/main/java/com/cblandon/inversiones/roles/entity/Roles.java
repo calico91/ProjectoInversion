@@ -4,16 +4,17 @@ package com.cblandon.inversiones.roles.entity;
 import com.cblandon.inversiones.permiso.entity.Permiso;
 import com.cblandon.inversiones.roles.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "roles")
@@ -27,9 +28,12 @@ public class   Roles {
     @Column(length = 15)
     private Role name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "roles_permisos",
             joinColumns = @JoinColumn(
                     name = "rol_id"), inverseJoinColumns = @JoinColumn(name = "permiso_id"))
+    @ToString.Exclude
     Set<Permiso> permisos;
+
+
 }
