@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value = "SELECT u.isActive FROM UserEntity u WHERE u.username = :username")
     boolean validarEstadoUsuario(@Param("username") String username);
 
+
+
 }

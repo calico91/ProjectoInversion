@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MensajesErrorEnum {
 
-    USUARIO_REGISTRADO("Usuario registrado, verifique el nombre de usuario que se encuentra creando", "E1"),
+    USUARIO_REGISTRADO("Usuario registrado, modifique el nombre de usuario que se encuentra ingresando", "E1"),
     ERROR_FECHA_NUEVA("La fecha nueva no puede ser menor a la fecha de la cuota", "E2"),
     NO_PUEDE_PAGAR_CUOTA_NORMAL("No puede pagar la cuota normal, realice el pago por modulo de credito", "E3"),
     CUOTA_YA_PAGADA("Cuota ya se encuentra cancelada, verifique la informacion", "E4"),
@@ -34,7 +34,7 @@ public enum MensajesErrorEnum {
     ERROR_RENOVAR_CREDITO("El credito que desea renovar no existe", "E23"),
     ERROR_RENOVAR_CREDITO_POR_MONTO("El valor de la renovacion debe ser mayor a 0",
             "E24"),
-    CORREO_REGISTRADO("Correo registrado, verifique el correo que se encuentra creando", "E25"),
+    CORREO_REGISTRADO("Correo registrado, verifique el correo que se encuentra ingresando", "E25"),
     USUARIO_INACTIVO("Usuario inactivo, contacte a su administrador", "E26");
 
 

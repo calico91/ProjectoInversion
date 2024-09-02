@@ -1,6 +1,6 @@
 package com.cblandon.inversiones.user.controller;
 
-import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.user.dto.UserDTO;
 import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.user.service.UserService;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
@@ -20,8 +20,8 @@ public class UserController {
 
     @PostMapping(value = "registrar")
     @PreAuthorize("hasAnyRole('SUPER')")
-    public ResponseEntity<GenericResponseDTO> registrar(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        return GenericResponseDTO.genericResponse(userService.registrar(registerUserRequestDTO));
+    public ResponseEntity<GenericResponseDTO> registrar(@RequestBody UserDTO userDTO) {
+        return GenericResponseDTO.genericResponse(userService.registrar(userDTO));
     }
 
     @GetMapping(value = "consultar-usuarios")
@@ -34,8 +34,8 @@ public class UserController {
     @PutMapping("/actualizar")
     @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> actualizarUsuario(
-            @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        return GenericResponseDTO.genericResponse(userService.actualizarUsuario(registerUserRequestDTO));
+            @RequestBody UserDTO userDTO) {
+        return GenericResponseDTO.genericResponse(userService.actualizarUsuario(userDTO));
     }
 
     @PutMapping(value = "cambiar-contrasena")

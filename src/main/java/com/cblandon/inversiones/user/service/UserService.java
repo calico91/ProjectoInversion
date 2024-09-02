@@ -1,12 +1,11 @@
 package com.cblandon.inversiones.user.service;
 
-import com.cblandon.inversiones.user.dto.RegisterUserRequestDTO;
+import com.cblandon.inversiones.mapper.Mapper;
+import com.cblandon.inversiones.user.dto.UserDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
-import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.mapper.UserMapper;
-import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.roles.repository.RolesRepository;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
@@ -14,15 +13,11 @@ import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.user.dto.*;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
-import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,25 +56,25 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UsuariosResponseDTO registrar(RegisterUserRequestDTO registerUserRequestDTO) throws RequestException {
-        log.info("registrarUsuario: {}", registerUserRequestDTO);
+    public UsuariosResponseDTO registrar(UserDTO userDTO) throws RequestException {
+        log.info("registrarUsuario: {}", userDTO);
 
 
-        String password = registerUserRequestDTO.password() == null ? "cambio" : registerUserRequestDTO.password();
-        if (userRepository.findByUsername(registerUserRequestDTO.username()).isPresent()) {
+        String password = userDTO.password() == null ? "cambio" : userDTO.password();
+        if (userRepository.findByUsername(userDTO.username()).isPresent()) {
             throw new RequestException(MensajesErrorEnum.USUARIO_REGISTRADO);
         }
 
-        if (userRepository.findByEmail(registerUserRequestDTO.email()).isPresent()) {
+        if (userRepository.findByEmail(userDTO.email()).isPresent()) {
             throw new RequestException(MensajesErrorEnum.CORREO_REGISTRADO);
         }
         try {
 
-            UserEntity user = UserMapper.USER.toUserEntity(registerUserRequestDTO);
+            UserEntity user = UserMapper.USER.toUserEntity(userDTO);
 
             user.setPassword(passwordEncoder.encode(password));
 
-            Set<Roles> roles = registerUserRequestDTO.roles().stream()
+            Set<Roles> roles = userDTO.roles().stream()
                     .map(role -> rolesRepository.findById(role.getId()).orElseThrow(
                             () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
                     .collect(Collectors.toSet());
@@ -126,38 +121,43 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserEntity actualizarUsuario(RegisterUserRequestDTO registrarClienteDTO) {
-        log.info("actualizarUsuario: {}", registrarClienteDTO);
-        UserEntity usuarioBD = userRepository.findById(registrarClienteDTO.id()).orElseThrow(
+    public UsuarioModificadoDTO actualizarUsuario(UserDTO userDTO) {
+        log.info("actualizarUsuario: {}", userDTO);
+        UserEntity usuarioBD = userRepository.findById(userDTO.id()).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
+
+        if (!usuarioBD.getEmail().equals(userDTO.email())) {
+            userRepository.findByEmail(userDTO.email()).ifPresent(correo -> {
+                throw new RequestException(MensajesErrorEnum.CORREO_REGISTRADO);
+            });
+        }
+        if (!usuarioBD.getUsername().equals(userDTO.username())) {
+            userRepository.findByUsername(userDTO.username()).ifPresent(correo -> {
+                throw new RequestException(MensajesErrorEnum.USUARIO_REGISTRADO);
+            });
+
+        }
+
         try {
 
-            UserEntity usuarioModificado = UserEntity.builder()
-                    .lastname(registrarClienteDTO.lastname())
-                    .firstname(registrarClienteDTO.firstname())
-                    .username(registrarClienteDTO.username())
-                    .country(registrarClienteDTO.country())
-                    .email(registrarClienteDTO.email())
-                    .password(passwordEncoder.encode(registrarClienteDTO.password()))
-                    .roles(registrarClienteDTO.roles().stream()
-                            .map(role -> Roles.builder()
-                                    .id(role.getId())
-                                    .build())
-                            .collect(Collectors.toSet()))
-                    .isActive(true)
-                    .build();
+            UserEntity usuarioModificado = UserMapper.USER.toUserEntity(userDTO);
+            usuarioModificado.setActive(true);
+            usuarioModificado.setPassword(usuarioBD.getPassword());
+            usuarioModificado.setCountry(usuarioBD.getCountry());
+            usuarioModificado.setRoles(userDTO.roles().stream()
+                    .map(role -> Roles.builder()
+                            .id(role.getId())
+                            .build())
+                    .collect(Collectors.toSet()));
 
-            usuarioModificado.setId(usuarioBD.getId());
-            return userRepository.save(usuarioModificado);
+            return UserMapper.USER.toUsuarioModificadoDTO(userRepository.save(usuarioModificado));
 
         } catch (RuntimeException ex) {
             log.error("actualizarUsuario: {}", ex.getMessage());
-
             throw new RuntimeException(ex.getMessage());
         }
-
-
     }
+
 
     @Transactional
     public String cambiarContrasena(CambiarContrasenaDTO cambiarContrasenaDTO) {
@@ -178,6 +178,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * solo disponible para el usuario super, reinicia la contraseña de los demas usuarios
+     */
     @Transactional
     public String restablecerContrasena(Integer idUsuario) {
         log.info("restablecerContrasena: {}", idUsuario.toString());
@@ -220,9 +223,5 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
     }
 
-
-    private Set<String> getAuthoritiesString(Set<Roles> roles) {
-        return roles.stream().map(role -> role.getName().name()).collect(Collectors.toSet());
-    }
 
 }
