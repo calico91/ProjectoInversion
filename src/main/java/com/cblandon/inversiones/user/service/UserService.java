@@ -126,9 +126,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserEntity actualizarUsuario(String username, RegisterUserRequestDTO registrarClienteDTO) {
+    public UserEntity actualizarUsuario(RegisterUserRequestDTO registrarClienteDTO) {
         log.info("actualizarUsuario: {}", registrarClienteDTO);
-        UserEntity usuarioBD = userRepository.findByUsername(username).orElseThrow(
+        UserEntity usuarioBD = userRepository.findById(registrarClienteDTO.id()).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
         try {
 
@@ -174,6 +174,42 @@ public class UserService implements UserDetailsService {
             return "Contrasena modificada correctamente";
         } catch (RuntimeException ex) {
             log.error("cambiarContrasena: ".concat(ex.getMessage()));
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public String restablecerContrasena(Integer idUsuario) {
+        log.info("restablecerContrasena: {}", idUsuario.toString());
+
+        try {
+            UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
+                    () -> new UsernameNotFoundException("No se encontro usuario"));
+
+            usuarioBD.setPassword(passwordEncoder.encode("cambio"));
+            userRepository.save(usuarioBD);
+            return "Contrasena modificada correctamente";
+        } catch (RuntimeException ex) {
+            log.error("restablecerContrasena: ".concat(ex.getMessage()));
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public String cambiarEstadoUsuario(Integer idUsuario) {
+        log.info("cambiarEstadoUsuario: {}", idUsuario.toString());
+
+        try {
+            UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
+                    () -> new UsernameNotFoundException("No se encontro usuario"));
+
+            usuarioBD.setActive(!usuarioBD.isActive());
+            userRepository.save(usuarioBD);
+            String estado = usuarioBD.isActive() ? "activado" : "inactivado";
+
+            return String.format("usuario %s correctamente ", estado);
+        } catch (RuntimeException ex) {
+            log.error("cambiarEstadoUsuario: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }

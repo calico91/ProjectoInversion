@@ -3,6 +3,7 @@ package com.cblandon.inversiones.security;
 
 import com.cblandon.inversiones.security.filters.JwtTokenValidator;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,7 @@ public class SecurityConfig {
     private final JwtUtils jwtUtils;
 
     private final HandlerExceptionResolver handlerExceptionResolver;
+    private final UserRepository userRepository;
 
 
     @Bean
@@ -48,7 +50,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/autenticacion/login").permitAll();
                     http.anyRequest().authenticated();
                 })
-                .addFilterBefore(new JwtTokenValidator(jwtUtils, handlerExceptionResolver),
+                .addFilterBefore(new JwtTokenValidator(jwtUtils, handlerExceptionResolver, userRepository),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
