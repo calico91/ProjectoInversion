@@ -23,4 +23,6 @@ public class UsuariosResponseDTO {
     String email;
     String country;
     Set<Roles> roles;
+    Boolean active;
+
 }

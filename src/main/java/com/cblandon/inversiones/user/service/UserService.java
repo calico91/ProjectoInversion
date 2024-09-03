@@ -1,6 +1,5 @@
 package com.cblandon.inversiones.user.service;
 
-import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.user.dto.UserDTO;
 import com.cblandon.inversiones.user.dto.UsuariosResponseDTO;
 import com.cblandon.inversiones.excepciones.NoDataException;
@@ -121,10 +120,15 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UsuarioModificadoDTO actualizarUsuario(UserDTO userDTO) {
+    public UsuariosResponseDTO actualizarUsuario(UserDTO userDTO) {
         log.info("actualizarUsuario: {}", userDTO);
         UserEntity usuarioBD = userRepository.findById(userDTO.id()).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
+
+        Set<Roles> roles = userDTO.roles().stream()
+                .map(role -> rolesRepository.findById(role.getId()).orElseThrow(
+                        () -> new RequestException(MensajesErrorEnum.ROL_NO_ENCONTRADO)))
+                .collect(Collectors.toSet());
 
         if (!usuarioBD.getEmail().equals(userDTO.email())) {
             userRepository.findByEmail(userDTO.email()).ifPresent(correo -> {
@@ -144,13 +148,9 @@ public class UserService implements UserDetailsService {
             usuarioModificado.setActive(true);
             usuarioModificado.setPassword(usuarioBD.getPassword());
             usuarioModificado.setCountry(usuarioBD.getCountry());
-            usuarioModificado.setRoles(userDTO.roles().stream()
-                    .map(role -> Roles.builder()
-                            .id(role.getId())
-                            .build())
-                    .collect(Collectors.toSet()));
+            usuarioModificado.setRoles(roles);
 
-            return UserMapper.USER.toUsuarioModificadoDTO(userRepository.save(usuarioModificado));
+            return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(usuarioModificado));
 
         } catch (RuntimeException ex) {
             log.error("actualizarUsuario: {}", ex.getMessage());
@@ -202,9 +202,10 @@ public class UserService implements UserDetailsService {
     public String cambiarEstadoUsuario(Integer idUsuario) {
         log.info("cambiarEstadoUsuario: {}", idUsuario.toString());
 
+        UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
+                () -> new UsernameNotFoundException("No se encontro usuario"));
+
         try {
-            UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
-                    () -> new UsernameNotFoundException("No se encontro usuario"));
 
             usuarioBD.setActive(!usuarioBD.isActive());
             userRepository.save(usuarioBD);
@@ -215,6 +216,25 @@ public class UserService implements UserDetailsService {
             log.error("cambiarEstadoUsuario: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
+    }
+
+    @Transactional(readOnly = true)
+    public UsuariosResponseDTO consultarUsuario(Integer id) {
+        log.error("consultarUsuario: {}", id.toString());
+
+        UserEntity usuarioBD = userRepository.findById(id).orElseThrow(
+                () -> new UsernameNotFoundException("No se encontro usuario"));
+        System.out.println("--------------" + usuarioBD.getRoles());
+        try {
+
+            return UserMapper.USER.toUsuariosResponseDTO(usuarioBD);
+
+        } catch (RuntimeException ex) {
+
+            throw new RuntimeException(ex.getMessage());
+        }
+
+
     }
 
 

@@ -54,4 +54,10 @@ public class UserController {
     public ResponseEntity<GenericResponseDTO> cambiarEstado(@PathVariable Integer idUsuario) {
         return GenericResponseDTO.genericResponse(userService.cambiarEstadoUsuario(idUsuario));
     }
+
+    @GetMapping(value = "consultar-usuario/{idUsuario}")
+    @PreAuthorize("hasAnyRole('SUPER')")
+    public ResponseEntity<GenericResponseDTO> consultarUsuario(@PathVariable Integer idUsuario) {
+        return GenericResponseDTO.genericResponse(userService.consultarUsuario(idUsuario));
+    }
 }
