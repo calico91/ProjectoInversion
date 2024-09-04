@@ -108,6 +108,7 @@ public class UserService implements UserDetailsService {
                             .lastname(user.getLastname())
                             .firstname(user.getFirstname())
                             .email(user.getEmail())
+                            .active(user.isActive())
                             .build()).toList();
 
 
