@@ -183,8 +183,8 @@ public class UserService implements UserDetailsService {
      * solo disponible para el usuario super, reinicia la contraseña de los demas usuarios
      */
     @Transactional
-    public String restablecerContrasena(Integer idUsuario) {
-        log.info("restablecerContrasena: {}", idUsuario.toString());
+    public String reiniciarContrasena(Integer idUsuario) {
+        log.info("reiniciarContrasena: {}", idUsuario.toString());
 
         try {
             UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
@@ -192,9 +192,10 @@ public class UserService implements UserDetailsService {
 
             usuarioBD.setPassword(passwordEncoder.encode("cambio"));
             userRepository.save(usuarioBD);
-            return "Contrasena modificada correctamente";
+            return String.format("Se asigno la contrasena 'cambio' para el usuario %s ,ingrese y asigne una nueva",
+                    usuarioBD.getUsername());
         } catch (RuntimeException ex) {
-            log.error("restablecerContrasena: ".concat(ex.getMessage()));
+            log.error("reiniciarContrasena: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -212,7 +213,7 @@ public class UserService implements UserDetailsService {
             userRepository.save(usuarioBD);
             String estado = usuarioBD.isActive() ? "activado" : "inactivado";
 
-            return String.format("usuario %s correctamente ", estado);
+            return String.format("Usuario %s correctamente ", estado);
         } catch (RuntimeException ex) {
             log.error("cambiarEstadoUsuario: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
@@ -225,7 +226,6 @@ public class UserService implements UserDetailsService {
 
         UserEntity usuarioBD = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("No se encontro usuario"));
-        System.out.println("--------------" + usuarioBD.getRoles());
         try {
 
             return UserMapper.USER.toUsuariosResponseDTO(usuarioBD);

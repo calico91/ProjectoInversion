@@ -16,4 +16,7 @@ public class EstadoCredito {
     @Column(length = 20)
     private String descripcion;
 
+    public EstadoCredito(Integer id) {
+        this.id = id;
+    }
 }

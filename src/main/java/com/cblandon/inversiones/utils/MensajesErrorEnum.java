@@ -35,7 +35,8 @@ public enum MensajesErrorEnum {
     ERROR_RENOVAR_CREDITO_POR_MONTO("El valor de la renovacion debe ser mayor a 0",
             "E24"),
     CORREO_REGISTRADO("Correo registrado, verifique el correo que se encuentra ingresando", "E25"),
-    USUARIO_INACTIVO("Usuario inactivo, contacte a su administrador", "E26");
+    USUARIO_INACTIVO("Usuario inactivo, contacte a su administrador", "E26"),
+    ERROR_SALDAR_CREDITO("El valor ingresado es menor al saldo capital del credito", "E26");
 
 
     private final String message;

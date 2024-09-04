@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -202,6 +204,47 @@ public class CreditoService {
             log.error("modificarEstadoCredito: {}", ex.getMessage());
             throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
+    }
+
+    public SaldarCreditoResponseDTO saldar(SaldarCreditoDTO saldarCreditoDTO) throws NoDataException {
+        log.error("saldarCredito: {}", saldarCreditoDTO);
+
+        Credito creditoConsultado = creditoRepository.findById(saldarCreditoDTO.idCredito())
+                .orElseThrow(() -> new NoDataException(
+                        MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
+
+        if (creditoConsultado.getSaldoCredito() > saldarCreditoDTO.valorPagado()) {
+            throw new RequestException(MensajesErrorEnum.ERROR_SALDAR_CREDITO);
+        }
+
+        try {
+            CuotaCredito ultimaCuota = creditoConsultado.getListaCuotasCredito().get(
+                    creditoConsultado.getListaCuotasCredito().size() - 1);
+
+            ultimaCuota.setValorInteres(saldarCreditoDTO.valorPagado() - creditoConsultado.getSaldoCredito());
+            ultimaCuota.setValorCapital(creditoConsultado.getSaldoCredito());
+            ultimaCuota.setValorAbonado(saldarCreditoDTO.valorPagado());
+            ultimaCuota.setFechaAbono(LocalDateTime.now());
+            ultimaCuota.setTipoAbono("AC");
+            ultimaCuota.setAbonoExtra(true);
+
+
+            creditoConsultado.setIdEstadoCredito(new EstadoCredito(2));
+            creditoConsultado.setSaldoCredito(0.0);
+            creditoConsultado.setListaCuotasCredito(new ArrayList<>(List.of(ultimaCuota)));
+            creditoRepository.save(creditoConsultado);
+
+
+            return new SaldarCreditoResponseDTO(
+                    saldarCreditoDTO.idCredito(),
+                    saldarCreditoDTO.valorPagado(),
+                    creditoConsultado.getCliente().getNombres() + " " + creditoConsultado.getCliente().getApellidos()
+            );
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     private double calcularCuotaCapital(Double valorPrestado, Integer cantidadCuotas) {

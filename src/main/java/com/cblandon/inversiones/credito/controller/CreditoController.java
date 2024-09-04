@@ -1,6 +1,7 @@
 package com.cblandon.inversiones.credito.controller;
 
 
+import com.cblandon.inversiones.credito.dto.SaldarCreditoDTO;
 import com.cblandon.inversiones.credito.servicio.CreditoService;
 import com.cblandon.inversiones.credito.dto.RegistrarCreditoRequestDTO;
 import com.cblandon.inversiones.utils.dto.GenericResponseDTO;
@@ -47,6 +48,14 @@ public class CreditoController {
             @PathVariable int idEstadoCredito) {
 
         return GenericResponseDTO.genericResponse(creditoService.modificarEstadoCredito(idCredito, idEstadoCredito));
+    }
+
+    @PutMapping("/saldar")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(20))")
+    public ResponseEntity<GenericResponseDTO> saldar(
+            @RequestBody SaldarCreditoDTO saldarCreditoDTO) {
+
+        return GenericResponseDTO.genericResponse(creditoService.saldar(saldarCreditoDTO));
     }
 
 

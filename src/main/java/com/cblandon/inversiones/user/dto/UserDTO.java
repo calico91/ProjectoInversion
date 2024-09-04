@@ -1,7 +1,6 @@
 package com.cblandon.inversiones.user.dto;
 
 import com.cblandon.inversiones.roles.entity.Roles;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 
 import java.util.Set;
