@@ -2,8 +2,11 @@ package com.cblandon.inversiones.security.filters;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.cblandon.inversiones.excepciones.RequestException;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
+import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.utils.Constantes;
+import com.cblandon.inversiones.utils.MensajesErrorEnum;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +31,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final HandlerExceptionResolver handlerExceptionResolver;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -40,6 +44,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
                 String username = jwtUtils.extractUsername(decodedJWT);
+
+                if (!userRepository.validarEstadoUsuario(username)) {
+                    throw new RequestException(MensajesErrorEnum.USUARIO_INACTIVO);
+                }
+
                 String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
 
                 Collection<? extends GrantedAuthority> authorities =
@@ -52,7 +61,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 context.setAuthentication(authenticationToken);
                 SecurityContextHolder.setContext(context);
 
-            } catch (JWTVerificationException ex) {
+            } catch (JWTVerificationException | RequestException ex) {
                 handlerExceptionResolver.resolveException(request, response, null, ex);
                 return;
             }

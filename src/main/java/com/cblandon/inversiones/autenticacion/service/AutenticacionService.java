@@ -2,10 +2,10 @@ package com.cblandon.inversiones.autenticacion.service;
 
 import com.cblandon.inversiones.excepciones.UsernameNotFoundExceptionCustom;
 import com.cblandon.inversiones.security.jwt.JwtUtils;
-import com.cblandon.inversiones.user.dto.AuthBiometriaRequestDTO;
-import com.cblandon.inversiones.user.dto.AuthResponseDTO;
-import com.cblandon.inversiones.user.dto.LoginRequestDTO;
-import com.cblandon.inversiones.user.dto.RegistrarDispositivoDTO;
+import com.cblandon.inversiones.autenticacion.dto.AuthBiometriaRequestDTO;
+import com.cblandon.inversiones.autenticacion.dto.AuthResponseDTO;
+import com.cblandon.inversiones.autenticacion.dto.LoginRequestDTO;
+import com.cblandon.inversiones.autenticacion.dto.RegistrarDispositivoDTO;
 import com.cblandon.inversiones.user.entity.UserEntity;
 import com.cblandon.inversiones.user.repository.UserRepository;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;

@@ -21,4 +21,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "   WHERE u.username = :username OR ur.role_id = 1", nativeQuery = true)
     Set<UserEntity> buscarUsuariosAdmin(@Param("username") String username);
 
+    Optional<UserEntity> findByEmail(String email);
+
+    @Query(value = "SELECT u FROM UserEntity u JOIN u.roles r WHERE r.id != 1")
+    Set<UserEntity> consultarUsuarios();
+
+    @Query(value = "SELECT u.isActive FROM UserEntity u WHERE u.username = :username")
+    boolean validarEstadoUsuario(@Param("username") String username);
+
+
+
 }

@@ -23,4 +23,13 @@ public class RolesController {
         return GenericResponseDTO.genericResponse(rolesService.asignarPermisos(asignarPermisosDTO));
 
     }
+
+    @GetMapping("/consultar-roles")
+    @PreAuthorize("hasAnyRole('SUPER')")
+    public ResponseEntity<GenericResponseDTO> consultarRoles() {
+        return GenericResponseDTO.genericResponse(rolesService.consultarRoles());
+
+    }
+
+
 }

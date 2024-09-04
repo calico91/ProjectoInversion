@@ -76,4 +76,18 @@ public class RolesService {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Transactional(readOnly = true)
+    public Set<Roles> consultarRoles() {
+        log.info("consultarRoles");
+
+        try {
+            return rolesRepository.consultarRoles();
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+
 }
