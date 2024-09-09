@@ -8,7 +8,9 @@ public record SaldarCreditoResponseDTO(
         @JsonProperty("valor_pagado")
         Double valorPagado,
         @JsonProperty("nombre_cliente")
-        String nombreCliente
+        String nombreCliente,
+        @JsonProperty("valor_credito")
+        Double valorCredito
 ) {
 
 }

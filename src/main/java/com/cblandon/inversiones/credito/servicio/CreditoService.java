@@ -238,8 +238,8 @@ public class CreditoService {
             return new SaldarCreditoResponseDTO(
                     saldarCreditoDTO.idCredito(),
                     saldarCreditoDTO.valorPagado(),
-                    creditoConsultado.getCliente().getNombres() + " " + creditoConsultado.getCliente().getApellidos()
-            );
+                    creditoConsultado.getCliente().getNombres() + " " + creditoConsultado.getCliente().getApellidos(),
+                    creditoConsultado.getValorCredito());
 
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
