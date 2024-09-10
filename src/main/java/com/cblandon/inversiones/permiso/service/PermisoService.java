@@ -45,7 +45,8 @@ public class PermisoService {
                 new Permiso(16, "generar-reporte-ultimos-abonos-realizados"),
                 new Permiso(17, "consultar-abono-por-id"),
                 new Permiso(18, "anular-ultimo-abono"),
-                new Permiso(19, "asignar-permisos")
+                new Permiso(19, "asignar-permisos"),
+                new Permiso(20, "saldar-credito")
 
         ));
 

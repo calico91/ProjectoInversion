@@ -46,7 +46,7 @@ public class UserController {
     @PutMapping(value = "reiniciar-contrasena/{idUsuario}")
     @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> reiniciarContrasena(@PathVariable Integer idUsuario) {
-        return GenericResponseDTO.genericResponse(userService.restablecerContrasena(idUsuario));
+        return GenericResponseDTO.genericResponse(userService.reiniciarContrasena(idUsuario));
     }
 
     @PutMapping(value = "cambiar-estado/{idUsuario}")

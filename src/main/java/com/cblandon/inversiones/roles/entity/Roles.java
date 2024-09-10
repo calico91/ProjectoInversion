@@ -5,9 +5,7 @@ import com.cblandon.inversiones.permiso.entity.Permiso;
 import com.cblandon.inversiones.roles.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
