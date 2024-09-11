@@ -35,6 +35,7 @@ public class RolesService {
     }
 
     private void asignarPermisosSuperUsuario() {
+        log.info("asignarPermisosSuperUsuario");
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findById(1).orElse(new Roles());
 

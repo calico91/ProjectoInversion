@@ -27,27 +27,24 @@ public class PermisoService {
 
     private void crearPermisos() {
         List<Permiso> permisos = new ArrayList<>(Arrays.asList(
-                new Permiso(1, "registrar-cliente"),
-                new Permiso(2, "consultar-clientes"),
-                new Permiso(3, "consultar-cliente-por-cedula"),
-                new Permiso(4, "consultar-cuotas-por-fecha"),
-                new Permiso(5, "actualizar-cliente"),
-                new Permiso(6, "registrar-credito"),
-                new Permiso(7, "consultar-credito"),
-                new Permiso(8, "consultar-creditos-activos"),
-                new Permiso(9, "modificar-estado-credito"),
-                new Permiso(10, "pagar-cuota"),
-                new Permiso(11, "consultar-cuota-cliente"),
-                new Permiso(12, "consultar-credito-saldo"),
-                new Permiso(13, "modificar-fecha-pago"),
-                new Permiso(14, "generar-reporte-interes-capital"),
-                new Permiso(15, "consultar-abonos-realizados"),
-                new Permiso(16, "generar-reporte-ultimos-abonos-realizados"),
-                new Permiso(17, "consultar-abono-por-id"),
-                new Permiso(18, "anular-ultimo-abono"),
-                new Permiso(19, "asignar-permisos"),
-                new Permiso(20, "saldar-credito")
+                new Permiso(101, "Clientes/registrar", "registrar-cliente"),
+                new Permiso(102, "Clientes/consultar todos los clientes", "consultar-clientes"),
+                new Permiso(103, "Clientes/consultar clientes por cedula", "consultar-cliente-por-cedula"),
+                new Permiso(104, "Clientes/actualizar clientes", "actualizar-cliente"),
 
+                new Permiso(201, "Creditos/crear o renovar credito", "registrar-credito"),
+                new Permiso(202, "Creditos/consultar creditos", "consultar-creditos-activos"),
+                new Permiso(203, "Creditos/modificar estado de credito", "modificar-estado-credito"),
+                new Permiso(204, "Credito/modificar fecha pago", "modificar-fecha-pago"),
+                new Permiso(205, "Credito/consultar informacion de credito", "consultar-credito-saldo"),
+                new Permiso(206, "Credito/consultar abonos realizados", "consultar-abonos-realizados"),
+                new Permiso(206, "Credito/anular ultimo abono", "anular-ultimo-abono"),
+                new Permiso(207, "Credito/saldarCredito", "saldar-credito"),
+                new Permiso(208, "Credito/abonar interes, capital o pagar cuota", "pagar-cuota"),
+                new Permiso(209, "Credito/consultar abono realizado", "consultar-abono-por-id"),
+
+                new Permiso(301, "Inicio/consultar cuota cliente", "consultar-cuota-cliente"),
+                new Permiso(302, "Inicio/consultar cuotas pendientes", "consultar-cuotas-por-fecha")
         ));
 
         List<Permiso> permisosActuales = permisoRepository.findAll();
