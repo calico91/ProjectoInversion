@@ -16,7 +16,7 @@ public class RolesController {
     private final RolesService rolesService;
 
     @PutMapping("/asignar-permisos")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(19))")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> asignarPermisos(
             @RequestBody AsignarPermisosDTO asignarPermisosDTO) {
 
