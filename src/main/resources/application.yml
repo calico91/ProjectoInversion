@@ -6,6 +6,9 @@ security:
     user:
       generator: tokencode
 spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
   datasource:
     password: ${DATABASE_PASSWORD}
     url: ${DATABASE_URL}
@@ -15,7 +18,11 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+#Swagger
 springdoc:
   api-docs:
     enabled: true

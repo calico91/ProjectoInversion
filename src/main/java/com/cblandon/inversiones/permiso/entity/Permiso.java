@@ -18,4 +18,6 @@ public class Permiso {
 
     @Column(length = 50)
     private String descripcion;
+    @Column(length = 50)
+    private String endpoint;
 }
