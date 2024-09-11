@@ -20,7 +20,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping("/registrar-cliente")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(1))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(101))")
     public ResponseEntity<GenericResponseDTO> registrarCliente(
             @RequestBody @Valid RegistrarClienteDTO registrarClienteDTO) {
 
@@ -29,13 +29,13 @@ public class ClienteController {
     }
 
     @GetMapping("/consultar-clientes")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(2))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(102))")
     public ResponseEntity<GenericResponseDTO> consultarClientes() {
         return GenericResponseDTO.genericResponse(clienteService.allClientes());
     }
 
     @GetMapping("/consultar-cliente-por-cedula/{cedula}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(3))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(103))")
     public ResponseEntity<GenericResponseDTO> consultarCliente(@PathVariable String cedula) {
         return GenericResponseDTO.genericResponse(clienteService.consultarCliente(cedula));
 
@@ -43,7 +43,7 @@ public class ClienteController {
     }
 
     @GetMapping("/consultar-cuotas-por-fecha/{fechaFiltro}/{idUsuario}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(4))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(302))")
     public ResponseEntity<GenericResponseDTO> consultarCuotasPorFechas(
             @PathVariable String fechaFiltro, @PathVariable int idUsuario) {
         return GenericResponseDTO.genericResponse(
@@ -51,7 +51,7 @@ public class ClienteController {
     }
 
     @PutMapping("/actualizar-cliente/{id}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(5))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(105))")
     public ResponseEntity<GenericResponseDTO> actualizarCliente(
             @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
 

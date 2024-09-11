@@ -21,7 +21,7 @@ public class CreditoController {
     }
 
     @PostMapping("/registrar-renovar-credito")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(6))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(201))")
     public ResponseEntity<GenericResponseDTO> registrarRenovarCredito(
             @RequestBody @Valid RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
         return GenericResponseDTO.genericResponse(creditoService.registrarRenovarCredito(registrarCreditoRequestDTO));
@@ -29,20 +29,20 @@ public class CreditoController {
 
 
     @GetMapping("/consultar-credito/{idCredito}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(7))")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> consultarCredito(@PathVariable Integer idCredito) {
         return GenericResponseDTO.genericResponse(creditoService.consultarCredito(idCredito));
 
     }
 
     @GetMapping("/consultar-creditos-activos")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(8))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(202))")
     public ResponseEntity<GenericResponseDTO> consultarCreditosActivos() {
         return GenericResponseDTO.genericResponse(creditoService.consultarCreditosActivos());
     }
 
     @PutMapping("/modificar-estado-credito/{idCredito}/{idEstadoCredito}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(9))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(203))")
     public ResponseEntity<GenericResponseDTO> modificarEstadoCredito(
             @PathVariable int idCredito,
             @PathVariable int idEstadoCredito) {
@@ -51,7 +51,7 @@ public class CreditoController {
     }
 
     @PutMapping("/saldar")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(20))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(207))")
     public ResponseEntity<GenericResponseDTO> saldar(
             @RequestBody SaldarCreditoDTO saldarCreditoDTO) {
 
