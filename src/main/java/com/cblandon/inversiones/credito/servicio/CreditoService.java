@@ -136,6 +136,7 @@ public class CreditoService {
                     .valorPrimerCuota(Double.toString(valorPrimerCuota))
                     .valorCredito(registrarCreditoRequestDTO.valorCredito().toString())
                     .valorCuotas(Double.toString(valorCuotas))
+                    .nombreCliente(clienteBD.getNombres() + " " + clienteBD.getApellidos())
                     .build();
 
         } catch (RuntimeException ex) {
