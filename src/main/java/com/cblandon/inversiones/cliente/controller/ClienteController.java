@@ -51,7 +51,7 @@ public class ClienteController {
     }
 
     @PutMapping("/actualizar-cliente/{id}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(105))")
+    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(104))")
     public ResponseEntity<GenericResponseDTO> actualizarCliente(
             @PathVariable Integer id, @Valid @RequestBody RegistrarClienteDTO registrarClienteDTO) {
 
