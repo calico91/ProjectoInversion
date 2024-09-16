@@ -90,7 +90,7 @@ public class CuotaCreditoService {
                     permitirPagarCuotaNormal(cuotaCreditoDB.getCredito().getSaldoCredito(),
                             cuotaCreditoDB.getFechaCuota(), cuotaCreditoDB.getCredito().getValorCredito(),
                             cuotaCreditoDB.getInteresPorcentaje(), cuotaCreditoDB.getCredito().getModalidad().getDescription(),
-                            cuotaCreditoDB.getNumeroCuotas());
+                            cuotaCreditoDB.getNumeroCuotas(), pagarCuotaRequestDTO.getValorAbonado());
 
                     cuotaCreditoDB.setValorCapital(capitalCuotaNormal);
                     cuotaCreditoDB.setValorInteres(
@@ -176,7 +176,9 @@ public class CuotaCreditoService {
 
             log.info("pagarCuota: {}", mapRespuesta);
             return mapRespuesta;
-        } catch (RuntimeException ex) {
+        } catch (RequestException ex) {
+            throw ex;
+        }catch (RuntimeException ex) {
             log.error("pagarCuota: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
@@ -378,7 +380,7 @@ public class CuotaCreditoService {
         int ultimaCuotaGenerada = abonosRealizados.get(0).idAbono();
 
         abonosRealizados.remove(0);
-        
+
 
         ///valida si el abono a realizar es el ultimo
         if (abonosRealizados.stream().anyMatch(idAbonos -> idAbonos.idAbono() > idAbono)) {
@@ -510,13 +512,16 @@ public class CuotaCreditoService {
      * para permitir dejar hacer el abono normal
      */
     private void permitirPagarCuotaNormal(Double saldoCredito, LocalDate fechaCuota, double valorCredito,
-                                          double interesPorcentaje, String modalidad, int numeroCuotas) {
+                                          double interesPorcentaje, String modalidad, int numeroCuotas,
+                                          double valorAbonado
+    ) {
 
-        double interesActual = calcularInteresActual(
-                fechaCuota,
-                valorCredito,
-                interesPorcentaje,
-                modalidad);
+        double interesActual = calcularInteresActual(fechaCuota, valorCredito, interesPorcentaje, modalidad);
+
+        if (valorAbonado < (valorCredito / numeroCuotas)) {
+            throw new RequestException(MensajesErrorEnum.ERROR_PAGAR_CUOTA_NORMAL);
+
+        }
 
         if ((saldoCredito + interesActual) < (valorCredito / numeroCuotas)) {
 
