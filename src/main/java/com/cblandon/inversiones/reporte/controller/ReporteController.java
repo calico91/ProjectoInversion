@@ -26,7 +26,7 @@ public class ReporteController {
     }
 
     @GetMapping("/generar-reporte-ultimos-abonos-realizados/{cantidadAbonos}")
-    @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(16))")
+    @PreAuthorize("hasAnyRole('SUPER')")
     public ResponseEntity<GenericResponseDTO> consultarUltimosAbonosRealizados(@PathVariable int cantidadAbonos) {
         return GenericResponseDTO.genericResponse(
                 reporteService.consultarUltimosAbonosRealizados(cantidadAbonos));
