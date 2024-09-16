@@ -36,7 +36,8 @@ public enum MensajesErrorEnum {
             "E24"),
     CORREO_REGISTRADO("Correo registrado, verifique el correo que se encuentra ingresando", "E25"),
     USUARIO_INACTIVO("Usuario inactivo, contacte a su administrador", "E26"),
-    ERROR_SALDAR_CREDITO("El valor ingresado es menor al saldo capital del credito", "E26");
+    ERROR_SALDAR_CREDITO("El valor ingresado es menor al saldo capital del credito", "E26"),
+    ERROR_PAGAR_CUOTA_NORMAL("El valor a abonar no puede ser menor al valor capital de la cuota", "E27");
 
 
     private final String message;
