@@ -1,7 +1,7 @@
 package com.cblandon.inversiones.roles.service;
 
+import com.cblandon.inversiones.excepciones.NoDataException;
 import com.cblandon.inversiones.excepciones.RequestException;
-import com.cblandon.inversiones.mapper.Mapper;
 import com.cblandon.inversiones.mapper.RolesMapper;
 import com.cblandon.inversiones.permiso.entity.Permiso;
 import com.cblandon.inversiones.permiso.repository.PermisoRepository;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -90,12 +89,21 @@ public class RolesService {
         log.info("consultarRoles");
 
         try {
-            return rolesRepository.consultarRoles().stream().map(
-                    RolesMapper.ROLES::toRolesDTO).collect(Collectors.toSet());
+            return rolesRepository.consultarRoles();
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
+    }
+
+    @Transactional(readOnly = true)
+    public RolesDTO consultarPermisosRol(Integer id) {
+        log.info("consultarPermisosRol");
+
+        return RolesMapper.ROLES.toRolesDTO(
+                rolesRepository.consultarPermisosRol(id).orElseThrow(
+                        () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS)));
+
     }
 
 

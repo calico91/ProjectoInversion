@@ -31,5 +31,12 @@ public class RolesController {
 
     }
 
+    @GetMapping("/consultar-permisos-rol/{id}")
+    @PreAuthorize("hasAnyRole('SUPER')")
+    public ResponseEntity<GenericResponseDTO> consultarPermisos(@PathVariable Integer id) {
+        return GenericResponseDTO.genericResponse(rolesService.consultarPermisosRol(id));
+
+    }
+
 
 }
