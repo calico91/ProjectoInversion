@@ -1,10 +1,13 @@
 package com.cblandon.inversiones.roles.service;
 
 import com.cblandon.inversiones.excepciones.RequestException;
+import com.cblandon.inversiones.mapper.Mapper;
+import com.cblandon.inversiones.mapper.RolesMapper;
 import com.cblandon.inversiones.permiso.entity.Permiso;
 import com.cblandon.inversiones.permiso.repository.PermisoRepository;
 import com.cblandon.inversiones.roles.Role;
 import com.cblandon.inversiones.roles.dto.AsignarPermisosDTO;
+import com.cblandon.inversiones.roles.dto.RolesDTO;
 import com.cblandon.inversiones.roles.entity.Roles;
 import com.cblandon.inversiones.roles.repository.RolesRepository;
 import com.cblandon.inversiones.utils.MensajesErrorEnum;
@@ -13,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,6 +47,9 @@ public class RolesService {
         rolesRepository.save(rolAdmin);
     }
 
+    /**
+     * metodo que se utiliza en cada peticion para saber si el usuario tiene permisos a un endpoint
+     */
     @Transactional(readOnly = true)
     public Set<String> consultarPermisoRoles(int id) {
         try {
@@ -79,11 +86,12 @@ public class RolesService {
     }
 
     @Transactional(readOnly = true)
-    public Set<Roles> consultarRoles() {
+    public Set<RolesDTO> consultarRoles() {
         log.info("consultarRoles");
 
         try {
-            return rolesRepository.consultarRoles();
+            return rolesRepository.consultarRoles().stream().map(
+                    RolesMapper.ROLES::toRolesDTO).collect(Collectors.toSet());
 
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
