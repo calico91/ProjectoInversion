@@ -8,8 +8,10 @@ public class RequestException extends RuntimeException {
     private final MensajesErrorEnum mensajesErrorEnum;
 
     public RequestException(MensajesErrorEnum mensajesErrorEnum) {
+        super(mensajesErrorEnum.getMessage());
         this.mensajesErrorEnum = mensajesErrorEnum;
     }
+
 }
 
 

@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UsernameNotFoundExceptionCustom extends UsernameNotFoundException {
     private final MensajesErrorEnum mensajesErrorEnum;
 
-    public UsernameNotFoundExceptionCustom(String msg, MensajesErrorEnum mensajesErrorEnum) {
-        super(msg);
+    public UsernameNotFoundExceptionCustom(MensajesErrorEnum mensajesErrorEnum) {
+        super(mensajesErrorEnum.getMessage());
         this.mensajesErrorEnum = mensajesErrorEnum;
     }
 }

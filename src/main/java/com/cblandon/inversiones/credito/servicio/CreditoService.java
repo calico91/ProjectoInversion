@@ -46,7 +46,6 @@ public class CreditoService {
      */
     @Transactional()
     public RegistrarCreditoResponseDTO registrarRenovarCredito(RegistrarCreditoRequestDTO registrarCreditoRequestDTO) {
-        log.info("crearCredito: {}", registrarCreditoRequestDTO);
 
         Cliente clienteBD = clienteRepository.findById(registrarCreditoRequestDTO.idCliente())
                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.CLIENTE_NO_CREADO));
@@ -140,7 +139,6 @@ public class CreditoService {
                     .build();
 
         } catch (RuntimeException ex) {
-            log.error("crearCredito: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
 
         }
@@ -154,11 +152,9 @@ public class CreditoService {
             Credito credito = creditoRepository.findById(idCredito)
                     .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
-            log.info("consultarCredito: {}", credito.toString());
 
             return CreditoMapper.mapperCredito.creditoToCreditoCuotasResponseDTO(credito);
         } catch (RuntimeException ex) {
-            log.error("consultarCredito: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -171,14 +167,10 @@ public class CreditoService {
     public List<CreditosActivosDTO> consultarCreditosActivos() {
         try {
 
-            List<CreditosActivosDTO> listaClientes = creditoRepository.consultarClientesConCreditosActivos();
+            return creditoRepository.consultarClientesConCreditosActivos();
 
-            log.info("consultarInfoCreditosActivos: {}", listaClientes.toString());
-
-            return listaClientes;
 
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCreditosActivos: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -186,7 +178,6 @@ public class CreditoService {
 
     @Transactional()
     public String modificarEstadoCredito(int idCredito, int idstadoCredito) throws NoDataException {
-        log.error("modificarEstadoCredito: {}", idCredito);
         Credito creditoConsultado = creditoRepository.findById(idCredito)
                 .orElseThrow(() -> new NoDataException(
                         MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
@@ -202,13 +193,11 @@ public class CreditoService {
             return "Estado de credito ".concat(estadoCredito.getDescripcion());
 
         } catch (RuntimeException ex) {
-            log.error("modificarEstadoCredito: {}", ex.getMessage());
             throw new RuntimeException("Estado de credito ".concat(ex.getMessage()));
         }
     }
 
     public SaldarCreditoResponseDTO saldar(SaldarCreditoDTO saldarCreditoDTO) throws NoDataException {
-        log.error("saldarCredito: {}", saldarCreditoDTO);
 
         Credito creditoConsultado = creditoRepository.findById(saldarCreditoDTO.idCredito())
                 .orElseThrow(() -> new NoDataException(

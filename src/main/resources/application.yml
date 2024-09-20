@@ -10,10 +10,7 @@ jwt:
 logging:
   file:
     name: D:/Spring/ProjectoInversion/logs/inversiones.log
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
+
 spring:
   liquibase:
     enabled: true

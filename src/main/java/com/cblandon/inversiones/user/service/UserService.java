@@ -56,7 +56,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UsuariosResponseDTO registrar(UserDTO userDTO) throws RequestException {
-        log.info("registrarUsuario: {}", userDTO);
 
 
         String password = userDTO.password() == null ? "cambio" : userDTO.password();
@@ -87,7 +86,6 @@ public class UserService implements UserDetailsService {
             return usuariosResponseDTO;
 
         } catch (RuntimeException ex) {
-            log.error("registrarUsuario: {}", ex.getMessage());
             throw new RuntimeException(ex);
         }
 
@@ -96,7 +94,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public List<UsuariosResponseDTO> consultarUsuarios() {
-        log.info("consultarUsuarios: ");
         Set<UserEntity> usuariosConsulta = userRepository.consultarUsuarios();
 
         try {
@@ -113,7 +110,6 @@ public class UserService implements UserDetailsService {
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarUsuarios: {}", ex.getMessage());
 
             throw new RuntimeException(ex.getMessage());
         }
@@ -122,7 +118,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UsuariosResponseDTO actualizarUsuario(UserDTO userDTO) {
-        log.info("actualizarUsuario: {}", userDTO);
         UserEntity usuarioBD = userRepository.findById(userDTO.id()).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
@@ -154,7 +149,6 @@ public class UserService implements UserDetailsService {
             return UserMapper.USER.toUsuariosResponseDTO(userRepository.save(usuarioModificado));
 
         } catch (RuntimeException ex) {
-            log.error("actualizarUsuario: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -162,7 +156,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public String cambiarContrasena(CambiarContrasenaDTO cambiarContrasenaDTO) {
-        log.info("cambiarContrasena: {}", cambiarContrasenaDTO.toString());
         UserEntity usuarioBD = userRepository.findById(cambiarContrasenaDTO.idUsuario()).orElseThrow(
                 () -> new UsernameNotFoundException("No se encontro usuario"));
 
@@ -174,7 +167,6 @@ public class UserService implements UserDetailsService {
             userRepository.save(usuarioBD);
             return "Contrasena modificada correctamente";
         } catch (RuntimeException ex) {
-            log.error("cambiarContrasena: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -184,7 +176,6 @@ public class UserService implements UserDetailsService {
      */
     @Transactional
     public String reiniciarContrasena(Integer idUsuario) {
-        log.info("reiniciarContrasena: {}", idUsuario.toString());
 
         try {
             UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
@@ -195,14 +186,12 @@ public class UserService implements UserDetailsService {
             return String.format("Se asigno la contrasena 'cambio' para el usuario %s ,ingrese y asigne una nueva",
                     usuarioBD.getUsername());
         } catch (RuntimeException ex) {
-            log.error("reiniciarContrasena: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }
 
     @Transactional
     public String cambiarEstadoUsuario(Integer idUsuario) {
-        log.info("cambiarEstadoUsuario: {}", idUsuario.toString());
 
         UserEntity usuarioBD = userRepository.findById(idUsuario).orElseThrow(
                 () -> new UsernameNotFoundException("No se encontro usuario"));
@@ -215,14 +204,12 @@ public class UserService implements UserDetailsService {
 
             return String.format("Usuario %s correctamente ", estado);
         } catch (RuntimeException ex) {
-            log.error("cambiarEstadoUsuario: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }
 
     @Transactional(readOnly = true)
     public UsuariosResponseDTO consultarUsuario(Integer id) {
-        log.error("consultarUsuario: {}", id.toString());
 
         UserEntity usuarioBD = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("No se encontro usuario"));

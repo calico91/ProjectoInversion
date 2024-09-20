@@ -11,7 +11,6 @@ import lombok.*;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Table(name = "permisos")
 @Entity

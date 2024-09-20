@@ -30,7 +30,6 @@ public class ClienteService {
 
     @Transactional
     public ClienteResponseDTO registrarCliente(RegistrarClienteDTO registrarClienteDTO) {
-        log.info("createCliente registrarClienteDTO: {}", registrarClienteDTO.toString());
 
         if (clienteRepository.findByCedula(registrarClienteDTO.cedula()).isPresent()) {
             throw new RequestException(
@@ -43,7 +42,6 @@ public class ClienteService {
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(cliente));
 
         } catch (RuntimeException ex) {
-            log.error("createCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -55,15 +53,10 @@ public class ClienteService {
 
             List<Cliente> clientes = clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
-            List<ClienteAllResponseDTO> clienteResponseDTO = clientes.stream().map(
+            return clientes.stream().map(
                     Mapper.mapper::clienteToClienteAllResponseDto).toList();
 
-            log.info("allClientes: {}", clienteResponseDTO);
-
-            return clienteResponseDTO;
-
         } catch (RuntimeException ex) {
-            log.error("allClientes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -77,13 +70,10 @@ public class ClienteService {
 
         try {
 
-            ClienteResponseDTO clienteResponseDTO = Mapper.mapper.clienteToClienteResponseDto(clienteBD);
-            log.info("consultarCliente: {}", clienteResponseDTO.toString());
-            return clienteResponseDTO;
+            return Mapper.mapper.clienteToClienteResponseDto(clienteBD);
 
         } catch (RuntimeException ex) {
 
-            log.error("consultarCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -93,7 +83,6 @@ public class ClienteService {
     @Transactional
     public ClienteResponseDTO actualizarCliente(Integer id, RegistrarClienteDTO registrarClienteDTO) {
 
-        log.info("actualizarCliente: {}", registrarClienteDTO.toString());
         Cliente clienteBD = clienteRepository.findById(id).orElseThrow(
                 () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
@@ -108,7 +97,6 @@ public class ClienteService {
             return Mapper.mapper.clienteToClienteResponseDto(clienteRepository.save(clienteModificado));
 
         } catch (RuntimeException ex) {
-            log.error("actualizarCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -132,14 +120,9 @@ public class ClienteService {
     public List<ClientesCuotaCreditoDTO> consultarClientesCuotasPendientes(LocalDate fechaFiltro, int idUsuario) {
 
         try {
-            List<ClientesCuotaCreditoDTO> listaCreditosdto = clienteRepository.consultarClientesCuotasPendientes(
-                    fechaFiltro, idUsuario);
-
-            log.info("infoClientesCuotasPendientes: {} ", listaCreditosdto.toString());
-            return listaCreditosdto;
+            return clienteRepository.consultarClientesCuotasPendientes(fechaFiltro, idUsuario);
 
         } catch (RuntimeException ex) {
-            log.error("infoClientesCuotasPendientes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 

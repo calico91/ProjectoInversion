@@ -38,7 +38,6 @@ public class RolesService {
     }
 
     private void asignarPermisosSuperUsuario() {
-        log.info("asignarPermisosSuperUsuario");
         Set<Permiso> permisos = Set.copyOf(permisoRepository.findAll());
         Roles rolAdmin = rolesRepository.findById(1).orElse(new Roles());
 
@@ -52,11 +51,9 @@ public class RolesService {
     @Transactional(readOnly = true)
     public Set<String> consultarPermisoRoles(int id) {
         try {
-            Set<String> roles = rolesRepository.consultarPermisos(id).
+            return rolesRepository.consultarPermisos(id).
                     stream().map(rol -> rol.getName().toString()).collect(Collectors.toSet());
 
-            log.info("consultarPermisoRoles: {}", roles);
-            return roles;
 
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
@@ -65,7 +62,6 @@ public class RolesService {
 
     @Transactional
     public String asignarPermisos(AsignarPermisosDTO asignarPermisosDTO) {
-        log.info("asignarPermisos: {}", asignarPermisosDTO.toString());
 
         Roles rol = rolesRepository.findByName(Role.valueOf(asignarPermisosDTO.rol().toUpperCase())).orElse(new Roles());
 
@@ -79,14 +75,12 @@ public class RolesService {
             rolesRepository.save(rol);
             return "Permisos asignados correctamente al rol ".concat(asignarPermisosDTO.rol());
         } catch (RuntimeException ex) {
-            log.error("asignarPermisos: ".concat(ex.getMessage()));
             throw new RuntimeException(ex.getMessage());
         }
     }
 
     @Transactional(readOnly = true)
     public Set<RolesDTO> consultarRoles() {
-        log.info("consultarRoles");
 
         try {
             return rolesRepository.consultarRoles();
@@ -98,7 +92,6 @@ public class RolesService {
 
     @Transactional(readOnly = true)
     public RolesDTO consultarPermisosRol(Integer id) {
-        log.info("consultarPermisosRol");
 
         return RolesMapper.ROLES.toRolesDTO(
                 rolesRepository.consultarPermisosRol(id).orElseThrow(

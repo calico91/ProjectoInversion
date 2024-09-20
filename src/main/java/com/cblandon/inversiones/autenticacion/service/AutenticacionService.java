@@ -32,15 +32,14 @@ public class AutenticacionService {
 
     @Transactional(readOnly = true)
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        log.info("login: {}", loginRequestDTO);
 
         UserEntity usuario = userRepository.findByUsername(loginRequestDTO.username())
                 .orElseThrow(() -> new UsernameNotFoundExceptionCustom(
-                        null, MensajesErrorEnum.ERROR_AUTENTICACION));
+                         MensajesErrorEnum.ERROR_AUTENTICACION));
 
         if (!passwordEncoder.matches(loginRequestDTO.password(), usuario.getPassword())) {
             throw new UsernameNotFoundExceptionCustom(
-                    null, MensajesErrorEnum.ERROR_AUTENTICACION);
+                     MensajesErrorEnum.ERROR_AUTENTICACION);
         }
         try {
             return AuthResponseDTO.builder()
@@ -52,7 +51,6 @@ public class AutenticacionService {
 
 
         } catch (RuntimeException ex) {
-            log.error("login: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -60,13 +58,12 @@ public class AutenticacionService {
 
     @Transactional(readOnly = true)
     public AuthResponseDTO authBiometrica(AuthBiometriaRequestDTO authBiometriaRequestDTO) {
-        log.info("authBiometrica: {}", authBiometriaRequestDTO);
         UserEntity usuario = userRepository.findByUsername(
                 authBiometriaRequestDTO.username()).orElseThrow(() ->
-                new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
+                new UsernameNotFoundExceptionCustom( MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA));
 
         if (!passwordEncoder.matches(authBiometriaRequestDTO.idMovil(), usuario.getIdMovil())) {
-            throw new UsernameNotFoundExceptionCustom(null, MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
+            throw new UsernameNotFoundExceptionCustom( MensajesErrorEnum.AUTENTICACION_BIOMETRICA_FALLIDA);
         }
 
         try {
@@ -79,7 +76,6 @@ public class AutenticacionService {
                     .build();
 
         } catch (RuntimeException ex) {
-            log.error("authBiometrica: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -90,7 +86,6 @@ public class AutenticacionService {
      */
     @Transactional
     public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
-        log.info("vincularDispositivo: {}", registrarDispositivoDTO);
         UserEntity user = userRepository.findByUsername(
                 registrarDispositivoDTO.username()).orElseThrow(() ->
                 new UsernameNotFoundException("No se encontro usuario"));
@@ -101,7 +96,6 @@ public class AutenticacionService {
 
             return "Dispositivo vinculado correctamente";
         } catch (RuntimeException ex) {
-            log.error("vincularDispositivo: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
