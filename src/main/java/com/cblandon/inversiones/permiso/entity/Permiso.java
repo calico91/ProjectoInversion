@@ -1,14 +1,16 @@
 package com.cblandon.inversiones.permiso.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Table(name = "permisos")
 @Entity
@@ -20,4 +22,6 @@ public class Permiso {
     private String descripcion;
     @Column(length = 50)
     private String endpoint;
+
+
 }

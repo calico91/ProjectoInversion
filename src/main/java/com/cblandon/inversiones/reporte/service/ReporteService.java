@@ -29,14 +29,11 @@ public class ReporteService {
     public ReporteInteresCapitalDTO generarReporteInteresCapital(String fechaInicial, String fechaFinal) {
         try {
 
-            ReporteInteresCapitalDTO interesYcapital = cuotaCreditoRepository
+            return cuotaCreditoRepository
                     .generarReporteInteresyCapital(convertirFechas(fechaInicial), convertirFechas(fechaFinal));
 
-            log.info("reporte capital e interes: {}", interesYcapital);
-            return interesYcapital;
 
         } catch (RuntimeException ex) {
-            log.error("reporte capital e interes: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -51,7 +48,7 @@ public class ReporteService {
 
             List<Tuple> ultimosAbonosRealizados = cuotaCreditoRepository.consultarUltimosAbonosRealizados(cantidadAbonos);
 
-            List<AbonosRealizadosResponseDTO> ultimosAbonosRealizadosDTO = ultimosAbonosRealizados.stream().map(
+            return ultimosAbonosRealizados.stream().map(
                     abonos -> AbonosRealizadosResponseDTO.builder()
                             .nombres(abonos.get("nombres").toString())
                             .apellidos(abonos.get("apellidos").toString())
@@ -59,12 +56,9 @@ public class ReporteService {
                             .fechaAbono(LocalDate.parse(abonos.get("fecha_abono").toString().substring(0, 10)))
                             .build()).toList();
 
-            log.info("consultarUltimosAbonosRealizados: {}", ultimosAbonosRealizadosDTO);
-            return ultimosAbonosRealizadosDTO;
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarUltimosAbonosRealizados: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }

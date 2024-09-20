@@ -48,7 +48,6 @@ public class CuotaCreditoService {
             Integer codigoCuota, PagarCuotaRequestDTO pagarCuotaRequestDTO)
             throws NoDataException {
 
-        log.info("pagarCuota: {}", pagarCuotaRequestDTO.toString());
 
         CuotaCredito cuotaCreditoDB = cuotaCreditoRepository.findById(codigoCuota)
                 .orElseThrow(() -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
@@ -152,7 +151,6 @@ public class CuotaCreditoService {
                 cuotaCreditoRepository.save(nuevaCuota);
 
             } else {
-                log.info("entre a saldar credito");
                 Credito credito = creditoRepository.findById(cuotaCancelada.getCredito().getId())
                         .orElseThrow(() -> new NoDataException(
                                 MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
@@ -174,12 +172,10 @@ public class CuotaCreditoService {
                 mapRespuesta.put("cuotasPagadas", cuotaCreditoDB.getCuotaNumero());
             }
 
-            log.info("pagarCuota: {}", mapRespuesta);
             return mapRespuesta;
         } catch (RequestException ex) {
             throw ex;
-        }catch (RuntimeException ex) {
-            log.error("pagarCuota: {}", ex.getMessage());
+        } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -218,13 +214,11 @@ public class CuotaCreditoService {
             infoCuotaPagar.setValorCuota(infoCuotaPagar.getValorCuota() + interesMora);
             infoCuotaPagar.setValorCredito(infoCuotaPagar.getValorCredito());
             infoCuotaPagar.setFechaProximaMora(fechaProximaMora);
-            log.info("consultarCuotaCreditoCliente: {}", infoCuotaPagar);
 
             return infoCuotaPagar;
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCuotaCreditoCliente: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -276,10 +270,8 @@ public class CuotaCreditoService {
             infoCreditoySaldo.get(0).setSaldoCredito((Double) datosCredito.get("saldoCredito"));
             infoCreditoySaldo.get(0).setUltimaCuotaPagada(datosCredito.get("ultimaCuotaPagada").toString());
 
-            log.info("consultarInfoCreditoySaldo: {}", infoCreditoySaldo.get(0).toString());
             return infoCreditoySaldo.get(0);
         } catch (RuntimeException ex) {
-            log.error("consultarInfoCreditoySaldo: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
 
@@ -309,17 +301,13 @@ public class CuotaCreditoService {
 
             CuotaCredito cuotaGenerada = cuotaCreditoRepository.save(ultimaCuotaGenerada);
 
-            CuotasCreditoResponseDTO cuotasCreditoResponseDTO = CuotaCreditoMapper.
+            return CuotaCreditoMapper.
                     mapperCuotaCredito.
                     cuotaCreditoToCuotasCreditoResponseDTO(cuotaGenerada);
 
-            log.info("modificarFechaPago: {}", cuotasCreditoResponseDTO.toString());
-
-            return cuotasCreditoResponseDTO;
 
         } catch (RuntimeException ex) {
 
-            log.error("modificarFechaPago: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -336,7 +324,6 @@ public class CuotaCreditoService {
 
             cuotasPagas.remove(cuotasPagas.size() - 1);
 
-            log.info("consultarAbonosRealizados: {}", cuotasPagas.size());
 
             return cuotasPagas.stream().map(
                     cuota -> AbonosRealizadosResponseDTO.builder()
@@ -348,7 +335,6 @@ public class CuotaCreditoService {
                             .build()).toList();
 
         } catch (RuntimeException ex) {
-            log.error("consultarAbonosRealizados: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -361,20 +347,15 @@ public class CuotaCreditoService {
 
         try {
 
-            AbonoPorIdDTO abonoPorId = cuotaCreditoRepository.consultarAbonoPorId(idCuotaCredito);
-
-            log.info("consultarAbonoPorId: {}", abonoPorId.toString());
-            return abonoPorId;
+            return cuotaCreditoRepository.consultarAbonoPorId(idCuotaCredito);
 
 
         } catch (RuntimeException ex) {
-            log.error("consultarAbonoPorId: {}", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
 
     public String anularUltimoAbono(Integer idAbono, Integer idCredito) {
-        log.info("anularAbono: {}", idAbono);
         List<IdAbonosRealizadosDTO> abonosRealizados = cuotaCreditoRepository.consultarIdAbonosRealizadosPorCredito(
                 idCredito);
         int ultimaCuotaGenerada = abonosRealizados.get(0).idAbono();
@@ -404,7 +385,6 @@ public class CuotaCreditoService {
             return "Abono anulado correctamente.";
 
         } catch (RuntimeException e) {
-            log.error("anularAbono: {}", e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -477,7 +457,6 @@ public class CuotaCreditoService {
                 listaCuotas.get(0).getModalidad());
 
         Double interesMora = calcularInteresMora(listaCuotas.get(0).getFechaCuota());
-        log.info(interesMora.toString());
 
         interesActual = Math.max(interesActual, 0.0);
 
@@ -535,7 +514,6 @@ public class CuotaCreditoService {
      */
     private Double calcularInteresMora(LocalDate fechaCuota) {
         int diasDiferencia = calcularDiasDiferenciaEntreFechas(fechaCuota, LocalDate.now());
-        log.info("dias de mora:" + diasDiferencia);
         fechaProximaMora = fechaCuota.plusDays(4);
 
         int diasCobrar = 0;
@@ -547,12 +525,7 @@ public class CuotaCreditoService {
             }
             i++;
         }
-        log.info("fecha proxima mora".concat(fechaProximaMora.toString()));
-        log.info("dias a cobrar:" + diasCobrar);
-        double valorMora = Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
-        log.info("valorMora:" + valorMora);
-
-        return valorMora;
+        return Double.parseDouble(Integer.toString(diasCobrar)) * 5000;
     }
 
 
