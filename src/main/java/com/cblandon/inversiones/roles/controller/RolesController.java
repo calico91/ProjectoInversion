@@ -37,6 +37,5 @@ public class RolesController {
         return GenericResponseDTO.genericResponse(rolesService.consultarPermisosRol(id));
 
     }
-
-
+    
 }

@@ -63,17 +63,18 @@ public class RolesService {
     @Transactional
     public String asignarPermisos(AsignarPermisosDTO asignarPermisosDTO) {
 
-        Roles rol = rolesRepository.findByName(Role.valueOf(asignarPermisosDTO.rol().toUpperCase())).orElse(new Roles());
+        Roles rol = rolesRepository.findById(asignarPermisosDTO.idRol()).orElseThrow(
+                () -> new NoDataException(MensajesErrorEnum.DATOS_NO_ENCONTRADOS));
 
         Set<Permiso> permisos = asignarPermisosDTO.permisos().stream().map(
-                        permiso -> permisoRepository.findById(permiso)
+                        permiso -> permisoRepository.findById(permiso.getId())
                                 .orElseThrow(() -> new RequestException(MensajesErrorEnum.PERMISO_NO_EXISTE)))
                 .collect(Collectors.toSet());
 
         try {
             rol.setPermisos(permisos);
             rolesRepository.save(rol);
-            return "Permisos asignados correctamente al rol ".concat(asignarPermisosDTO.rol());
+            return "Permisos asignados correctamente al rol ".concat(rol.getName().toString());
         } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
