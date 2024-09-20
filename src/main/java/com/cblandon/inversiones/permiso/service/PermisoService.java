@@ -2,12 +2,15 @@ package com.cblandon.inversiones.permiso.service;
 
 import com.cblandon.inversiones.permiso.entity.Permiso;
 import com.cblandon.inversiones.permiso.repository.PermisoRepository;
+import com.cblandon.inversiones.roles.dto.RolesDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PermisoService {
@@ -54,4 +57,17 @@ public class PermisoService {
 
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Permiso> consultarTodos() {
+
+        try {
+            return permisoRepository.findAll();
+
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+
 }
