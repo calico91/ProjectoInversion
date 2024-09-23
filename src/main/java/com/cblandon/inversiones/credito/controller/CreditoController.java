@@ -35,10 +35,10 @@ public class CreditoController {
 
     }
 
-    @GetMapping("/consultar-creditos-activos")
+    @GetMapping("/consultar-creditos-activos/{idUsuario}")
     @PreAuthorize("hasAnyRole(@rolesService.consultarPermisoRoles(202))")
-    public ResponseEntity<GenericResponseDTO> consultarCreditosActivos() {
-        return GenericResponseDTO.genericResponse(creditoService.consultarCreditosActivos());
+    public ResponseEntity<GenericResponseDTO> consultarCreditosActivos(@PathVariable Integer idUsuario) {
+        return GenericResponseDTO.genericResponse(creditoService.consultarCreditosActivos(idUsuario));
     }
 
     @PutMapping("/modificar-estado-credito/{idCredito}/{idEstadoCredito}")

@@ -164,10 +164,10 @@ public class CreditoService {
      * consulta credito y sus cuotas generadas
      */
     @Transactional(readOnly = true)
-    public List<CreditosActivosDTO> consultarCreditosActivos() {
+    public List<CreditosActivosDTO> consultarCreditosActivos(Integer idUsuario) {
         try {
 
-            return creditoRepository.consultarClientesConCreditosActivos();
+            return creditoRepository.consultarClientesConCreditosActivos(idUsuario);
 
 
         } catch (RuntimeException ex) {
