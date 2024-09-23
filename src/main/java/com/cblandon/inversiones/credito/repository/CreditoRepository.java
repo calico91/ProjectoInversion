@@ -15,7 +15,8 @@ public interface CreditoRepository extends JpaRepository<Credito, Integer> {
             "cl.apellidos,cl.cedula,cr.id, cr.fechaCredito,cr.valorCredito )" +
             "FROM Credito cr " +
             "JOIN cr.cliente cl " +
+            "JOIN cr.usuarios uc on uc.id = :idUsuario " +
             "WHERE cr.idEstadoCredito.id=1 ORDER BY cr.id DESC ")
-    List<CreditosActivosDTO> consultarClientesConCreditosActivos();
+    List<CreditosActivosDTO> consultarClientesConCreditosActivos(Integer idUsuario);
 
 }
