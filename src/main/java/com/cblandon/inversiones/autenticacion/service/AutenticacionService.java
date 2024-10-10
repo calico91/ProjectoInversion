@@ -86,7 +86,6 @@ public class AutenticacionService {
      */
     @Transactional
     public String vincularDispositivo(RegistrarDispositivoDTO registrarDispositivoDTO) {
-        log.info("vincularDispositivo");
         UserEntity user = userRepository.findByUsername(
                 registrarDispositivoDTO.username()).orElseThrow(() ->
                 new UsernameNotFoundException("No se encontro usuario"));
